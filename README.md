@@ -3,9 +3,9 @@ I did not count the time building the chassis kit.
 
 ### Thursday, October 16th | 30 minutes
 Spent 30 minutes designing a simple riser so that I can fit more stuff on the tank. There is not enough room otherwise. This is mainly so I can start installing everything tmrw, once I have an idea of where things fit, I'll make a better version.
-![Fusion](CAD/photos/riser_fusion.jpg)
-![Wayyy too much stuff on the tank](CAD/photos/tank_with_junk.jpg)
-![Profile of tank](CAD/photos/tank_profile.jpg)
+![Fusion](photos/riser_fusion.jpg)
+![Wayyy too much stuff on the tank](photos/tank_with_junk.jpg)
+![Profile of tank](photos/tank_profile.jpg)
 
 ### Friday, October 17th | 30 minutes
 #### 07:00 | 30 minutes
@@ -14,9 +14,13 @@ Tested V1 of the riser. It covered the tracks fine, but I made the screw holes t
 - Fix chassis mountiung hole locations
 - Add holes for mounting RPI Zero
 - Add holes to ziptie batterys on the edge
-![V2 of the riser in fusion](CAD/photos/riser_v2_fusion.jpg)
-![Tank with V1 of riser](CAD/photos/tank_with_riser_v1.jpg)
+![V2 of the riser in fusion](photos/riser_v2_fusion.jpg)
+![Tank with V1 of riser](photos/tank_with_riser_v1.jpg)
 
 #### 16:00 | 30 minutes
 Took apart the car and tracks to test V2 of the riser. The mounting holes distance to edge rn is good but apparently I misread the design sheet and made them to far apart. So I made a quick edit and started V3 on the printer.
-![V3 of riser in fusion](CAD/photos/riser_v3_fusion.jpg)
+![V3 of riser in fusion](photos/riser_v3_fusion.jpg)
+
+#### 18:30 | 1 hour
+Soldered a bunch of cables to the motor controllers and did first boot of pi from the tank battery. V3 of teh riser is almost done printing. Going to start researching and writing code to make the motors spin!
+![Tank with pi on it](photos/tank_with_pi.jpg)
