@@ -14,7 +14,7 @@ lcd = LCD(address=0x27)
 
 ip = get_ip()
 lcd.text("Tank Online", 1)
-lcd.text(f"IP: {ip}", 2)
+lcd.text(ip, 2)
 
 # keep displayed
 try:
