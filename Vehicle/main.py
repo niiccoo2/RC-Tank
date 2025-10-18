@@ -6,10 +6,6 @@ import time
 LEFT_PWM_PIN = 18
 RIGHT_PWM_PIN = 13  # set to 18 if sharing one pin
 
-# Optional inversion per side
-INVERT_LEFT = False
-INVERT_RIGHT = False
-
 # Servo/ESC timing
 SERVO_FREQ_HZ = 50
 ESC_MIN_DUTY = 5.0      # ~1.0 ms
@@ -35,8 +31,8 @@ def throttle_to_duty(throttle: float) -> float:
     else:
         return ESC_NEUTRAL_DUTY + (ESC_NEUTRAL_DUTY - ESC_MIN_DUTY) * t
 
-def set_esc(pwm: GPIO.PWM, throttle: float, inverted: bool):
-    t = -throttle if inverted else throttle
+def set_esc(pwm: GPIO.PWM, throttle: float):
+    t = -throttle
     pwm.ChangeDutyCycle(throttle_to_duty(t))
 
 def arm_escs():
@@ -46,8 +42,8 @@ def arm_escs():
     time.sleep(ARM_TIME_SEC)
 
 def neutral():
-    set_esc(left, 0.0, INVERT_LEFT)
-    set_esc(right, 0.0, INVERT_RIGHT)
+    set_esc(left, 0.0)
+    set_esc(right, 0.0)
 
 print("Arming ESCs at neutral...")
 arm_escs()
@@ -57,12 +53,12 @@ try:
     while True:
         cmd = input("Input: ").strip().lower()
         if cmd == "w":
-            set_esc(left, 0.3, INVERT_LEFT)
-            set_esc(right, 0.3, INVERT_RIGHT)
+            set_esc(left, 0.3)
+            set_esc(right, 0.3)
         elif cmd == "s":
             # If reverse doesn't engage, some ESCs require brake-then-reverse.
-            set_esc(left, -0.3, INVERT_LEFT)
-            set_esc(right, -0.3, INVERT_RIGHT)
+            set_esc(left, -0.3)
+            set_esc(right, -0.3)
         elif cmd == "x":
             neutral()
         elif cmd == "q":
