@@ -38,3 +38,5 @@ while True:
         print("Stopping motor")
         left.ChangeDutyCycle(0)  # Back to min throttle
         right.ChangeDutyCycle(0)  # Back to min throttle
+    elif input.lower() == "q":
+        break
