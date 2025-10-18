@@ -32,3 +32,5 @@ Got the car to drive. But one of the free wheels is locking up, v3 of the riser 
 #### 10:00 | 1 hour
 Added a lcd screen that displays the IP because it kept changing ip. Also wrote code so that it auto displays on boot. Right now its seprate from main.py but at some point I will find a way to intigrate once I feel safe having it auto run main.py.
 ![Tank with screen showing the IP](photos/tank_with_ip_screen.jpg)
+
+#### 12:00 | 1 hour

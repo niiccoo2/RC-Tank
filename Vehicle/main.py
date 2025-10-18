@@ -7,8 +7,8 @@ import atexit
 app = Flask(__name__)
 CORS(app)
 
-LEFT_PWM_PIN = 18
-RIGHT_PWM_PIN = 13
+LEFT_PWM_PIN = 13
+RIGHT_PWM_PIN = 18
 
 SERVO_FREQ_HZ = 50
 ESC_MIN_DUTY = 5.0
