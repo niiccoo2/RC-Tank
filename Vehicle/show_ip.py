@@ -11,7 +11,6 @@ def get_ip():
         return "Error"
 
 lcd = LCD(address=0x27)
-lcd.backlight_on()
 
 ip = get_ip()
 lcd.text("Tank Online", 1)
