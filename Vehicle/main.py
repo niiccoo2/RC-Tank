@@ -1,27 +1,34 @@
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO # type: ignore
 import time
 
-ESC_PIN = 18  # Replace with your correct PWM pin
+LEFT_MOTOR_PIN = 18
+RIGHT_MOTOR_PIN = 13
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(ESC_PIN, GPIO.OUT)
+GPIO.setup(LEFT_MOTOR_PIN, GPIO.OUT)
+GPIO.setup(RIGHT_MOTOR_PIN, GPIO.OUT)
 
 # Standard RC ESC frequency
-pwm = GPIO.PWM(ESC_PIN, 50)  # 50 Hz for RC ESC
-pwm.start(0)
+left = GPIO.PWM(LEFT_MOTOR_PIN, 50) # 50 Hz for RC ESC
+right = GPIO.PWM(RIGHT_MOTOR_PIN, 50) # 50 Hz for RC ESC
+left.start(0)
+right.start(0)
 
 try:
     print("Initializing ESC...")
-    pwm.ChangeDutyCycle(5)  # Minimum throttle (motor off)
+    left.ChangeDutyCycle(5)  # Minimum throttle (motor off)
+    right.ChangeDutyCycle(5)  # Minimum throttle (motor off)
     time.sleep(2)  # Give ESC time to initialize
 
     print("Running motor at ~10% throttle")
-    pwm.ChangeDutyCycle(6)  # Low speed
+    left.ChangeDutyCycle(6)  # Low speed
+    right.ChangeDutyCycle(6)  # Low speed
     time.sleep(5)
 
     print("Stopping motor")
-    pwm.ChangeDutyCycle(5)  # Back to min throttle
+    left.ChangeDutyCycle(5)  # Back to min throttle
+    right.ChangeDutyCycle(5)  # Back to min throttle
 
 finally:
-    pwm.stop()
+    left.stop()
     GPIO.cleanup()

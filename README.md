@@ -22,5 +22,5 @@ Took apart the car and tracks to test V2 of the riser. The mounting holes distan
 ![V3 of riser in fusion](photos/riser_v3_fusion.jpg)
 
 #### 18:30 | 1 hour
-Soldered a bunch of cables to the motor controllers and did first boot of pi from the tank battery. V3 of teh riser is almost done printing. Going to start researching and writing code to make the motors spin!
+Soldered a bunch of cables to the motor controllers and did first boot of pi from the tank battery. V3 of the riser is almost done printing. Going to start researching and writing code to make the motors spin!
 ![Tank with pi on it](photos/tank_with_pi.jpg)
