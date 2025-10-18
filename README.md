@@ -33,4 +33,7 @@ Got the car to drive. But one of the free wheels is locking up, v3 of the riser 
 Added a lcd screen that displays the IP because it kept changing ip. Also wrote code so that it auto displays on boot. Right now its seprate from main.py but at some point I will find a way to intigrate once I feel safe having it auto run main.py.
 ![Tank with screen showing the IP](photos/tank_with_ip_screen.jpg)
 
-#### 12:00 | 1 hour
+#### 14:30 | 15 minutes
+Seeing how quickly I'm running out of room, I designed a cover for the pi, modem and camera so that I could mount more stuff like the screen, antennas, lights, and other goodies.
+![Cover in fusion](photos/cover_in_fusion.jpg)
+
