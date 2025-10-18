@@ -5,7 +5,14 @@ import RPi.GPIO as GPIO  # type: ignore
 import time
 import atexit
 
-
+# Colors
+BLACK = "\033[0;30m"
+RED = "\033[0;31m"
+GREEN = "\033[0;32m"
+BROWN = "\033[0;33m"
+BLUE = "\033[0;34m"
+PURPLE = "\033[0;35m"
+RESET = "\033[0m"
 
 app = Flask(__name__)
 CORS(app)
@@ -46,7 +53,6 @@ def gen_frames():
         ok, buf = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])  # adjust quality to save data
         if not ok:
             continue
-        frame = cv2.rotate(frame, cv2.ROTATE_180)
         jpg = buf.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n'
@@ -62,6 +68,7 @@ def clamp(x, lo, hi):
 
 def throttle_to_duty(throttle: float) -> float:
     t = clamp(-throttle, -1.0, 1.0)
+    print(f"{PURPLE}Setting throttle to: {throttle}, Clamped: {t}{RESET}")
     if t >= 0:
         return ESC_NEUTRAL_DUTY + (ESC_MAX_DUTY - ESC_NEUTRAL_DUTY) * t
     else:
