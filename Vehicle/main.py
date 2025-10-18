@@ -22,7 +22,7 @@ time.sleep(2)  # Give ESC time to initialize
 print("Running motor at ~10% throttle")
 left.ChangeDutyCycle(6)  # Low speed
 right.ChangeDutyCycle(6)  # Low speed
-time.sleep(5)
+time.sleep(2)
 
 print("Stopping motor")
 left.ChangeDutyCycle(0)  # Back to min throttle
