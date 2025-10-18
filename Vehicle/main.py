@@ -27,7 +27,7 @@ def clamp(x, lo, hi):
     return max(lo, min(hi, x))
 
 def throttle_to_duty(throttle: float) -> float:
-    t = clamp(throttle, -1.0, 1.0)
+    t = clamp(-throttle, -1.0, 1.0)
     if t >= 0:
         return ESC_NEUTRAL_DUTY + (ESC_MAX_DUTY - ESC_NEUTRAL_DUTY) * t
     else:
