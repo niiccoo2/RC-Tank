@@ -63,6 +63,7 @@ def set_motor():
     POST /motor
     Body: {"left": -1.0 to 1.0, "right": -1.0 to 1.0}
     """
+    print(f"Received motor command: {request.get_json()}")
     data = request.get_json()
     left_speed = float(data.get('left', 0.0))
     right_speed = float(data.get('right', 0.0))

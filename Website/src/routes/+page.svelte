@@ -4,6 +4,7 @@
   let status: string = 'disconnected';
 
   async function sendCommand(left: number, right: number) {
+    console.log(`Sending command - Left: ${left}, Right: ${right}`);
     try {
       const response = await fetch('http://192.168.1.161:5000/motor', {
         method: 'POST',
