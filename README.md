@@ -27,3 +27,8 @@ Soldered a bunch of cables to the motor controllers and did first boot of pi fro
 
 #### 20:00 | 2 hours
 Got the car to drive. But one of the free wheels is locking up, v3 of the riser but finished printing so I'll fix the wheel as I put the new version on. Put V3 of riser on tank. ALL SCREWS LINE UP!!
+
+### Saturday, October 18th | 1 hour
+#### 10:00 | 1 hour
+Added a lcd screen that displays the IP because it kept changing ip. Also wrote code so that it auto displays on boot. Right now its seprate from main.py but at some point I will find a way to intigrate once I feel safe having it auto run main.py.
+![Tank with screen showing the IP](photos/tank_with_ip_screen.jpg)
