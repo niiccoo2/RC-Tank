@@ -10,7 +10,7 @@ def get_ip():
     except:
         return "Error"
 
-lcd = LCD(address=0x27, cols=20, rows=2)
+lcd = LCD(address=0x27)
 lcd.backlight_on()
 
 ip = get_ip()
