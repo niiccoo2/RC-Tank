@@ -1,6 +1,10 @@
 from rpi_lcd import LCD # type: ignore
 import subprocess
 from time import sleep
+sleep(10)  # wait for WIFI to initialize
+
+# Right now this runs on boot, once I get the other code good enough so that it can start on boot,
+# We'll just call this from there.
 
 # detect Pi's IP
 def get_ip():
@@ -19,7 +23,7 @@ lcd.text(ip, 2)
 # keep displayed
 try:
     while True:
-        sleep(60)
+        sleep(10)
         ip = get_ip()
         lcd.text(ip, 2)
 except KeyboardInterrupt:
