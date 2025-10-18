@@ -7,7 +7,7 @@ Spent 30 minutes designing a simple riser so that I can fit more stuff on the ta
 ![Wayyy too much stuff on the tank](photos/tank_with_junk.jpg)
 ![Profile of tank](photos/tank_profile.jpg)
 
-### Friday, October 17th | 30 minutes
+### Friday, October 17th | 4 hours
 #### 07:00 | 30 minutes
 Tested V1 of the riser. It covered the tracks fine, but I made the screw holes too small and mismeasured where the holes in the chassis are. I spent 30 making V2 with the following improvements.
 - Fix size of screw holes
@@ -24,3 +24,6 @@ Took apart the car and tracks to test V2 of the riser. The mounting holes distan
 #### 18:30 | 1 hour
 Soldered a bunch of cables to the motor controllers and did first boot of pi from the tank battery. V3 of the riser is almost done printing. Going to start researching and writing code to make the motors spin!
 ![Tank with pi on it](photos/tank_with_pi.jpg)
+
+#### 20:00 | 2 hours
+Got the car to drive. But one of the free wheels is locking up, v3 of the riser but finished printing so I'll fix the wheel as I put the new version on. Put V3 of riser on tank. ALL SCREWS LINE UP!!

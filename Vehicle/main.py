@@ -19,11 +19,22 @@ left.ChangeDutyCycle(0)  # Minimum throttle (motor off)
 right.ChangeDutyCycle(0)  # Minimum throttle (motor off)
 time.sleep(2)  # Give ESC time to initialize
 
-print("Running motor at ~10% throttle")
-left.ChangeDutyCycle(6)  # Low speed
-right.ChangeDutyCycle(6)  # Low speed
-time.sleep(2)
-
-print("Stopping motor")
-left.ChangeDutyCycle(0)  # Back to min throttle
-right.ChangeDutyCycle(0)  # Back to min throttle
+while True:
+    input = input("Input:")
+    
+    if input.lower() == "w": 
+        print("Running motor at ~10% throttle")
+        left.ChangeDutyCycle(6)  # Low speed
+        right.ChangeDutyCycle(6)  # Low speed
+        time.sleep(1)
+        print("Stopping motor")
+        left.ChangeDutyCycle(0)  # Back to min throttle
+        right.ChangeDutyCycle(0)  # Back to min throttle
+    elif input.lower() == "s":
+        print("Reversing motor at ~10% throttle")
+        left.ChangeDutyCycle(-6)  # Low reverse speed
+        right.ChangeDutyCycle(-6)  # Low reverse speed
+        time.sleep(1)
+        print("Stopping motor")
+        left.ChangeDutyCycle(0)  # Back to min throttle
+        right.ChangeDutyCycle(0)  # Back to min throttle
