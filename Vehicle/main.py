@@ -46,6 +46,7 @@ def gen_frames():
         ok, buf = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])  # adjust quality to save data
         if not ok:
             continue
+        frame = cv2.rotate(frame, cv2.ROTATE_180)
         jpg = buf.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n'
