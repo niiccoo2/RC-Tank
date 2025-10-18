@@ -53,12 +53,11 @@ try:
     while True:
         cmd = input("Input: ").strip().lower()
         if cmd == "w":
-            set_esc(left, 0.3)
-            set_esc(right, 0.3)
+            set_esc(left, 1)
+            set_esc(right, 1)
         elif cmd == "s":
-            # If reverse doesn't engage, some ESCs require brake-then-reverse.
-            set_esc(left, -0.3)
-            set_esc(right, -0.3)
+            set_esc(left, 1)
+            set_esc(right, 1)
         elif cmd == "x":
             neutral()
         elif cmd == "q":
