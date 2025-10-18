@@ -47,6 +47,7 @@ def gen_frames():
     # Yields JPEG frames for MJPEG streaming
     while True:
         ok, frame = usb_camera.read()
+        frame = cv2.rotate(frame, cv2.ROTATE_180)
         if not ok:
             time.sleep(0.05)
             continue
