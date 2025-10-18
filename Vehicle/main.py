@@ -1,8 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+import cv2
 from flask_cors import CORS
 import RPi.GPIO as GPIO  # type: ignore
 import time
 import atexit
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +25,36 @@ GPIO.setup(RIGHT_PWM_PIN, GPIO.OUT)
 
 left = GPIO.PWM(LEFT_PWM_PIN, SERVO_FREQ_HZ)
 right = GPIO.PWM(RIGHT_PWM_PIN, SERVO_FREQ_HZ)
+
+# Init USB camera at 480p
+usb_camera = cv2.VideoCapture(0)  # 0 = first USB cam
+usb_camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)   # 480p width
+usb_camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)  # 480p height
+usb_camera.set(cv2.CAP_PROP_FPS, 30)
+try:
+    usb_camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+except Exception:
+    pass
+
+def gen_frames():
+    # Yields JPEG frames for MJPEG streaming
+    while True:
+        ok, frame = usb_camera.read()
+        if not ok:
+            time.sleep(0.05)
+            continue
+        ok, buf = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])  # adjust quality to save data
+        if not ok:
+            continue
+        jpg = buf.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n'
+               b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
+               jpg + b'\r\n')
+
+@app.route('/camera')
+def camera():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def clamp(x, lo, hi):
     return max(lo, min(hi, x))
