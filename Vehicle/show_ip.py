@@ -21,6 +21,6 @@ try:
     while True:
         sleep(60)
         ip = get_ip()
-        lcd.text(f"IP: {ip}", 2)
+        lcd.text(ip, 2)
 except KeyboardInterrupt:
     lcd.clear()
