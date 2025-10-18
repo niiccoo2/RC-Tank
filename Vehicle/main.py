@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import RPi.GPIO as GPIO  # type: ignore
 import time
 import atexit
 
 app = Flask(__name__)
+CORS(app)
 
 LEFT_PWM_PIN = 18
 RIGHT_PWM_PIN = 13
