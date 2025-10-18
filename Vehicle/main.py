@@ -14,21 +14,16 @@ right = GPIO.PWM(RIGHT_MOTOR_PIN, 50) # 50 Hz for RC ESC
 left.start(0)
 right.start(0)
 
-try:
-    print("Initializing ESC...")
-    left.ChangeDutyCycle(5)  # Minimum throttle (motor off)
-    right.ChangeDutyCycle(5)  # Minimum throttle (motor off)
-    time.sleep(2)  # Give ESC time to initialize
+print("Initializing ESC...")
+left.ChangeDutyCycle(0)  # Minimum throttle (motor off)
+right.ChangeDutyCycle(0)  # Minimum throttle (motor off)
+time.sleep(2)  # Give ESC time to initialize
 
-    print("Running motor at ~10% throttle")
-    left.ChangeDutyCycle(6)  # Low speed
-    right.ChangeDutyCycle(6)  # Low speed
-    time.sleep(5)
+print("Running motor at ~10% throttle")
+left.ChangeDutyCycle(6)  # Low speed
+right.ChangeDutyCycle(6)  # Low speed
+time.sleep(5)
 
-    print("Stopping motor")
-    left.ChangeDutyCycle(5)  # Back to min throttle
-    right.ChangeDutyCycle(5)  # Back to min throttle
-
-finally:
-    left.stop()
-    GPIO.cleanup()
+print("Stopping motor")
+left.ChangeDutyCycle(0)  # Back to min throttle
+right.ChangeDutyCycle(0)  # Back to min throttle
