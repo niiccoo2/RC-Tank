@@ -28,7 +28,7 @@ Soldered a bunch of cables to the motor controllers and did first boot of pi fro
 #### 20:00 | 2 hours
 Got the car to drive. But one of the free wheels is locking up, v3 of the riser but finished printing so I'll fix the wheel as I put the new version on. Put V3 of riser on tank. ALL SCREWS LINE UP!!
 
-### Saturday, October 18th | 1 hour
+### Saturday, October 18th | 3.25 hours
 #### 10:00 | 1 hour
 Added a lcd screen that displays the IP because it kept changing ip. Also wrote code so that it auto displays on boot. Right now its seprate from main.py but at some point I will find a way to intigrate once I feel safe having it auto run main.py.
 ![Tank with screen showing the IP](photos/tank_with_ip_screen.jpg)
@@ -45,6 +45,52 @@ Changes:
 - Add hole for SMA connector
 - Add hole for LCD cables
 - Add notch for camera
+![Cover V2 in fusion](photos/cover_v2_fusion.jpg)
 
 #### 21:40 | Not logging this time
 Just spent 20 minutes figuring out why code was not working, but it was because I was never pulling changes to the tank... Also forgot that a vertical cam makes a vertical stream so going to put it back into original positon and remove the notch in the cover for it. Not a big deal so not printing V3 of cover yet.
+
+#### 22:00 | 1.5 hours
+Worked on the website and debugged the twitches. I want to make the website look nicer but I'm going to get some more features working first.
+Website changes:
+- Embed video stream
+- Add connection status
+- Add var to enable or disable cam (Added, but did not add a ui switch yet)
+- Add ping
+- Redo layout
+
+### Sunday, October 19th | x hours
+#### 08:00 | 30 minutes
+Installed the modem and V2 of the cover.
+![Cover V2 on tank](photos/tank_with_cover_v2.jpg)
+![Cover V2 on tank side view](photos/tank_with_cover_v2_side.jpg)
+
+## CAD designs
+### Riser
+#### V3
+- Holes to mount to chasis
+- Holes for RPI
+- Holes for battery zipties
+#### V4
+- Screw holes to mount to chasis
+- Screw holes for RPI
+- Holes for battery zipties
+- Screw holes for cover
+- Holes for motor cables
+### Cover
+#### V1
+- Indents for zipties
+#### V2
+- Indents for zipties
+- Hole for switches
+- Indent for camera mount
+- Hole for cell SMA
+- Hole for LCD cables
+#### V3 (To be designed)
+- Indents for zipties
+- Hole for switches + holes for switch screws
+- Hole for cell SMA
+- Hole for GPS SMA
+- Hole for LCD cables
+- Mounting method for LCD?
+- Mounting holes to mount to riser?
