@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify, Response
-import cv2
+import cv2 # pip install opencv-python
 from flask_cors import CORS
 import RPi.GPIO as GPIO  # type: ignore
 import time
 import atexit
+import asyncio
 
 # Colors
 BLACK = "\033[0;30m"
@@ -26,6 +27,8 @@ ESC_NEUTRAL_DUTY = 7.5
 ESC_MAX_DUTY = 10.5
 ARM_TIME_SEC = 2.0
 
+last_update_time = time.time()
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(LEFT_PWM_PIN, GPIO.OUT)
 GPIO.setup(RIGHT_PWM_PIN, GPIO.OUT)
@@ -43,6 +46,14 @@ try:
 except Exception:
     pass
 
+async def timeout_check():
+    global last_update_time
+
+    # x 1000 to make it millis
+    time_since_last_update = (time.time() - last_update_time)*1000
+    if time_since_last_update > 1000: # if over 1 sec
+        stop()
+
 def gen_frames():
     # Yields JPEG frames for MJPEG streaming
     while True:
@@ -59,10 +70,6 @@ def gen_frames():
                b'Content-Type: image/jpeg\r\n'
                b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
                jpg + b'\r\n')
-
-@app.route('/camera')
-def camera():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def clamp(x, lo, hi):
     return max(lo, min(hi, x))
@@ -91,13 +98,9 @@ def cleanup():
     right.stop()
     GPIO.cleanup()
 
-# Arm on startup
-print("Arming ESCs...")
-arm_escs()
-print("Ready")
-
-# Cleanup on exit
-atexit.register(cleanup)
+@app.route('/camera')
+def camera():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/motor', methods=['POST'])
 def set_motor():
@@ -105,6 +108,9 @@ def set_motor():
     POST /motor
     Body: {"left": -1.0 to 1.0, "right": -1.0 to 1.0}
     """
+    global last_update_time
+    last_update_time = time.time()
+
     data = request.get_json()
     print(f"Received motor command: {data}")
     left_speed = float(data.get('left', 0.0))
@@ -121,5 +127,14 @@ def stop():
     set_esc(right, 0.0)
     return jsonify({"status": "stopped"})
 
+# Arm on startup
+print("Arming ESCs...")
+arm_escs()
+print("Ready")
+
+# Cleanup on exit
+atexit.register(cleanup)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+    asyncio.run(timeout_check())
