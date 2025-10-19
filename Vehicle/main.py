@@ -35,8 +35,8 @@ right = GPIO.PWM(RIGHT_PWM_PIN, SERVO_FREQ_HZ)
 
 # Init USB camera at 480p
 usb_camera = cv2.VideoCapture(0)  # 0 = first USB cam
-usb_camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-usb_camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+usb_camera.set(cv2.CAP_PROP_FRAME_WIDTH, 150)
+usb_camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
 usb_camera.set(cv2.CAP_PROP_FPS, 30)
 try:
     usb_camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)

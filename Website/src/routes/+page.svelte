@@ -45,9 +45,9 @@ function pollGamepad() {
     leftSpeed = -gamepad.axes[1];   // Left trigger
     rightSpeed = -gamepad.axes[3];  // Right trigger
     
-    // Only send if 50ms has passed
+    // Only send if x ms has passed
     const now = Date.now();
-    if (now - lastSendTime > 50) {
+    if (now - lastSendTime > 10) {
       sendCommand(leftSpeed, rightSpeed);
       lastSendTime = now;
     }
