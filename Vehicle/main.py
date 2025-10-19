@@ -49,12 +49,13 @@ except Exception:
 async def timeout_check():
     global last_update_time
 
+    while True:
     # x 1000 to make it millis
-    time_since_last_update = (time.time() - last_update_time)*1000
-    if time_since_last_update > 1000: # if over 1 sec
-        stop()
-    time.sleep(0.010) # 10 millis I think
-    # Need this to be responsive, but also not hog resources
+        time_since_last_update = (time.time() - last_update_time)*1000
+        if time_since_last_update > 1000: # if over 1 sec
+            stop()
+        time.sleep(0.010) # 10 millis I think
+        # Need this to be responsive, but also not hog resources
 
 def gen_frames():
     # Yields JPEG frames for MJPEG streaming
