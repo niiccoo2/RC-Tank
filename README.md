@@ -64,6 +64,8 @@ Website changes:
 Installed the modem and V2 of the cover.
 ![Cover V2 on tank](photos/tank_with_cover_v2.jpg)
 ![Cover V2 on tank side view](photos/tank_with_cover_v2_side.jpg)
+#### 11:00 | 30 minutes
+Wrote some quick code that will set the motors to 0 if it has not gotten a cmd in the last 1000ms. To be tested.
 
 ## CAD designs
 ### Riser
