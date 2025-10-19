@@ -141,5 +141,5 @@ print("Ready")
 atexit.register(cleanup)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
     asyncio.run(timeout_check())
+    app.run(host='0.0.0.0', port=5000)
