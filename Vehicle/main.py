@@ -35,8 +35,8 @@ right = GPIO.PWM(RIGHT_PWM_PIN, SERVO_FREQ_HZ)
 
 # Init USB camera at 480p
 usb_camera = cv2.VideoCapture(0)  # 0 = first USB cam
-usb_camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)   # 480p width
-usb_camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)  # 480p height
+usb_camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+usb_camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 usb_camera.set(cv2.CAP_PROP_FPS, 30)
 try:
     usb_camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
@@ -109,10 +109,6 @@ def set_motor():
     print(f"Received motor command: {data}")
     left_speed = float(data.get('left', 0.0))
     right_speed = float(data.get('right', 0.0))
-
-    if left_speed == 0.0 and right_speed == 0.0:
-        print(f"{RED}Stopping motors as both speeds are zero.{RESET}")
-        return stop()
     
     set_esc(left, left_speed)
     set_esc(right, right_speed)
