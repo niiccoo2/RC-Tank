@@ -55,7 +55,8 @@ async def timeout_check():
         time_since_last_update = (time.time() - last_update_time)*1000
         print(f"Time since last update: {time_since_last_update}")
         if time_since_last_update > 1000: # if over 1 sec
-            stop()
+            set_esc(left, 0.0) # Stop both motors
+            set_esc(right, 0.0)
         time.sleep(0.010) # 10 millis I think
         # Need this to be responsive, but also not hog resources
 
