@@ -51,7 +51,9 @@ async def timeout_check():
 
     while True:
     # x 1000 to make it millis
+        print("Checking time")
         time_since_last_update = (time.time() - last_update_time)*1000
+        print(f"Time since last update: {time_since_last_update}")
         if time_since_last_update > 1000: # if over 1 sec
             stop()
         time.sleep(0.010) # 10 millis I think
