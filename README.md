@@ -45,3 +45,6 @@ Changes:
 - Add hole for SMA connector
 - Add hole for LCD cables
 - Add notch for camera
+
+#### 21:40 | Not logging this time
+Just spent 20 minutes figuring out why code was not working, but it was because I was never pulling changes to the tank... Also forgot that a vertical cam makes a vertical stream so going to put it back into original positon and remove the notch in the cover for it. Not a big deal so not printing V3 of cover yet.
