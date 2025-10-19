@@ -37,3 +37,11 @@ Added a lcd screen that displays the IP because it kept changing ip. Also wrote 
 Seeing how quickly I'm running out of room, I designed a cover for the pi, modem and camera so that I could mount more stuff like the screen, antennas, lights, and other goodies.
 ![Cover in fusion](photos/cover_in_fusion.jpg)
 
+#### 20:25 | 30 minutes
+Tested the cover and made some changes and printed v2. Still going to use hot glue to mount until I redo the riser.
+Changes:
+- Make total width 75mm instead of 3+75+3
+- Add hole for power switches
+- Add hole for SMA connector
+- Add hole for LCD cables
+- Add notch for camera
