@@ -8,7 +8,7 @@ let leftSpeed: number = 0;
 let rightSpeed: number = 0;
 let status: string = 'Disconnected';
 // let ip: string = '192.168.1.161';
-let ip: string = '100.119.119.30';
+let ip: string = 'tank.tail883e2b.ts.net';
 let videoSetting = true;
 let ping: string = 'N/A';
 

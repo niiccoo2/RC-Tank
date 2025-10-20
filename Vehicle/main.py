@@ -57,7 +57,7 @@ async def timeout_check():
         if time_since_last_update > 1000: # if over 1 sec
             set_esc(left, 0.0) # Stop both motors
             set_esc(right, 0.0)
-        time.sleep(0.010) # 10 millis I think
+        time.sleep(0.100)
         # Need this to be responsive, but also not hog resources
 
 def gen_frames():
@@ -142,5 +142,5 @@ print("Ready")
 atexit.register(cleanup)
 
 if __name__ == '__main__':
-    asyncio.run(timeout_check())
+    # asyncio.run(timeout_check())
     app.run(host='0.0.0.0', port=5000)
