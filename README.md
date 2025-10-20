@@ -76,6 +76,15 @@ Used `sudo nmtui` to set up multiple wifi networks. Then used `nmcli c mod "mypr
 | cell modem   | 30       |
 #### 21:00 | 30 minutes
 Spend a bit trying to debug why it is sending tiny bit of power to the motors whenever we read from camera. Seems to be either power related or USB interferince. Tmrw I'll look at the pwm signals to check how they look, as well as calculate the total power everything is drawing and the total the motor contolers can supply from the 5v rail. I think I'm pulling too much so might need a seprate buck converter.
+### Monday, October 20th | x hours
+#### 07:20 | 30 minutes
+Did some research on how much power everything draws. (Everything @ 5v). Each BEC provides 1A so 2A total. A lot of the items did not have stright answers so I'll measure myself at some point. Next I'm going to look at the pwm signals to see if there is anything weird about them.
+| Device | Power |
+| ------ | ----- |
+| RPI    | 500mA |
+| Modem  | 300mA?|
+| Camera | 200mA?|
+| LCD    | 22mA? |
 
 ## CAD designs
 ### Riser
