@@ -59,7 +59,7 @@ Website changes:
 - Add ping
 - Redo layout
 
-### Sunday, October 19th | x hours
+### Sunday, October 19th | 2 hours
 #### 08:00 | 30 minutes
 Installed the modem and V2 of the cover.
 ![Cover V2 on tank](photos/tank_with_cover_v2.jpg)
@@ -74,6 +74,8 @@ Used `sudo nmtui` to set up multiple wifi networks. Then used `nmcli c mod "mypr
 | home2        | 10       |
 | phone        | 20       |
 | cell modem   | 30       |
+#### 21:00 | 30 minutes
+Spend a bit trying to debug why it is sending tiny bit of power to the motors whenever we read from camera. Seems to be either power related or USB interferince. Tmrw I'll look at the pwm signals to check how they look, as well as calculate the total power everything is drawing and the total the motor contolers can supply from the 5v rail. I think I'm pulling too much so might need a seprate buck converter.
 
 ## CAD designs
 ### Riser
