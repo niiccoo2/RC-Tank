@@ -66,6 +66,14 @@ Installed the modem and V2 of the cover.
 ![Cover V2 on tank side view](photos/tank_with_cover_v2_side.jpg)
 #### 11:00 | 30 minutes
 Wrote some quick code that will set the motors to 0 if it has not gotten a cmd in the last 1000ms. To be tested.
+#### 20:30 | 30 minutes
+Used `sudo nmtui` to set up multiple wifi networks. Then used `nmcli c mod "mypreferred" conn.autoconnect-priority 10` to set priority; higher number is higher priority. The modem has not been set up yet but thats the idea. I'll set up the modem once I have the tank working better on wifi.
+| Network Name | Priority |
+| ------------ | -------- |
+| home1        | 10       |
+| home2        | 10       |
+| phone        | 20       |
+| cell modem   | 30       |
 
 ## CAD designs
 ### Riser
