@@ -76,15 +76,18 @@ Used `sudo nmtui` to set up multiple wifi networks. Then used `nmcli c mod "mypr
 | cell modem   | 30       |
 #### 21:00 | 30 minutes
 Spend a bit trying to debug why it is sending tiny bit of power to the motors whenever we read from camera. Seems to be either power related or USB interferince. Tmrw I'll look at the pwm signals to check how they look, as well as calculate the total power everything is drawing and the total the motor contolers can supply from the 5v rail. I think I'm pulling too much so might need a seprate buck converter.
-### Monday, October 20th | x hours
+### Monday, October 20th | 30 minutes
 #### 07:20 | 30 minutes
-Did some research on how much power everything draws. (Everything @ 5v). Each BEC provides 1A so 2A total. A lot of the items did not have stright answers so I'll measure myself at some point. Next I'm going to look at the pwm signals to see if there is anything weird about them.
+Did some research on how much power everything draws. (Everything @ 5v). Each BEC provides 1A so 2A total. A lot of the items did not have stright answers so I'll measure myself at some point. The Pi claims it uses 2.5A but thats crazy so I'll say 1A. Next I'm going to look at the pwm signals to see if there is anything weird about them.
 | Device | Power |
 | ------ | ----- |
-| RPI    | 500mA |
-| Modem  | 300mA?|
+| RPI    | 1A    |
+| Modem  | 2A    |
 | Camera | 200mA?|
 | LCD    | 22mA? |
+| Total  | 3.2A  |
+
+I think all the weird issues are becasue we are drawing too much power from the ESC BEC's. So I'm going to find a better buck comverter to use. In the mean time I'm going to work on the website or something that is not broken.
 
 ## CAD designs
 ### Riser
