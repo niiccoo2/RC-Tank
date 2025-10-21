@@ -89,6 +89,8 @@ Did some research on how much power everything draws. (Everything @ 5v). Each BE
 
 I think all the weird issues are becasue we are drawing too much power from the ESC BEC's. So I'm going to find a better buck comverter to use. In the mean time I'm going to work on the website or something that is not broken.
 
+### Tuesday, October 21st |
+
 ## CAD designs
 ### Riser
 #### V3
