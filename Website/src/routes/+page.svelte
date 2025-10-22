@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import '../app.css';
+import { onMount, onDestroy } from 'svelte';
 
 let animationFrame: number;
 let lastSendTime: number = 0;

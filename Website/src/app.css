@@ -11,7 +11,11 @@
     display: flex;
     justify-content: center;
     align-items: center; /* keeps whole layout vertically centered */
-    background: #000;
+    background-color: #000000;
+    background-image: radial-gradient(#3d3d3d .5px, transparent 2px);
+    background-size: 32px 32px; /* tile the pattern */
+    background-repeat: repeat;
+    background-position: 0 0;
     min-height: 100vh;
     width: 100vw;
     color: #fff;
