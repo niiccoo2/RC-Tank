@@ -124,4 +124,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-} 
+}
+
+.info_card {
+  background-color: #000000;
+  width: 200px;
+  border: 1px solid #fff;
+}

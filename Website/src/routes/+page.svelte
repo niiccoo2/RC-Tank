@@ -127,10 +127,10 @@ if (animationFrame) {
 
         <div class="side right">
             <div>
-                <p class="border px-4 py-2">Ping: {ping}</p>
+                <p class="info_card px-4 py-2">Ping: {ping}</p>
             </div>
             <div>
-                <div class="border" style="display:inline-flex; align-items:center; gap:8px;">
+                <div class="info_card" style="display:inline-flex; align-items:center; gap:8px;">
                     <span class= "px-4 py-2">Show Video:</span>
                     <label class="switch" style="margin:0;">
                         <input type="checkbox" bind:checked={videoSetting}>
