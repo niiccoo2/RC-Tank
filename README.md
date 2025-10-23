@@ -97,6 +97,10 @@ Changes:
 - Fix setting div's
 - Add switch for cam on / off (Still working on looks)
 
+### Wendesday, October 22nd | 1 hour
+#### 20:00 | 1 hour
+Found a buck converter and did some testing to get it ready to be used in the tank. Also started thinking and calculating the correct size fuse to add to the battery.
+
 ## CAD designs
 ### Riser
 #### V3
