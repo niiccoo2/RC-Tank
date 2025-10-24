@@ -102,8 +102,10 @@ Changes:
 Found a buck converter and did some testing to get it ready to be used in the tank. Also started thinking and calculating the correct size fuse to add to the battery.
 
 ### Friday, Octover 24th | x hours
-#### 17:40 | 25 minutes
-Started designing new versions of the riser and cover. Need to eat but will try to get them done tonight so they can print overnight.
+#### 17:40 | 30 minutes
+Designed V4 of riser. Made the whole thing widers and added holes for the cover to screw into.
+![Riser V4 in fusion](/photos/riser_v4_fusion.jpg)
+
 
 ## CAD designs
 ### Riser
@@ -116,7 +118,6 @@ Started designing new versions of the riser and cover. Need to eat but will try 
 - Screw holes for RPI
 - Holes for battery zipties
 - Screw holes for cover
-- Holes for motor cables
 ### Cover
 #### V1
 - Indents for zipties
