@@ -101,6 +101,10 @@ Changes:
 #### 20:00 | 1 hour
 Found a buck converter and did some testing to get it ready to be used in the tank. Also started thinking and calculating the correct size fuse to add to the battery.
 
+### Friday, Octover 24th | x hours
+#### 17:40 | 25 minutes
+Started designing new versions of the riser and cover. Need to eat but will try to get them done tonight so they can print overnight.
+
 ## CAD designs
 ### Riser
 #### V3
