@@ -101,10 +101,20 @@ Changes:
 #### 20:00 | 1 hour
 Found a buck converter and did some testing to get it ready to be used in the tank. Also started thinking and calculating the correct size fuse to add to the battery.
 
-### Friday, Octover 24th | x hours
+### Friday, Octover 24th | 2 hours
 #### 17:40 | 30 minutes
 Designed V4 of riser. Made the whole thing widers and added holes for the cover to screw into.
 ![Riser V4 in fusion](/photos/riser_v4_fusion.jpg)
+
+### 20:00 | 1.5 hours
+Designed V3 of the cover. Main change were the screw holes so I don't need to use hot glue each time I want to mount it. Tmrw morning I'm going to finish some tests on the new buck converter and mount it, along with a fuse and main power switch into the tank. Then mount new cover and see if it fixed anything.
+Changes:
+- Add hole for GPS SMA connector.
+- Add new walls
+- Add hole for batt cord
+- New hole for new power switch
+- GPS and CELL labels
+- Screw mounts
 
 
 ## CAD designs
@@ -127,11 +137,10 @@ Designed V4 of riser. Made the whole thing widers and added holes for the cover 
 - Indent for camera mount
 - Hole for cell SMA
 - Hole for LCD cables
-#### V3 (To be designed)
+#### V3
 - Indents for zipties
 - Hole for switches + holes for switch screws
 - Hole for cell SMA
 - Hole for GPS SMA
 - Hole for LCD cables
-- Mounting method for LCD?
-- Mounting holes to mount to riser?
+- Mounting holes to mount to riser
