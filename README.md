@@ -101,7 +101,7 @@ Changes:
 #### 20:00 | 1 hour
 Found a buck converter and did some testing to get it ready to be used in the tank. Also started thinking and calculating the correct size fuse to add to the battery.
 
-### Friday, Octover 24th | 2 hours
+### Friday, October 24th | 2 hours
 #### 17:40 | 30 minutes
 Designed V4 of riser. Made the whole thing widers and added holes for the cover to screw into.
 ![Riser V4 in fusion](/photos/riser_v4_fusion.jpg)
@@ -115,6 +115,10 @@ Changes:
 - New hole for new power switch
 - GPS and CELL labels
 - Screw mounts
+
+### Sunday, October 26th | x hours
+#### 12:00 | 30 minutes
+Found out from testing that the buck converter I have needs something like 14v in to be able to supply 5v out. So I spend a few minutes looking for parts, and I'll make my own. 
 
 
 ## CAD designs
