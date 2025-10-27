@@ -116,9 +116,17 @@ Changes:
 - GPS and CELL labels
 - Screw mounts
 
-### Sunday, October 26th | x hours
+### Saturday, October 25th | 1.5 hours
+#### 10:00 | 1 hour
+Assembled and attached the new riser. I made the holes for the M3 screws a bit too big (3.4mm from 3mm), so that was a mess. Right now you have to take the whole tank apart to replace the riser, not the best, so I might fix that in a new version.
 #### 12:00 | 30 minutes
-Found out from testing that the buck converter I have needs something like 14v in to be able to supply 5v out. So I spend a few minutes looking for parts, and I'll make my own. 
+Kept testing the buck converter (forshadowing, it was broken), it was not making sense why the voltage would colapse as soon as a load was added (24 Ohm power resistors).
+
+### Sunday, October 26th | 2 hours
+#### 10:00 | 1 hour
+Found out that the buck converter I was trying to use was damaged. After I found that out and got some new ones, everything was making much more sense. The converter was able to buck a 6v input to 5v out. That is better than the specs but thats good. It was also able to power some 24 Ohm power resistors. I=V/R 5/24=0.204 ish Amps.
+#### 22:00 | 1 hour
+Soldered the new buck converter, fuse, and power switch into the tank. Now I need to fit this mess into the new cover I printed... After being powered on for a few secs, something starts making a weird noise, I'll look into it in the morning. 
 
 
 ## CAD designs
