@@ -128,8 +128,9 @@ Found out that the buck converter I was trying to use was damaged. After I found
 #### 22:00 | 1 hour
 Soldered the new buck converter, fuse, and power switch into the tank. Now I need to fit this mess into the new cover I printed... After being powered on for a few secs, something starts making a weird noise, I'll look into it in the morning.
 
-### Wendsday, October 29th |
-#### 20:00 | 
+### Wendsday, October 29th | 1.30 hours
+#### 20:00 | 1.30 hours
+Finished making the main page look nice. Also made the IP picker screen, so when you open the site, you can just type the current ip instead of editing code. Now have to figure out why the camera is not streaming.
 
 ## CAD designs
 ### Riser
