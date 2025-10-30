@@ -34,6 +34,9 @@ async function updatePing() {
     ping = await pingAddress(`http://${ip}:5000/stats`);
 }
 
+let roundedLeftSpeed: Number = 0;
+let roundedRightSpeed: Number = 0;
+
 function pollGamepad() {
   const gamepads = navigator.getGamepads();
   const gamepad = gamepads[0];
@@ -45,6 +48,8 @@ function pollGamepad() {
     // Adjust these indices based on your controller
     leftSpeed = -gamepad.axes[1];   // Left trigger
     rightSpeed = -gamepad.axes[3];  // Right trigger
+    roundedLeftSpeed = Number(leftSpeed.toFixed(2));
+    roundedRightSpeed = Number(rightSpeed.toFixed(2));
     
     // Only send if x ms has passed
     const now = Date.now();
@@ -101,8 +106,10 @@ if (animationFrame) {
     <!-- Test Image -->
     <div class="layout">
         <div class="side left">
-            <p>Left Speed: {leftSpeed}</p>
-            <p>Right Speed: {rightSpeed}</p>
+            <div class="info_card px-4 py-2">
+                <p>Left Speed: {roundedLeftSpeed}</p>
+                <p>Right Speed: {roundedRightSpeed}</p>
+            </div>
         </div>
 
         <div class="center">
