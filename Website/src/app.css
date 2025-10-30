@@ -135,3 +135,22 @@ input:checked + .slider:before {
 .black_background {
   background-color: #000000;
 }
+
+.ip_picker {
+  width: 640px;
+  height: 480px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;   /* stack elements vertically */
+  align-items: center;      /* horizontal centering */
+  justify-content: center;  /* vertical centering */
+
+  margin: auto;             /* centers the whole box itself if parent is larger */
+}
+
+.button {
+  background-color: #fff;
+  color: #000000;
+  /* font-weight: 700; */
+}

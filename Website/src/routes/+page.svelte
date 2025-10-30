@@ -8,9 +8,12 @@ let leftSpeed: number = 0;
 let rightSpeed: number = 0;
 let status: string = 'Disconnected';
 // let ip: string = '192.168.1.161';
-let ip: string = 'tank.tail883e2b.ts.net';
+let ip: string = '';
+let ip_textbox: string = '';
 let videoSetting = true;
 let ping: string = 'N/A';
+let roundedLeftSpeed: Number = 0;
+let roundedRightSpeed: Number = 0;
 
 async function pingAddress(ip: string) {
     let latency: number | null = null;
@@ -33,9 +36,6 @@ async function pingAddress(ip: string) {
 async function updatePing() {
     ping = await pingAddress(`http://${ip}:5000/stats`);
 }
-
-let roundedLeftSpeed: Number = 0;
-let roundedRightSpeed: Number = 0;
 
 function pollGamepad() {
   const gamepads = navigator.getGamepads();
@@ -79,6 +79,10 @@ try {
 }
 }
 
+function confirmIp() {
+    ip = ip_textbox
+}
+
 onMount(() => {
     pollGamepad();
     sendCommand(0, 0); // Ensure motors are stopped on load and check connection
@@ -102,50 +106,68 @@ if (animationFrame) {
 </svelte:head>
 
 <main>
-    <!-- <img src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
-    <!-- Test Image -->
-    <div class="layout">
-        <div class="side left">
-            <div class="info_card px-4 py-2">
-                <p>Left Speed: {roundedLeftSpeed}</p>
-                <p>Right Speed: {roundedRightSpeed}</p>
+    {#if ip}
+        <!-- <img src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
+        <!-- Test Image -->
+        <div class="layout">
+            <div class="side left">
+                <div class="info_card px-4 py-2">
+                    <p>Left Speed: {roundedLeftSpeed}</p>
+                    <p>Right Speed: {roundedRightSpeed}</p>
+                </div>
             </div>
-        </div>
 
-        <div class="center">
-            {#if videoSetting}
-                {#if status !== 'Connected'}
+            <div class="center">
+                {#if videoSetting}
+                    {#if status !== 'Connected'}
+                        <img class="border black_background" src={`${cam_off_icon}`} width="640" height="480" alt="Test Cam Feed">
+                        <p style="color: #FF0000; font-weight: bold;">{status}</p>
+                    {:else}
+                        <img class="border black_background" src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed">
+                        <p style="color: #00FF00; font-weight: bold;">{status}</p>
+                    {/if}
+                {:else}
                     <img class="border black_background" src={`${cam_off_icon}`} width="640" height="480" alt="Test Cam Feed">
-                    <p style="color: #FF0000; font-weight: bold;">{status}</p>
-                {:else}
-                    <img class="border black_background" src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed">
-                    <p style="color: #00FF00; font-weight: bold;">{status}</p>
+                    {#if status === 'Connected'}
+                        <p style="color: #00FF00; font-weight: bold;">Camera Off | {status}</p>
+                    {:else if status === 'Error'}
+                        <p style="color: #FF0000; font-weight: bold;">Camera Off | {status}</p>
+                    {:else}
+                        <p style="color: #FF0000; font-weight: bold;">Camera Off | {status}</p>
+                    {/if}
                 {/if}
-            {:else}
-                <img class="border black_background" src={`${cam_off_icon}`} width="640" height="480" alt="Test Cam Feed">
-                {#if status === 'Connected'}
-                    <p style="color: #00FF00; font-weight: bold;">Camera Off | {status}</p>
-                {:else if status === 'Error'}
-                    <p style="color: #FF0000; font-weight: bold;">Camera Off | {status}</p>
-                {:else}
-                    <p style="color: #FF0000; font-weight: bold;">Camera Off | {status}</p>
-                {/if}
-            {/if}
-        </div>
-
-        <div class="side right">
-            <div>
-                <p class="info_card px-4 py-2">Ping: {ping}</p>
             </div>
-            <div>
-                <div class="info_card" style="display:inline-flex; align-items:center; gap:8px;">
-                    <span class= "px-4 py-2">Show Video:</span>
-                    <label class="switch" style="margin:0;">
-                        <input type="checkbox" bind:checked={videoSetting}>
-                        <span class="slider round"></span>
-                    </label>
+
+            <div class="side right">
+                <div>
+                    <p class="info_card px-4 py-2">Ping: {ping}</p>
+                </div>
+                <div>
+                    <div class="info_card" style="display:inline-flex; align-items:center; gap:8px;">
+                        <span class= "px-4 py-2">Show Video:</span>
+                        <label class="switch" style="margin:0;">
+                            <input type="checkbox" bind:checked={videoSetting}>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {:else}
+        <div class="center">
+            <div class="border black_background ip_picker">
+                <input
+                    id={'ip_textbox'}
+                    bind:value={ip_textbox}
+                    placeholder="Tank IP"
+                    class="border focus:outline-none px-2 py-1 mt-4"
+                />
+                <button 
+                    on:click={() => confirmIp()}
+                    class="px-4 py-2 cursor-pointer button px-2 py-1 mt-4">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    {/if}
 </main>
