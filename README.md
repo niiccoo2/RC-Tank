@@ -132,6 +132,11 @@ Soldered the new buck converter, fuse, and power switch into the tank. Now I nee
 #### 20:00 | 1.30 hours
 Finished making the main page look nice. Also made the IP picker screen, so when you open the site, you can just type the current ip instead of editing code. Now have to figure out why the camera is not streaming.
 
+### Thursday, October 30th |
+#### 06:40 | 1 hour
+Finaly put the cover on the tank, it involved a lot of pushing hard, so I'll make the next version of the cover much taller. I also need to make all the m3 screw holes smaller. And need to space the cell and GPS connectors apart more. It looks likes it's powering on but never connects to tailscale so I'll fix all of this after school.
+![Tank with cover V3](/photos/tank_with_cover_v3.jpg)
+
 ## CAD designs
 ### Riser
 #### V3
@@ -143,6 +148,13 @@ Finished making the main page look nice. Also made the IP picker screen, so when
 - Screw holes for RPI
 - Holes for battery zipties
 - Screw holes for cover
+#### V5
+- Screw holes to mount to chasis
+- Screw holes for RPI
+- Holes for battery zipties
+- Screw holes for cover
+- MAKE ALL M3 HOLES SMALLER
+
 ### Cover
 #### V1
 - Indents for zipties
@@ -159,3 +171,11 @@ Finished making the main page look nice. Also made the IP picker screen, so when
 - Hole for GPS SMA
 - Hole for LCD cables
 - Mounting holes to mount to riser
+#### V4
+- Indents for zipties
+- Hole for switches + holes for switch screws
+- Hole for cell SMA
+- Hole for GPS SMA
+- Hole for LCD cables
+- Mounting holes to mount to riser
+- MAKE ALL M3 HOLES SMALLER
