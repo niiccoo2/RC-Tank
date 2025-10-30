@@ -1,5 +1,6 @@
 <script lang="ts">
 import { onMount, onDestroy } from 'svelte';
+import cam_off_icon from '$lib/assets/cam_off.svg';
 
 let animationFrame: number;
 let lastSendTime: number = 0;
@@ -16,7 +17,7 @@ async function pingAddress(ip: string) {
     let error: string | null = null;
     try {
       const start = performance.now();
-      // We request a small resource (can be a 1x1 image or anything small)
+      // request a small resource
       await fetch(ip, { method: 'HEAD', mode: 'no-cors' });
       const end = performance.now();
       latency = Math.round(end - start);
@@ -24,7 +25,7 @@ async function pingAddress(ip: string) {
       return String(latency+' ms');
     } catch (e) {
       latency = null;
-      error = 'Failed to reach server';
+      error = 'Error';
       return error;
     }
   }
@@ -107,20 +108,20 @@ if (animationFrame) {
         <div class="center">
             {#if videoSetting}
                 {#if status !== 'Connected'}
-                    <img class="border"src={`https://images.wallpapersden.com/image/wl-yellow-forest-landscape-4k-mountains_87481.jpg`} width="640" height="480" alt="Test Cam Feed">
+                    <img class="border black_background" src={`${cam_off_icon}`} width="640" height="480" alt="Test Cam Feed">
                     <p style="color: #FF0000; font-weight: bold;">{status}</p>
                 {:else}
-                    <img class="border" src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed">
-                    <p style="color: #00FF00;">{status}</p>
+                    <img class="border black_background" src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed">
+                    <p style="color: #00FF00; font-weight: bold;">{status}</p>
                 {/if}
             {:else}
-                <img class="border"src={`https://images.wallpapersden.com/image/wl-yellow-forest-landscape-4k-mountains_87481.jpg`} width="640" height="480" alt="Test Cam Feed">
+                <img class="border black_background" src={`${cam_off_icon}`} width="640" height="480" alt="Test Cam Feed">
                 {#if status === 'Connected'}
-                    <p style="color: #00FF00;">Camera Off | {status}</p>
+                    <p style="color: #00FF00; font-weight: bold;">Camera Off | {status}</p>
                 {:else if status === 'Error'}
-                    <p style="color: #FF0000;">Camera Off | {status}</p>
+                    <p style="color: #FF0000; font-weight: bold;">Camera Off | {status}</p>
                 {:else}
-                    <p style="color: #FF0000;">Camera Off | {status}</p>
+                    <p style="color: #FF0000; font-weight: bold;">Camera Off | {status}</p>
                 {/if}
             {/if}
         </div>

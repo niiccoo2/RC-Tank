@@ -126,8 +126,10 @@ Kept testing the buck converter (forshadowing, it was broken), it was not making
 #### 10:00 | 1 hour
 Found out that the buck converter I was trying to use was damaged. After I found that out and got some new ones, everything was making much more sense. The converter was able to buck a 6v input to 5v out. That is better than the specs but thats good. It was also able to power some 24 Ohm power resistors. I=V/R 5/24=0.204 ish Amps.
 #### 22:00 | 1 hour
-Soldered the new buck converter, fuse, and power switch into the tank. Now I need to fit this mess into the new cover I printed... After being powered on for a few secs, something starts making a weird noise, I'll look into it in the morning. 
+Soldered the new buck converter, fuse, and power switch into the tank. Now I need to fit this mess into the new cover I printed... After being powered on for a few secs, something starts making a weird noise, I'll look into it in the morning.
 
+### Wendsday, October 29th |
+#### 20:00 | 
 
 ## CAD designs
 ### Riser
