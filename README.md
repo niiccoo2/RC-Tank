@@ -160,12 +160,12 @@ Soldered the new buck converter, fuse, and power switch into the tank. Now I nee
 #### 20:00 | 1.30 hours
 Finished making the main page look nice. Also made the IP picker screen, so when you open the site, you can just type the current ip instead of editing code. Now have to figure out why the camera is not streaming.
 
-### Thursday, October 30th |
+### Thursday, October 30th | 2.5 hours
 #### 06:40 | 1 hour
 Finaly put the cover on the tank, it involved a lot of pushing hard, so I'll make the next version of the cover much taller. I also need to make all the m3 screw holes smaller. And need to space the cell and GPS connectors apart more. It looks likes it's powering on but never connects to tailscale so I'll fix all of this after school.
 ![Tank with cover V3](/photos/tank_with_cover_v3.jpg)
 
-#### 21:00 | 0.30 hours
+#### 21:00 | 0.3 hours
 Figured out why the tank is not working... I may have snaped the SD card. Just reflashed a card an now am going to set everything up again.
 ![Snapped SD card](/photos/snapped_sd_card.jpg)
 
