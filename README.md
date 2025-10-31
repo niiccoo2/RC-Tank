@@ -1,3 +1,22 @@
+## Setup
+### Install Tailscale
+Go to [login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines) and follow instructions for new linux device.
+
+### Turn off wifi power saving
+`sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf`
+
+```ini
+[connection]
+wifi.powersave = 2
+```
+
+`sudo systemctl restart NetworkManager`
+
+### Add networks and set wifi priority
+`sudo nmtui`
+
+`sudo nmcli c mod "mypreferred" conn.autoconnect-priority 10` to set priority; higher number is higher priority.
+
 ## Journal
 I did not count the time building the chassis kit.
 
@@ -140,6 +159,12 @@ Finaly put the cover on the tank, it involved a lot of pushing hard, so I'll mak
 #### 21:00 | 0.30 hours
 Figured out why the tank is not working... I may have snaped the SD card. Just reflashed a card an now am going to set everything up again.
 ![Snapped SD card](/photos/snapped_sd_card.jpg)
+
+#### 21:30 | 1 hour
+Set everything up on the pi. Also wrote some instructions for setup to help me and or others next time. Debugged some issues with the website, need to make it only try to run any of the functions that use ip once the ip is set. It's also really laggy, but I'll fix that in the morning.
+
+#### 22:30 | 0.2 hours
+~~Site seems to not work when hosted on vercel, only works on localhost. This is probably due to the fact that its trying to call the API requests from the backend, not the client.~~ I think that was just becasue the site was not working in general... Anyways, fixed the site, so now you can enter the IP and it actually tries to connect.
 
 ## CAD designs
 ### Riser
