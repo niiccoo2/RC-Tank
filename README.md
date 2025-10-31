@@ -3,19 +3,28 @@
 Go to [login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines) and follow instructions for new linux device.
 
 ### Turn off wifi power saving
-`sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf`
+```shell
+sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+```
 
 ```ini
 [connection]
 wifi.powersave = 2
 ```
 
-`sudo systemctl restart NetworkManager`
+```shell
+sudo systemctl restart NetworkManager
+```
 
 ### Add networks and set wifi priority
-`sudo nmtui`
+```shell
+sudo nmtui
+```
 
-`sudo nmcli c mod "mypreferred" conn.autoconnect-priority 10` to set priority; higher number is higher priority.
+```shell
+sudo nmcli c mod "mypreferred" conn.autoconnect-priority 10
+```
+to set priority; higher number is higher priority.
 
 ## Journal
 I did not count the time building the chassis kit.
