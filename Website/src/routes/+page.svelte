@@ -18,6 +18,12 @@ let roundedRightSpeed: Number = 0;
 async function pingAddress(ip: string) {
     let latency: number | null = null;
     let error: string | null = null;
+
+    if (!ip) {
+        console.log("IP is not set. pingAddress is returning.")
+        return "IP is not set."
+    }
+
     try {
       const start = performance.now();
       // request a small resource
@@ -63,20 +69,25 @@ function pollGamepad() {
 }
 
 async function sendCommand(left: number, right: number) {
-console.log(`Sending command - Left: ${left}, Right: ${right}`);
-try {
-    const response = await fetch(`http://${ip}:5000/motor`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ left, right })
-    });
-    const data = await response.json();
-    status = 'Connected';
-    return data;
-} catch (e) {
-    status = 'Error';
-    console.error(e);
-}
+    if(!ip) {
+        console.log("IP is not set. sendCommand returning.")
+        return
+    } else {
+        console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
+        try {
+            const response = await fetch(`http://${ip}:5000/motor`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ left, right })
+            });
+            const data = await response.json();
+            status = 'Connected';
+            return data;
+        } catch (e) {
+            status = 'Error';
+            console.error(e);
+        }
+        }
 }
 
 function confirmIp() {
@@ -91,6 +102,10 @@ onMount(() => {
 
     setInterval(() => {
         updatePing();
+
+        if (status === "Disconnected") {
+            sendCommand(0, 0);
+        }
     }, 5000);
 });
 
