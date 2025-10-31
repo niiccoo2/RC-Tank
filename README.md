@@ -137,6 +137,10 @@ Finished making the main page look nice. Also made the IP picker screen, so when
 Finaly put the cover on the tank, it involved a lot of pushing hard, so I'll make the next version of the cover much taller. I also need to make all the m3 screw holes smaller. And need to space the cell and GPS connectors apart more. It looks likes it's powering on but never connects to tailscale so I'll fix all of this after school.
 ![Tank with cover V3](/photos/tank_with_cover_v3.jpg)
 
+#### 21:00 | 0.30 hours
+Figured out why the tank is not working... I may have snaped the SD card. Just reflashed a card an now am going to set everything up again.
+![Snapped SD card](/photos/snapped_sd_card.jpg)
+
 ## CAD designs
 ### Riser
 #### V3
