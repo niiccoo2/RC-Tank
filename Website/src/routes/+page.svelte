@@ -17,6 +17,7 @@ let leftSpeed: number = 0;
 let rightSpeed: number = 0;
 let trottle: number = 0;
 let stick: number = 0;
+let carMode: boolean = true;
 
 function changeRefresh(amount: number) {
     refreshTimeMs = refreshTimeMs + amount;
@@ -85,19 +86,16 @@ function pollGamepad() {
   if (gamepad) {
     console.log('Axes:', gamepad.axes);
     
-    // Stick-to-track
-    // leftSpeed = -gamepad.axes[1];   // Left stick
-    // rightSpeed = -gamepad.axes[3];  // Right stick
+    if (carMode) {
+        // Using sticks for now but will change to triggers soon
+        trottle = -gamepad.axes[3];  // Right stick
+        stick = gamepad.axes[0];   // Left stick
 
-    // roundedLeftSpeed = Number(leftSpeed.toFixed(2));
-    // roundedRightSpeed = Number(rightSpeed.toFixed(2));
-
-    // Car way
-    // Using sticks for now but will change to triggers soon
-    trottle = -gamepad.axes[3];  // Right stick
-    stick = gamepad.axes[0];   // Left stick
-
-    [leftSpeed, rightSpeed] = carToTracks(trottle, stick) 
+        [leftSpeed, rightSpeed] = carToTracks(trottle, stick) 
+    } else { // Stick-to-track
+        leftSpeed = -gamepad.axes[1];   // Left stick
+        rightSpeed = -gamepad.axes[3];  // Right stick
+    }
 
     roundedLeftSpeed = Number(leftSpeed.toFixed(2));
     roundedRightSpeed = Number(rightSpeed.toFixed(2));
@@ -219,6 +217,14 @@ if (animationFrame) {
                             <p class="m-0">{refreshTimeMs}ms</p>
                             <button on:click={() => changeRefresh(10)} class="cursor-pointer button px-2 py-1">+</button>
                         </div>
+                    </div>
+
+                    <div class="info_card inline-flex items-center gap-3 px-3 py-2">
+                        <span class="py-1">Car mode:</span>
+                        <label class="switch m-0 ml-auto">
+                            <input type="checkbox" bind:checked={carMode}>
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                 </div>
             </div>
