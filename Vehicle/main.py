@@ -75,6 +75,7 @@ class Tank:
             time_since_last_update = (time.time() - self.last_update_time)*1000
             print(f"Time since last update: {time_since_last_update}")
             if time_since_last_update > 1000 and not self.stopped: # if over 1 sec
+                print(f"{RED}TIMEOUT HIT, STOPPING{RESET}")
                 self.set_esc(self.left, 0.0) # Stop both motors
                 self.set_esc(self.right, 0.0)
                 self.stopped = True
