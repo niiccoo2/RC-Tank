@@ -23,19 +23,28 @@ function changeRefresh(amount: number) {
 }
 
 function carToTracks(trottle: number, stick: number) {
-    let left: number = trottle;
-    let right: number = trottle;
-    const multiplier: number = .4
+    let left: number;
+    let right: number;
+    const multiplier: number = .6
 
-    left = trottle+(multiplier*stick)
-    right = trottle-(multiplier*stick)
+    if (stick != 0.00) { // Only cap the trottle if turning
+        left = .6*trottle+(multiplier*stick)
+        right = .6*trottle-(multiplier*stick)
+    } else {
+        left = trottle
+        right = trottle
+    }
 
     if (left > 1.00) {
         left = 1.00
+    } else if (left < -1.00) {
+        left = -1.00
     }
         
     if (right > 1.00) {
         right = 1.00
+    } else if (right < -1.00) {
+        right = -1.00
     }
     
     return [left, right]
@@ -205,7 +214,7 @@ if (animationFrame) {
 
                     <div class="info_card inline-flex items-center gap-3 px-3 py-2">
                         <span class="py-1">Refresh:</span>
-                        <div class="inline-flex items-center gap-2">
+                        <div class="inline-flex items-center gap-2 ml-auto">
                             <button on:click={() => changeRefresh(-10)} class="cursor-pointer button px-2 py-1">-</button>
                             <p class="m-0">{refreshTimeMs}ms</p>
                             <button on:click={() => changeRefresh(10)} class="cursor-pointer button px-2 py-1">+</button>
