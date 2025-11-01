@@ -183,6 +183,10 @@ Set everything up on the pi. Also wrote some instructions for setup to help me a
 #### 22:30 | 0.2 hours
 ~~Site seems to not work when hosted on vercel, only works on localhost. This is probably due to the fact that its trying to call the API requests from the backend, not the client.~~ I think that was just becasue the site was not working in general... Anyways, fixed the site, so now you can enter the IP and it actually tries to connect.
 
+### Saturday, November 1st | 1.5 Hours
+#### 12:00 | 1.5 hours
+Did some debugging. Got the timeout feature working. Also changed the amount the website sends motor cmds from every 10ms to every 100ms. That helped with the lag a lot. Added a thing on website to change that value.
+
 ## CAD designs
 ### Riser
 #### V3
