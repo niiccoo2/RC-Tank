@@ -78,7 +78,7 @@ class Tank:
                 self.set_esc(self.left, 0.0) # Stop both motors
                 self.set_esc(self.right, 0.0)
                 self.stopped = True
-            time.sleep(0.100)
+            time.sleep(0.5)
             # Need this to be responsive, but also not hog resources
 
     def clamp(self, x, lo, hi):
