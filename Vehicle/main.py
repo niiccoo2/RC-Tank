@@ -18,23 +18,14 @@ RESET = "\033[0m"
 app = Flask(__name__)
 CORS(app)
 
-LEFT_PWM_PIN = 13
-RIGHT_PWM_PIN = 18
+# LEFT_PWM_PIN = 13
+# RIGHT_PWM_PIN = 18
 
-SERVO_FREQ_HZ = 50
-ESC_MIN_DUTY = 4.5
-ESC_NEUTRAL_DUTY = 7.5
-ESC_MAX_DUTY = 10.5
-ARM_TIME_SEC = 2.0
-
-last_update_time = time.time()
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(LEFT_PWM_PIN, GPIO.OUT)
-GPIO.setup(RIGHT_PWM_PIN, GPIO.OUT)
-
-left = GPIO.PWM(LEFT_PWM_PIN, SERVO_FREQ_HZ)
-right = GPIO.PWM(RIGHT_PWM_PIN, SERVO_FREQ_HZ)
+# SERVO_FREQ_HZ = 50
+# ESC_MIN_DUTY = 4.5
+# ESC_NEUTRAL_DUTY = 7.5
+# ESC_MAX_DUTY = 10.5
+# ARM_TIME_SEC = 2.0
 
 # Init USB camera at 480p
 usb_camera = cv2.VideoCapture(0)  # 0 = first USB cam
@@ -46,19 +37,80 @@ try:
 except Exception:
     pass
 
-async def timeout_check():
-    global last_update_time
+class Tank:
+    
+    def __init__(self,
+                 left_pwm_pin: int = 13,
+                 right_pwm_pin: int = 18,
+                 servo_freq_hz: int = 50,
+                 esc_min_duty: float = 4.5,
+                 esc_neutral_duty: float = 7.5,
+                 esc_max_duty: float = 10.5,
+                 arm_time_sec: float = 2.0):
+        self.LEFT_PWM_PIN = left_pwm_pin
+        self.RIGHT_PWM_PIN = right_pwm_pin
+        self.SERVO_FREQ_HZ = servo_freq_hz
+        self.ESC_MIN_DUTY = esc_min_duty
+        self.ESC_NEUTRAL_DUTY = esc_neutral_duty
+        self.ESC_MAX_DUTY = esc_max_duty
+        self.ARM_TIME_SEC = arm_time_sec
 
-    while True:
-    # x 1000 to make it millis
-        print("Checking time")
-        time_since_last_update = (time.time() - last_update_time)*1000
-        print(f"Time since last update: {time_since_last_update}")
-        if time_since_last_update > 1000: # if over 1 sec
-            set_esc(left, 0.0) # Stop both motors
-            set_esc(right, 0.0)
-        time.sleep(0.100)
-        # Need this to be responsive, but also not hog resources
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.LEFT_PWM_PIN, GPIO.OUT)
+        GPIO.setup(self.RIGHT_PWM_PIN, GPIO.OUT)
+
+        self.left = GPIO.PWM(self.LEFT_PWM_PIN, self.SERVO_FREQ_HZ)
+        self.right = GPIO.PWM(self.RIGHT_PWM_PIN, self.SERVO_FREQ_HZ)
+
+        self.last_update_time = time.time()
+
+        self.set_esc(self.left, 0.0) # Stop both motors
+        self.set_esc(self.right, 0.0)
+        self.stopped = True
+
+    async def timeout_check(self):
+        while True:
+        # x 1000 to make it millis
+            print("Checking time")
+            time_since_last_update = (time.time() - self.last_update_time)*1000
+            print(f"Time since last update: {time_since_last_update}")
+            if time_since_last_update > 1000 and not self.stopped: # if over 1 sec
+                self.set_esc(self.left, 0.0) # Stop both motors
+                self.set_esc(self.right, 0.0)
+                self.stopped = True
+            time.sleep(0.100)
+            # Need this to be responsive, but also not hog resources
+
+    def clamp(self, x, lo, hi):
+        return max(lo, min(hi, x))
+
+    def throttle_to_duty(self, throttle: float) -> float:
+        t = self.clamp(-throttle, -1.0, 1.0)
+        print(f"{PURPLE}Setting throttle to: {throttle}, Clamped: {t}{RESET}")
+        if t >= 0:
+            return self.ESC_NEUTRAL_DUTY + (self.ESC_MAX_DUTY - self.ESC_NEUTRAL_DUTY) * t
+        else:
+            return self.ESC_NEUTRAL_DUTY + (self.ESC_NEUTRAL_DUTY - self.ESC_MIN_DUTY) * t
+
+    def set_esc(self, pwm: GPIO.PWM, throttle: float):
+        pwm.ChangeDutyCycle(self.throttle_to_duty(throttle))
+        if throttle != 0.0:
+            self.stopped = False
+
+    def arm_escs(self):
+        self.left.start(self.ESC_NEUTRAL_DUTY)
+        self.right.start(self.ESC_NEUTRAL_DUTY)
+        time.sleep(self.ARM_TIME_SEC)
+
+    def cleanup(self):
+        self.set_esc(self.left, 0.0)
+        self.set_esc(self.right, 0.0)
+        time.sleep(0.3)
+        self.left.stop()
+        self.right.stop()
+        GPIO.cleanup()
+
+tank = Tank()
 
 def gen_frames():
     # Yields JPEG frames for MJPEG streaming
@@ -73,36 +125,9 @@ def gen_frames():
             continue
         jpg = buf.tobytes()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n'
-               b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
-               jpg + b'\r\n')
-
-def clamp(x, lo, hi):
-    return max(lo, min(hi, x))
-
-def throttle_to_duty(throttle: float) -> float:
-    t = clamp(-throttle, -1.0, 1.0)
-    print(f"{PURPLE}Setting throttle to: {throttle}, Clamped: {t}{RESET}")
-    if t >= 0:
-        return ESC_NEUTRAL_DUTY + (ESC_MAX_DUTY - ESC_NEUTRAL_DUTY) * t
-    else:
-        return ESC_NEUTRAL_DUTY + (ESC_NEUTRAL_DUTY - ESC_MIN_DUTY) * t
-
-def set_esc(pwm: GPIO.PWM, throttle: float):
-    pwm.ChangeDutyCycle(throttle_to_duty(throttle))
-
-def arm_escs():
-    left.start(ESC_NEUTRAL_DUTY)
-    right.start(ESC_NEUTRAL_DUTY)
-    time.sleep(ARM_TIME_SEC)
-
-def cleanup():
-    set_esc(left, 0.0)
-    set_esc(right, 0.0)
-    time.sleep(0.3)
-    left.stop()
-    right.stop()
-    GPIO.cleanup()
+            b'Content-Type: image/jpeg\r\n'
+            b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
+            jpg + b'\r\n')
 
 @app.route('/camera')
 def camera():
@@ -122,25 +147,25 @@ def set_motor():
     left_speed = float(data.get('left', 0.0))
     right_speed = float(data.get('right', 0.0))
     
-    set_esc(left, left_speed)
-    set_esc(right, right_speed)
+    tank.set_esc(tank.left, left_speed)
+    tank.set_esc(tank.right, right_speed)
     
     return jsonify({"status": "ok", "left": left_speed, "right": right_speed})
 
 @app.route('/stop', methods=['POST'])
 def stop():
-    set_esc(left, 0.0)
-    set_esc(right, 0.0)
+    tank.set_esc(tank.left, 0.0)
+    tank.set_esc(tank.right, 0.0)
     return jsonify({"status": "stopped"})
 
 # Arm on startup
 print("Arming ESCs...")
-arm_escs()
+tank.arm_escs()
 print("Ready")
 
 # Cleanup on exit
-atexit.register(cleanup)
+atexit.register(tank.cleanup)
 
 if __name__ == '__main__':
-    asyncio.run(timeout_check())
+    asyncio.run(tank.timeout_check())
     app.run(host='0.0.0.0', port=5000)
