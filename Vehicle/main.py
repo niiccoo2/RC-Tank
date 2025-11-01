@@ -4,7 +4,7 @@ from flask_cors import CORS
 import RPi.GPIO as GPIO  # type: ignore
 import time
 import atexit
-import asyncio
+import threading
 
 # Colors
 BLACK = "\033[0;30m"
@@ -167,5 +167,6 @@ print("Ready")
 atexit.register(tank.cleanup)
 
 if __name__ == '__main__':
-    asyncio.run(tank.timeout_check())
+    t = threading.Thread(target=tank.timeout_check, daemon=True)
+    t.start()
     app.run(host='0.0.0.0', port=5000)
