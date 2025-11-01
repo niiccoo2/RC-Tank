@@ -186,6 +186,8 @@ Set everything up on the pi. Also wrote some instructions for setup to help me a
 ### Saturday, November 1st | 1.5 Hours
 #### 12:00 | 1.5 hours
 Did some debugging. Got the timeout feature working. Also changed the amount the website sends motor cmds from every 10ms to every 100ms. That helped with the lag a lot. Added a thing on website to change that value.
+#### 15:00 | 2 hours
+Wrote code to let you control the tank like a car, also added switch to turn that on and off. Refactored the whole python file to use classes. Got a bit of help from AI to reduce video bandwidth. It now looks rlly bad, and feels the same on latency, but the bandwidth is down by A LOT.
 
 ## CAD designs
 ### Riser
