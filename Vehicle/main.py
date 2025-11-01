@@ -140,8 +140,7 @@ def set_motor():
     POST /motor
     Body: {"left": -1.0 to 1.0, "right": -1.0 to 1.0}
     """
-    global last_update_time
-    last_update_time = time.time()
+    tank.last_update_time = time.time()
 
     data = request.get_json()
     print(f"Received motor command: {data}")
