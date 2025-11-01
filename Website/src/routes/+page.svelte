@@ -4,8 +4,6 @@ import cam_off_icon from '$lib/assets/cam_off.svg';
 
 let animationFrame: number;
 let lastSendTime: number = 0;
-let leftSpeed: number = 0;
-let rightSpeed: number = 0;
 let status: string = 'Disconnected';
 // let ip: string = '192.168.1.161';
 let ip: string = '';
@@ -15,9 +13,32 @@ let ping: string = 'N/A';
 let roundedLeftSpeed: number = 0;
 let roundedRightSpeed: number = 0;
 let refreshTimeMs: number = 100;
+let leftSpeed: number = 0;
+let rightSpeed: number = 0;
+let trottle: number = 0;
+let stick: number = 0;
 
 function changeRefresh(amount: number) {
     refreshTimeMs = refreshTimeMs + amount;
+}
+
+function carToTracks(trottle: number, stick: number) {
+    let left: number = trottle;
+    let right: number = trottle;
+    const multiplier: number = .4
+
+    left = trottle+(multiplier*stick)
+    right = trottle-(multiplier*stick)
+
+    if (left > 1.00) {
+        left = 1.00
+    }
+        
+    if (right > 1.00) {
+        right = 1.00
+    }
+    
+    return [left, right]
 }
 
 async function pingAddress(ip: string) {
@@ -51,14 +72,24 @@ async function updatePing() {
 function pollGamepad() {
   const gamepads = navigator.getGamepads();
   const gamepad = gamepads[0];
-
+  
   if (gamepad) {
-    // Log to find your trigger axes
     console.log('Axes:', gamepad.axes);
     
-    // Adjust these indices based on your controller
-    leftSpeed = -gamepad.axes[1];   // Left trigger
-    rightSpeed = -gamepad.axes[3];  // Right trigger
+    // Stick-to-track
+    // leftSpeed = -gamepad.axes[1];   // Left stick
+    // rightSpeed = -gamepad.axes[3];  // Right stick
+
+    // roundedLeftSpeed = Number(leftSpeed.toFixed(2));
+    // roundedRightSpeed = Number(rightSpeed.toFixed(2));
+
+    // Car way
+    // Using sticks for now but will change to triggers soon
+    trottle = -gamepad.axes[3];  // Right stick
+    stick = gamepad.axes[0];   // Left stick
+
+    [leftSpeed, rightSpeed] = carToTracks(trottle, stick) 
+
     roundedLeftSpeed = Number(leftSpeed.toFixed(2));
     roundedRightSpeed = Number(rightSpeed.toFixed(2));
     
