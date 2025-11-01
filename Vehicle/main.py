@@ -68,7 +68,7 @@ class Tank:
         self.set_esc(self.right, 0.0)
         self.stopped = True
 
-    async def timeout_check(self):
+    def timeout_check(self):
         while True:
         # x 1000 to make it millis
             print("Checking time")
