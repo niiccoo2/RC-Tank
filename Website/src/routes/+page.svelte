@@ -76,7 +76,7 @@ async function pingAddress(ip: string) {
   }
 
 async function updatePing() {
-    ping = await pingAddress(`https://${ip}:5000/stats`);
+    ping = await pingAddress(`http://${ip}:5000/stats`);
 }
 
 function pollGamepad() {
@@ -118,7 +118,7 @@ async function sendCommand(left: number, right: number) {
     } else {
         console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
         try {
-            const response = await fetch(`https://${ip}:5000/motor`, {
+            const response = await fetch(`http://${ip}:5000/motor`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ left, right })
@@ -165,7 +165,7 @@ if (animationFrame) {
 
 <main>
     {#if ip}
-        <!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
+        <!-- <img src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
         <!-- Test Image -->
         <div class="layout">
             <div class="side left">
@@ -181,7 +181,7 @@ if (animationFrame) {
                         <img class="border black_background" src={`${cam_off_icon}`} width="640" height="480" alt="Test Cam Feed">
                         <p style="color: #FF0000; font-weight: bold;">{status}</p>
                     {:else}
-                        <img class="border black_background" src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed">
+                        <img class="border black_background" src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed">
                         <p style="color: #00FF00; font-weight: bold;">{status}</p>
                     {/if}
                 {:else}
