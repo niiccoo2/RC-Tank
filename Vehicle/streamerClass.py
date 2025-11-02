@@ -119,8 +119,9 @@ class MJPEGStreamer:
                     src_small = self._latest_small
                 if src_small is None:
                     continue
-                small = src_small.copy()
-                ok, buf = cv2.imencode('.jpg', small, local_params)
+                # src_small is a color (BGR) small frame
+                small_color = src_small.copy()
+                ok, buf = cv2.imencode('.jpg', small_color, local_params)
                 if not ok:
                     continue
                 jpg = buf.tobytes()
@@ -132,7 +133,7 @@ class MJPEGStreamer:
 
     # ---------- Internal capture loop ----------
     def _capture_loop(self) -> None:
-        prev_small: Optional[np.ndarray] = None
+        prev_gray: Optional[np.ndarray] = None
 
         while self._running:
             ok, frame = self.cap.read()
@@ -143,20 +144,21 @@ class MJPEGStreamer:
             if self.rotate_180:
                 frame = cv2.rotate(frame, cv2.ROTATE_180)
 
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            # NOTE: camera is already set to width/height; resize is cheap sanity
-            small = cv2.resize(gray, (self.width, self.height), interpolation=cv2.INTER_AREA)
+            # Keep a small color (BGR) frame for output
+            small_color = cv2.resize(frame, (self.width, self.height), interpolation=cv2.INTER_AREA)
 
-            # Motion gating: skip encode if scene barely changed
-            if self.motion_gate and prev_small is not None:
-                mean_change = float(cv2.absdiff(small, prev_small).mean())
-                if mean_change < self.motion_thresh:
-                    # Keep previous output; do not overwrite latest or re-encode
-                    continue
-            prev_small = small
+            # Motion gating: compute on grayscale (faster / more robust)
+            if self.motion_gate:
+                gray_small = cv2.cvtColor(small_color, cv2.COLOR_BGR2GRAY)
+                if prev_gray is not None:
+                    mean_change = float(cv2.absdiff(gray_small, prev_gray).mean())
+                    if mean_change < self.motion_thresh:
+                        # Keep previous output; do not overwrite latest or re-encode
+                        continue
+                prev_gray = gray_small
 
             if self.share_encoded:
-                ok, buf = cv2.imencode('.jpg', small, self.jpeg_params)
+                ok, buf = cv2.imencode('.jpg', small_color, self.jpeg_params)
                 if not ok:
                     continue
                 jpg_bytes = buf.tobytes()
@@ -165,5 +167,6 @@ class MJPEGStreamer:
                     self._latest_ts = time.time()
             else:
                 with self._lock:
-                    self._latest_small = small
+                    # store color small frame
+                    self._latest_small = small_color
                     self._latest_ts = time.time()
