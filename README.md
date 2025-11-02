@@ -189,6 +189,18 @@ Did some debugging. Got the timeout feature working. Also changed the amount the
 #### 15:00 | 2 hours
 Wrote code to let you control the tank like a car, also added switch to turn that on and off. Refactored the whole python file to use classes. Got a bit of help from AI to reduce video bandwidth. It now looks rlly bad, and feels the same on latency, but the bandwidth is down by A LOT.
 
+### Sunday, November 2nd | 3 hours
+#### 10:00 | 2 hours
+Spent forever trying to get ppp (network over serial) working on the modem. The modem itself will get an IP from the cell towers, but once I start asking for a ppp address, I get ghosted. I had the same issue with this modem on my last project, and I was naive to think it would work better this time. The solution is to use usb, but I'm already using the one usb port for the camera, so I'll have to wire up a hub.
+
+#### 15:00 | 1 hour
+Tested the car on it's first long range test. It uhh worked. But the latency was annoying, a lot of the time it was usable, but with color off I coulden't tell the difference between the road and dirt, so I turned on color, that broke everything. I hope it works better once I'm back in Boston, but I don't want to get my hopes up too much. Another issue is not a bug, but once your on the road, it feels SUPER slow. It's fine in a house but once you are on the street its wayyy too slow. So I'm going to start designing a new chassis made out of aluminum extrutions, with a higher speed and more room for goodies.
+
+New things for v2:
+- Ham radio for close range
+- Switch to electon so we can use the hosts serial ports for radios and such
+- Faster top speed
+
 ## CAD designs
 ### Riser
 #### V3
