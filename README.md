@@ -206,13 +206,16 @@ New things for v2:
 Tested the tank in Boston (hopefully has faster cell). It worked, but has a lot to be wanted... It was night so I could bearly see what I was doing. [filz.cc/f/UVyD.mp4](https://filz.cc/f/UVyD.mp4) [filz.cc/f/diph.mp4](https://filz.cc/f/diph.mp4)
 ![Driving in Boston](/photos/driving_in_boston.jpg)
 
-### Tuesday, November 4th | 
+### Tuesday, November 4th | 1.5 hours
 #### 17:00 | 1 hour
 Started by checking btop (better htop) to see cpu usage while running the script. THe cpu is around 10% when running, so we don't need a faster pi. Then I took apart a hover board to get to the brushless motors, this is going to be the main motors for V2 until I feel I need better ones. ![Wayyyy too many screws](/photos/screws_from_hoverboard.jpg) ![Taken apart hoverboard](/photos/taken_apart_hoverboard.jpg)
 
 #### 20:00 | 0.5 hours
-Started thinking about how to design the robot and doing the cad. Right now I'm stuck on the suspension because I rally have to build around it.
+Started thinking about how to design the robot and doing the cad. Right now I'm stuck on the suspension because I rally have to build around it. CAD is hard :/
 
+### Wednesday, November 5th | x hours
+#### 07:30 | 0.5 hours
+Started reading about WebRTC and how to use it, seems helpful due too variable bitrate among other features. Just built out more in general. To use this libary I found, it looks like I need to switch to FastAPI so I started doing that. Later today I'm going to build the frame for the bigger chassis. It's going to be really simple to start, just a rectangle, but it will be much bigger and allow me to start getting the motors working.
 
 ## CAD designs
 ### Riser

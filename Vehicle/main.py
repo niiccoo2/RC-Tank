@@ -2,6 +2,7 @@ from tankClass import Tank
 from streamerClass import MJPEGStreamer
 
 from flask import Flask, request, jsonify, Response
+from fastapi import FastAPI
 from flask_cors import CORS
 import time
 import atexit
@@ -16,8 +17,7 @@ BLUE = "\033[0;34m"
 PURPLE = "\033[0;35m"
 RESET = "\033[0m"
 
-app = Flask(__name__)
-CORS(app)
+app = FastAPI()
 
 tank = Tank()
 
