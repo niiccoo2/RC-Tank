@@ -206,6 +206,14 @@ New things for v2:
 Tested the tank in Boston (hopefully has faster cell). It worked, but has a lot to be wanted... It was night so I could bearly see what I was doing. [filz.cc/f/UVyD.mp4](https://filz.cc/f/UVyD.mp4) [filz.cc/f/diph.mp4](https://filz.cc/f/diph.mp4)
 ![Driving in Boston](/photos/driving_in_boston.jpg)
 
+### Tuesday, November 4th | 
+#### 17:00 | 1 hour
+Started by checking btop (better htop) to see cpu usage while running the script. THe cpu is around 10% when running, so we don't need a faster pi. Then I took apart a hover board to get to the brushless motors, this is going to be the main motors for V2 until I feel I need better ones. ![Wayyyy too many screws](/photos/screws_from_hoverboard.jpg) ![Taken apart hoverboard](/photos/taken_apart_hoverboard.jpg)
+
+#### 20:00 | 0.5 hours
+Started thinking about how to design the robot and doing the cad. Right now I'm stuck on the suspension because I rally have to build around it.
+
+
 ## CAD designs
 ### Riser
 #### V3
