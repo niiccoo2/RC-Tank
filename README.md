@@ -213,12 +213,16 @@ Started by checking btop (better htop) to see cpu usage while running the script
 #### 20:00 | 0.5 hours
 Started thinking about how to design the robot and doing the cad. Right now I'm stuck on the suspension because I rally have to build around it. CAD is hard :/
 
-### Wednesday, November 5th | x hours
+### Wednesday, November 5th | 1.5 hours
 #### 07:30 | 0.5 hours
 Started reading about WebRTC and how to use it, seems helpful due too variable bitrate among other features. Just built out more in general. To use this libary I found, it looks like I need to switch to FastAPI so I started doing that. Later today I'm going to build the frame for the bigger chassis. It's going to be really simple to start, just a rectangle, but it will be much bigger and allow me to start getting the motors working.
 
 #### 21:00 | 1 hour
 Found this repo that looks good, it will let me use the motor contolers already in the hoverboard mobo. I might make the robot in to a hoverboard for now so I don't need to get more parts, depends on if the repo will do the balance, if not, I'll jsut use the motors and mobo. I'll look into a bit more in the morning and figure out my next steps for hardware. [Repo Link](https://github.com/RoboDurden/Hoverboard-Firmware-Hack-Gen2.x-GD32)
+
+### Thursday, November 6th | x hours
+#### 07:00 | 0.5 hours
+Wired up this ESP8266 to flash the new firmware to the hoverboard boards. Also got headers ready for the boards. Now i just need to solder the headers and flash it, but the pins for flashing are a weird size so the headers don't want to solder.
 
 ## CAD designs
 ### Riser
