@@ -225,7 +225,7 @@ Found this repo that looks good, it will let me use the motor contolers already 
 Wired up this ESP8266 to flash the new firmware to the hoverboard boards. Also got headers ready for the boards. Now i just need to solder the headers and flash it, but the pins for flashing are a weird size so the headers don't want to solder.
 
 #### 17:00 | 1 hour
-Soldered headers to the hoverboard PCB's to flash. Now I'm trying to follow the **not very helpful** guide in the repo on how to set up the flasher and all that. I have about 20 programs open rn and bearly know what half of them do... 
+Soldered headers to the hoverboard PCB's to flash. Now I'm trying to follow the **not very helpful** guide in the repo on how to set up the flasher and all that. I have about 20 programs open rn and bearly know what half of them do... ![ESP8266 I'm using to flash the hoverboard](/photos/esp_8266_flasher.jpg) ![Hoverboard PCB with nice headers I added](/photos/hoverboard_pcb_with_headers_and_wires.jpg)
 
 ## CAD designs
 ### Riser
