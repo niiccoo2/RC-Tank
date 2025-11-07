@@ -220,12 +220,15 @@ Started reading about WebRTC and how to use it, seems helpful due too variable b
 #### 21:00 | 1 hour
 Found this repo that looks good, it will let me use the motor contolers already in the hoverboard mobo. I might make the robot in to a hoverboard for now so I don't need to get more parts, depends on if the repo will do the balance, if not, I'll jsut use the motors and mobo. I'll look into a bit more in the morning and figure out my next steps for hardware. [Repo Link](https://github.com/RoboDurden/Hoverboard-Firmware-Hack-Gen2.x-GD32)
 
-### Thursday, November 6th | x hours
+### Thursday, November 6th | 2.5 hours
 #### 07:00 | 0.5 hours
 Wired up this ESP8266 to flash the new firmware to the hoverboard boards. Also got headers ready for the boards. Now i just need to solder the headers and flash it, but the pins for flashing are a weird size so the headers don't want to solder.
 
 #### 17:00 | 1 hour
 Soldered headers to the hoverboard PCB's to flash. Now I'm trying to follow the **not very helpful** guide in the repo on how to set up the flasher and all that. I have about 20 programs open rn and bearly know what half of them do... ![ESP8266 I'm using to flash the hoverboard](/photos/esp_8266_flasher.jpg) ![Hoverboard PCB with nice headers I added](/photos/hoverboard_pcb_with_headers_and_wires.jpg)
+
+#### 21:30 | 1 hour
+Set up Keil and some other apps to try and program it. I'm making no progress though. I think I'm going to try and use a rpi pico instead of ESP8266 and start over tmrw.
 
 ## CAD designs
 ### Riser
