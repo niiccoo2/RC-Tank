@@ -230,6 +230,10 @@ Soldered headers to the hoverboard PCB's to flash. Now I'm trying to follow the 
 #### 21:30 | 1 hour
 Set up Keil and some other apps to try and program it. I'm making no progress though. I think I'm going to try and use a rpi pico instead of ESP8266 and start over tmrw.
 
+### Friday, November 7th | x hours
+#### 20:30 | 1 hour
+Started by flashing (WHY FLASH SOO MANY THINGS TODAY :/ ) a rpi pico with picoprobe, a SWD flasher that runs on a pi pico. Then I spent a while figuring out what program I use to flash the new firmware to the hoverboard. After a while of it not working, I found out that I was trying to wipe the wrong type of chip. Once I started using the correct chip, I just had to use shorter wires and IT WIPED THE CHIP. :yayayayay: Now I'm going to try to flash the new firmware and see if it does anything... ![Hoverboard connected to picoprobe](/photos/hoverboard_board_with_pi_pico.jpg) 
+
 ## CAD designs
 ### Riser
 #### V3
