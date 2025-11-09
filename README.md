@@ -230,12 +230,24 @@ Soldered headers to the hoverboard PCB's to flash. Now I'm trying to follow the 
 #### 21:30 | 1 hour
 Set up Keil and some other apps to try and program it. I'm making no progress though. I think I'm going to try and use a rpi pico instead of ESP8266 and start over tmrw.
 
-### Friday, November 7th | x hours
+### Friday, November 7th | 2 hours
 #### 20:30 | 1 hour
 Started by flashing (WHY FLASH SOO MANY THINGS TODAY :/ ) a rpi pico with picoprobe, a SWD flasher that runs on a pi pico. Then I spent a while figuring out what program I use to flash the new firmware to the hoverboard. After a while of it not working, I found out that I was trying to wipe the wrong type of chip. Once I started using the correct chip, I just had to use shorter wires and IT WIPED THE CHIP. :yayayayay: Now I'm going to try to flash the new firmware and see if it does anything... ![Hoverboard connected to picoprobe](/photos/hoverboard_board_with_pi_pico.jpg)
 
 #### 22:00 | 1 hour
 Got stuck with [this](https://github.com/pyocd/pyOCD/issues/1396) error, will try again in morning. I tried grounding the reset pin as it says to, but that doesn't do anythign about the error, it just pops up as soon as I let go (therefore starting the mcu). ![Pcb in question](/photos/hoverboard_pcb_held.jpg)
+
+### Sunday, November 9th | 2 hours
+#### 16:30 | 2 hours
+Susfually compiled firmware from scratch, and tried to flash, no diffrence. Tried pulling boot0 high and low on boot. Tried external 36v power. Tried on other PCB that has not been messed with. Went back to ESP8266 with Keil and flashed with same error. STLink app does not work with ESP8266 or rpi pico.
+
+Fet is `110n8f6` according to google is 80v 80a?
+
+Next steps:
+- Try STLink programmer
+- Find other repos doing same thing
+- Look into price of other motor contollers and or motors
+- 
 
 ## CAD designs
 ### Riser
