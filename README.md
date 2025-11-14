@@ -250,7 +250,7 @@ Next steps:
 
 ### Thursday, November 13th | 1 hour
 #### 20:45 | 1 hour
-I GOT IT TO PROGRAM!!! I have been stuck on this part for almost 2 weeks (of not everyday work) so this is good. To tired rn, but next time I'm home I'm going to test the motors with the boards. ![Programing working](/photos/PROGRAM_WORKING.jpg) ![ST-Link Versions](/photos/ST-Link_Version.jpg) ![Flasher](/photos/ST-Link_Flasher.jpg)
+I GOT IT TO PROGRAM!!! Using the ST-Link flasher was the fix!! I have been stuck on this part for almost 2 weeks (of not everyday work) so this is good. To tired rn, but next time I'm home I'm going to test the motors with the boards. ![Programing working](/photos/PROGRAM_WORKING.jpg) ![ST-Link Versions](/photos/ST-Link_Version.jpg) ![Flasher](/photos/ST-Link_Flasher.jpg)
 
 ## CAD designs
 ### Riser
