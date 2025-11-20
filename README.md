@@ -252,6 +252,12 @@ Next steps:
 #### 20:45 | 1 hour
 I GOT IT TO PROGRAM!!! Using the ST-Link flasher was the fix!! I have been stuck on this part for almost 2 weeks (of not everyday work) so this is good. To tired rn, but next time I'm home I'm going to test the motors with the boards. ![Programing working](/photos/PROGRAM_WORKING.jpg) ![ST-Link Versions](/photos/ST-Link_Version.jpg) ![Flasher](/photos/ST-Link_Flasher.jpg)
 
+### Wendsday, November 19th | 1.5 hours
+#### 20:00 | 1 hour
+GOT THE THING FLASHING LIGHTS WHEN I SPIN MOTOR!!! This is mainly so I don't forget, but when programing, start with only 3v3 from programer, then after the programing disconnect 3v3 and use 36v mains (12v seems to work fine). Now I'm going to see if I can get it to spin the motor!
+#### 21:00 | .5 hours
+Can't get it to spin motors, when I give it power, the motors seems to stiffen though, so somethings happening. Next steps are to flash the pit detection firmware so I can make sure I'm using the right pins for the hall sensors or smt. I think thare should be 3 lights switching when I spin the wheel, not two. So tmrw I will wire an esp32 to see the output of the autodetect firmware! [Video!](https://filz.cc/f/YVN7.mp4)
+
 ## CAD designs
 ### Riser
 #### V3
