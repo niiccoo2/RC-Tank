@@ -258,6 +258,10 @@ GOT THE THING FLASHING LIGHTS WHEN I SPIN MOTOR!!! This is mainly so I don't for
 #### 21:00 | .5 hours
 Can't get it to spin motors, when I give it power, the motors seems to stiffen though, so somethings happening. Next steps are to flash the pit detection firmware so I can make sure I'm using the right pins for the hall sensors or smt. I think thare should be 3 lights switching when I spin the wheel, not two. So tmrw I will wire an esp32 to see the output of the autodetect firmware! [Video!](https://filz.cc/f/YVN7.mp4)
 
+### Thursday, November 20th | x hours
+#### 07:30 | 30 minutes
+Made a cable to connect the ESP8266 for commands and debug info, but now when programing, I get this error: `STLink USB communication error`. No idea why because I have not changed anything. Tried diffrent cables with no sucess.
+
 ## CAD designs
 ### Riser
 #### V3
