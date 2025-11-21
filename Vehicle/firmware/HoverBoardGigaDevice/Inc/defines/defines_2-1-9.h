@@ -22,12 +22,12 @@
 */
 
 // LED defines, colors probably mismatch !
-#define LED_GREEN 			PA5
-#define LED_ORANGE 			PA14
-#define LED_RED 				PB3
+#define LED_GREEN 			B3
+#define LED_ORANGE 			B5
+#define LED_RED 				B8
 
-#define UPPER_LED 	PB4
-#define LOWER_LED 	PB5
+#define UPPER_LED 	A15
+#define LOWER_LED 	B4
 
 //#define MOSFET_OUT TODO_PIN		// onboard led on some boards
 
@@ -53,9 +53,12 @@
 //#define HALL_A	PB0	// robo from front+back-photo
 //#define HALL_B	PB1	// robo from front+back-photo
 //#define HALL_C	PA5	// robo from front+back-photo
-#define HALL_A	PB11	// rhody, swapped with B by robo to keep the 6 bldc output pins as usual
-#define HALL_B	PA1		// rhody
-#define HALL_C	PA0		// rhody, swapped with B by robo to keep the 6 bldc output pins as usual
+//#define HALL_A	PB11	// rhody, swapped with B by robo to keep the 6 bldc output pins as usual
+//#define HALL_B	PA1		// rhody
+//#define HALL_C	PA0		// rhody, swapped with B by robo to keep the 6 bldc output pins as usual
+#define HALL_A	PA0	// nico
+#define HALL_B	PA1		// nico
+#define HALL_C	PB11		// nico
 
 // GD32F130 USART0 TX/RX:	(PA9/PA10)AF1	, (PB6/PB7)AF0 , 	(PA2/PA3)AF1 , (PA14/PA15)AF1 GD32F130x4 only!
 // GD32F130 USART1 GD32F130 TX/RX: (PA14/PA15)AF1 , (PA2,PA3)AF1	, (PA8/PB0)AlternateFunction4

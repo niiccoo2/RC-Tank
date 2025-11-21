@@ -11,6 +11,9 @@
 #define HALL_A		PB11
 #define HALL_B		PC14
 #define HALL_C		PF1
+//#define HALL_A		PA0
+//#define HALL_B		PB11
+//#define HALL_C		PA1
 #define PHASE_A		PB0
 #define PHASE_B		PB1
 //#define PHASE_C		P_UNKOWN

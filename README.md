@@ -259,8 +259,48 @@ GOT THE THING FLASHING LIGHTS WHEN I SPIN MOTOR!!! This is mainly so I don't for
 Can't get it to spin motors, when I give it power, the motors seems to stiffen though, so somethings happening. Next steps are to flash the pit detection firmware so I can make sure I'm using the right pins for the hall sensors or smt. I think thare should be 3 lights switching when I spin the wheel, not two. So tmrw I will wire an esp32 to see the output of the autodetect firmware! [Video!](https://filz.cc/f/YVN7.mp4)
 
 ### Thursday, November 20th | x hours
-#### 07:30 | 30 minutes
+#### 07:30 | .5 hours
 Made a cable to connect the ESP8266 for commands and debug info, but now when programing, I get this error: `STLink USB communication error`. No idea why because I have not changed anything. Tried diffrent cables with no sucess.
+#### 16:45 | .25 hours
+Got it programing again, here is the full process you have to do: first, connect all pins but make sure the 36v power is OFF. Power via programmer 3v3. Then in ST-Link, click connect, it should load some data. Then load your file and click download when it asks you to. Then disconnect the 3v3 from programmer, and turn on 36v power to test.
+#### 17:00 | 1 hour
+![ESP8266 Pinout](/photos/esp_8266_pinout.jpg)
+
+| SWD        | Pico       | Pico Board | ESP        | ESP Board  | Color      |
+| ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| SWCLK      | GPIO2      | 4          | GPIO14     | D5         | Blue       |
+| SWDIO      | GPIO3      | 5          | GPIO13     | D7         | Purple     |
+| VCC        | 3V3        | 3V3        | 3v3        | 3v3        | White      |
+| GND        | GND        | GND        | GND        | GND        | Gray       |
+
+**Keil installation folder:** `C:\Users\wev\AppData\Local\Keil_v5`
+
+We have the `gd32f130c8`
+
+Packs go here: `C:\Users\web\AppData\Local\cmsis-pack-manager\cmsis-pack-manager`
+
+**Green = pink on original cable**
+
+| Color  | Meaning | GPIO | Pin# |
+| ------ | ------- | ---- | ---- |
+| Green  | Ground  | GND  | GND  |
+| Blue   | 5v      | 5v?  | 5v   |
+| Orange | PA2?    | 14   | D5   |
+| Yellow | PA3?    | 12   | D6   |
+
+[This](http://www.hiletgo.com/ProductDetail/1906570.html) has some good info about how to set up the board.
+
+So I got the firmware on the ESP32 so we can see the output from the pin autodetect firmware. I am seeing nothing but there are a lot of things to check. Rn it looks like it only draws current when holding the on button...
+
+#### 18:00 | .5 hours
+Compiled the firmware myself and in config selected the pins I'm using for output, now I get messages in the serial console. Still have to hold the button but tis not that bad.
+Figured out that `#define LAYOUT_SUB 19	// Layout 19 means x.1.9`.
+Anyways rn its still not spinning but I figured out how to get the autodetect firmware running and how to edit all the code. So hopefully it works tonight!
+
+#### 21:00 | 1 hour
+Can't tell if the dummy mode is actualy trying to spin the motor. Rn only 2/3 leds light up for the phases... Ideas for tmrw:
+- Test with python UART
+- Use STM Var viewer thing 
 
 ## CAD designs
 ### Riser

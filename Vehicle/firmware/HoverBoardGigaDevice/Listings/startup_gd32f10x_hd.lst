@@ -599,14 +599,13 @@ ARM Macro Assembler    Page 10
               00000000 
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M3 --depe
 nd=.\objects\startup_gd32f10x_hd.d -o.\objects\startup_gd32f10x_hd.o -I.\RTE\_G
-D32F103 -I"C:\Users\PAN CF-LX6\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Co
-re\Include" -I"C:\Users\PAN CF-LX6\AppData\Local\Arm\Packs\GigaDevice\GD32F10x_
-DFP\2.0.1\Device\Firmware\Peripherals\inc" -I"C:\Users\PAN CF-LX6\AppData\Local
-\Arm\Packs\GigaDevice\GD32F10x_DFP\2.0.1\Device\Include" --predefine="__MICROLI
-B SETA 1" --predefine="__UVISION_VERSION SETA 542" --predefine="GD32F10X_MD SET
-A 1" --predefine="USE_STDPERIPH_DRIVER SETA 1" --predefine="_RTE_ SETA 1" --lis
-t=.\listings\startup_gd32f10x_hd.lst RTE/Device/GD32F103C8/startup_gd32f10x_hd.
-s
+D32F103 -IC:\Users\web\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Inclu
+de -IC:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F10x_DFP\2.0.1\Device\
+Firmware\Peripherals\inc -IC:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32
+F10x_DFP\2.0.1\Device\Include --predefine="__MICROLIB SETA 1" --predefine="__UV
+ISION_VERSION SETA 543" --predefine="GD32F10X_MD SETA 1" --predefine="USE_STDPE
+RIPH_DRIVER SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\startup_gd32f1
+0x_hd.lst RTE/Device/GD32F103C8/startup_gd32f10x_hd.s
 
 
 
