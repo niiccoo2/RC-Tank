@@ -308,11 +308,11 @@ Decided to try and use STM Studio to watch the vars like in the guide. After I g
 #### 22:00 | 1 hour
 When it uses the correct files with what I thought was correct hall pins, the leds dont light up at all, and I feel no resistance on the motor. I should see what the pins are on the file I was doing by mistake and use those.
 
-Just tried the halls from the file I was wrongly using (2-1-2) and it did not work. This is good though, so it has to be something else in 2-1-2 but not halls so we can use new halls. Now I am using all settings from 2-1-2 BUT used proper led mappings are we can see all the halls. Still don't know why its not trying to spin...
+Just tried the halls from the file I was wrongly using (2-1-2) and it did not work. This is good though, so it has to be something else in 2-1-2 but not halls so we can use new halls. Now I am using all settings from 2-1-2 BUT used proper led mappings are we can see all the halls. [Video](https://github.com/niiccoo2/RC-Tank/raw/refs/heads/main/photos/working_hall_with_led.mp4) Still don't know why its not trying to spin...
 
 Switched the `Brushless Control DC (BLDC) defines` and it did nothing, so I think its just not trying to spin at all.
 
-IT SPINSSSSS!!!!! All I did was switch out this bit from 2-1-9 and it started working!!!!!!
+IT SPINSSSSS!!!!! All I did was switch out this bit from 2-1-9 and it started working!!!!!! [Video](https://github.com/niiccoo2/RC-Tank/raw/refs/heads/main/photos/IT_SPINS.mp4)
 
 ```
 // GD32F130 USART0 TX/RX:	(PA9/PA10)AF1	, (PB6/PB7)AF0 , 	(PA2/PA3)AF1 , (PA14/PA15)AF1 GD32F130x4 only!
