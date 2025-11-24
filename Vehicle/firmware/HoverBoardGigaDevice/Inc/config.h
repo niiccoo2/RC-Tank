@@ -20,8 +20,8 @@
 	// and then set your layout below
 	// Gen2-target-layout is included in defines.h
 	#ifdef GD32F130		// TARGET = 1
-		#define LAYOUT 2
-		#define LAYOUT_SUB 19	// Layout 19 means x.1.9
+		#define LAYOUT 9 // 9 Means 2.1.9
+		//#define LAYOUT_SUB 19	// Layout 9 means x.x.9?
 	#elif GD32F103		// TARGET = 2
 		#define LAYOUT 1
 		//#define STM32F103 	// uncomment if your board has stm32f103 instead of gd32f103. Will give the max 64 Mhz for STM32

@@ -1,3 +1,5 @@
+//FOR LAYOUT 2-1-2
+
 #ifdef MASTER_OR_SINGLE		// layout 2.2 and 2.7 have buzzer on the slave board.
 	#define HAS_BUZZER
 #endif
@@ -21,6 +23,7 @@
 
 #define TODO_PIN PF4	// PF4 is only accessible on the largest GD32F130Rx LQFP64 pinouts mcu
 
+#pragma message "MESSAGE ON 2-1-2"
 
 // LED defines CORRECT
 #define LED_GREEN PB3

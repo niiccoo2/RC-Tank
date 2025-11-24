@@ -1,6 +1,6 @@
-// from https://github.com/RoboDurden/Hoverboard-Firmware-Hack-Gen2.x/issues/20
+//FOR LAYOUT 2-1-2
 
-#ifdef MASTER_OR_SINGLE		// layout 2.2 has buzzer on the slave board.
+#ifdef MASTER_OR_SINGLE		// layout 2.2 and 2.7 have buzzer on the slave board.
 	#define HAS_BUZZER
 #endif
 
@@ -21,17 +21,34 @@
 	A0 A1 A2 A3 A4 A5 A6 A7 B0 B1 	
 */
 
-// LED defines, colors probably mismatch !
-#define LED_GREEN 			B3
-#define LED_ORANGE 			B5
-#define LED_RED 				B8
+#define TODO_PIN PF4	// PF4 is only accessible on the largest GD32F130Rx LQFP64 pinouts mcu
 
-#define UPPER_LED 	A15
-#define LOWER_LED 	B4
+#pragma message "MESSAGE ON 2-1-9"
 
-//#define MOSFET_OUT TODO_PIN		// onboard led on some boards
+// LED defines CORRECT
+#define LED_GREEN 			PB3 // Original
+#define LED_ORANGE 			PB5
+#define LED_RED 				PB8
 
-// Brushless Control DC (BLDC) defines
+#define UPPER_LED 	PA15
+#define LOWER_LED 	PB4
+
+// Mosfet output CORRECT
+#define MOSFET_OUT PC13
+
+// Brushless Control DC (BLDC) defines 2-1-2 version
+//#define TIMER_BLDC_PULLUP	GPIO_PUPD_NONE	// robo
+// Channel G CORRECT
+//#define BLDC_GH PA10
+//#define BLDC_GL PB15
+// Channel B CORRECT
+//#define BLDC_BH PA9
+//#define BLDC_BL PB14
+// Channel Y CORRECT
+//#define BLDC_YH PA8
+//#define BLDC_YL PB13
+
+// Brushless Control DC (BLDC) defines 2-1-9 version
 #define TIMER_BLDC_PULLUP	GPIO_PUPD_PULLUP	// robo, based on Herleybob:defines.h
 // Channel G
 #define BLDC_GH		PA8		// channels G=green and Y=yellow swopped compared to 2.0
@@ -43,22 +60,14 @@
 #define BLDC_YH		PA10
 #define BLDC_YL		PB15
 
-// Timer BLDC short circuit emergency shutoff define
-// Is initialized here but never used somewhere else in code.
-// setup.c:176	gpio_mode_set(TIMER_BLDC_EMERGENCY_SHUTDOWN_PORT , GPIO_MODE_AF, GPIO_PUPD_NONE, TIMER_BLDC_EMERGENCY_SHUTDOWN);  
-//#define TIMER_BLDC_EMERGENCY_SHUTDOWN		TODO_PIN	// TODO
+// Timer BLDC short circuit emergency shutoff define LOOKS LIKE
+#define TIMER_BLDC_EMERGENCY_SHUTDOWN PB12
 
-// Hall sensor defines
-// mateuszfcg tested with PA1,PA2,PA0 
-//#define HALL_A	PB0	// robo from front+back-photo
-//#define HALL_B	PB1	// robo from front+back-photo
-//#define HALL_C	PA5	// robo from front+back-photo
-//#define HALL_A	PB11	// rhody, swapped with B by robo to keep the 6 bldc output pins as usual
-//#define HALL_B	PA1		// rhody
-//#define HALL_C	PA0		// rhody, swapped with B by robo to keep the 6 bldc output pins as usual
-#define HALL_A	PA0	// nico
-#define HALL_B	PA1		// nico
-#define HALL_C	PB11		// nico
+// Hall sensor defines CORRECT
+#define HALL_A PA0
+#define HALL_C PB11
+#define HALL_B PA1
+
 
 // GD32F130 USART0 TX/RX:	(PA9/PA10)AF1	, (PB6/PB7)AF0 , 	(PA2/PA3)AF1 , (PA14/PA15)AF1 GD32F130x4 only!
 // GD32F130 USART1 GD32F130 TX/RX: (PA14/PA15)AF1 , (PA2,PA3)AF1	, (PA8/PB0)AlternateFunction4
@@ -66,7 +75,7 @@
 #define USART1_RX		PA3
 
 #define VBATT	PA4		//maybe 
-#define CURRENT_DC	PA6		//maybe 
+#define CURRENT_DC	PA5		//maybe 
 
 #define SELF_HOLD	PB2		// rhody tested
 #define BUTTON		PC14 	// rhody tested
@@ -75,11 +84,4 @@
 	// Buzzer defines
 	#define BUZZER	PB9 // rhody tested
 #endif
-
-//#define CHARGE_STATE TODO_PIN
-
-// photo diodes / light barriers on the backside
-#define PHOTO_L		TODO_PIN
-#define PHOTO_R		TODO_PIN
-
 

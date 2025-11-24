@@ -258,7 +258,7 @@ GOT THE THING FLASHING LIGHTS WHEN I SPIN MOTOR!!! This is mainly so I don't for
 #### 21:00 | .5 hours
 Can't get it to spin motors, when I give it power, the motors seems to stiffen though, so somethings happening. Next steps are to flash the pit detection firmware so I can make sure I'm using the right pins for the hall sensors or smt. I think thare should be 3 lights switching when I spin the wheel, not two. So tmrw I will wire an esp32 to see the output of the autodetect firmware! [Video!](https://filz.cc/f/YVN7.mp4)
 
-### Thursday, November 20th | x hours
+### Thursday, November 20th | 3.25 hours
 #### 07:30 | .5 hours
 Made a cable to connect the ESP8266 for commands and debug info, but now when programing, I get this error: `STLink USB communication error`. No idea why because I have not changed anything. Tried diffrent cables with no sucess.
 #### 16:45 | .25 hours
@@ -300,7 +300,38 @@ Anyways rn its still not spinning but I figured out how to get the autodetect fi
 #### 21:00 | 1 hour
 Can't tell if the dummy mode is actualy trying to spin the motor. Rn only 2/3 leds light up for the phases... Ideas for tmrw:
 - Test with python UART
-- Use STM Var viewer thing 
+- Use STM Var viewer thing
+
+### Sunday, November 23rd | x hours
+#### 20:00 | 1.5 hours
+Decided to try and use STM Studio to watch the vars like in the guide. After I got it installed, and then added some stuff to PATH, I got this error. I got it watching the vars, but nothing was happening. My next idea was try changing the hall sensor pins to ones I knew was wrong, this made no change, giving me the idea that its not compiling for the right board. I added a debug message to 2-1-9 and it never ran so I messed with the options a figured out how to select the correct one: `#define LAYOUT 9 // means 2.1.9`
+#### 22:00 | 1 hour
+When it uses the correct files with what I thought was correct hall pins, the leds dont light up at all, and I feel no resistance on the motor. I should see what the pins are on the file I was doing by mistake and use those.
+
+Just tried the halls from the file I was wrongly using (2-1-2) and it did not work. This is good though, so it has to be something else in 2-1-2 but not halls so we can use new halls. Now I am using all settings from 2-1-2 BUT used proper led mappings are we can see all the halls. Still don't know why its not trying to spin...
+
+Switched the `Brushless Control DC (BLDC) defines` and it did nothing, so I think its just not trying to spin at all.
+
+IT SPINSSSSS!!!!! All I did was switch out this bit from 2-1-9 and it started working!!!!!!
+
+```
+// GD32F130 USART0 TX/RX:	(PA9/PA10)AF1	, (PB6/PB7)AF0 , 	(PA2/PA3)AF1 , (PA14/PA15)AF1 GD32F130x4 only!
+// GD32F130 USART1 GD32F130 TX/RX: (PA14/PA15)AF1 , (PA2,PA3)AF1	, (PA8/PB0)AlternateFunction4
+#define USART1_TX		PA2
+#define USART1_RX		PA3
+
+#define VBATT	PA4		//maybe 
+#define CURRENT_DC	PA5		//maybe 
+
+#define SELF_HOLD	PB2		// rhody tested
+#define BUTTON		PC14 	// rhody tested
+
+#ifdef HAS_BUZZER
+	// Buzzer defines
+	#define BUZZER	PB9 // rhody tested
+#endif
+```
+
 
 ## CAD designs
 ### Riser
