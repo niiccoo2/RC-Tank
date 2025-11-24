@@ -1,7 +1,7 @@
 //FOR LAYOUT 2-1-2
 
 #ifdef MASTER_OR_SINGLE		// layout 2.2 and 2.7 have buzzer on the slave board.
-	#define HAS_BUZZER
+	//#define HAS_BUZZER // Buzzer is REALLY annoying
 #endif
 
 /* GD32F130 48pin possible IO pins: 
@@ -23,7 +23,7 @@
 
 #define TODO_PIN PF4	// PF4 is only accessible on the largest GD32F130Rx LQFP64 pinouts mcu
 
-#pragma message "MESSAGE ON 2-1-9"
+//#pragma message "MESSAGE ON 2-1-9"
 
 // LED defines CORRECT
 #define LED_GREEN 			PB3 // Original

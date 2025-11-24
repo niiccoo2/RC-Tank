@@ -44,7 +44,7 @@
 	//#define BATTERY_LOW_SHUTOFF		// will shut off the board below BAT_LOW_DEAD = BAT_CELLS * CELL_LOW_DEAD, 
 	#define BATTERY_LOW_BEEP		// will start beeping for different battery low lwevels
 
-	#define BEEP_BACKWARDS
+	//#define BEEP_BACKWARDS
 
 	//#define DEBUG_LED		// uncomment to activate DEBUG_LedSet(bSet,iColor) macro. iCol: 0=green, 1=organge, 2=red
 

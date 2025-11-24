@@ -302,7 +302,7 @@ Can't tell if the dummy mode is actualy trying to spin the motor. Rn only 2/3 le
 - Test with python UART
 - Use STM Var viewer thing
 
-### Sunday, November 23rd | x hours
+### Sunday, November 23rd | 2.5 hours
 #### 20:00 | 1.5 hours
 Decided to try and use STM Studio to watch the vars like in the guide. After I got it installed, and then added some stuff to PATH, I got this error. I got it watching the vars, but nothing was happening. My next idea was try changing the hall sensor pins to ones I knew was wrong, this made no change, giving me the idea that its not compiling for the right board. I added a debug message to 2-1-9 and it never ran so I messed with the options a figured out how to select the correct one: `#define LAYOUT 9 // means 2.1.9`
 #### 22:00 | 1 hour
@@ -331,6 +331,13 @@ IT SPINSSSSS!!!!! All I did was switch out this bit from 2-1-9 and it started wo
 	#define BUZZER	PB9 // rhody tested
 #endif
 ```
+
+### Monday, November 24th | .33 hours
+#### 07:40 | .33 hours
+Figured out how to turn off the buzzer. It's really annoying. Next steps:
+- Get UART control working
+- Set up on other board
+- Get UART bus working to control both boards with one ESP8266
 
 
 ## CAD designs
