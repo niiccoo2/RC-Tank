@@ -13,7 +13,7 @@ Packet format (simplified, matches hoverboard firmware RemoteUARTBus):
 """
 
 import struct
-import serial
+import serial # type: ignore
 import time
 import sys
 
@@ -23,7 +23,7 @@ import sys
 PORT = "/dev/serial0"
 BAUDRATE = 19200
 SEND_MS = 50
-SLAVES = [0, 1, 2, 3]
+SLAVES = [0]
 
 HEADER = b'NW'
 CMD_SET_SPEED = 0x01
