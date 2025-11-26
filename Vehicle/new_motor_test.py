@@ -22,7 +22,7 @@ import sys
 # ----------------------
 PORT = "/dev/serial0"
 BAUDRATE = 19200
-SEND_MS = 50
+SEND_MS = 100
 SLAVES = [0]
 
 HEADER = b'NW'
