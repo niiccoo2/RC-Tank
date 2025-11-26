@@ -56,7 +56,7 @@
 	#if defined(MASTER) || defined(SINGLE)
 		
 		// choose only one 'remote' to control the motor
-		#define REMOTE_DUMMY
+		//#define REMOTE_DUMMY
 				#ifdef REMOTE_DUMMY
 					#define REMOTE_PERIOD 6 // 3 = 3 seconds period of the zigzag curve
 					#define TEST_HALL2LED	// led the 3-led panel blink according to the hall sensors
@@ -64,7 +64,7 @@
 						#define WINDOWS_RN		// adds a \r before every \n to RTT log
 				#endif
 		//#define REMOTE_UART
-		//#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
+		#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
 				#ifdef REMOTE_UARTBUS
 					#define SLAVE_ID	0		// must be unique for all hoverboards connected to the bus
 				#endif

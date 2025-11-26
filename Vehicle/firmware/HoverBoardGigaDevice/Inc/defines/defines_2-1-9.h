@@ -71,8 +71,8 @@
 
 // GD32F130 USART0 TX/RX:	(PA9/PA10)AF1	, (PB6/PB7)AF0 , 	(PA2/PA3)AF1 , (PA14/PA15)AF1 GD32F130x4 only!
 // GD32F130 USART1 GD32F130 TX/RX: (PA14/PA15)AF1 , (PA2,PA3)AF1	, (PA8/PB0)AlternateFunction4
-#define USART1_TX		PA2
-#define USART1_RX		PA3
+#define USART0_TX		PA2
+#define USART0_RX		PA3
 
 #define VBATT	PA4		//maybe 
 #define CURRENT_DC	PA5		//maybe 

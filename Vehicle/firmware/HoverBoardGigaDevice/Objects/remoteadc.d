@@ -22,7 +22,6 @@
   C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h \
   C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h \
   Src\..\Inc\..\Inc\configSelect.h Src\..\Inc\..\Inc\..\Inc\config.h \
-  Src\..\Inc\..\Inc\remote.h Src\..\Inc\..\Inc\..\Inc\remoteDummy.h \
+  Src\..\Inc\..\Inc\remote.h Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h \
   Src\..\Inc\defines\defines_2-1-9.h Src\..\Inc\..\Inc\setup.h \
-  Src\..\Inc\..\Src\SEGGER_RTT.h Src\..\Inc\..\Src\SEGGER_RTT_Conf.h \
   Src\..\Inc\it.h
