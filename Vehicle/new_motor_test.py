@@ -1,19 +1,6 @@
 #!/usr/bin/env python3
-"""
-RemoteUARTBus Python3 client for Raspberry Pi Zero 2 W
-Sends commands to multiple hoverboards on the same bus.
-
-Packet format (simplified, matches hoverboard firmware RemoteUARTBus):
-[HEADER 0x4E 0x57 "NW"]
-[SLAVE_ID] (0-3)
-[COMMAND_ID] (0x01=set speed/steer)
-[LENGTH] (payload length)
-[STEER_L STEER_H SPEED_L SPEED_H STATE_L STATE_H]
-[CRC_L CRC_H]
-"""
-
 import struct
-import serial # type: ignore
+import serial
 import time
 import sys
 
@@ -23,7 +10,7 @@ import sys
 PORT = "/dev/serial0"
 BAUDRATE = 19200
 SEND_MS = 100
-SLAVES = [0, 1, 2, 3]
+SLAVES = [0, 1]  # hoverboards IDs on your bus
 
 HEADER = b'NW'
 CMD_SET_SPEED = 0x01
@@ -38,37 +25,34 @@ def open_serial(port=PORT, baud=BAUDRATE):
     return ser
 
 # ----------------------
-# CRC helper
+# CRC helper (simple sum)
 # ----------------------
 def calc_crc(data: bytes) -> int:
     return sum(data) & 0xFFFF
 
 # ----------------------
-# Build packet for bus
+# Build full packet
 # ----------------------
-def build_packet(slave_id, steer, speed, state=1):
+def build_packet(slave_id: int, steer: int, speed: int, state: int = 1) -> bytes:
     # clamp values
     steer = max(-32768, min(32767, steer))
     speed = max(-32768, min(32767, speed))
     state = state & 0xFFFF
 
-    payload = struct.pack("<hhH", steer, speed, state)
+    payload = struct.pack("<hhH", steer, speed, state)  # 6 bytes
     length = len(payload)
-    
-    # full packet: HEADER + SLAVE_ID + CMD + LENGTH + PAYLOAD
-    packet = HEADER + bytes([slave_id]) + bytes([CMD_SET_SPEED]) + bytes([length]) + payload
-
-    # append CRC
-    crc = calc_crc(packet)
-    packet += struct.pack("<H", crc)
-
+    packet_no_crc = HEADER + bytes([slave_id, CMD_SET_SPEED, length]) + payload
+    crc = calc_crc(packet_no_crc)
+    packet = packet_no_crc + struct.pack("<H", crc)  # append 2-byte CRC
     return packet
 
+# ----------------------
+# Send command
+# ----------------------
 def send_to_slave(ser, slave_id, steer, speed, state=1):
     packet = build_packet(slave_id, steer, speed, state)
     ser.write(packet)
     ser.flush()
-
 
 # ----------------------
 # Demo loop
@@ -79,6 +63,8 @@ def demo_loop():
 
     iMax = 500
     iPeriod = 3.0
+    send_index = 0
+
     try:
         t_next = time.monotonic()
         while True:
@@ -90,11 +76,12 @@ def demo_loop():
             pseudo2 = int((now / 0.4 + 100)) % 400
             iSteer = int(abs(pseudo2 - 200) - 100)
 
-            # send to all slaves
-            for slave_id in SLAVES:
-                send_to_slave(ser, slave_id, iSteer, iSpeed, state=1)
+            # send to one slave at a time (rotate)
+            slave_id = SLAVES[send_index % len(SLAVES)]
+            send_to_slave(ser, slave_id, iSteer, iSpeed, state=1)
+            send_index += 1
 
-            # wait for next
+            # wait for next send
             t_next += SEND_MS / 1000.0
             sleep_for = t_next - time.monotonic()
             if sleep_for > 0:
