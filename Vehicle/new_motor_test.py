@@ -1,122 +1,114 @@
 #!/usr/bin/env python3
 """
-hover_rpi.py
-Send hoverboard (steer, speed, state) packets from a Raspberry Pi Zero 2 W via UART.
+RemoteUARTBus Python3 client for Raspberry Pi Zero 2 W
+Sends commands to multiple hoverboards on the same bus.
 
-Packet layout (little-endian):
-  uint16 start   = 0xCDAB
-  int16  steer
-  int16  speed
-  uint16 state
-  uint16 crc     = sum(all previous bytes) & 0xFFFF
+Packet format (simplified, matches hoverboard firmware RemoteUARTBus):
+[HEADER 0x4E 0x57 "NW"]
+[SLAVE_ID] (0-3)
+[COMMAND_ID] (0x01=set speed/steer)
+[LENGTH] (payload length)
+[STEER_L STEER_H SPEED_L SPEED_H STATE_L STATE_H]
+[CRC_L CRC_H]
 """
 
 import struct
+import serial
 import time
-import serial # type: ignore
 import sys
 
 # ----------------------
 # Config
 # ----------------------
-PORT = "/dev/serial0"       # change to /dev/ttyUSB0 if using USB-serial adapter
+PORT = "/dev/serial0"
 BAUDRATE = 19200
-SEND_MS = 50                # send interval in milliseconds
-START_WORD = 0xCDAB
+SEND_MS = 50
+SLAVES = [0, 1, 2, 3]
+
+HEADER = b'NW'
+CMD_SET_SPEED = 0x01
 
 # ----------------------
-# Serial open
+# Serial
 # ----------------------
-def open_serial(port=PORT, baud=BAUDRATE, timeout=0.1):
-    try:
-        ser = serial.Serial(port, baudrate=baud, timeout=timeout)
-        # flush input/output
-        ser.reset_input_buffer()
-        ser.reset_output_buffer()
-        return ser
-    except Exception as e:
-        print(f"Failed to open serial port {port}: {e}", file=sys.stderr)
-        raise
+def open_serial(port=PORT, baud=BAUDRATE):
+    ser = serial.Serial(port, baudrate=baud, timeout=0.1)
+    ser.reset_input_buffer()
+    ser.reset_output_buffer()
+    return ser
 
 # ----------------------
-# Build & send packet
+# CRC helper
 # ----------------------
-def build_packet(steer: int, speed: int, state: int = 1) -> bytes:
-    """
-    Build the hoverboard packet (without CRC), compute CRC (sum of bytes),
-    and return the full bytes to send.
-    steer/speed are signed 16-bit. state is unsigned 16-bit.
-    """
-    # pack start, steer, speed, state (little-endian)
-    # '<' = little-endian; H = uint16, h = int16
-    msg = struct.pack("<HhhH", START_WORD, int(steer) & 0xFFFF, int(speed) & 0xFFFF, int(state) & 0xFFFF)
+def calc_crc(data: bytes) -> int:
+    return sum(data) & 0xFFFF
 
-    # compute CRC as sum of bytes of msg modulo 65536
-    # must treat msg as sequence of unsigned bytes
-    crc = sum(msg) & 0xFFFF
+# ----------------------
+# Build packet for bus
+# ----------------------
+def build_packet(slave_id: int, steer: int, speed: int, state: int = 1) -> bytes:
+    # payload: steer(int16) speed(int16) state(uint16)
+    payload = struct.pack("<hhH", steer & 0xFFFF, speed & 0xFFFF, state & 0xFFFF)
+    length = len(payload)
+    packet = HEADER + struct.pack("BBB", slave_id, CMD_SET_SPEED, length) + payload
+    crc = calc_crc(packet)
+    packet += struct.pack("<H", crc)
+    return packet
 
-    full = msg + struct.pack("<H", crc)
-    return full
-
-def send_hover(ser: serial.Serial, steer: int, speed: int, state: int = 1) -> None:
-    packet = build_packet(steer, speed, state)
+# ----------------------
+# Send command to a single slave
+# ----------------------
+def send_to_slave(ser, slave_id, steer, speed, state=1):
+    packet = build_packet(slave_id, steer, speed, state)
     ser.write(packet)
-    # optional: flush to ensure immediate send
     ser.flush()
 
 # ----------------------
-# Simple demo loop
+# Demo loop
 # ----------------------
-def demo_loop(port=PORT, baud=BAUDRATE, send_ms=SEND_MS):
-    ser = open_serial(port, baud)
-    print(f"Opened {port} @ {baud} bps. Sending every {send_ms} ms. Ctrl-C to stop.")
+def demo_loop():
+    ser = open_serial(PORT, BAUDRATE)
+    print(f"Opened {PORT} @ {BAUDRATE} bps. Ctrl-C to stop.")
 
+    iMax = 500
+    iPeriod = 3.0
     try:
         t_next = time.monotonic()
-        iMax = 500
-        iPeriod = 3.0
         while True:
             now = time.monotonic()
-
-            # simple triangular-ish speed pattern similar to original
-            # keep values in signed 16-bit range
-            # note: integer math for steer/speed
             fScaleMax = 1.6 * (max(3, min(int(iPeriod), 9)) / 9.0)
-            # use a repeating saw/triangle based on monotonic time
-            # period scaling to create variation
             pseudo = int((now / iPeriod + 250)) % 1000
             iSpeed = int((fScaleMax * iMax / 100.0) * (abs(pseudo - 500) - 250))
             iSpeed = max(-iMax, min(iMax, iSpeed))
-
             pseudo2 = int((now / 0.4 + 100)) % 400
             iSteer = int(abs(pseudo2 - 200) - 100)
 
-            # state: keep default 1 (ledGreen) unless you want to toggle
-            send_hover(ser, iSteer, iSpeed, state=1)
+            # send to all slaves
+            for slave_id in SLAVES:
+                send_to_slave(ser, slave_id, iSteer, iSpeed, state=1)
 
             # wait for next
-            t_next += send_ms / 1000.0
+            t_next += SEND_MS / 1000.0
             sleep_for = t_next - time.monotonic()
             if sleep_for > 0:
                 time.sleep(sleep_for)
             else:
-                # if we're behind, don't block (prevents drift)
                 t_next = time.monotonic()
+
     except KeyboardInterrupt:
         print("\nStopped by user.")
     finally:
         ser.close()
         print("Serial closed.")
 
-
 # ----------------------
-# Helper CLI to send single commands
+# CLI single command
 # ----------------------
-def cli_send_once(port=PORT, baud=BAUDRATE, steer=0, speed=0, state=1):
-    ser = open_serial(port, baud, timeout=1)
+def cli_send_once(slave_id=0, steer=0, speed=0, state=1):
+    ser = open_serial(PORT, BAUDRATE)
     try:
-        print(f"Sending steer={steer}, speed={speed}, state={state}")
-        send_hover(ser, steer, speed, state)
+        send_to_slave(ser, slave_id, steer, speed, state)
+        print(f"Sent steer={steer}, speed={speed} to slave {slave_id}")
     finally:
         ser.close()
 
@@ -124,14 +116,12 @@ def cli_send_once(port=PORT, baud=BAUDRATE, steer=0, speed=0, state=1):
 # Entry point
 # ----------------------
 if __name__ == "__main__":
-    # Simple CLI:
-    #   python3 hover_rpi.py            -> demo loop
-    #   python3 hover_rpi.py once s p  -> send once (s=steer, p=speed)
     args = sys.argv[1:]
     if len(args) >= 1 and args[0].lower() == "once":
-        s = int(args[1]) if len(args) >= 2 else 0
-        p = int(args[2]) if len(args) >= 3 else 0
-        st = int(args[3]) if len(args) >= 4 else 1
-        cli_send_once(PORT, BAUDRATE, s, p, st)
+        sid = int(args[1]) if len(args) >= 2 else 0
+        s = int(args[2]) if len(args) >= 3 else 0
+        p = int(args[3]) if len(args) >= 4 else 0
+        st = int(args[4]) if len(args) >= 5 else 1
+        cli_send_once(sid, s, p, st)
     else:
-        demo_loop(PORT, BAUDRATE, SEND_MS)
+        demo_loop()
