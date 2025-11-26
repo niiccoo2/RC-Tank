@@ -23,7 +23,7 @@ import sys
 PORT = "/dev/serial0"
 BAUDRATE = 19200
 SEND_MS = 100
-SLAVES = [0]
+SLAVES = [0, 1, 2, 3]
 
 HEADER = b'NW'
 CMD_SET_SPEED = 0x01
