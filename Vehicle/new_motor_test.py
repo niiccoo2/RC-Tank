@@ -46,14 +46,16 @@ def calc_crc(data: bytes) -> int:
 # ----------------------
 # Build packet for bus
 # ----------------------
-def build_packet(slave_id: int, steer: int, speed: int, state: int = 1) -> bytes:
-    # payload: steer(int16) speed(int16) state(uint16)
-    payload = struct.pack("<hhH", steer & 0xFFFF, speed & 0xFFFF, state & 0xFFFF)
-    length = len(payload)
-    packet = HEADER + struct.pack("BBB", slave_id, CMD_SET_SPEED, length) + payload
-    crc = calc_crc(packet)
-    packet += struct.pack("<H", crc)
-    return packet
+def build_packet(slave_id, steer, speed, state=1):
+    # clamp values
+    steer = max(-32768, min(32767, steer))
+    speed = max(-32768, min(32767, speed))
+    state = state & 0xFFFF  # still unsigned
+
+    payload = struct.pack("<hhH", steer, speed, state)
+    # build your full packet with headers/checksum as needed
+    return payload
+
 
 # ----------------------
 # Send command to a single slave
