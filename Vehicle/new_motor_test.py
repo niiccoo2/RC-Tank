@@ -50,20 +50,25 @@ def build_packet(slave_id, steer, speed, state=1):
     # clamp values
     steer = max(-32768, min(32767, steer))
     speed = max(-32768, min(32767, speed))
-    state = state & 0xFFFF  # still unsigned
+    state = state & 0xFFFF
 
     payload = struct.pack("<hhH", steer, speed, state)
-    # build your full packet with headers/checksum as needed
-    return payload
+    length = len(payload)
+    
+    # full packet: HEADER + SLAVE_ID + CMD + LENGTH + PAYLOAD
+    packet = HEADER + bytes([slave_id]) + bytes([CMD_SET_SPEED]) + bytes([length]) + payload
 
+    # append CRC
+    crc = calc_crc(packet)
+    packet += struct.pack("<H", crc)
 
-# ----------------------
-# Send command to a single slave
-# ----------------------
+    return packet
+
 def send_to_slave(ser, slave_id, steer, speed, state=1):
     packet = build_packet(slave_id, steer, speed, state)
     ser.write(packet)
     ser.flush()
+
 
 # ----------------------
 # Demo loop
