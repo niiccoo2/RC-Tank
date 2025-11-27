@@ -40,9 +40,9 @@
 
 	//#define SPEED_AsRevsPerSec		// Will overflow at 327 revs/s = 19620 rpm. Hoverboard motor: 14 rpm/V * 50V = 700 rpm
 
-	#define BAT_CELLS         	10        // battery number of cells. Normal Hoverboard battery: 10s
+	#define BAT_CELLS         	4        // battery number of cells. Normal Hoverboard battery: 10s
 	//#define BATTERY_LOW_SHUTOFF		// will shut off the board below BAT_LOW_DEAD = BAT_CELLS * CELL_LOW_DEAD, 
-	#define BATTERY_LOW_BEEP		// will start beeping for different battery low lwevels
+	//#define BATTERY_LOW_BEEP		// will start beeping for different battery low lwevels
 
 	//#define BEEP_BACKWARDS
 
@@ -58,14 +58,19 @@
 		// choose only one 'remote' to control the motor
 		//#define REMOTE_DUMMY
 				#ifdef REMOTE_DUMMY
-					#define REMOTE_PERIOD 6 // 3 = 3 seconds period of the zigzag curve
+					#define REMOTE_PERIOD 3 // 3 = 3 seconds period of the zigzag curve
 					#define TEST_HALL2LED	// led the 3-led panel blink according to the hall sensors
 					#define RTT_REMOTE	// log and set via ST-Link dongle
 						#define WINDOWS_RN		// adds a \r before every \n to RTT log
 				#endif
-		//#define REMOTE_UART
-		#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
+		
+		//#define REMOTE_USART 1
+		#define TEST_HALL2LED
+				
+		#define REMOTE_UART
+		//#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
 				#ifdef REMOTE_UARTBUS
+					#define TEST_HALL2LED
 					#define SLAVE_ID	0		// must be unique for all hoverboards connected to the bus
 				#endif
 		//#define REMOTE_CRSF		// https://github.com/RoboDurden/Hoverboard-Firmware-Hack-Gen2.x/issues/26
@@ -111,7 +116,7 @@
 	#endif
 	
 	#if defined(REMOTE_UART) || defined(REMOTE_UARTBUS) || defined(REMOTE_CRSF) || defined(REMOTE_ROS2)
-		#define REMOTE_USART				0 	// 	1 is usually PA2/PA3 and the original master-slave 4pin header
+		#define REMOTE_USART				1 	// 	1 is usually PA2/PA3 and the original master-slave 4pin header
 																		//	0 is usually PB6/PB7 and the empty header close to the flash-header
 																		//	2 is usually PB10/PB11 on stm32f103 boards
 	#endif

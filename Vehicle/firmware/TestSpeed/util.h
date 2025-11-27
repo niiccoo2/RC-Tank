@@ -1,34 +1,48 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-String ShiftValue(String &sLine, char* c)
+#include <Arduino.h> // For String, isDigit, etc.
+
+// --- String utilities ---
+inline String ShiftValue(String &sLine, const char* c)
 {
-  //Serial.println("ShiftValue:'"+sLine+"'");
   int i = sLine.indexOf(c);
-  String s = sLine.substring(0,i);
-  sLine.remove(0,i+1);
+  if (i == -1) return "";  // safety check
+  String s = sLine.substring(0, i);
+  sLine.remove(0, i + 1);
   return s;
 }
 
-boolean isUInt(String str)
+inline bool isUInt(const String &str)
 {
-  for(byte i=0; i<str.length(); i++)
-    if (!isDigit(str.charAt(i)) )
+  for (size_t i = 0; i < str.length(); i++)
+    if (!isDigit(str.charAt(i)))
       return false;
-
   return true;
 }
 
-#define ABS(a) (((a) < 0.0) ? -(a) : (a))
-#define CLAMP(x, low, high) (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
-#define MAP(x, xMin, xMax, yMin, yMax) ((x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin)
+// --- Safe math utilities ---
+template <typename T>
+inline T Abs(T val) { return (val < 0) ? -val : val; }
 
+template <typename T>
+inline T Clamp(T val, T low, T high) { 
+  if (val < low) return low;
+  if (val > high) return high;
+  return val;
+}
 
+template <typename T>
+inline T MapVal(T x, T xMin, T xMax, T yMin, T yMax) {
+  return (x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin;
+}
+
+// --- Debug macros ---
 #ifdef _DEBUG
   #define DEBUG(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.print(val);}
   #define DEBUGT(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.print(val); Serial.print(F("\t"));}
-  #define DEBUGTX(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.print(val,HEX); Serial.print(F("\t"));}
-  #define DEBUGTB(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.print(val,BIN); Serial.print(F("\t"));}
+  #define DEBUGTX(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.print(val, HEX); Serial.print(F("\t"));}
+  #define DEBUGTB(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.print(val, BIN); Serial.print(F("\t"));}
   #define DEBUGN(txt, val) {Serial.print(F(txt)); Serial.print(F(": ")); Serial.println(val);}
 #else
   #define DEBUG(txt, val)

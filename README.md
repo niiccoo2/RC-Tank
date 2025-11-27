@@ -451,6 +451,10 @@ Made some code to send the uart stuff from pi, still not working. Next steps:
 
 - Flash and get known good code working on esp8266
 
+#### 20:00 | 1.5 hours
+
+Got it to kinda spin via uart. Rn it spins but at a really weird interval. Next steps are to go back to the rpi and see if I can get it to spin, then tune the code more. Then get it working via uart bus. Then start working on the frame (wood or metal) and figure out hte battery and steering I will use for the first test in NH this weekend.
+
 ## CAD designs
 
 ### Riser
