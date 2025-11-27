@@ -6,72 +6,71 @@ import time
 # ----------------------
 # Config
 # ----------------------
-PORT = "/dev/serial0"  # Change this to your serial port (e.g., COMx on Windows)
+PORT = "/dev/serial0"  # or use the appropriate serial port (e.g., COMx on Windows)
 BAUDRATE = 19200
-SEND_INTERVAL = 0.1  # Delay between packets in seconds (100ms)
-
-SPEED = 500  # Constant speed to be sent
+SEND_INTERVAL = 0.05  # 50ms, matching Arduino SEND_MILLIS
+SPEED = 500  # Constant speed for motors
 STATE = 1  # Enabled
 
-# Packet constants (based on documentation and INO code)
-HEADER = b'\x0C\xFE'  # Header bytes from observed data
-CMD_SET_SPEED = 0x01  # Command ID for setting speed and state
+# Header matches Arduino implementation
+HEADER = b'\xFF\xFF'
 
 # ----------------------
-# Serial Communication Helpers
+# Helper Functions
 # ----------------------
-def open_serial(port=PORT, baud=BAUDRATE):
-    """ Open a serial port with the specified configuration """
-    ser = serial.Serial(port, baudrate=baud, timeout=0.1)
-    ser.reset_input_buffer()
-    ser.reset_output_buffer()
-    return ser
-
 def calc_crc(data: bytes) -> int:
-    """ Calculate a simple CRC (Sum of bytes mod 65536) """
-    return sum(data) & 0xFFFF
+    """Calculate CRC (matching Arduino CalculateCRC function)."""
+    crc = 0xFFFF
+    for byte in data:
+        crc ^= byte << 8
+        for _ in range(8):
+            if crc & 0x8000:
+                crc = (crc << 1) ^ 0x1021
+            else:
+                crc <<= 1
+            crc &= 0xFFFF  # Keep CRC 16-bit
+    return crc
 
-def build_packet(slave_id: int, speed: int, state: int = STATE) -> bytes:
+def build_packet(slave_id: int, speed: int, state: int) -> bytes:
     """
-    Build a data packet for sending to the hoverboard.
-    Packet structure:
-    [HEADER(2)][CMD(1)][SLAVE_ID(1)][payload(6)][CRC(2)]
-    Payload = speed(int16), state(uint16)
+    Builds a packet equivalent to HoverSendDebug in Arduino.
+    Packet = [HEADER(2)][SlaveID(1)][Speed(int16)][State(uint8)][CRC(uint16)]
     """
-    # Ensure speed and state are within valid bounds
+    # Ensure values are within limits
     speed = max(-32768, min(32767, speed))
-    state = state & 0xFFFF
+    state = state & 0xFF
 
-    payload = struct.pack("<hH", speed, state)  # Little-endian: <hH -> int16, uint16
-    crc_input = HEADER + bytes([CMD_SET_SPEED, slave_id]) + payload
-    crc = calc_crc(crc_input)
-    packet = crc_input + struct.pack("<H", crc)  # Append CRC (uint16)
-
+    # Build packet excluding CRC
+    packet_no_crc = HEADER + bytes([slave_id]) + struct.pack("<hB", speed, state)
+    crc = calc_crc(packet_no_crc)
+    packet = packet_no_crc + struct.pack("<H", crc)  # Append CRC as uint16
     return packet
 
-def send_packet(ser, slave_id: int, speed: int, state: int = STATE):
-    """ Build and send a packet to the hoverboard via the serial port """
+def send_packet(ser, slave_id: int, speed: int, state: int):
+    """Send a packet to the hoverboard."""
     packet = build_packet(slave_id, speed, state)
     ser.write(packet)
     ser.flush()
-    print(f"Sent packet to Slave {slave_id}: Speed={speed}, State={state}")
+
+    # Debug: Print the packet
+    print(f"Sent packet to Slave {slave_id}: {packet.hex()}")
 
 # ----------------------
 # Main Loop
 # ----------------------
 def demo_loop():
-    ser = open_serial(PORT, BAUDRATE)
+    ser = serial.Serial(PORT, baudrate=BAUDRATE, timeout=1)
     print(f"Opened {PORT} @ {BAUDRATE} bps. Ctrl-C to stop.")
-    
+
     try:
         while True:
-            # Send constant speed (500) with state=1 to slave 0
+            # Send to slave 0 (left motor)
             send_packet(ser, slave_id=0, speed=SPEED, state=STATE)
 
-            # Send constant speed (500) with state=1 to slave 1
+            # Send to slave 1 (right motor)
             send_packet(ser, slave_id=1, speed=SPEED, state=STATE)
 
-            time.sleep(SEND_INTERVAL)  # Wait for the next cycle
+            time.sleep(SEND_INTERVAL)  # Wait for the next frame
     except KeyboardInterrupt:
         print("\nStopped by user.")
     finally:

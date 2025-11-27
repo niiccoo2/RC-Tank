@@ -68,8 +68,8 @@
 		//#define TEST_HALL2LED
 		#define DISABLE_CHARGESTATE
 				
-		//#define REMOTE_UART
-		#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
+		#define REMOTE_UART
+		//#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
 				#ifdef REMOTE_UARTBUS
 					//#define TEST_HALL2LED
 					#define SLAVE_ID	0		// must be unique for all hoverboards connected to the bus
