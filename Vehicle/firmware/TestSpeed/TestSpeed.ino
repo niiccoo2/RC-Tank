@@ -4,7 +4,7 @@
 
 // ------------------- Config -------------------
 #define BAUDRATE 19200  // Baud rate for hoverboard communication
-#define SEND_MILLIS 20  // Command send interval
+#define SEND_MILLIS 50  // Command send interval
 #define ABS(x) ((x) < 0 ? -(x) : (x))  // Macro for absolute value calculation
 
 // ------------------- Globals -------------------

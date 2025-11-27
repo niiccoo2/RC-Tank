@@ -461,6 +461,11 @@ Got it to kinda spin via uart. Rn it spins but at a really weird interval. Next 
 
 Did a good bit of debugging, so from the var viewer, it looks like every time it starts spinning it gets a speed set, then it times out so therefore the slow down. Now need to figure out why its timing out.
 
+#### 14:00 | .5 hours
+
+Still cant get python to work... This is the data of the semi working code... Also don't know why its timing out...
+![Semi working data](/photos/semi_working_data_bytes.png)
+
 ## CAD designs
 
 ### Riser

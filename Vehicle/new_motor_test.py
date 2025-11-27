@@ -32,19 +32,11 @@ def calc_crc(data: bytes) -> int:
     return crc
 
 def build_packet(slave_id: int, speed: int, state: int) -> bytes:
-    """
-    Builds a packet equivalent to HoverSendDebug in Arduino.
-    Packet = [HEADER(2)][SlaveID(1)][Speed(int16)][State(uint8)][CRC(uint16)]
-    """
-    # Ensure values are within limits
-    speed = max(-32768, min(32767, speed))
-    state = state & 0xFF
-
-    # Build packet excluding CRC
-    packet_no_crc = HEADER + bytes([slave_id]) + struct.pack("<hB", speed, state)
+    HEADER = b'\xE3\x2F'  # Example dynamic header
+    payload = struct.pack("<hB", speed, state)
+    packet_no_crc = HEADER + bytes([slave_id]) + payload
     crc = calc_crc(packet_no_crc)
-    packet = packet_no_crc + struct.pack("<H", crc)  # Append CRC as uint16
-    return packet
+    return packet_no_crc + struct.pack("<H", crc)
 
 def send_packet(ser, slave_id: int, speed: int, state: int):
     """Send a packet to the hoverboard."""
