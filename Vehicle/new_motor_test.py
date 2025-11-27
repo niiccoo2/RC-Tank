@@ -4,16 +4,17 @@ import serial  # type: ignore
 import time
 
 # ----------------------
-# Config (mirror Arduino)
+# Config
 # ----------------------
 PORT = "/dev/serial0"  # or COM port on Windows
 BAUDRATE = 19200
-SEND_MILLIS = 100
-SLAVES = [0, 1]  # hoverboard IDs
+SEND_INTERVAL = 0.1  # seconds between packets
+
 iMax = 500
 iPeriod = 3.0
 
-HEADER = b'NW'
+# Packet constants (from INO raw data)
+HEADER = b'\x0C\xFE'
 CMD_SET_SPEED = 0x01
 
 # ----------------------
@@ -26,42 +27,45 @@ def open_serial(port=PORT, baud=BAUDRATE):
     return ser
 
 def calc_crc(data: bytes) -> int:
-    """Simple sum CRC, 16-bit"""
+    """Simple CRC as sum of bytes modulo 65536 (matching INO)"""
     return sum(data) & 0xFFFF
 
-def build_packet(slave_id: int, steer: int, speed: int, state: int = 1) -> bytes:
-    """Build packet exactly like Arduino format"""
-    # Clamp values to int16 for steer & speed
+def build_packet(steer: int, speed: int, state: int = 1) -> bytes:
+    """
+    Build a hoverboard packet similar to Arduino.
+    Packet structure (from INO observation):
+    [HEADER(2)][CMD(1)][??(2)][payload(6)][CRC(2)]
+    Payload = steer(int16), speed(int16), state(uint16)
+    """
     steer = max(-32768, min(32767, steer))
     speed = max(-32768, min(32767, speed))
     state = state & 0xFFFF
 
-    payload = struct.pack("<hhH", steer, speed, state)  # 6 bytes
-    length = len(payload)
-    packet_no_crc = HEADER + bytes([slave_id, CMD_SET_SPEED, length]) + payload
+    payload = struct.pack("<hhH", steer, speed, state)
+    # Two unknown bytes between CMD and payload (observed as 0x01 0x00)
+    middle_bytes = b'\x01\x00'
+    packet_no_crc = HEADER + bytes([CMD_SET_SPEED]) + middle_bytes + payload
     crc = calc_crc(packet_no_crc)
-    return packet_no_crc + struct.pack("<H", crc)
+    packet = packet_no_crc + struct.pack("<H", crc)
+    return packet
 
-def send_to_slave(ser, slave_id, steer, speed, state=1):
-    packet = build_packet(slave_id, steer, speed, state)
+def send_packet(ser, steer: int, speed: int, state: int = 1):
+    packet = build_packet(steer, speed, state)
     ser.write(packet)
     ser.flush()
 
 # ----------------------
-# Main loop (mirror Arduino)
+# Main loop
 # ----------------------
 def demo_loop():
     ser = open_serial(PORT, BAUDRATE)
     print(f"Opened {PORT} @ {BAUDRATE} bps. Ctrl-C to stop.")
 
-    send_index = 0
-    t_next = time.monotonic()
-
     try:
         while True:
             now = time.monotonic()
 
-            # --- Calculate speed and steer exactly like Arduino ---
+            # --- Generate pseudo speed/steer like Arduino ---
             pseudo_speed = int(now / iPeriod + 250) % 1000
             iSpeed = int((1.6 * iMax / 100.0) * (abs(pseudo_speed - 500) - 250))
             iSpeed = max(-iMax, min(iMax, iSpeed))
@@ -69,22 +73,13 @@ def demo_loop():
             pseudo_steer = int(now / 0.4 + 100) % 400
             iSteer = int(abs(pseudo_steer - 200) - 100)
 
-            # --- Rotate through slaves and alternate sending ---
-            slave_id = SLAVES[send_index % len(SLAVES)]
-            if send_index % 2 == 0:
-                send_to_slave(ser, slave_id, iSpeed + iSteer, iSpeed + iSteer, state=1)
+            # Alternate direction
+            if int(now / SEND_INTERVAL) % 2 == 0:
+                send_packet(ser, iSteer, iSpeed, state=1)
             else:
-                send_to_slave(ser, slave_id, -iSpeed + iSteer, -iSpeed + iSteer, state=1)
+                send_packet(ser, -iSteer, -iSpeed, state=1)
 
-            send_index += 1
-
-            # --- Wait until next send ---
-            t_next += SEND_MILLIS / 1000.0
-            sleep_for = t_next - time.monotonic()
-            if sleep_for > 0:
-                time.sleep(sleep_for)
-            else:
-                t_next = time.monotonic()
+            time.sleep(SEND_INTERVAL)
 
     except KeyboardInterrupt:
         print("\nStopped by user.")
