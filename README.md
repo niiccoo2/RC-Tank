@@ -443,7 +443,7 @@ Figured out how to turn off the buzzer. It's really annoying. Next steps:
 - Set up on other board
 - Get UART bus working to control both boards with one ESP8266
 
-### Wendsday, November 26th | x hours
+### Wendsday, November 26th | 3 hours
 
 #### 16:00 | 1.5 hours
 
