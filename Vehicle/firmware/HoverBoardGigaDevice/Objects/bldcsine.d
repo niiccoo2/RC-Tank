@@ -25,7 +25,7 @@
   Src\..\Inc\..\Inc\..\Inc\configSelect.h \
   Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h \
   Src\..\Inc\..\Inc\..\Inc\remote.h \
-  Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUart.h \
+  Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUartBus.h \
   Src\..\Inc\..\Inc\defines\defines_2-1-9.h \
   Src\..\Inc\..\Inc\..\Inc\setup.h Src\..\Inc\..\Inc\bldcSINE.h \
   Src\..\Inc\it.h Src\..\Inc\..\Inc\configSelect.h

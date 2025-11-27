@@ -455,6 +455,12 @@ Made some code to send the uart stuff from pi, still not working. Next steps:
 
 Got it to kinda spin via uart. Rn it spins but at a really weird interval. Next steps are to go back to the rpi and see if I can get it to spin, then tune the code more. Then get it working via uart bus. Then start working on the frame (wood or metal) and figure out hte battery and steering I will use for the first test in NH this weekend.
 
+### Thursday, November 27th | x hours
+
+#### 11:40 | 1 hour
+
+Did a good bit of debugging, so from the var viewer, it looks like every time it starts spinning it gets a speed set, then it times out so therefore the slow down. Now need to figure out why its timing out.
+
 ## CAD designs
 
 ### Riser
