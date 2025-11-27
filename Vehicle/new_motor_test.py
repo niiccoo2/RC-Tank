@@ -6,11 +6,12 @@ import time
 # ----------------------
 # Hoverboard Configuration
 # ----------------------
-PORT = "/dev/serial0"  # Serial connection to hoverboard
-BAUDRATE = 19200  # Baud rate matches Arduino setup
+PORT = "/dev/serial0"  # Adjust as necessary for your system
+BAUDRATE = 19200  # Matches Arduino setup
 SEND_INTERVAL = 0.05  # 50ms interval between transmissions
 SPEED = 500  # Motor speed: -1000 to +1000
-STATE = 1  # Enabled state
+CMD_BYTE = 0x82  # Command/Mode field observed in Arduino structure
+STATE = 0xFF  # State: Enabled or all bits set
 
 # ----------------------
 # Utilities
@@ -27,37 +28,35 @@ def calc_crc(data: bytes) -> int:
                 crc <<= 1
     return crc & 0xFFFF  # Ensure 16-bit CRC
 
-def build_packet(slave_id: int, speed: int, state: int = STATE) -> bytes:
+def build_packet(slave_id: int, speed: int) -> bytes:
     """
-    Build a hoverboard packet matching observed structure:
-    Dynamic Byte + Start Byte + Slave ID + Speed + State + CRC
+    Build a hoverboard packet matching Arduino examples:
+    Start Byte (`0x2F`) + Command Byte + Speed + State + CRC
     """
     # Ensure valid ranges
     speed = max(-1000, min(1000, speed))  # Limit speed [-1000, 1000]
-    state = state & 0xFF  # Limit state to a single byte
 
-    # Dynamic Byte + Start Byte
-    dynamic_byte = b'\xE3'  # Observed dynamic byte
-    start_byte = b'\x2F'    # Start byte (`'/'` or 0x2F)
+    # Packet Data
+    start_byte = b'\x2F'             # Start byte (`'/'`)
+    command_byte = CMD_BYTE.to_bytes(1, 'big')  # `0x82`
+    speed_bytes = struct.pack("<h", speed)     # Motor speed (little-endian)
+    state_byte = STATE.to_bytes(1, 'big')      # State field (`0xFF`)
 
-    # Payload: Slave ID (uint8), Speed (int16, little-endian), State (uint8)
-    payload = struct.pack("<bhB", slave_id, speed, state)
+    # Combine fields for CRC calculation
+    packet_no_crc = start_byte + command_byte + struct.pack("<B", slave_id) + speed_bytes + state_byte
+    checksum = calc_crc(packet_no_crc)  # Generate CRC for the packet
 
-    # Combine for CRC calculation
-    packet_no_crc = dynamic_byte + start_byte + payload
-    checksum = calc_crc(packet_no_crc)  # Generate CRC
-
-    # Final packet: Add CRC at the end
+    # Final Packet: Prefix Start Byte and Append CRC
     packet = packet_no_crc + struct.pack("<H", checksum)
     return packet
 
-def send_packet(ser, slave_id: int, speed: int, state: int):
+def send_packet(ser, slave_id: int, speed: int):
     """Send a hoverboard control packet."""
-    packet = build_packet(slave_id, speed, state)
+    packet = build_packet(slave_id, speed)
     ser.write(packet)
     ser.flush()
 
-    # Debugging: Print each sent packet for verification
+    # Debugging: Print each sent packet
     print(f"Sent packet to Slave {slave_id}: {packet.hex()}")
 
 # ----------------------
@@ -71,10 +70,10 @@ def demo_loop():
     try:
         while True:
             # Send to Slave 0 (left motor)
-            send_packet(ser, slave_id=0, speed=SPEED, state=STATE)
+            send_packet(ser, slave_id=0, speed=SPEED)
 
             # Send to Slave 1 (right motor)
-            send_packet(ser, slave_id=1, speed=SPEED, state=STATE)
+            send_packet(ser, slave_id=1, speed=SPEED)
 
             # Maintain 50ms interval
             time.sleep(SEND_INTERVAL)
