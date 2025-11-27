@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import struct
-import serial # type: ignore
+import serial  # type: ignore
 import time
 
 # ----------------------
@@ -26,13 +26,17 @@ def open_serial(port=PORT, baud=BAUDRATE):
     return ser
 
 def calc_crc(data: bytes) -> int:
+    """Simple sum CRC, 16-bit"""
     return sum(data) & 0xFFFF
 
 def build_packet(slave_id: int, steer: int, speed: int, state: int = 1) -> bytes:
+    """Build packet exactly like Arduino format"""
+    # Clamp values to int16 for steer & speed
     steer = max(-32768, min(32767, steer))
     speed = max(-32768, min(32767, speed))
     state = state & 0xFFFF
-    payload = struct.pack("<hhH", steer, speed, state)
+
+    payload = struct.pack("<hhH", steer, speed, state)  # 6 bytes
     length = len(payload)
     packet_no_crc = HEADER + bytes([slave_id, CMD_SET_SPEED, length]) + payload
     crc = calc_crc(packet_no_crc)
@@ -44,7 +48,7 @@ def send_to_slave(ser, slave_id, steer, speed, state=1):
     ser.flush()
 
 # ----------------------
-# Main loop
+# Main loop (mirror Arduino)
 # ----------------------
 def demo_loop():
     ser = open_serial(PORT, BAUDRATE)
@@ -65,12 +69,12 @@ def demo_loop():
             pseudo_steer = int(now / 0.4 + 100) % 400
             iSteer = int(abs(pseudo_steer - 200) - 100)
 
-            # --- Rotate through slaves ---
+            # --- Rotate through slaves and alternate sending ---
             slave_id = SLAVES[send_index % len(SLAVES)]
             if send_index % 2 == 0:
-                send_to_slave(ser, slave_id, iSteer, iSpeed, state=1)
+                send_to_slave(ser, slave_id, iSpeed + iSteer, iSpeed + iSteer, state=1)
             else:
-                send_to_slave(ser, slave_id, -iSteer, -iSpeed, state=1)
+                send_to_slave(ser, slave_id, -iSpeed + iSteer, -iSpeed + iSteer, state=1)
 
             send_index += 1
 
