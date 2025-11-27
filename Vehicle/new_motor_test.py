@@ -4,12 +4,12 @@ import serial  # type: ignore
 import time
 
 # ----------------------
-# Configuration
+# Hoverboard Configuration
 # ----------------------
-PORT = "/dev/serial0"  # Adjust as necessary (e.g., COMx on Windows)
-BAUDRATE = 19200  # Matches Arduino setup
-SEND_INTERVAL = 0.05  # Send commands every 50ms
-SPEED = 500  # Constant motor speed
+PORT = "/dev/serial0"  # Serial connection to hoverboard
+BAUDRATE = 19200  # Baud rate matches Arduino setup
+SEND_INTERVAL = 0.05  # 50ms interval between transmissions
+SPEED = 500  # Motor speed: -1000 to +1000
 STATE = 1  # Enabled state
 
 # ----------------------
@@ -30,32 +30,34 @@ def calc_crc(data: bytes) -> int:
 def build_packet(slave_id: int, speed: int, state: int = STATE) -> bytes:
     """
     Build a hoverboard packet matching observed structure:
-    Dynamic byte + Start Byte + Slave ID + Speed + State + CRC
+    Dynamic Byte + Start Byte + Slave ID + Speed + State + CRC
     """
-    # Ensure values fit within expected ranges
-    speed = max(-1000, min(1000, speed))  # Clamp speed to [-1000, 1000]
-    state = state & 0xFF  # Ensure state is an 8-bit value
+    # Ensure valid ranges
+    speed = max(-1000, min(1000, speed))  # Limit speed [-1000, 1000]
+    state = state & 0xFF  # Limit state to a single byte
 
-    # Packet fields
-    dynamic_byte = b'\xE3'  # Dynamic byte observed in the working data
-    start_byte = b'\x2F'   # Start byte ('/')
-    payload = struct.pack("<bhB", slave_id, speed, state)  # Slave ID, Speed (little-endian), and State
+    # Dynamic Byte + Start Byte
+    dynamic_byte = b'\xE3'  # Observed dynamic byte
+    start_byte = b'\x2F'    # Start byte (`'/'` or 0x2F)
 
-    # Calculate CRC for the full packet excluding the CRC itself
+    # Payload: Slave ID (uint8), Speed (int16, little-endian), State (uint8)
+    payload = struct.pack("<bhB", slave_id, speed, state)
+
+    # Combine for CRC calculation
     packet_no_crc = dynamic_byte + start_byte + payload
-    checksum = calc_crc(packet_no_crc)
+    checksum = calc_crc(packet_no_crc)  # Generate CRC
 
-    # Append CRC (little-endian)
+    # Final packet: Add CRC at the end
     packet = packet_no_crc + struct.pack("<H", checksum)
     return packet
 
-def send_packet(ser, slave_id: int, speed: int, state: int = STATE):
+def send_packet(ser, slave_id: int, speed: int, state: int):
     """Send a hoverboard control packet."""
     packet = build_packet(slave_id, speed, state)
     ser.write(packet)
     ser.flush()
 
-    # Debugging: Log the sent packet
+    # Debugging: Print each sent packet for verification
     print(f"Sent packet to Slave {slave_id}: {packet.hex()}")
 
 # ----------------------
@@ -64,17 +66,18 @@ def send_packet(ser, slave_id: int, speed: int, state: int = STATE):
 def demo_loop():
     # Setup the serial connection
     ser = serial.Serial(PORT, baudrate=BAUDRATE, timeout=1)
-    print(f"Opened {PORT} @ {BAUDRATE} bps. Press Ctrl-C to stop.")
+    print(f"Opened serial port {PORT} @ {BAUDRATE} bps. Press Ctrl-C to stop.")
 
     try:
         while True:
-            # Send constant speed to slave 0 (left motor)
+            # Send to Slave 0 (left motor)
             send_packet(ser, slave_id=0, speed=SPEED, state=STATE)
 
-            # Send constant speed to slave 1 (right motor)
+            # Send to Slave 1 (right motor)
             send_packet(ser, slave_id=1, speed=SPEED, state=STATE)
 
-            time.sleep(SEND_INTERVAL)  # Maintain consistent timing
+            # Maintain 50ms interval
+            time.sleep(SEND_INTERVAL)
 
     except KeyboardInterrupt:
         print("\nStopped by user.")
