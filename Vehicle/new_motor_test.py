@@ -60,11 +60,12 @@ def build_packet(slave_id: int, speed: int, state: int) -> bytes:
 
 def send_packet(slave_id: int, speed: int, state: int):
     """Send a hoverboard control packet."""
+    packet = build_packet(slave_id, speed, state)
+
     global ser
     if ser is None:
         raise RuntimeError("Serial port is not open. Call demo_loop() or open the serial port before sending packets.")
 
-    packet = build_packet(slave_id, speed, state)
     ser.write(packet)
     ser.flush()
 
