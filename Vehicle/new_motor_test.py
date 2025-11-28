@@ -9,7 +9,7 @@ import time
 PORT = "/dev/serial0"  # Adjust as necessary for your system
 BAUDRATE = 4800  # Matches Arduino setup
 SEND_INTERVAL = 0.1  # 100ms interval between transmissions
-MAX_SPEED = 500  # Maximum speed for control
+MAX_SPEED = 1000  # Maximum speed for control
 MAX_STEER = 300  # Maximum steering value
 PERIOD = 3  # Zigzag period in seconds (for dynamic speed calculation)
 
