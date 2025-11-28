@@ -455,7 +455,7 @@ Made some code to send the uart stuff from pi, still not working. Next steps:
 
 Got it to kinda spin via uart. Rn it spins but at a really weird interval. Next steps are to go back to the rpi and see if I can get it to spin, then tune the code more. Then get it working via uart bus. Then start working on the frame (wood or metal) and figure out hte battery and steering I will use for the first test in NH this weekend.
 
-### Thursday, November 27th | x hours
+### Thursday, November 27th | 4.5 hours
 
 #### 11:40 | 1 hour
 
@@ -465,6 +465,144 @@ Did a good bit of debugging, so from the var viewer, it looks like every time it
 
 Still cant get python to work... This is the data of the semi working code... Also don't know why its timing out...
 ![Semi working data](/photos/semi_working_data_bytes.png)
+
+#### 18:00 | 3 hours
+
+Got it to follow cmds! I had to switch from 19200 to 4800 buad. Now for the time explanation: First spend a while understanding how the code worked. Code in question:
+
+Old code:
+
+```cpp
+void RemoteCallback(void)
+{
+	uint8_t cRead = USART_REMOTE_BUFFER[0];
+	//DEBUG_LedSet(SET,0)
+	//DEBUG_LedSet((steerCounter%20) < 10,0)	//
+	if (	(iReceivePos<0) && (cRead == '/'))	// Start character is captured, start record
+	{
+		iReceivePos++;
+	}
+
+	if (iReceivePos >= 0)		// data reading has begun
+	{
+		aReceiveBuffer[iReceivePos++] = cRead;
+		if (iReceivePos == sizeof(SerialServer2Hover))
+		{
+			SerialServer2Hover* pData = (SerialServer2Hover*) aReceiveBuffer;
+			//memcpy(aDebug,aReceiveBuffer,sizeof(SerialServer2Hover));
+			//if (1)
+
+			nicoRxCRC = pData->checksum;
+			nicoCalcCRC = CalcCRC(aReceiveBuffer, sizeof(SerialServer2Hover) - 2);
+
+
+			if (pData->checksum == CalcCRC(aReceiveBuffer, sizeof(SerialServer2Hover) - 2))	//  first bytes except crc
+			{
+				iTimeLastRx = millis();
+				bRemoteTimeout = 0;
+				speed = pData->iSpeed;
+				steer = pData->iSteer;
+				wState = pData->wStateMaster;
+				wStateSlave = pData->wStateSlave;
+				//if (speed > 300) speed = 300;	else if (speed < -300) speed = -300;		// for testing this function
+
+				ResetTimeout();	// Reset the pwm timout to avoid stopping motors
+				iReceivePos = -1;
+			}
+			else
+				iReceivePos = -2;	// skip next start character in case there was another such char in message
+		}
+	}
+}
+```
+
+New code:
+
+```cpp
+void RemoteCallback(void) {
+    uint8_t cRead = USART_REMOTE_BUFFER[0]; // Read the incoming byte
+
+    // Log raw data into nicoRawData for debugging purposes
+    nicoRawData[nicoRawIndex] = cRead; // Save the raw byte
+    nicoRawIndex = (nicoRawIndex + 1) % 128; // Move to the next index, wrap around if the buffer is full
+
+    // If we are in idle state (waiting for start character) and receive the start character
+    if ((iReceivePos < 0) && (cRead == '/')) {
+        iReceivePos = 0; // Start recording data
+        aReceiveBuffer[iReceivePos++] = cRead; // Save the start character
+        return; // Wait for further data
+    }
+
+    // If data reading has begun
+    if (iReceivePos >= 0) {
+        aReceiveBuffer[iReceivePos++] = cRead; // Record the incoming byte to the buffer
+
+        // If buffer is full, process the message
+        if (iReceivePos == sizeof(SerialServer2Hover)) {
+            SerialServer2Hover* pData = (SerialServer2Hover*)aReceiveBuffer;
+
+            // Assign debug values for CRC
+            nicoRxCRC = pData->checksum; // Store received CRC for debugging
+            nicoCalcCRC = CalcCRC(aReceiveBuffer, sizeof(SerialServer2Hover) - 2); // Calculate local CRC for debugging
+
+            // Check if CRC matches
+            if (nicoRxCRC == nicoCalcCRC) {
+                // Valid message
+                iTimeLastRx = millis(); // Update timestamp of last valid message
+                bRemoteTimeout = 0; // Clear timeout flag
+                speed = pData->iSpeed; // Extract speed
+                steer = pData->iSteer; // Extract steering
+                wState = pData->wStateMaster; // Extract master state
+                wStateSlave = pData->wStateSlave; // Extract slave state
+
+                ResetTimeout(); // Reset PWM timeout to avoid stopping motors
+                iReceivePos = -1; // Reset position to idle (ready for next message)
+            } else {
+                // CRC mismatch, invalid message
+                // Set position to -2 (error state) and wait for the next valid start character
+                iReceivePos = -2;
+            }
+        }
+    }
+
+    // Handle failed state (-2): Skip until the next start character
+    if (iReceivePos == -2) {
+        if (cRead == '/') {
+            // Valid start character detected, reset and start recording new message
+            iReceivePos = 0;
+            aReceiveBuffer[iReceivePos++] = cRead;
+        }
+    }
+
+    // Handle buffer overflow (unexpected condition)
+    if (iReceivePos >= sizeof(aReceiveBuffer)) {
+        iReceivePos = -1; // Reset to idle state to avoid overriding memory
+    }
+}
+```
+
+Make sure that both sides were calculating CRC (checksums) the same way, they were. Then added some global vars so I could see the values of CRCrx and CRCcalc. For some reason they are diffrent most of the time. Then spent a while looking at code to understand why they were not calculating the same.
+
+Then hooked up my logic analyzer to look at the raw data. It was the same each time... (Thats good) ![Picture of data](/photos/data_from_logic.png) (This is not the final, or correct data). Also hooked up normal scope to make sure it looked clean and not noisy. It was fine.
+
+At this point, I was almost about to restart with another set of code for the hoverboard. But then I decided to do one last thing and change the baud rate from 19200 to 4800 and it worked!!
+
+Right now there are still a few issues with the wheel, other than needing to get it working from a pi (not a esp8266) and needing to use UART Bus:
+
+- Seems to have a very conservative breaking / slow down. Like VERY slow, if you stop giving it cmds, it takes almost 10 secs to stop from speed 400.
+- Seems to make a loud noise when running at high speeds, idk if this is because it is hitting my power limits (set on PS) or if its because its floating rn, and not on the ground, hopefully this fixes itself.
+
+Things to do tmrw:
+
+- Fix conservative breaking
+- Make sure second wheel and contoller work alone
+- UART Bus
+- Frame
+- Wire the new python code into the old stuff
+- Might need to finish getting webRTC working, might just skip that though
+- Set up modem with usb ub
+- Figure out what >= 14v battery to use for it
+- ^ Might need to make harness for two 2s batts
 
 ## CAD designs
 

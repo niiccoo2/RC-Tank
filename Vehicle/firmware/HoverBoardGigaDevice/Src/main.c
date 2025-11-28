@@ -91,6 +91,11 @@ void ShowBatteryState(int8_t iLevel);
 	FlagStatus enable = RESET;
 		int16_t pwmSlave = 0;
 
+		uint16_t nicoRxCRC = 0;
+		uint16_t nicoCalcCRC = 0;
+		
+		uint8_t nicoRawData[128];
+		uint16_t nicoRawIndex = 0;
 	
 uint32_t iTimeNextLoop = 0;
 //----------------------------------------------------------------------------

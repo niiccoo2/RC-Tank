@@ -2,7 +2,7 @@
 #define REMOTE_UART_H
 
 #ifndef REMOTE_BAUD 
-	#define REMOTE_BAUD 19200
+	#define REMOTE_BAUD 4800
 #endif
 
 #define SEND_INTERVAL_MS	100	// sending SerialHover2Server data every 100 ms to ESP32/Arduino

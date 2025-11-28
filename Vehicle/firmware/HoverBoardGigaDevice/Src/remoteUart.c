@@ -149,9 +149,14 @@ void RemoteUpdate(void)
 
 extern uint32_t steerCounter;								// Steer counter for setting update rate
 
+extern uint16_t nicoRxCRC;
+extern uint16_t nicoCalcCRC;
+extern uint8_t nicoRawData[128];
+extern uint16_t nicoRawIndex;
 
 // Update USART steer input
 // static int16_t iReceivePos = -1;		// if >= 0 incoming bytes are recorded until message size reached
+/*
 void RemoteCallback(void)
 {
 	uint8_t cRead = USART_REMOTE_BUFFER[0];
@@ -170,6 +175,11 @@ void RemoteCallback(void)
 			SerialServer2Hover* pData = (SerialServer2Hover*) aReceiveBuffer;
 			//memcpy(aDebug,aReceiveBuffer,sizeof(SerialServer2Hover));
 			//if (1)
+			
+			nicoRxCRC = pData->checksum;
+			nicoCalcCRC = CalcCRC(aReceiveBuffer, sizeof(SerialServer2Hover) - 2);
+			
+			
 			if (pData->checksum == CalcCRC(aReceiveBuffer, sizeof(SerialServer2Hover) - 2))	//  first bytes except crc
 			{
 				iTimeLastRx = millis();
@@ -188,6 +198,69 @@ void RemoteCallback(void)
 		}
 	}
 }
+*/
+
+void RemoteCallback(void) {
+    uint8_t cRead = USART_REMOTE_BUFFER[0]; // Read the incoming byte
+
+    // Log raw data into nicoRawData for debugging purposes
+    nicoRawData[nicoRawIndex] = cRead; // Save the raw byte
+    nicoRawIndex = (nicoRawIndex + 1) % 128; // Move to the next index, wrap around if the buffer is full
+
+    // If we are in idle state (waiting for start character) and receive the start character
+    if ((iReceivePos < 0) && (cRead == '/')) {
+        iReceivePos = 0; // Start recording data
+        aReceiveBuffer[iReceivePos++] = cRead; // Save the start character
+        return; // Wait for further data
+    }
+
+    // If data reading has begun
+    if (iReceivePos >= 0) {
+        aReceiveBuffer[iReceivePos++] = cRead; // Record the incoming byte to the buffer
+
+        // If buffer is full, process the message
+        if (iReceivePos == sizeof(SerialServer2Hover)) {
+            SerialServer2Hover* pData = (SerialServer2Hover*)aReceiveBuffer;
+
+            // Assign debug values for CRC
+            nicoRxCRC = pData->checksum; // Store received CRC for debugging
+            nicoCalcCRC = CalcCRC(aReceiveBuffer, sizeof(SerialServer2Hover) - 2); // Calculate local CRC for debugging
+
+            // Check if CRC matches
+            if (nicoRxCRC == nicoCalcCRC) {
+                // Valid message
+                iTimeLastRx = millis(); // Update timestamp of last valid message
+                bRemoteTimeout = 0; // Clear timeout flag
+                speed = pData->iSpeed; // Extract speed
+                steer = pData->iSteer; // Extract steering
+                wState = pData->wStateMaster; // Extract master state
+                wStateSlave = pData->wStateSlave; // Extract slave state
+
+                ResetTimeout(); // Reset PWM timeout to avoid stopping motors
+                iReceivePos = -1; // Reset position to idle (ready for next message)
+            } else {
+                // CRC mismatch, invalid message
+                // Set position to -2 (error state) and wait for the next valid start character
+                iReceivePos = -2;
+            }
+        }
+    }
+
+    // Handle failed state (-2): Skip until the next start character
+    if (iReceivePos == -2) {
+        if (cRead == '/') {
+            // Valid start character detected, reset and start recording new message
+            iReceivePos = 0;
+            aReceiveBuffer[iReceivePos++] = cRead;
+        }
+    }
+
+    // Handle buffer overflow (unexpected condition)
+    if (iReceivePos >= sizeof(aReceiveBuffer)) {
+        iReceivePos = -1; // Reset to idle state to avoid overriding memory
+    }
+}
+
 
 /*
 // Update USART steer input
