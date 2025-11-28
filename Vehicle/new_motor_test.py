@@ -7,11 +7,19 @@ import time
 # Hoverboard Configuration
 # ----------------------
 PORT = "/dev/serial0"  # Adjust as necessary for your system
-BAUDRATE = 19200  # Matches Arduino setup
-SEND_INTERVAL = 0.05  # 50ms interval between transmissions
-SPEED = 500  # Motor speed: -1000 to +1000
-CMD_BYTE = 0x82  # Command/Mode field observed in Arduino structure
-STATE = 0xFF  # State: Enabled or all bits set
+BAUDRATE = 4800  # Matches Arduino setup
+SEND_INTERVAL = 0.1  # 100ms interval between transmissions
+CMD_BYTE = 0x82  # Command/Mode field
+WSTATE_INITIAL = 0x01  # Initial state for wState
+MAX_SPEED = 500  # Maximum speed amplitude for zigzag
+PERIOD = 3  # Zigzag period in seconds
+
+# ----------------------
+# Globals
+# ----------------------
+w_state = WSTATE_INITIAL
+next_state_time = time.time() + 3
+ser = None
 
 # ----------------------
 # Utilities
@@ -28,7 +36,7 @@ def calc_crc(data: bytes) -> int:
                 crc <<= 1
     return crc & 0xFFFF  # Ensure 16-bit CRC
 
-def build_packet(slave_id: int, speed: int) -> bytes:
+def build_packet(slave_id: int, speed: int, state: int) -> bytes:
     """
     Build a hoverboard packet matching Arduino examples:
     Start Byte (`0x2F`) + Command Byte + Speed + State + CRC
@@ -40,7 +48,7 @@ def build_packet(slave_id: int, speed: int) -> bytes:
     start_byte = b'\x2F'             # Start byte (`'/'`)
     command_byte = CMD_BYTE.to_bytes(1, 'big')  # `0x82`
     speed_bytes = struct.pack("<h", speed)     # Motor speed (little-endian)
-    state_byte = STATE.to_bytes(1, 'big')      # State field (`0xFF`)
+    state_byte = state.to_bytes(1, 'big')      # State field
 
     # Combine fields for CRC calculation
     packet_no_crc = start_byte + command_byte + struct.pack("<B", slave_id) + speed_bytes + state_byte
@@ -50,32 +58,71 @@ def build_packet(slave_id: int, speed: int) -> bytes:
     packet = packet_no_crc + struct.pack("<H", checksum)
     return packet
 
-def send_packet(ser, slave_id: int, speed: int):
+def send_packet(slave_id: int, speed: int, state: int):
     """Send a hoverboard control packet."""
-    packet = build_packet(slave_id, speed)
+    global ser
+    if ser is None:
+        raise RuntimeError("Serial port is not open. Call demo_loop() or open the serial port before sending packets.")
+
+    packet = build_packet(slave_id, speed, state)
     ser.write(packet)
     ser.flush()
 
     # Debugging: Print each sent packet
-    print(f"Sent packet to Slave {slave_id}: {packet.hex()}")
+    print(f"Sent packet to Slave {slave_id} | Speed: {speed} | State: {state} | Packet: {packet.hex()}")
+
+def calculate_speeds(t: float) -> tuple[int, int]:
+    """Calculate dynamic speeds for zigzag behavior."""
+    scaled_time = (t % PERIOD) / PERIOD  # Scaled time [0, 1)
+    scale_factor = 1.6 * (min(max(PERIOD, 3), 9) / 9.0)  # Match Arduino scale factor
+
+    # Calculate zigzag pattern speed
+    iSpeed = int(
+        scale_factor * MAX_SPEED * (
+            abs(((scaled_time + 0.25) % 1) - 0.5) - 0.25
+        ) * 4
+    )
+    iSteer = int(abs((scaled_time - 0.5) * 1600)) - 800
+
+    # Calculate motor speeds
+    iSpeedLeft = min(max(iSpeed + iSteer, -MAX_SPEED), MAX_SPEED)
+    iSpeedRight = min(max(-iSpeed + iSteer, -MAX_SPEED), MAX_SPEED)
+
+    return iSpeedLeft, iSpeedRight
+
+def update_state():
+    """Update state every 3 seconds."""
+    global w_state, next_state_time
+
+    if time.time() > next_state_time:
+        next_state_time = time.time() + 3
+        w_state <<= 1  # Cycle state by shifting left
+        if w_state >= 64:
+            w_state = 1  # Reset state to the initial state
 
 # ----------------------
 # Main Communication Loop
 # ----------------------
 def demo_loop():
-    # Setup the serial connection
+    global ser
     ser = serial.Serial(PORT, baudrate=BAUDRATE, timeout=1)
     print(f"Opened serial port {PORT} @ {BAUDRATE} bps. Press Ctrl-C to stop.")
 
     try:
         while True:
-            # Send to Slave 0 (left motor)
-            send_packet(ser, slave_id=0, speed=SPEED)
+            current_time = time.time()
 
-            # Send to Slave 1 (right motor)
-            send_packet(ser, slave_id=1, speed=SPEED)
+            # Update motor state
+            update_state()
 
-            # Maintain 50ms interval
+            # Calculate motor speeds
+            iSpeedLeft, iSpeedRight = calculate_speeds(current_time)
+
+            # Send commands to motors
+            send_packet(0, iSpeedLeft, w_state)  # Slave 0 (Left Motor)
+            send_packet(1, iSpeedRight, w_state)  # Slave 1 (Right Motor)
+
+            # Maintain the send interval
             time.sleep(SEND_INTERVAL)
 
     except KeyboardInterrupt:
