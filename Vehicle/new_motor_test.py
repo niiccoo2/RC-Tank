@@ -89,15 +89,15 @@ def calculate_speeds_and_steer(t: float) -> tuple[int, int]:
 
     return iSteer, iSpeed
 
-def update_state():
-    """Update motor state every 3 seconds."""
-    global w_state_master, next_state_time
+# def update_state():
+#     """Update motor state every 3 seconds."""
+#     global w_state_master, next_state_time
 
-    if time.time() > next_state_time:
-        next_state_time = time.time() + 3
-        w_state_master <<= 1  # Cycle state by shifting left
-        if w_state_master >= 0x40:  # Reset state if it exceeds "Battery LED" max
-            w_state_master = 0x01
+#     if time.time() > next_state_time:
+#         next_state_time = time.time() + 3
+#         w_state_master <<= 1  # Cycle state by shifting left
+#         if w_state_master >= 0x40:  # Reset state if it exceeds "Battery LED" max
+#             w_state_master = 0x01
 
 # ----------------------
 # Main Communication Loop
@@ -112,13 +112,13 @@ def demo_loop():
             current_time = time.time()
 
             # Update motor state
-            update_state()
+            # update_state()
 
             # Calculate dynamic speed and steering
             iSteer, iSpeed = calculate_speeds_and_steer(current_time)
 
             # Send a single control packet
-            send_packet(iSteer, iSpeed, w_state_master, w_state_slave)
+            send_packet(iSteer, iSpeed, 1, 1)
 
             # Maintain the send interval
             time.sleep(SEND_INTERVAL)
