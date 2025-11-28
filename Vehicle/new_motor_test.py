@@ -118,7 +118,7 @@ def demo_loop():
             iSteer, iSpeed = calculate_speeds_and_steer(current_time)
 
             # Send a single control packet
-            send_packet(iSteer, iSpeed, 1, 1)
+            send_packet(0, iSpeed, 1, 1)
 
             # Maintain the send interval
             time.sleep(SEND_INTERVAL)
