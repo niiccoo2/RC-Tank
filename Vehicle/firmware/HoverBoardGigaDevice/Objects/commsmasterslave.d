@@ -26,4 +26,4 @@
   Src\..\Inc\defines\defines_2-1-9.h Src\..\Inc\..\Inc\setup.h \
   Src\..\Inc\it.h Src\..\Inc\comms.h Src\..\Inc\commsMasterSlave.h \
   Src\..\Inc\bldc.h Src\..\Inc\..\Inc\defines.h \
-  Src\..\Inc\..\Inc\bldcSINE.h Src\..\Inc\..\Inc\bldc.h Src\..\Inc\led.h
+  Src\..\Inc\..\Inc\bldcBC.h Src\..\Inc\..\Inc\bldc.h Src\..\Inc\led.h

@@ -63,11 +63,16 @@
 // Timer BLDC short circuit emergency shutoff define LOOKS LIKE
 #define TIMER_BLDC_EMERGENCY_SHUTDOWN PB12
 
-// Hall sensor defines CORRECT
+// Hall sensor defines CORRECT 
 #define HALL_A PA0
-#define HALL_C PB11
 #define HALL_B PA1
+#define HALL_C PB11
 
+/*
+#define HALL_A	PB11	// nico
+#define HALL_B	PA1		// nico
+#define HALL_C	PA0		// nico
+*/
 
 // GD32F130 USART0 TX/RX:	(PA9/PA10)AF1	, (PB6/PB7)AF0 , 	(PA2/PA3)AF1 , (PA14/PA15)AF1 GD32F130x4 only!
 // GD32F130 USART1 GD32F130 TX/RX: (PA14/PA15)AF1 , (PA2,PA3)AF1	, (PA8/PB0)AlternateFunction4

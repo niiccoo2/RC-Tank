@@ -32,8 +32,8 @@
 		#define LAYOUT 1
 	#endif
 
-	//#define BLDC_BC			// old block commutation bldc control
-	#define BLDC_SINE			// silent sine-pwm motor control, added 2025 by Robo Durden. 
+	#define BLDC_BC			// old block commutation bldc control
+	//#define BLDC_SINE			// silent sine-pwm motor control, added 2025 by Robo Durden. 
 	//#define BLDC_SINE_BOOSTER		// can boost speed by 15% starting from 87% throttle.
 	
 	#define DRIVING_MODE 0	//  0=pwm, 1=speed in revs/s*1024, 2=torque in NewtonMeter*1024, 3=iOdometer

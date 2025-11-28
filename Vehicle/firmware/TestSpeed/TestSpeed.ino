@@ -75,7 +75,7 @@ void loop() {
   if (iNow > iNext) {
     iNext = iNow + SEND_MILLIS;
 
-    HoverSend(oSerialHover, 0, 1000, 0, 0);
+    HoverSend(oSerialHover, 0, 800, 1, 2);
     Serial.print("Sent Motor Commands: ");
     Serial.println(iNow);
     

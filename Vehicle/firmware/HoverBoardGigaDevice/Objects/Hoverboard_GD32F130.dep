@@ -25,15 +25,15 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\commsMasterSlave.h)(0x69111755)
 F (.\Src\bldc.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/bldc.o -MMD)
@@ -62,12 +62,12 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\..\Inc\setup.h)(0x69111756)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\driver.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/driver.o -MMD)
 I (Src\..\Inc\bldc.h)(0x69111755)
@@ -95,12 +95,12 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\..\Inc\setup.h)(0x69111756)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\bldcBC.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/bldcbc.o -MMD)
 I (Src\..\Inc\bldcBC.h)(0x69111755)
@@ -129,13 +129,12 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\..\Inc\setup.h)(0x69111756)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 F (.\Src\bldcSINE.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/bldcsine.o -MMD)
 I (Src\..\Inc\bldcSINE.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
@@ -163,12 +162,13 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\..\Inc\setup.h)(0x69111756)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
 F (.\Src\setup.c)(0x691F9E97)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/setup.o -MMD)
@@ -196,10 +196,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 F (.\Src\it.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/it.o -MMD)
@@ -227,15 +227,15 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\led.h)(0x69111755)
 I (Src\..\Inc\commsMasterSlave.h)(0x69111755)
@@ -264,10 +264,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\led.h)(0x69111755)
 F (.\Src\comms.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/comms.o -MMD)
@@ -318,16 +318,16 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\comms.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\remoteCrsf.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remotecrsf.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -354,16 +354,16 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\comms.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\remoteDummy.c)(0x691E82FA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remotedummy.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -390,15 +390,15 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\remoteUartBus.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remoteuartbus.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -425,16 +425,16 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\comms.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\remoteOptimizePID.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remoteoptimizepid.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -461,15 +461,15 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\commsMasterSlave.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/commsmasterslave.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -496,17 +496,17 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\comms.h)(0x69111755)
 I (Src\..\Inc\commsMasterSlave.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\led.h)(0x69111755)
 F (.\Src\RemoteAdc.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remoteadc.o -MMD)
@@ -534,10 +534,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 F (.\Src\RemoteAutodetect.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remoteautodetect.o -MMD)
@@ -565,16 +565,16 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\comms.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\RemoteROS2.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/remoteros2.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -601,16 +601,16 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\comms.h)(0x69111755)
 I (Src\..\Inc\bldc.h)(0x69111755)
 I (Src\..\Inc\..\Inc\defines.h)(0x69111755)
-I (Src\..\Inc\..\Inc\bldcSINE.h)(0x69111755)
+I (Src\..\Inc\..\Inc\bldcBC.h)(0x69111755)
 I (Src\..\Inc\..\Inc\bldc.h)(0x69111755)
 F (.\Src\i2c.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/i2c.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -637,10 +637,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\i2c.h)(0x69111755)
@@ -669,10 +669,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\mpu6050.h)(0x69111755)
@@ -702,10 +702,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\mpu6050.h)(0x69111755)
@@ -735,10 +735,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 I (Src\..\Inc\it.h)(0x69111755)
 I (Src\..\Inc\mpu6050.h)(0x69111755)
@@ -768,10 +768,10 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 F (.\Src\PilotUser.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/pilotuser.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
@@ -798,16 +798,16 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6928A7D7)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929A4BC)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUart.h)(0x69291361)
-I (Src\..\Inc\defines\defines_2-1-9.h)(0x6927B5F4)
+I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
 I (Src\..\Inc\..\Inc\setup.h)(0x69111756)
 F (.\Src\SEGGER_RTT.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/segger_rtt.o -MMD)
 I (Src\SEGGER_RTT.h)(0x69111757)
 I (Src\SEGGER_RTT_Conf.h)(0x69111757)
 F (.\Inc\configSelect.h)(0x69111755)()
-F (.\Inc\config.h)(0x6928A7D7)()
+F (.\Inc\config.h)(0x6929A4BC)()
 F (.\Inc\configDebug.h)(0x69111755)()
 F (.\Inc\setup.h)(0x69111756)()
 F (.\Inc\bldc.h)(0x69111755)()
@@ -839,7 +839,7 @@ F (.\Inc\defines\defines_2-1-5.h)(0x69111756)()
 F (.\Inc\defines\defines_2-1-6.h)(0x69111756)()
 F (.\Inc\defines\defines_2-1-7.h)(0x69111756)()
 F (.\Inc\defines\defines_2-1-8.h)(0x69111756)()
-F (.\Inc\defines\defines_2-1-9.h)(0x6927B5F4)()
+F (.\Inc\defines\defines_2-1-9.h)(0x6929A37B)()
 F (.\Inc\defines\defines_2-1-10.h)(0x69111756)()
 F (.\Inc\defines\defines_2-1-11.h)(0x69111756)()
 F (.\Inc\defines\defines_2-1-12.h)(0x69111756)()

@@ -604,6 +604,14 @@ Things to do tmrw:
 - Figure out what >= 14v battery to use for it
 - ^ Might need to make harness for two 2s batts
 
+### Friday, November 28th | x hours
+
+#### 8:00 | 1 hour
+
+Seems to get stuck when going over speed 500... Using BLDC_BC instead of BLDC_SINE fixed it! Now going to test the other motor and contoller alone, then work on uart bus!
+
+Tested the other PCB and motor and they are working the same as first!! Now going to get uart working from the pi.
+
 ## CAD designs
 
 ### Riser

@@ -25,5 +25,5 @@
   Src\..\Inc\..\Inc\remote.h Src\..\Inc\..\Inc\..\Inc\remoteUart.h \
   Src\..\Inc\defines\defines_2-1-9.h Src\..\Inc\..\Inc\setup.h \
   Src\..\Inc\it.h Src\..\Inc\comms.h Src\..\Inc\bldc.h \
-  Src\..\Inc\..\Inc\defines.h Src\..\Inc\..\Inc\bldcSINE.h \
+  Src\..\Inc\..\Inc\defines.h Src\..\Inc\..\Inc\bldcBC.h \
   Src\..\Inc\..\Inc\bldc.h
