@@ -49,7 +49,7 @@ def build_packet(iSteer: int, iSpeed: int, wStateMaster: int, wStateSlave: int) 
     state_slave_byte = wStateSlave.to_bytes(1, 'big')  # Slave state
 
     # Combine fields for CRC calculation
-    packet_no_crc = start_byte + speed_bytes + state_master_byte + state_slave_byte + steer_bytes
+    packet_no_crc = start_byte + speed_bytes + steer_bytes + state_master_byte + state_slave_byte
     checksum = calc_crc(packet_no_crc)  # Generate CRC for the packet
 
     # Final Packet: Append CRC
