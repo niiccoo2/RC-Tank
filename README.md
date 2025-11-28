@@ -614,7 +614,7 @@ Tested the other PCB and motor and they are working the same as first!! Now goin
 
 #### 09:00 | x hours
 
-Got UART working from pi, now working on UART bus.
+Got UART working from pi, now working on UART bus. Got uart bus working. Now need to test it with two salves and start on the frame. ![Working UART Bus bytes](/photos/working_uart_bytes.png)
 
 ## CAD designs
 
