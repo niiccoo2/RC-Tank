@@ -71,7 +71,7 @@ def send_packet(iSteer: int, iSpeed: int, wStateMaster: int, wStateSlave: int):
 
 def calculate_speeds_and_steer(t: float) -> tuple[int, int]:
     """Calculate dynamic speed and steer values."""
-    SLOW_FACTOR = 2  # Slows down speed updates even further
+    SLOW_FACTOR = 10  # Slows down speed updates even further
 
     # Adjust PERID with a multiplier (SLOW_FACTOR elongates the switching time)
     adjusted_time = t / SLOW_FACTOR  
