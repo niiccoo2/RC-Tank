@@ -606,11 +606,15 @@ Things to do tmrw:
 
 ### Friday, November 28th | x hours
 
-#### 8:00 | 1 hour
+#### 08:00 | 1 hour
 
 Seems to get stuck when going over speed 500... Using BLDC_BC instead of BLDC_SINE fixed it! Now going to test the other motor and contoller alone, then work on uart bus!
 
 Tested the other PCB and motor and they are working the same as first!! Now going to get uart working from the pi.
+
+#### 09:00 | x hours
+
+Got UART working from pi, now working on UART bus.
 
 ## CAD designs
 

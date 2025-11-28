@@ -6,23 +6,22 @@ import time
 # ----------------------
 # Hoverboard Configuration
 # ----------------------
-PORT = "/dev/serial0"  # Adjust as necessary for your system
-BAUDRATE = 4800  # Matches Arduino setup
+PORT = "/dev/serial0"  # Adjust depending on your hardware setup
+BAUDRATE = 4800  # Matches default configuration in hoverboard firmware
 SEND_INTERVAL = 0.1  # 100ms interval between transmissions
-MAX_SPEED = 1000  # Maximum speed for control
-PERIOD = 6  # Zigzag period in seconds (increased to stay longer at speeds)
-DEFAULT_STATE = 1  # Default state (e.g., Battery LED on)
+MAX_SPEED = 1000  # Maximum absolute motor speed
+PERIOD = 6  # Zigzag period in seconds (speed changes every 3)
 
 # ----------------------
 # Globals
 # ----------------------
-ser = None
+ser = None  # Serial interface for communication
 
 # ----------------------
 # Utilities
 # ----------------------
 def calc_crc(data: bytes) -> int:
-    """Calculate CRC (matching Arduino's CalcCRC function)."""
+    """Calculate CRC (matching Arduino CalcCRC function)."""
     crc = 0
     for byte in data:
         crc ^= (byte << 8)
@@ -31,66 +30,58 @@ def calc_crc(data: bytes) -> int:
                 crc = (crc << 1) ^ 0x1021
             else:
                 crc <<= 1
-    return crc & 0xFFFF  # Ensure 16-bit CRC
+    return crc & 0xFFFF  # Ensure a 16-bit CRC
 
 def build_packet(iSlave: int, iSpeed: int, wState: int) -> bytes:
     """
-    Build a hoverboard control packet:
-    Start Byte (`0x2F`) + Slave + Speed + State + CRC
+    Build UART packet in `SerialServer2Hover` format:
+    Start Byte (1B) + Data Type (1B) + Slave ID (1B) + Speed (2B LE) + State (1B) + CRC (2B LE)
     """
-    # Packet Data
-    start_byte = b'\x2F'  # Start byte (`'/'`)
-    slave_byte = struct.pack("<B", iSlave)  # Slave ID
-    speed_bytes = struct.pack("<h", iSpeed)  # Speed (little-endian)
-    state_byte = struct.pack("<B", wState)  # State
+    START_BYTE = b'\x2F'  # Start byte, `/` in ASCII
+    DATA_TYPE = b'\x00'  # Data type (`0x00` for SerialServer2Hover)
+
+    # Encode fields
+    slave_byte = struct.pack("<B", iSlave)  # Slave ID, 1 byte
+    speed_bytes = struct.pack("<h", iSpeed)  # Speed (signed 16-bit, little-endian)
+    state_byte = struct.pack("<B", wState)  # State byte
 
     # Combine fields for CRC calculation
-    packet_no_crc = start_byte + slave_byte + speed_bytes + state_byte
-    checksum = calc_crc(packet_no_crc)  # Generate CRC for the packet
+    payload_without_crc = START_BYTE + DATA_TYPE + slave_byte + speed_bytes + state_byte
+    checksum = calc_crc(payload_without_crc)  # Calculate checksum
+    crc_bytes = struct.pack("<H", checksum)  # CRC (16-bit, little-endian)
 
-    # Final Packet: Append CRC
-    packet = packet_no_crc + struct.pack("<H", checksum)
-    return packet
+    # Final packet: Append checksum
+    return payload_without_crc + crc_bytes
 
 def send_packet(iSlave: int, iSpeed: int, wState: int):
-    """Send a hoverboard control packet."""
+    """Send the constructed hoverboard control packet."""
     global ser
     if ser is None:
-        raise RuntimeError("Serial port is not open. Call demo_loop() or open the serial port before sending packets.")
+        raise RuntimeError("Serial port is not opened. Initialize it before sending packets.")
 
     packet = build_packet(iSlave, iSpeed, wState)
     ser.write(packet)
     ser.flush()
 
-    # Debugging: Print each sent packet
+    # Debugging: Show the sent packet
     print(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
 
 def calculate_speeds(t: float) -> int:
-    """Calculate dynamic speed values."""
-    SLOW_FACTOR = 10  # Slows down speed updates further
+    """Calculate a dynamic speed value based on time for a zigzag pattern."""
+    scaled_time = (t % PERIOD) / PERIOD  # Scaled time [0, 1)
+    speed = int(MAX_SPEED * abs(2 * ((scaled_time + 0.25) % 1) - 1))  # Zigzag pattern
 
-    adjusted_time = t / SLOW_FACTOR  # Adjust time to slow down transitions
-    scaled_time = (adjusted_time % PERIOD) / PERIOD  # Scaled time [0, 1)
-
-    # Zigzag pattern for speed calculation
-    iSpeed = int(
-        MAX_SPEED * (
-            abs(((scaled_time + 0.25) % 1) - 0.5) * 2  # Oscillates between 0 and 1
-        )
-    )
-
-    # Clamp values to valid ranges
-    iSpeed = min(max(iSpeed, -MAX_SPEED), MAX_SPEED)
-
-    return iSpeed
+    # Clamp speed to valid range
+    return max(-MAX_SPEED, min(speed, MAX_SPEED))
 
 # ----------------------
 # Main Communication Loop
 # ----------------------
 def demo_loop():
+    """Main loop for sending hoverboard control packets."""
     global ser
     ser = serial.Serial(PORT, baudrate=BAUDRATE, timeout=1)
-    print(f"Opened serial port {PORT} @ {BAUDRATE} bps. Press Ctrl-C to stop.")
+    print(f"Opened serial port {PORT} at {BAUDRATE} bps. Press Ctrl-C to stop.")
 
     try:
         while True:
@@ -99,11 +90,11 @@ def demo_loop():
             # Calculate dynamic speed
             iSpeed = calculate_speeds(current_time)
 
-            # Send control packets to two slaves
-            send_packet(0, iSpeed, DEFAULT_STATE)  # Slave 0
-            send_packet(1, -iSpeed, DEFAULT_STATE)  # Slave 1 (optional: reverse speed)
+            # Send control packets to both slaves
+            send_packet(0, iSpeed, 32)  # Send to slave 0
+            send_packet(1, -iSpeed, 32)  # Send to slave 1 (reverse speed for demonstration)
 
-            # Maintain the send interval
+            # Wait before the next command
             time.sleep(SEND_INTERVAL)
 
     except KeyboardInterrupt:
