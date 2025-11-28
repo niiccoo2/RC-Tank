@@ -11,7 +11,7 @@ BAUDRATE = 4800  # Matches Arduino setup
 SEND_INTERVAL = 0.1  # 100ms interval between transmissions
 MAX_SPEED = 1000  # Maximum speed for control
 MAX_STEER = 300  # Maximum steering value
-PERIOD = 3  # Zigzag period in seconds (for dynamic speed calculation)
+PERIOD = 6  # Zigzag period in seconds (increased to stay longer at speeds)
 
 # ----------------------
 # Globals
@@ -71,7 +71,11 @@ def send_packet(iSteer: int, iSpeed: int, wStateMaster: int, wStateSlave: int):
 
 def calculate_speeds_and_steer(t: float) -> tuple[int, int]:
     """Calculate dynamic speed and steer values."""
-    scaled_time = (t % PERIOD) / PERIOD  # Scaled time [0, 1)
+    SLOW_FACTOR = 2  # Slows down speed updates even further
+
+    # Adjust PERID with a multiplier (SLOW_FACTOR elongates the switching time)
+    adjusted_time = t / SLOW_FACTOR  
+    scaled_time = (adjusted_time % PERIOD) / PERIOD  # Scaled time [0, 1)
     scale_factor = 1.6 * (min(max(PERIOD, 3), 9) / 9.0)  # Match Arduino scale factor
 
     # Calculate dynamic speed (zigzag pattern)
@@ -88,16 +92,6 @@ def calculate_speeds_and_steer(t: float) -> tuple[int, int]:
     iSteer = min(max(iSteer, -MAX_STEER), MAX_STEER)
 
     return iSteer, iSpeed
-
-# def update_state():
-#     """Update motor state every 3 seconds."""
-#     global w_state_master, next_state_time
-
-#     if time.time() > next_state_time:
-#         next_state_time = time.time() + 3
-#         w_state_master <<= 1  # Cycle state by shifting left
-#         if w_state_master >= 0x40:  # Reset state if it exceeds "Battery LED" max
-#             w_state_master = 0x01
 
 # ----------------------
 # Main Communication Loop
@@ -118,7 +112,7 @@ def demo_loop():
             iSteer, iSpeed = calculate_speeds_and_steer(current_time)
 
             # Send a single control packet
-            send_packet(0, iSpeed, 1, 1)
+            send_packet(0, iSpeed, w_state_master, w_state_slave)
 
             # Maintain the send interval
             time.sleep(SEND_INTERVAL)
