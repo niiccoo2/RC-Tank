@@ -1,4 +1,4 @@
-# from tankClass import Tank
+from motor_class import Motor
 from streamerClass import MJPEGStreamer
 
 from fastapi import FastAPI, Request, HTTPException
@@ -17,6 +17,8 @@ class MotorCommand(BaseModel):
 
 # --------- FastAPI Application ---------
 app = FastAPI()
+
+motors = Motor()
 
 # Enable CORS middleware for cross-origin requests
 app.add_middleware(
@@ -50,8 +52,8 @@ async def lifespan(app: FastAPI):
     streamer.start()
 
     # Start the timeout check thread
-    # timeout_thread = threading.Thread(target=tank.timeout_check, daemon=True)
-    # timeout_thread.start()
+    timeout_thread = threading.Thread(target=motors.timeout_check, daemon=True)
+    timeout_thread.start()
 
     try:
         # Application is running
@@ -59,7 +61,7 @@ async def lifespan(app: FastAPI):
     finally:
         print("Shutting down...")
         streamer.stop()
-        # tank.cleanup()
+        motors.cleanup()
 
 # Assign lifespan handler to FastAPI app
 app.router.lifespan_context = lifespan
@@ -92,11 +94,11 @@ async def set_motor(command: MotorCommand):
     """
     # tank.last_update_time = time.time()
 
-    left_speed = float(command.left)
-    right_speed = float(command.right)
+    left_speed = int(command.left)
+    right_speed = int(command.right)
 
-    # tank.set_esc(tank.left, left_speed)
-    # tank.set_esc(tank.right, right_speed)
+    motors.set_esc(1, left_speed) # slave 1 is left
+    motors.set_esc(0, right_speed) # slave 0 is right
 
     print(f'/motor ran, left: {left_speed}, right: {right_speed}')
 
@@ -107,8 +109,8 @@ async def stop():
     """
     Stop both motors.
     """
-    # tank.set_esc(tank.left, 0.0)
-    # tank.set_esc(tank.right, 0.0)
+    motors.set_esc(1, 0)
+    motors.set_esc(0, 1)
 
     print("/stop ran")
     return {"status": "stopped"}
