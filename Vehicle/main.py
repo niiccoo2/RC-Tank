@@ -1,24 +1,33 @@
 from tankClass import Tank
 from streamerClass import MJPEGStreamer
 
-from flask import Flask, request, jsonify, Response
-from fastapi import FastAPI
-from flask_cors import CORS
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from contextlib import asynccontextmanager
+import asyncio
 import time
-import atexit
 import threading
 
-# Colors (kept as-is)
-BLACK = "\033[0;30m"
-RED = "\033[0;31m"
-GREEN = "\033[0;32m"
-BROWN = "\033[0;33m"
-BLUE = "\033[0;34m"
-PURPLE = "\033[0;35m"
-RESET = "\033[0m"
+# --------- Classes for HTTP Requests ----------
+class MotorCommand(BaseModel):
+    left: float
+    right: float
 
+# --------- FastAPI Application ---------
 app = FastAPI()
 
+# Enable CORS middleware for cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update this with your allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --------- Tank and Camera Initialization ----------
 tank = Tank()
 
 streamer = MJPEGStreamer(
@@ -33,66 +42,78 @@ streamer = MJPEGStreamer(
     motion_thresh=6.0,
     share_encoded=True         # encode once, share to all clients (lowest CPU)
 )
-streamer.start()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Starting up...")
+    tank.arm_escs()
+    streamer.start()
+
+    # Start the timeout check thread
+    timeout_thread = threading.Thread(target=tank.timeout_check, daemon=True)
+    timeout_thread.start()
+
+    try:
+        # Application is running
+        yield
+    finally:
+        print("Shutting down...")
+        streamer.stop()
+        tank.cleanup()
+
+# Assign lifespan handler to FastAPI app
+app.router.lifespan_context = lifespan
 
 # --------- ROUTES ----------
-@app.route('/camera')
-def camera():
-    # Optional knobs: /camera?fps=8&q=40
-    try:
-        fps = int(request.args.get('fps', 12))   # lower FPS => fewer bytes
-        fps = max(1, min(30, fps))
-    except Exception:
-        fps = 12
-
-    q_param = request.args.get('q')  # only used if share_encoded=False
-    q_override = int(q_param) if q_param is not None else None
-
-    return Response(
-        streamer.gen_frames(max_fps=fps, quality_override=q_override),
-        mimetype='multipart/x-mixed-replace; boundary=frame'
+@app.get("/camera")
+async def camera(fps: int = 12, q: int | None = None):
+    """
+    Stream the MJPEG camera feed.
+    Optional query params:
+      - fps: Frames per second (default: 12, range: 1-30)
+      - q: JPEG quality (only used if share_encoded=False)
+    """
+    fps = max(1, min(30, fps))  # Clamp FPS between 1 and 30
+    return StreamingResponse(
+        streamer.gen_frames(max_fps=fps, quality_override=q),
+        media_type="multipart/x-mixed-replace; boundary=frame"
     )
 
-@app.route('/motor', methods=['POST'])
-def set_motor():
+@app.post("/motor")
+async def set_motor(command: MotorCommand):
     """
-    POST /motor
-    Body: {"left": -1.0 to 1.0, "right": -1.0 to 1.0}
+    Set the speed of the tank's motors.
+    POST body takes left and right speeds, -1.0 to 1.0.
+    Example:
+    {
+        "left": 0.5,
+        "right": -0.5
+    }
     """
     tank.last_update_time = time.time()
 
-    data = request.get_json()
-    print(f"Received motor command: {data}")
-    left_speed = float(data.get('left', 0.0))
-    right_speed = float(data.get('right', 0.0))
+    left_speed = float(command.left)
+    right_speed = float(command.right)
 
-    tank.set_esc(tank.left, left_speed)
-    tank.set_esc(tank.right, right_speed)
+    # tank.set_esc(tank.left, left_speed)
+    # tank.set_esc(tank.right, right_speed)
 
-    return jsonify({"status": "ok", "left": left_speed, "right": right_speed})
+    print(f'/motor ran, left: {left_speed}, right: {right_speed}')
 
-@app.route('/stop', methods=['POST'])
-def stop():
-    tank.set_esc(tank.left, 0.0)
-    tank.set_esc(tank.right, 0.0)
-    return jsonify({"status": "stopped"})
+    return {"status": "ok", "left": left_speed, "right": right_speed}
 
-# --------- STARTUP / CLEANUP ----------
-print("Arming ESCs...")
-tank.arm_escs()
-print("Ready")
+@app.post("/stop")
+async def stop():
+    """
+    Stop both motors.
+    """
+    # tank.set_esc(tank.left, 0.0)
+    # tank.set_esc(tank.right, 0.0)
 
-# Clean up motors and streamer on exit
-def _cleanup():
-    try:
-        tank.cleanup()
-    finally:
-        streamer.stop()
+    print("/stop ran")
+    return {"status": "stopped"}
 
-atexit.register(_cleanup)
-
+# Run the FastAPI app
 if __name__ == '__main__':
-    t = threading.Thread(target=tank.timeout_check, daemon=True)
-    t.start()
-    # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
-    app.run(host='0.0.0.0', port=5000)
+    import uvicorn
+    uvicorn.run(app, host='0.0.0.0', port=5000)
