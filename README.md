@@ -618,7 +618,7 @@ Got UART working from pi, now working on UART bus. Got uart bus working. Now nee
 
 #### 10:00 | 2 hours
 
-Did a bunch of wiring. Made a harness to go from 2 2s batts to 1 4s batt. Now working on a 4 way connnector with fuse so we can power everything. Then working on frame.
+Did a bunch of wiring. Made a harness to go from 2 2s batts to 1 4s batt. Now working on a 4 way connnector with fuse so we can power everything. Then working on frame. ![Battery adapter](/photos/battery_adapter.jpg)
 
 #### 12:30 | 1 hour
 
@@ -626,7 +626,7 @@ Took forever but made the wiring harness for the data stuff. Now testing both mo
 
 #### 15:00 | 2 hours
 
-Made this really nice frame. It looks a bit weird but it works. Then put everything onto the tank and tested that the motors still spin, they do! Tmrw morning I will turn the motor code into a class then integrate.
+Made this really nice frame. It looks a bit weird but it works. Then put everything onto the tank and tested that the motors still spin, they do! Tmrw morning I will turn the motor code into a class then integrate. ![Top view of new frame](/photos/chassis_top.jpg) ![Side view of new frame](/photos/chassis_side.jpg)
 
 ### Satuday, November 19th | x hours
 
