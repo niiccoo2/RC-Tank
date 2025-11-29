@@ -117,6 +117,11 @@ async def stop():
     print("/stop ran")
     return {"status": "stopped"}
 
+@app.post("/health")
+async def health():
+    print("/health ran")
+    return {"status": "healthy"}
+
 # Run the FastAPI app
 if __name__ == '__main__':
     import uvicorn
