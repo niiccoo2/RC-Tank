@@ -630,9 +630,17 @@ Made this really nice frame. It looks a bit weird but it works. Then put everyth
 
 ### Satuday, November 19th | x hours
 
-#### 09:00 | x hours
+#### 09:00 | 1 hour
 
-Now working on rewriting the motor control into a class that I can then use in the api thing.
+Now working on rewriting the motor control into a class that I can then use in the api thing. Was not too hard, just copied a bunch of code from the test file into the old class. One thing you have to remember is that slave 1 is left and slave 0 is right.
+
+#### 11:00 | 1 hour
+
+When I made the wiring harness for the esc data comms, I made it on perf board, but it was really bad. Thats why sometimes it woul just not listen to the cmds I was sending. So I decided to just solder the wires directly because perf board was a bit too much for the task. After I soldered the wires directly I realized that I still messed up the wiring. This is because from the factory, they switch the data tx and rx in the cable so that the two boards can talk to each other, so I took apart hte connector so I could switch them back. Now the esc wiring should be better.
+
+#### 12:00 | .5 hours
+
+Finally I got to test it, this test was a bit flawed though, because I found out that the usb hub I was using was really old, so it was unable to stream camera data over it. For camera I had someone follow on google meet so I could see what I was doing. Other than me getting car sick from the shaky camera, the test was pretty good, the latency was not amazing, but it was semi drivable. So hopefully once I get a new usb hub, the built in camera will be better! (Video will be from second test)
 
 ## CAD designs
 

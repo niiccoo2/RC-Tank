@@ -28,12 +28,12 @@
 	function carToTracks(trottle: number, stick: number) {
 		let left: number;
 		let right: number;
-		const multiplier: number = 0.6;
+		const multiplier: number = 0.2;
 
 		if (stick != 0.0) {
 			// Only cap the trottle if turning
-			left = 0.6 * trottle + multiplier * stick;
-			right = 0.6 * trottle - multiplier * stick;
+			left = 0.8 * trottle + multiplier * stick;
+			right = 0.8 * trottle - multiplier * stick;
 		} else {
 			left = trottle;
 			right = trottle;
