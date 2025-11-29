@@ -1,106 +1,108 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :global(body) {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial Black', sans-serif;
-    font-weight: bold;
-  }
-
-  main {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* keeps whole layout vertically centered */
-    background-color: #000000;
-    background-image: linear-gradient(#0c0c0c 1px, transparent 1px), linear-gradient(to right, #0c0c0c 1px, transparent 1px);
-    background-size: 32px 32px; /* tile the pattern */
-    background-repeat: repeat;
-    background-position: 0 0;
-    min-height: 100vh;
-    width: 100vw;
-    color: #fff;
+	margin: 0;
+	padding: 0;
+	font-family: 'Arial Black', sans-serif;
+	font-weight: bold;
 }
 
-    .layout {
-    display: grid;
-    grid-template-columns: 1fr 640px 1fr;
-    align-items: stretch;
-    gap: 1rem;
-    width: 100%;
-    max-width: 1280px;
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center; /* keeps whole layout vertically centered */
+	background-color: #000000;
+	background-image:
+		linear-gradient(#0c0c0c 1px, transparent 1px),
+		linear-gradient(to right, #0c0c0c 1px, transparent 1px);
+	background-size: 32px 32px; /* tile the pattern */
+	background-repeat: repeat;
+	background-position: 0 0;
+	min-height: 100vh;
+	width: 100vw;
+	color: #fff;
+}
 
-    /* instead of full height, just match center content height */
-    height: 480px; /* same as camera image height */
+.layout {
+	display: grid;
+	grid-template-columns: 1fr 640px 1fr;
+	align-items: stretch;
+	gap: 1rem;
+	width: 100%;
+	max-width: 1280px;
+
+	/* instead of full height, just match center content height */
+	height: 480px; /* same as camera image height */
 }
 
 .side {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
 .center {
-  width: 640px;
-  margin: 0 auto;
-  text-align: center;
+	width: 640px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .left {
-  align-items: flex-end;
+	align-items: flex-end;
 }
 
 .right {
-  align-items: flex-start;
-  height: 480px;
+	align-items: flex-start;
+	height: 480px;
 }
 
 .side.right > div {
-  flex: 1; /* both take equal space */
-  }
-
-.border {
-  border: 1px solid #fff;
-  /* border-radius: 5px; */
+	flex: 1; /* both take equal space */
 }
 
- /* The switch - the box around the slider */
+.border {
+	border: 1px solid #fff;
+	/* border-radius: 5px; */
+}
+
+/* The switch - the box around the slider */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
 }
 
 /* Hide default HTML checkbox */
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border:1px solid #fff;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border: 1px solid #fff;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: '';
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
 }
 
 /* input:checked + .slider {
@@ -112,45 +114,45 @@ input:focus + .slider {
 } */
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
 
 .info_card {
-  background-color: #000000;
-  width: 220px;
-  border: 1px solid #fff;
+	background-color: #000000;
+	width: 220px;
+	border: 1px solid #fff;
 }
 
 .black_background {
-  background-color: #000000;
+	background-color: #000000;
 }
 
 .ip_picker {
-  width: 640px;
-  height: 480px;
-  box-sizing: border-box;
+	width: 640px;
+	height: 480px;
+	box-sizing: border-box;
 
-  display: flex;
-  flex-direction: column;   /* stack elements vertically */
-  align-items: center;      /* horizontal centering */
-  justify-content: center;  /* vertical centering */
+	display: flex;
+	flex-direction: column; /* stack elements vertically */
+	align-items: center; /* horizontal centering */
+	justify-content: center; /* vertical centering */
 
-  margin: auto;             /* centers the whole box itself if parent is larger */
+	margin: auto; /* centers the whole box itself if parent is larger */
 }
 
 .button {
-  background-color: #fff;
-  color: #000000;
-  /* font-weight: 700; */
+	background-color: #fff;
+	color: #000000;
+	/* font-weight: 700; */
 }
