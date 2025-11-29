@@ -1,4 +1,4 @@
-from tankClass import Tank
+# from tankClass import Tank
 from streamerClass import MJPEGStreamer
 
 from fastapi import FastAPI, Request, HTTPException
@@ -28,7 +28,7 @@ app.add_middleware(
 )
 
 # --------- Tank and Camera Initialization ----------
-tank = Tank()
+# tank = Tank()
 
 streamer = MJPEGStreamer(
     src=0,
@@ -46,12 +46,12 @@ streamer = MJPEGStreamer(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
-    tank.arm_escs()
+    # tank.arm_escs()
     streamer.start()
 
     # Start the timeout check thread
-    timeout_thread = threading.Thread(target=tank.timeout_check, daemon=True)
-    timeout_thread.start()
+    # timeout_thread = threading.Thread(target=tank.timeout_check, daemon=True)
+    # timeout_thread.start()
 
     try:
         # Application is running
@@ -59,7 +59,7 @@ async def lifespan(app: FastAPI):
     finally:
         print("Shutting down...")
         streamer.stop()
-        tank.cleanup()
+        # tank.cleanup()
 
 # Assign lifespan handler to FastAPI app
 app.router.lifespan_context = lifespan
@@ -90,7 +90,7 @@ async def set_motor(command: MotorCommand):
         "right": -0.5
     }
     """
-    tank.last_update_time = time.time()
+    # tank.last_update_time = time.time()
 
     left_speed = float(command.left)
     right_speed = float(command.right)

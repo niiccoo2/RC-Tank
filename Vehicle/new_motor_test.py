@@ -21,7 +21,6 @@ ser = None  # Serial interface for communication
 # Utilities
 # ----------------------
 def calc_crc(data: bytes) -> int:
-    """Calculate CRC (matching Arduino CalcCRC function)."""
     crc = 0
     for byte in data:
         crc ^= (byte << 8)
