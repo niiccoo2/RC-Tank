@@ -604,7 +604,7 @@ Things to do tmrw:
 - Figure out what >= 14v battery to use for it
 - ^ Might need to make harness for two 2s batts
 
-### Friday, November 28th | x hours
+### Friday, November 28th | 6.5 hours
 
 #### 08:00 | 1 hour
 
@@ -612,9 +612,27 @@ Seems to get stuck when going over speed 500... Using BLDC_BC instead of BLDC_SI
 
 Tested the other PCB and motor and they are working the same as first!! Now going to get uart working from the pi.
 
-#### 09:00 | x hours
+#### 09:00 | .5 hours
 
 Got UART working from pi, now working on UART bus. Got uart bus working. Now need to test it with two salves and start on the frame. ![Working UART Bus bytes](/photos/working_uart_bytes.png)
+
+#### 10:00 | 2 hours
+
+Did a bunch of wiring. Made a harness to go from 2 2s batts to 1 4s batt. Now working on a 4 way connnector with fuse so we can power everything. Then working on frame.
+
+#### 12:30 | 1 hour
+
+Took forever but made the wiring harness for the data stuff. Now testing both motors at once. Need to find out how to bypass on button... Just crashed my laptop bc I hooked up power wrone :/ Found pins to bridge so it turns on on power. Got both motors working at once.
+
+#### 15:00 | 2 hours
+
+Made this really nice frame. It looks a bit weird but it works. Then put everything onto the tank and tested that the motors still spin, they do! Tmrw morning I will turn the motor code into a class then integrate.
+
+### Satuday, November 19th | x hours
+
+#### 09:00 | x hours
+
+Now working on rewriting the motor control into a class that I can then use in the api thing.
 
 ## CAD designs
 

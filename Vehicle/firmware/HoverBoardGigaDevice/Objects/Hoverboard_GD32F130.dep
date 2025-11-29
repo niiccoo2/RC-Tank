@@ -1,6 +1,6 @@
 Dependencies for Project 'Hoverboard', Target 'GD32F130': (DO NOT MODIFY !)
 CompilerVersion: 6240000::V6.24::ARMCLANG
-F (.\Src\main.c)(0x6929120C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/main.o -MMD)
+F (.\Src\main.c)(0x6929F185)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -fno-function-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_GD32F130-IC:/Users/web/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Firmware/Peripherals/inc-IC:/Users/web/AppData/Local/Arm/Packs/GigaDevice/GD32F1x0_DFP/3.2.1/Device/Include-D__UVISION_VERSION="543" -DGD32F1x0 -DGD32F130_150 -DUSE_STDPERIPH_DRIVER -D_RTE_ -DGD32F130 -DTARGET="1"-o ./objects/main.o -MMD)
 I (Src\..\Inc\defines.h)(0x69111755)
 I (Src\..\Inc\..\Inc\target.h)(0x69111756)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Include\gd32f1x0.h)(0x690D5EB6)
@@ -25,7 +25,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -62,7 +62,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -95,7 +95,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -129,7 +129,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -162,7 +162,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -196,7 +196,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -227,7 +227,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -264,7 +264,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -318,7 +318,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -354,7 +354,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -390,7 +390,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -425,7 +425,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -461,7 +461,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -496,7 +496,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -534,7 +534,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -565,7 +565,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -601,7 +601,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -637,7 +637,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -669,7 +669,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -702,7 +702,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -735,7 +735,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -768,7 +768,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -798,7 +798,7 @@ I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Fir
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_misc.h)(0x690D5EB6)
 I (C:\Users\web\AppData\Local\Arm\Packs\GigaDevice\GD32F1x0_DFP\3.2.1\Device\Firmware\Peripherals\inc\gd32f1x0_opa.h)(0x690D5EB6)
 I (Src\..\Inc\..\Inc\configSelect.h)(0x69111755)
-I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929B3B5)
+I (Src\..\Inc\..\Inc\..\Inc\config.h)(0x6929F19E)
 I (Src\..\Inc\..\Inc\remote.h)(0x69111755)
 I (Src\..\Inc\..\Inc\..\Inc\remoteUartBus.h)(0x6929B3C6)
 I (Src\..\Inc\defines\defines_2-1-9.h)(0x6929A37B)
@@ -807,7 +807,7 @@ F (.\Src\SEGGER_RTT.c)(0x69111757)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu
 I (Src\SEGGER_RTT.h)(0x69111757)
 I (Src\SEGGER_RTT_Conf.h)(0x69111757)
 F (.\Inc\configSelect.h)(0x69111755)()
-F (.\Inc\config.h)(0x6929B3B5)()
+F (.\Inc\config.h)(0x6929F19E)()
 F (.\Inc\configDebug.h)(0x69111755)()
 F (.\Inc\setup.h)(0x69111756)()
 F (.\Inc\bldc.h)(0x69111755)()

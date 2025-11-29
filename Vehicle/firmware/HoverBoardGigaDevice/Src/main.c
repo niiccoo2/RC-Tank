@@ -139,6 +139,7 @@ int main (void)
 
 	// Init GPIOs
 	GPIO_init();
+	
 	#ifndef REMOTE_AUTODETECT
 		DEBUG_LedSet(SET,0)
 		//pinMode(LED_GREEN,	GPIO_MODE_IPU);		// input_pullup turns led on with target 2
