@@ -96,8 +96,8 @@ async def set_motor(command: MotorCommand):
     """
     # tank.last_update_time = time.time()
 
-    left_speed = int(command.left*1000)
-    right_speed = int(command.right*1000)
+    left_speed = int(-command.left)
+    right_speed = int(command.right)
 
     motors.set_esc(1, left_speed) # slave 1 is left
     motors.set_esc(0, right_speed) # slave 0 is right
