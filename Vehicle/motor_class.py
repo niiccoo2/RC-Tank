@@ -3,6 +3,7 @@ import time
 import struct
 import serial  # type: ignore
 import time
+import threading
 
 BLACK = "\033[0;30m"
 RED = "\033[0;31m"
@@ -31,6 +32,12 @@ class Motor:
         self.set_esc(0, 0) # Stop both motors
         self.set_esc(1, 0)
         self.stopped = True
+
+        self._stop_event = threading.Event()
+    
+    def stop(self):
+        """Request the timeout_check loop to exit."""
+        self._stop_event.set()
     
     def calc_crc(self, data: bytes) -> int:
         crc = 0
@@ -77,7 +84,7 @@ class Motor:
         print(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
 
     def timeout_check(self):
-        while True:
+        while not self._stop_event.is_set():
         # x 1000 to make it millis
             print("Checking time")
             time_since_last_update = (time.time() - self.last_update_time)*1000
@@ -87,7 +94,7 @@ class Motor:
                 self.set_esc(0, 0) # Stop both motors
                 self.set_esc(1, 0)
                 self.stopped = True
-            time.sleep(0.5)
+            self._stop_event.wait(0.5)
             # Need this to be responsive, but also not hog resources
 
     def clamp(self, x, lo, hi):

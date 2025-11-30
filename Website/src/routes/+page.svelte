@@ -126,8 +126,8 @@
 		left = left * MULTIPLIER;
 		right = right * MULTIPLIER;
 
-		left = applyExpo(left);
-		right = applyExpo(right);
+		// left = applyExpo(left);
+		// right = applyExpo(right);
 
 		if (!ip) {
 			console.log('IP is not set. sendCommand returning.');
