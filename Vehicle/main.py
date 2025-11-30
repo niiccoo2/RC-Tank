@@ -125,8 +125,10 @@ async def health():
 
 def signal_handler(sig, frame):
     print("\nShutting down gracefully...")
-    streamer.stop()
-    motors.cleanup()
+    if streamer is not None:
+        streamer.stop()
+    if motors is not None:
+        motors.cleanup()
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)

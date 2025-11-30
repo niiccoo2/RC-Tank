@@ -20,7 +20,8 @@ class MJPEGStreamer:
         jpeg_quality: int = 45,         # 35..55 keeps bytes low
         motion_gate: bool = True,
         motion_thresh: float = 6.0,     # lower = more sensitive
-        share_encoded: bool = True      # True = encode once, share to all clients
+        share_encoded: bool = True,     # True = encode once, share to all clients
+        buffer_flush_count: int = 5     # Number of frames to flush from buffer
     ):
         self.width = width
         self.height = height
@@ -28,6 +29,7 @@ class MJPEGStreamer:
         self.motion_gate = motion_gate
         self.motion_thresh = motion_thresh
         self.share_encoded = share_encoded
+        self.buffer_flush_count = buffer_flush_count
 
         # JPEG params (favor small size)
         self.jpeg_params: list[int] = [
@@ -136,15 +138,20 @@ class MJPEGStreamer:
         while self._running:
             # Flush buffer - grab (but don't decode) frames until we get the latest
             # This ensures we always process the most recent frame
-            for _ in range(5):  # Flush up to 5 buffered frames
+            grabbed = False
+            for _ in range(self.buffer_flush_count):
                 grabbed = self.cap.grab()
                 if not grabbed:
                     break
 
-            # Now retrieve the latest frame
-            ok, frame = self.cap.retrieve()
+            # Now retrieve the latest frame if grab succeeded
+            if grabbed:
+                ok, frame = self.cap.retrieve()
+            else:
+                ok = False
+
             if not ok:
-                # If retrieve failed, try a full read
+                # If retrieve failed or no grab succeeded, try a full read
                 ok, frame = self.cap.read()
                 if not ok:
                     time.sleep(0.005)
