@@ -1,16 +1,17 @@
 from motor_class import Motor
-from streamerClass import MJPEGStreamer
 
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
-import asyncio
 import time
 import threading
 import signal
 import sys
+
+from fastrtc import Stream, VideoStreamHandler
+import cv2
+import numpy as np
 
 # --------- Classes for HTTP Requests ----------
 class MotorCommand(BaseModel):
@@ -34,24 +35,56 @@ app.add_middleware(
 # --------- Tank and Camera Initialization ----------
 # tank = Tank()
 
+# Camera configuration
+CAM_SRC = 0
+CAM_WIDTH = 320
+CAM_HEIGHT = 240
+CAM_FPS = 30
+ROTATE_180 = True
 
-streamer = MJPEGStreamer(
-    src=0,
-    width=320,              # Slightly higher resolution
-    height=240,
-    cam_fps=30,
-    fourcc_str="MJPG",
-    rotate_180=True,
-    jpeg_quality=35,        # Lower quality = smaller frames = faster transmission
-    motion_gate=False,      # Disable motion gating to reduce latency
-    share_encoded=True
+# Initialize camera capture
+cap = cv2.VideoCapture(CAM_SRC)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_WIDTH)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_HEIGHT)
+cap.set(cv2.CAP_PROP_FPS, CAM_FPS)
+cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*"MJPG"))
+try:
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+except Exception:
+    pass
+
+
+def video_handler(frame: np.ndarray) -> np.ndarray:
+    """
+    Process video frames for WebRTC streaming.
+    Captures from camera, rotates 180 degrees if configured,
+    and converts BGR to RGB for proper color display.
+    """
+    ret, camera_frame = cap.read()
+    if not ret:
+        # Return a black frame if camera read fails
+        return np.zeros((CAM_HEIGHT, CAM_WIDTH, 3), dtype=np.uint8)
+
+    # Rotate 180 degrees if configured
+    if ROTATE_180:
+        camera_frame = cv2.rotate(camera_frame, cv2.ROTATE_180)
+
+    # Convert BGR to RGB for proper color display
+    rgb_frame = cv2.cvtColor(camera_frame, cv2.COLOR_BGR2RGB)
+
+    return rgb_frame
+
+
+# Create WebRTC stream with VideoStreamHandler
+stream = Stream(
+    handler=VideoStreamHandler(video_handler, fps=CAM_FPS),
+    modality="video",
+    mode="send",
 )
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
-    
-    streamer.start()
 
     # Start the timeout check thread
     timeout_thread = threading.Thread(target=motors.timeout_check, daemon=True)
@@ -62,27 +95,16 @@ async def lifespan(app: FastAPI):
         yield
     finally:
         print("Shutting down...")
-        streamer.stop()
+        cap.release()
         motors.cleanup()
 
 # Assign lifespan handler to FastAPI app
 app.router.lifespan_context = lifespan
 
-# --------- ROUTES ----------
+# Mount WebRTC stream endpoints to FastAPI app
+stream.mount(app)
 
-@app.get("/camera")
-async def camera(fps: int = 24, q: int | None = None):
-    """
-    Stream the MJPEG camera feed.
-    Optional query params:
-      - fps: Frames per second (default: 12, range: 1-30)
-      - q: JPEG quality (only used if share_encoded=False)
-    """
-    fps = max(1, min(30, fps))  # Clamp FPS between 1 and 30
-    return StreamingResponse(
-        streamer.gen_frames(max_fps=fps, quality_override=q),
-        media_type="multipart/x-mixed-replace; boundary=frame"
-    )
+# --------- ROUTES ----------
 
 @app.post("/motor")
 async def set_motor(command: MotorCommand):
@@ -125,8 +147,8 @@ async def health():
 
 def signal_handler(sig, frame):
     print("\nShutting down gracefully...")
-    if streamer is not None:
-        streamer.stop()
+    if cap is not None:
+        cap.release()
     if motors is not None:
         motors.cleanup()
     sys.exit(0)
