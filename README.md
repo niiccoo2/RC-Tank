@@ -628,7 +628,7 @@ Took forever but made the wiring harness for the data stuff. Now testing both mo
 
 Made this really nice frame. It looks a bit weird but it works. Then put everything onto the tank and tested that the motors still spin, they do! Tmrw morning I will turn the motor code into a class then integrate. ![Top view of new frame](/photos/chassis_top.jpg) ![Side view of new frame](/photos/chassis_side.jpg)
 
-### Satuday, November 19th | x hours
+### Satuday, November 29th | 2.5 hours
 
 #### 09:00 | 1 hour
 
@@ -641,6 +641,25 @@ When I made the wiring harness for the esc data comms, I made it on perf board, 
 #### 12:00 | .5 hours
 
 Finally I got to test it, this test was a bit flawed though, because I found out that the usb hub I was using was really old, so it was unable to stream camera data over it. For camera I had someone follow on google meet so I could see what I was doing. Other than me getting car sick from the shaky camera, the test was pretty good, the latency was not amazing, but it was semi drivable. So hopefully once I get a new usb hub, the built in camera will be better! (Video will be from second test)
+
+### Sunday, November 30th | 2.33 hours
+
+#### 10:00 | 2 hours
+
+Spent a while trying to set up WebRTC. It should have much better latency but I was unable to get it working. I just wanted to drive the car so I reverted to using MJPEG.
+
+#### 14:00 | .33 hours
+
+DROVE THE CAR. There are a lot of things to add BUT ITS USABLE!!! Things that happend (so I remember):
+
+- Latency is not horible, but WebRTC is still a good thing to add
+- You tend to sverve a lot because of the (even if small) latency...
+- Need to figure out how to read bettery voltage. This could be from ESC's or make my own thing.
+- I think I broke the webcam because there are PCB trace looking things in my view. It's still driveable but should fix it.
+
+[Put video here]
+
+This is the first part of this project that I am submitting to [Moonshot](https://moonshot.hackclub.com). As of here I am at **65.46** hours!
 
 ## CAD designs
 

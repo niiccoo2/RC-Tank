@@ -21,6 +21,13 @@
 	let stick: number = 0;
 	let carMode: boolean = true;
 
+	function applyExpo(value: number, expo: number = 0.3) {
+		const sign = value >= 0 ? 1 : -1;
+		const abs = Math.abs(value);
+
+		return sign * (expo * abs * abs * abs + (1 - expo) * abs);
+	}
+
 	function changeRefresh(amount: number) {
 		refreshTimeMs = refreshTimeMs + amount;
 	}
@@ -118,6 +125,10 @@
 	async function sendCommand(left: number, right: number) {
 		left = left * MULTIPLIER;
 		right = right * MULTIPLIER;
+
+		left = applyExpo(left);
+		right = applyExpo(right);
+
 		if (!ip) {
 			console.log('IP is not set. sendCommand returning.');
 			return;
