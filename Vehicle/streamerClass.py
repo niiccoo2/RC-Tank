@@ -134,10 +134,21 @@ class MJPEGStreamer:
         prev_gray: Optional[np.ndarray] = None
 
         while self._running:
-            ok, frame = self.cap.read()
+            # Flush buffer - grab (but don't decode) frames until we get the latest
+            # This ensures we always process the most recent frame
+            for _ in range(5):  # Flush up to 5 buffered frames
+                grabbed = self.cap.grab()
+                if not grabbed:
+                    break
+
+            # Now retrieve the latest frame
+            ok, frame = self.cap.retrieve()
             if not ok:
-                time.sleep(0.005)
-                continue
+                # If retrieve failed, try a full read
+                ok, frame = self.cap.read()
+                if not ok:
+                    time.sleep(0.005)
+                    continue
 
             if self.rotate_180:
                 frame = cv2.rotate(frame, cv2.ROTATE_180)
