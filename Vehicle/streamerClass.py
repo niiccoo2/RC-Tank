@@ -83,8 +83,8 @@ class MJPEGStreamer:
 
     def gen_frames(self, max_fps: int = 12, quality_override: Optional[int] = None):
         """
-        Flask generator: yields latest frame with no queue buildup.
-        Lower max_fps => fewer bytes. Latency stays low because we always serve 'latest'.
+        Flask generator: yields latest frame with no queue buildup. 
+        Lower max_fps => fewer bytes.  Latency stays low because we always serve 'latest'. 
         """
         min_interval = 1.0 / max_fps
         last_send = 0.0
@@ -94,14 +94,14 @@ class MJPEGStreamer:
             local_params = self.jpeg_params[:]
             local_params[1] = max(10, min(95, int(quality_override)))
         else:
-            local_params = self.jpeg_params
+            local_params = self. jpeg_params
 
-        while True:
+        while self._running:  # <-- CHECK _running FLAG HERE instead of `while True`
             # FPS cap (bandwidth knob)
             now = time.time()
             wait = min_interval - (now - last_send)
             if wait > 0:
-                time.sleep(wait)
+                time.sleep(min(wait, 0.1))  # <-- Cap sleep to 0.1s so Ctrl+C is responsive
 
             if self.share_encoded:
                 with self._lock:
@@ -110,26 +110,24 @@ class MJPEGStreamer:
                     continue
                 last_send = time.time()
                 yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n'
-                       b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
-                       jpg + b'\r\n')
+                    b'Content-Type: image/jpeg\r\n'
+                    b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
+                    jpg + b'\r\n')
             else:
-                # Narrow None before copy to satisfy Pylance
                 with self._lock:
                     src_small = self._latest_small
                 if src_small is None:
                     continue
-                # src_small is a color (BGR) small frame
-                small_color = src_small.copy()
+                small_color = src_small. copy()
                 ok, buf = cv2.imencode('.jpg', small_color, local_params)
                 if not ok:
                     continue
                 jpg = buf.tobytes()
                 last_send = time.time()
                 yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n'
-                       b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
-                       jpg + b'\r\n')
+                    b'Content-Type: image/jpeg\r\n'
+                    b'Content-Length: ' + str(len(jpg)).encode() + b'\r\n\r\n' +
+                    jpg + b'\r\n')
 
     # ---------- Internal capture loop ----------
     def _capture_loop(self) -> None:

@@ -35,15 +35,14 @@ app.add_middleware(
 
 streamer = MJPEGStreamer(
     src=0,
-    width=160,
-    height=120,
+    width=320,              # Slightly higher resolution
+    height=240,
     cam_fps=30,
-    fourcc_str="MJPG",         # try "YUYV" if MJPG isn't supported well
+    fourcc_str="MJPG",
     rotate_180=True,
-    jpeg_quality=45,           # lower => smaller bytes
-    motion_gate=True,
-    motion_thresh=6.0,
-    share_encoded=True         # encode once, share to all clients (lowest CPU)
+    jpeg_quality=35,        # Lower quality = smaller frames = faster transmission
+    motion_gate=False,      # Disable motion gating to reduce latency
+    share_encoded=True
 )
 
 @asynccontextmanager
@@ -70,7 +69,7 @@ app.router.lifespan_context = lifespan
 # --------- ROUTES ----------
 
 @app.get("/camera")
-async def camera(fps: int = 12, q: int | None = None):
+async def camera(fps: int = 24, q: int | None = None):
     """
     Stream the MJPEG camera feed.
     Optional query params:
