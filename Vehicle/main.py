@@ -9,6 +9,8 @@ from contextlib import asynccontextmanager
 import asyncio
 import time
 import threading
+import signal
+import sys
 
 # --------- Classes for HTTP Requests ----------
 class MotorCommand(BaseModel):
@@ -121,7 +123,18 @@ async def health():
     print("/health ran")
     return {"status": "healthy"}
 
+def signal_handler(sig, frame):
+    print("\nShutting down gracefully...")
+    if streamer is not None:
+        streamer.stop()
+    if motors is not None:
+        motors.cleanup()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
+
 # Run the FastAPI app
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=5000)
+    uvicorn.run(app, host='0.0.0.0', port=5000, timeout_graceful_shutdown=1)
