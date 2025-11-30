@@ -11,6 +11,10 @@
 	let videoElement: HTMLVideoElement;
 	let peerConnection: RTCPeerConnection | null = null;
 	let currentIp = '';
+	let isSettingUp = false;
+
+	// ICE gathering timeout in milliseconds
+	const ICE_GATHERING_TIMEOUT = 5000;
 
 	// Clean up existing connection
 	function cleanup() {
@@ -31,6 +35,12 @@
 			connectionStatus = 'Disconnected';
 			return;
 		}
+
+		// Prevent concurrent setup attempts
+		if (isSettingUp) {
+			return;
+		}
+		isSettingUp = true;
 
 		// Clean up any existing connection
 		cleanup();
@@ -85,20 +95,25 @@
 			const offer = await peerConnection.createOffer();
 			await peerConnection.setLocalDescription(offer);
 
-			// Wait for ICE gathering to complete
-			await new Promise<void>((resolve) => {
-				if (peerConnection!.iceGatheringState === 'complete') {
-					resolve();
-				} else {
-					const checkState = () => {
-						if (peerConnection!.iceGatheringState === 'complete') {
-							peerConnection!.removeEventListener('icegatheringstatechange', checkState);
-							resolve();
-						}
-					};
-					peerConnection!.addEventListener('icegatheringstatechange', checkState);
-				}
-			});
+			// Wait for ICE gathering to complete with timeout
+			await Promise.race([
+				new Promise<void>((resolve) => {
+					if (peerConnection!.iceGatheringState === 'complete') {
+						resolve();
+					} else {
+						const checkState = () => {
+							if (peerConnection!.iceGatheringState === 'complete') {
+								peerConnection!.removeEventListener('icegatheringstatechange', checkState);
+								resolve();
+							}
+						};
+						peerConnection!.addEventListener('icegatheringstatechange', checkState);
+					}
+				}),
+				new Promise<void>((_, reject) =>
+					setTimeout(() => reject(new Error('ICE gathering timeout')), ICE_GATHERING_TIMEOUT)
+				)
+			]);
 
 			// Send offer to server and get answer
 			const response = await fetch(`http://${ip}:5000/webrtc/offer`, {
@@ -124,6 +139,8 @@
 			console.error('WebRTC connection failed:', error);
 			connectionStatus = 'Error';
 			cleanup();
+		} finally {
+			isSettingUp = false;
 		}
 	}
 

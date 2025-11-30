@@ -59,7 +59,12 @@ def video_handler(frame: np.ndarray) -> np.ndarray:
     Process video frames for WebRTC streaming.
     Captures from camera, rotates 180 degrees if configured,
     and converts BGR to RGB for proper color display.
+    
+    Note: The `frame` parameter is required by FastRTC's VideoStreamHandler
+    interface but is not used since we're in 'send' mode (server sends video
+    to client, not receiving from client).
     """
+    _ = frame  # Unused - required by FastRTC interface for send mode
     ret, camera_frame = cap.read()
     if not ret:
         # Return a black frame if camera read fails
