@@ -6,6 +6,14 @@
   </a>
 </div>
 
+## Info
+
+This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions for Hack Club [Moonshot](https://moonshot.hackclub.com).
+
+The idea of this project was simple, I had a normal rc car with camera, but it coulden't even go around the block, so I wanted something that would have much better range. Thats where using a cell modem comes in. The main (and big) disadvantage with this is latency, you need < 1.5s or else it becomes very hard to drive. I learned a lot doing this project (not done though!), I spent a lot of time learning about motor contollers and reverse engineering some hoverboard ECS's so I could use the motors I had. The main thing I want to keep working on, is the latency over cell, hopefully I can get webRTC working also. After I have a working human controled rover, then I will use it as the testbed for many more projects such as AI vision control, and GPS waypoints.
+
+![Top view of new frame](/photos/chassis_top.jpg)
+
 ## Setup
 
 ### Install Tailscale
@@ -657,7 +665,7 @@ DROVE THE CAR. There are a lot of things to add BUT ITS USABLE!!! Things that ha
 - Need to figure out how to read bettery voltage. This could be from ESC's or make my own thing.
 - I think I broke the webcam because there are PCB trace looking things in my view. It's still driveable but should fix it.
 
-[Put video here]
+[Video](https://hc-cdn.hel1.your-objectstorage.com/s/v3/c245bbe98e534a92a19db2d41ba9c841da88784e_2025-11-30_13-42-12.mp4)
 
 This is the first part of this project that I am submitting to [Moonshot](https://moonshot.hackclub.com). As of here I am at **65.46** hours!
 
