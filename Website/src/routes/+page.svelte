@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
+	import WebRTCVideo from '$lib/components/WebRTCVideo.svelte';
 
 	const MULTIPLIER: number = 1000;
 
@@ -194,23 +195,7 @@
 
 			<div class="center">
 				{#if videoSetting}
-					{#if status !== 'Connected'}
-						<img
-							class="border black_background"
-							src={`${cam_off_icon}`}
-							width="640"
-							height="480"
-							alt="Test Cam Feed" />
-						<p style="color: #FF0000; font-weight: bold;">{status}</p>
-					{:else}
-						<img
-							class="border black_background"
-							src={`http://${ip}:5000/camera`}
-							width="640"
-							height="480"
-							alt="RC Tank Camera Feed" />
-						<p style="color: #00FF00; font-weight: bold;">{status}</p>
-					{/if}
+					<WebRTCVideo {ip} />
 				{:else}
 					<img
 						class="border black_background"
