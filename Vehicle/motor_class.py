@@ -26,8 +26,11 @@ class Motor:
         self.MAX_SPEED = max_speed
 
         self.ser = serial.Serial(self.PORT, baudrate=self.BAUDRATE, timeout=1)
+        self.ser.reset_input_buffer()
+        self.ser.reset_output_buffer()
 
         self.last_update_time = time.time()
+        self._lock = threading.Lock()
 
         self.set_esc(0, 0) # Stop both motors
         self.set_esc(1, 0)
@@ -77,24 +80,26 @@ class Motor:
             raise RuntimeError("Serial port is not opened. Initialize it before sending packets.")
 
         packet = self.build_packet(iSlave, iSpeed, wState)
-        self.ser.write(packet)
-        self.ser.flush()
+        
+        with self._lock:
+            self.ser.write(packet)
+            # self.ser.flush() # Blocking, causes latency
 
         # Debugging: Show the sent packet
-        print(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
+        # print(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
 
     def timeout_check(self):
         while not self._stop_event.is_set():
         # x 1000 to make it millis
-            print("Checking time")
+            # print("Checking time")
             time_since_last_update = (time.time() - self.last_update_time)*1000
-            print(f"Time since last update: {time_since_last_update}")
-            if time_since_last_update > 1000 and not self.stopped: # if over 1 sec
-                print(f"{RED}TIMEOUT HIT, STOPPING{RESET}")
+            # print(f"Time since last update: {time_since_last_update}")
+            if time_since_last_update > 2000 and not self.stopped: # if over 2 sec
+                print(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
                 self.set_esc(0, 0) # Stop both motors
                 self.set_esc(1, 0)
                 self.stopped = True
-            self._stop_event.wait(0.5)
+            self._stop_event.wait(0.1)
             # Need this to be responsive, but also not hog resources
 
     def clamp(self, x, lo, hi):

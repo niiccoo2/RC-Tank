@@ -47,6 +47,13 @@ sudo nmcli c mod "mypreferred" conn.autoconnect-priority 10
 
 to set priority; higher number is higher priority.
 
+### Cmd to temp use wifi
+
+```shell
+sudo ip route del default via 192.168.1.1 dev wlan0
+sudo ip route add default via 192.168.1.1 dev wlan0 metric 50
+```
+
 ## Journal
 
 I did not count the time building the chassis kit.
