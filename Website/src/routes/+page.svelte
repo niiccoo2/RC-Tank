@@ -23,6 +23,7 @@
 	let carMode: boolean = true;
 	let pc: RTCPeerConnection | null = null;
 	let videoEl: HTMLVideoElement;
+	let FrSkyMode = true;
 
 	function applyExpo(value: number, expo: number = 0.3) {
 		const sign = value >= 0 ? 1 : -1;
@@ -100,15 +101,25 @@
 			// console.log('Axes:', gamepad.axes);
 
 			if (carMode) {
-				// Using sticks for now but will change to triggers soon
-				trottle = -gamepad.axes[3]; // Right stick
-				stick = gamepad.axes[0]; // Left stick
+				if (FrSkyMode) {
+					trottle = gamepad.axes[0]; // Left stick
+					stick = gamepad.axes[1]; // Right stick
+
+					if (Math.abs(trottle) < 0.1) trottle = 0;
+				} else {
+					trottle = -gamepad.axes[3]; // Right stick
+					stick = gamepad.axes[0]; // Left stick
+				}
 
 				[leftSpeed, rightSpeed] = carToTracks(trottle, stick);
 			} else {
-				// Stick-to-track
-				leftSpeed = -gamepad.axes[1]; // Left stick
-				rightSpeed = -gamepad.axes[3]; // Right stick
+				if (FrSkyMode) {
+					leftSpeed = gamepad.axes[0]; // Left stick
+					rightSpeed = gamepad.axes[2]; // Right stick
+				} else {
+					leftSpeed = -gamepad.axes[1]; // Left stick
+					rightSpeed = -gamepad.axes[3]; // Right stick
+				}
 			}
 
 			roundedLeftSpeed = Number(leftSpeed.toFixed(2));
@@ -294,6 +305,14 @@
 				</div>
 
 				<div class="mt-2 space-y-2">
+					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+						<span class="py-1">FrSky mode:</span>
+						<label class="switch m-0 ml-auto">
+							<input type="checkbox" bind:checked={FrSkyMode} />
+							<span class="slider round"></span>
+						</label>
+					</div>
+
 					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 						<span class="py-1">Show Video:</span>
 						<label class="switch m-0 ml-auto">
