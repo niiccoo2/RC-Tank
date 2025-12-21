@@ -11,6 +11,7 @@
 	let ip: string = '';
 	let ip_textbox: string = '';
 	let videoSetting = true;
+	let useWebRTC = true; // Toggle for WebRTC
 	let ping: string = 'N/A';
 	let roundedLeftSpeed: number = 0;
 	let roundedRightSpeed: number = 0;
@@ -20,6 +21,8 @@
 	let trottle: number = 0;
 	let stick: number = 0;
 	let carMode: boolean = true;
+	let pc: RTCPeerConnection | null = null;
+	let videoEl: HTMLVideoElement;
 
 	function applyExpo(value: number, expo: number = 0.3) {
 		const sign = value >= 0 ? 1 : -1;
@@ -94,7 +97,7 @@
 		const gamepad = gamepads[0];
 
 		if (gamepad) {
-			console.log('Axes:', gamepad.axes);
+			// console.log('Axes:', gamepad.axes);
 
 			if (carMode) {
 				// Using sticks for now but will change to triggers soon
@@ -133,7 +136,7 @@
 			console.log('IP is not set. sendCommand returning.');
 			return;
 		} else {
-			console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
+			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
 			try {
 				const response = await fetch(`http://${ip}:5000/motor`, {
 					method: 'POST',
@@ -152,6 +155,46 @@
 
 	function confirmIp() {
 		ip = ip_textbox;
+		if (useWebRTC) {
+			startWebRTC();
+		}
+	}
+
+	async function startWebRTC() {
+		if (pc) {
+			pc.close();
+		}
+
+		pc = new RTCPeerConnection();
+
+		pc.addTransceiver('video', { direction: 'recvonly' });
+
+		pc.ontrack = (event) => {
+			if (videoEl && event.streams[0]) {
+				videoEl.srcObject = event.streams[0];
+			}
+		};
+
+		const offer = await pc.createOffer();
+		await pc.setLocalDescription(offer);
+
+		try {
+			const response = await fetch(`http://${ip}:5000/offer`, {
+				method: 'POST',
+				body: JSON.stringify({
+					sdp: pc.localDescription?.sdp,
+					type: pc.localDescription?.type
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			const answer = await response.json();
+			await pc.setRemoteDescription(answer);
+		} catch (e) {
+			console.error('WebRTC negotiation failed:', e);
+		}
 	}
 
 	onMount(() => {
@@ -203,12 +246,23 @@
 							alt="Test Cam Feed" />
 						<p style="color: #FF0000; font-weight: bold;">{status}</p>
 					{:else}
-						<img
-							class="border black_background"
-							src={`http://${ip}:5000/camera`}
-							width="640"
-							height="480"
-							alt="RC Tank Camera Feed" />
+						{#if useWebRTC}
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<video
+								bind:this={videoEl}
+								autoplay
+								playsinline
+								class="border black_background"
+								width="640"
+								height="480"></video>
+						{:else}
+							<img
+								class="border black_background"
+								src={`http://${ip}:5000/camera`}
+								width="640"
+								height="480"
+								alt="RC Tank Camera Feed" />
+						{/if}
 						<p style="color: #00FF00; font-weight: bold;">{status}</p>
 					{/if}
 				{:else}
@@ -244,6 +298,19 @@
 						<span class="py-1">Show Video:</span>
 						<label class="switch m-0 ml-auto">
 							<input type="checkbox" bind:checked={videoSetting} />
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+						<span class="py-1">Use WebRTC:</span>
+						<label class="switch m-0 ml-auto">
+							<input
+								type="checkbox"
+								bind:checked={useWebRTC}
+								on:change={() => {
+									if (useWebRTC && ip) startWebRTC();
+								}} />
 							<span class="slider round"></span>
 						</label>
 					</div>
