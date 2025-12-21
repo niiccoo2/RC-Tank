@@ -49,6 +49,11 @@ class MJPEGStreamer:
             self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         except Exception:
             pass
+        
+        if not self.cap.isOpened():
+            print(f"Error: Camera source {src} could not be opened.")
+        else:
+            print(f"Camera source {src} opened successfully.")
 
         # Shared state
         self._lock = threading.Lock()
@@ -154,6 +159,7 @@ class MJPEGStreamer:
                 # If retrieve failed or no grab succeeded, try a full read
                 ok, frame = self.cap.read()
                 if not ok:
+                    print("Warning: Failed to read frame from camera.")
                     time.sleep(0.005)
                     continue
 
