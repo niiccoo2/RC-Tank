@@ -68,6 +68,7 @@ class MJPEGStreamer:
 
     # ---------- Public API ----------
     def start(self) -> None:
+        print("Streamer starting...")
         if self._running:
             return
         self._running = True

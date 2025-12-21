@@ -17,23 +17,8 @@ class MotorCommand(BaseModel):
     left: float
     right: float
 
-# --------- FastAPI Application ---------
-app = FastAPI()
-
+# --------- Global Objects Initialization ----------
 motors = Motor()
-
-# Enable CORS middleware for cross-origin requests
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Update this with your allowed origins
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# --------- Tank and Camera Initialization ----------
-# tank = Tank()
-
 
 streamer = MJPEGStreamer(
     src=0,
@@ -47,6 +32,7 @@ streamer = MJPEGStreamer(
     share_encoded=True
 )
 
+# --------- Lifespan Manager ---------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
@@ -65,8 +51,17 @@ async def lifespan(app: FastAPI):
         streamer.stop()
         motors.cleanup()
 
-# Assign lifespan handler to FastAPI app
-app.router.lifespan_context = lifespan
+# --------- FastAPI Application ---------
+app = FastAPI(lifespan=lifespan)
+
+# Enable CORS middleware for cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update this with your allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # --------- ROUTES ----------
 
