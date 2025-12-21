@@ -2,7 +2,6 @@ import asyncio
 import json
 import logging
 import platform
-import re
 from aiortc import RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaPlayer, MediaRelay
 
@@ -21,12 +20,7 @@ class WebRTCManager:
                  self.cam_file = f"video=Integrated Camera"
         else:
             # Linux / Raspberry Pi
-            # Force a lower framerate and resolution to naturally limit bitrate
-            self.cam_options = {
-                "framerate": "15",      # Lower FPS
-                "video_size": "320x240", # Keep small resolution
-                "pixel_format": "mjpeg"  # Force MJPEG input
-            }
+            self.cam_options = {"framerate": "30", "video_size": "320x240"}
             self.cam_format = "v4l2"
             # Ensure cam_src is treated as a string for the path construction if it's an int
             src_str = str(cam_src)
@@ -59,8 +53,8 @@ class WebRTCManager:
 
     async def offer(self, params):
         offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
-        # Default to 1000 kbps if not specified
-        target_bitrate = params.get("bitrate", 1000) 
+        # We accept bitrate but ignore it to ensure stability as requested
+        # target_bitrate = params.get("bitrate", 1000) 
 
         pc = RTCPeerConnection()
         self.pcs.add(pc)
@@ -81,18 +75,6 @@ class WebRTCManager:
 
         await pc.setRemoteDescription(offer)
         answer = await pc.createAnswer()
-
-        # Apply Bitrate Cap via SDP
-        if "m=video" in answer.sdp:
-            tias_bps = target_bitrate * 1000
-            answer.sdp = re.sub(
-                r'(m=video.*(?:\r\n|\n))', 
-                f'\\1b=AS:{target_bitrate}\r\nb=TIAS:{tias_bps}\r\n', 
-                answer.sdp
-            )
-            print(f"Bitrate cap applied to SDP ({target_bitrate} kbps)")
-        else:
-            print("Warning: Could not find video section in SDP to apply bitrate cap")
 
         await pc.setLocalDescription(answer)
 
