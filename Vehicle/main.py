@@ -99,7 +99,7 @@ async def offer(params: RTCOffer):
     Takes an SDP offer, configures the connection, and returns an SDP answer.
     """
     # If using WebRTC, we might want to stop MJPEG to free the camera
-    # streamer.stop() 
+    streamer.stop() 
     
     return await webrtc.offer(params.model_dump())
 

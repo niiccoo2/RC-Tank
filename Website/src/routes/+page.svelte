@@ -97,7 +97,7 @@
 		const gamepad = gamepads[0];
 
 		if (gamepad) {
-			console.log('Axes:', gamepad.axes);
+			// console.log('Axes:', gamepad.axes);
 
 			if (carMode) {
 				// Using sticks for now but will change to triggers soon
@@ -136,7 +136,7 @@
 			console.log('IP is not set. sendCommand returning.');
 			return;
 		} else {
-			console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
+			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
 			try {
 				const response = await fetch(`http://${ip}:5000/motor`, {
 					method: 'POST',
