@@ -52,6 +52,14 @@ class Motor:
                 else:
                     crc <<= 1
         return crc & 0xFFFF  # Ensure a 16-bit CRC
+
+    def read_feedback(self):
+        # Check if there is data in the buffer
+        if self.ser.in_waiting > 0:
+            # Read all available bytes
+            data = self.ser.read(self.ser.in_waiting)
+            # Process 'data' here (it will be bytes)
+            print(f"Received: {data.hex()}")
     
     def build_packet(self, iSlave: int, iSpeed: int, wState: int) -> bytes:
         """
@@ -99,6 +107,9 @@ class Motor:
                 self.set_esc(0, 0) # Stop both motors
                 self.set_esc(1, 0)
                 self.stopped = True
+            
+            self.read_feedback()
+
             self._stop_event.wait(0.1)
             # Need this to be responsive, but also not hog resources
 
