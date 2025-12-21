@@ -30,7 +30,14 @@ class WebRTCManager:
             # Linux / Raspberry Pi
             self.cam_options = {"framerate": "30", "video_size": "320x240"}
             self.cam_format = "v4l2"
-            self.cam_file = f"/dev/video{cam_src}" if isinstance(cam_src, int) else cam_src
+            # Ensure cam_src is treated as a string for the path construction if it's an int
+            src_str = str(cam_src)
+            if src_str.startswith("/dev/video"):
+                self.cam_file = src_str
+            elif src_str.isdigit():
+                self.cam_file = f"/dev/video{src_str}"
+            else:
+                self.cam_file = src_str
 
         self.webcam = None
 
