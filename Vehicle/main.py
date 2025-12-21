@@ -1,5 +1,6 @@
 from motor_class import Motor
 from streamerClass import MJPEGStreamer
+from webrtc_manager import WebRTCManager
 
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -17,9 +18,14 @@ class MotorCommand(BaseModel):
     left: float
     right: float
 
+class RTCOffer(BaseModel):
+    sdp: str
+    type: str
+
 # --------- Global Objects Initialization ----------
 motors = Motor()
 
+# MJPEG Streamer (Legacy/Backup)
 streamer = MJPEGStreamer(
     src=0,
     width=320,              # Slightly higher resolution
@@ -31,6 +37,12 @@ streamer = MJPEGStreamer(
     motion_gate=False,      # Disable motion gating to reduce latency
     share_encoded=True
 )
+
+# WebRTC Manager (New)
+# Note: src=0 might conflict if both MJPEG and WebRTC try to open it.
+# You should probably only use one at a time or use a different source.
+# For now, we initialize it but it only opens camera when requested.
+webrtc = WebRTCManager(cam_src="0") 
 
 # --------- Lifespan Manager ---------
 @asynccontextmanager
@@ -49,6 +61,7 @@ async def lifespan(app: FastAPI):
     finally:
         print("Shutting down...")
         streamer.stop()
+        await webrtc.cleanup()
         motors.cleanup()
 
 # --------- FastAPI Application ---------
@@ -78,6 +91,17 @@ async def camera(fps: int = 24, q: int | None = None):
         streamer.gen_frames(max_fps=fps, quality_override=q),
         media_type="multipart/x-mixed-replace; boundary=frame"
     )
+
+@app.post("/offer")
+async def offer(params: RTCOffer):
+    """
+    WebRTC Signaling Endpoint.
+    Takes an SDP offer, configures the connection, and returns an SDP answer.
+    """
+    # If using WebRTC, we might want to stop MJPEG to free the camera
+    # streamer.stop() 
+    
+    return await webrtc.offer(params.model_dump())
 
 @app.post("/motor")
 async def set_motor(command: MotorCommand):
