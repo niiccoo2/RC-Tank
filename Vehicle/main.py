@@ -92,11 +92,11 @@ async def set_motor(command: MotorCommand):
     """
     motors.last_update_time = time.time()
 
-    left_speed = int(command.left)
-    right_speed = int(-command.right)
+    left_speed = int(-command.left)
+    right_speed = int(command.right)
 
-    motors.set_esc(1, left_speed) # slave 1 is left
-    motors.set_esc(0, right_speed) # slave 0 is right
+    motors.set_esc(0, left_speed) # slave 0 is left
+    motors.set_esc(1, right_speed) # slave 1 is right
 
     print(f'/motor ran, left: {left_speed}, right: {right_speed}')
 
