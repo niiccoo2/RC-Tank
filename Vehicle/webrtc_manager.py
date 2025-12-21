@@ -11,9 +11,7 @@ class WebRTCManager:
         self.relay = MediaRelay()
 
         cam_options = {"framerate": "30",
-                       "video_size": "320x240",
-                       "input_format": "mjpeg",
-                       "video_bitrate": "1000k"}
+                       "video_size": "320x240"}
         
         # Determine platform for camera format
         system = platform.system()
