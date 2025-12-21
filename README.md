@@ -54,6 +54,15 @@ sudo ip route del default via 192.168.1.1 dev wlan0
 sudo ip route add default via 192.168.1.1 dev wlan0 metric 50
 ```
 
+## Cmd to dissconnect from WiFi
+
+```shell
+sudo ip link set wlan0 down
+
+sudo ip link set wlan0 up
+
+```
+
 ## Journal
 
 I did not count the time building the chassis kit.

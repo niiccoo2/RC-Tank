@@ -313,13 +313,13 @@
 						</label>
 					</div>
 
-					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+					<!-- <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 						<span class="py-1">Show Video:</span>
 						<label class="switch m-0 ml-auto">
 							<input type="checkbox" bind:checked={videoSetting} />
 							<span class="slider round"></span>
 						</label>
-					</div>
+					</div> -->
 
 					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 						<span class="py-1">Use WebRTC:</span>
