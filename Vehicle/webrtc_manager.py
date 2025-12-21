@@ -9,6 +9,11 @@ class WebRTCManager:
     def __init__(self, cam_src="/dev/video0"):
         self.pcs = set()
         self.relay = MediaRelay()
+
+        cam_options = {"framerate": "30",
+                       "video_size": "320x240",
+                       "input_format": "mjpeg",
+                       "video_bitrate": "1000k"}
         
         # Determine platform for camera format
         system = platform.system()
@@ -18,7 +23,7 @@ class WebRTCManager:
             # or use "default" if supported. 
             # For simplicity in dev, we might fallback to a file or try default.
             # This is a best-effort guess for Windows dev environment.
-            self.cam_options = {"framerate": "30", "video_size": "320x240"}
+            self.cam_options = cam_options
             self.cam_format = "dshow"
             self.cam_file = f"video={cam_src}" if "video=" not in str(cam_src) else cam_src
             # If src is an integer (0, 1), it's harder with MediaPlayer on Windows without exact name.
@@ -28,7 +33,7 @@ class WebRTCManager:
                  self.cam_file = f"video=Integrated Camera" # Placeholder, user might need to change
         else:
             # Linux / Raspberry Pi
-            self.cam_options = {"framerate": "30", "video_size": "320x240"}
+            self.cam_options = cam_options
             self.cam_format = "v4l2"
             # Ensure cam_src is treated as a string for the path construction if it's an int
             src_str = str(cam_src)
