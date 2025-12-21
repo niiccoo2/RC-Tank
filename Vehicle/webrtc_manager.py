@@ -2,6 +2,7 @@ import asyncio
 import json
 import logging
 import platform
+import re
 from aiortc import RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaPlayer, MediaRelay
 
@@ -9,29 +10,23 @@ class WebRTCManager:
     def __init__(self, cam_src="/dev/video0"):
         self.pcs = set()
         self.relay = MediaRelay()
-
-        cam_options = {"framerate": "30",
-                       "video_size": "320x240"}
         
         # Determine platform for camera format
         system = platform.system()
         if system == "Windows":
-            # On Windows, we typically use dshow. 
-            # Note: You might need to specify the exact device name instead of "video=..." 
-            # or use "default" if supported. 
-            # For simplicity in dev, we might fallback to a file or try default.
-            # This is a best-effort guess for Windows dev environment.
-            self.cam_options = cam_options
+            self.cam_options = {"framerate": "30", "video_size": "320x240"}
             self.cam_format = "dshow"
             self.cam_file = f"video={cam_src}" if "video=" not in str(cam_src) else cam_src
-            # If src is an integer (0, 1), it's harder with MediaPlayer on Windows without exact name.
-            # We'll assume the user might test on Linux or has a specific string.
-            # Fallback for integer index on Windows is tricky with ffmpeg directly.
             if isinstance(cam_src, int):
-                 self.cam_file = f"video=Integrated Camera" # Placeholder, user might need to change
+                 self.cam_file = f"video=Integrated Camera"
         else:
             # Linux / Raspberry Pi
-            self.cam_options = cam_options
+            # Force a lower framerate and resolution to naturally limit bitrate
+            self.cam_options = {
+                "framerate": "15",      # Lower FPS
+                "video_size": "320x240", # Keep small resolution
+                "pixel_format": "mjpeg"  # Force MJPEG input
+            }
             self.cam_format = "v4l2"
             # Ensure cam_src is treated as a string for the path construction if it's an int
             src_str = str(cam_src)
@@ -64,6 +59,8 @@ class WebRTCManager:
 
     async def offer(self, params):
         offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
+        # Default to 1000 kbps if not specified
+        target_bitrate = params.get("bitrate", 1000) 
 
         pc = RTCPeerConnection()
         self.pcs.add(pc)
@@ -84,6 +81,19 @@ class WebRTCManager:
 
         await pc.setRemoteDescription(offer)
         answer = await pc.createAnswer()
+
+        # Apply Bitrate Cap via SDP
+        if "m=video" in answer.sdp:
+            tias_bps = target_bitrate * 1000
+            answer.sdp = re.sub(
+                r'(m=video.*(?:\r\n|\n))', 
+                f'\\1b=AS:{target_bitrate}\r\nb=TIAS:{tias_bps}\r\n', 
+                answer.sdp
+            )
+            print(f"Bitrate cap applied to SDP ({target_bitrate} kbps)")
+        else:
+            print("Warning: Could not find video section in SDP to apply bitrate cap")
+
         await pc.setLocalDescription(answer)
 
         return {
