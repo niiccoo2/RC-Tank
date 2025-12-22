@@ -195,22 +195,16 @@
 
 		const configuration = {
 			iceServers: [
-				{
-					urls: 'stun:100.71.211.72:3478'
-				},
+				{ urls: 'stun:100.71.211.72:3478' },
 				{
 					urls: 'turn:100.71.211.72:3478',
-					username: 'tank',
-					credential: 'tankpass'
-				},
-				{
-					urls: 'turn:100.71.211.72:3478?transport=tcp',
 					username: 'tank',
 					credential: 'tankpass'
 				}
 			],
 			iceCandidatePoolSize: 10,
-			iceTransportPolicy: 'all'
+			// CHANGE THIS FROM 'all' TO 'relay'
+			iceTransportPolicy: 'relay' 
 		};
 
 		pc = new RTCPeerConnection(configuration);
