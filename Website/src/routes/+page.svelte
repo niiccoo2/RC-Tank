@@ -195,11 +195,29 @@
 
 		const configuration = {
 			iceServers: [
-				{ urls: 'stun:stun.l.google.com:19302' },
-				{ urls: 'stun:stun1.l.google.com:19302' },
-				{ urls: 'stun:stun.cloudflare.com:3478' },
-				{ urls: 'stun:stun.anyfirewall.com:3478' },
-				{ urls: 'stun:stun.stunprotocol.org:3478' }
+				{
+					urls: 'stun:stun.relay.metered.ca:80'
+				},
+				{
+					urls: 'turn:standard.relay.metered.ca:80',
+					username: '6be1f04416fc3f226105b121',
+					credential: 'HpWT7jrUtFu32x0q'
+				},
+				{
+					urls: 'turn:standard.relay.metered.ca:80?transport=tcp',
+					username: '6be1f04416fc3f226105b121',
+					credential: 'HpWT7jrUtFu32x0q'
+				},
+				{
+					urls: 'turn:standard.relay.metered.ca:443',
+					username: '6be1f04416fc3f226105b121',
+					credential: 'HpWT7jrUtFu32x0q'
+				},
+				{
+					urls: 'turns:standard.relay.metered.ca:443?transport=tcp',
+					username: '6be1f04416fc3f226105b121',
+					credential: 'HpWT7jrUtFu32x0q'
+				}
 			],
 			iceCandidatePoolSize: 10,
 			iceTransportPolicy: 'all'
