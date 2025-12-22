@@ -143,6 +143,20 @@ async def stop():
     print("/stop ran")
     return {"status": "stopped"}
 
+@app.post("/lights_off")
+async def lights_off():
+    if lights:
+        lights.off()
+    else:
+        print('Lights object not defined')
+
+@app.post("/lights_on")
+async def lights_on():
+    if lights:
+        lights.run_lights()
+    else:
+        print('Lights object not defined')
+
 @app.post("/health")
 async def health():
     print("/health ran")

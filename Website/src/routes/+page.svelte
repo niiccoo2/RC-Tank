@@ -25,6 +25,7 @@
 	let videoEl: HTMLVideoElement;
 	let FrSkyMode = true;
 	let voltage: number = 0;
+	let lights: boolean = true;
 
 	function applyExpo(value: number, expo: number = 0.3) {
 		const sign = value >= 0 ? 1 : -1;
@@ -92,6 +93,20 @@
 
 	async function updatePing() {
 		ping = await pingAddress(`http://${ip}:5000/stats`);
+	}
+
+	async function handeLightSwitch(value: boolean) {
+		if (value) {
+			const response = await fetch(`http://${ip}:5000/lights_on`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' }
+			});
+		} else {
+			const response = await fetch(`http://${ip}:5000/lights_off`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' }
+			});
+		}
 	}
 
 	function pollGamepad() {
@@ -313,6 +328,17 @@
 				</div>
 
 				<div class="mt-2 space-y-2">
+					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+						<span class="py-1">Lights:</span>
+						<label class="switch m-0 ml-auto">
+							<input
+								type="checkbox"
+								bind:checked={lights}
+								on:change={() => handeLightSwitch(lights)} />
+							<span class="slider round"></span>
+						</label>
+					</div>
+
 					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 						<span class="py-1">FrSky mode:</span>
 						<label class="switch m-0 ml-auto">
