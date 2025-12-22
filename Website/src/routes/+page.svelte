@@ -24,6 +24,7 @@
 	let pc: RTCPeerConnection | null = null;
 	let videoEl: HTMLVideoElement;
 	let FrSkyMode = true;
+	let voltage: number = 0;
 
 	function applyExpo(value: number, expo: number = 0.3) {
 		const sign = value >= 0 ? 1 : -1;
@@ -155,6 +156,7 @@
 					body: JSON.stringify({ left, right })
 				});
 				const data = await response.json();
+				voltage = data.voltage;
 				status = 'Connected';
 				return data;
 			} catch (e) {
@@ -300,8 +302,14 @@
 			</div>
 
 			<div class="side right">
-				<div>
-					<p class="info_card px-4 py-2">Ping: {ping}</p>
+				<div class="space-y-2">
+					<div>
+						<p class="info_card px-4 py-2">Ping: {ping}</p>
+					</div>
+
+					<div>
+						<p class="info_card px-4 py-2">Battery Voltage: {voltage}v</p>
+					</div>
 				</div>
 
 				<div class="mt-2 space-y-2">

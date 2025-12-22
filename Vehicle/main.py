@@ -124,7 +124,7 @@ async def set_motor(command: MotorCommand):
 
     print(f'/motor ran, left: {left_speed}, right: {right_speed}')
 
-    return {"status": "ok", "left": left_speed, "right": right_speed}
+    return {"status": "ok", "left": left_speed, "right": right_speed, 'voltage': motors.voltage}
 
 @app.post("/stop")
 async def stop():

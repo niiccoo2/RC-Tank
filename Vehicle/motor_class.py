@@ -32,6 +32,8 @@ class Motor:
         self.last_update_time = time.time()
         self._lock = threading.Lock()
 
+        self.voltage: float = 0.0
+
         self.set_esc(0, 0) # Stop both motors
         self.set_esc(1, 0)
         self.stopped = True
@@ -60,6 +62,42 @@ class Motor:
             data = self.ser.read(self.ser.in_waiting)
             # Process 'data' here (it will be bytes)
             print(f"Received: {data.hex()}")
+            return data.hex()
+        return
+
+    def read_voltage_from_uart(self, data):
+        """
+        Read battery voltage from hoverboard UART data. 
+        
+        Args:
+            data: bytes or bytearray from UART
+            
+        Returns: 
+            float: Voltage in volts, or None if no valid packet found
+        """
+        # Convert to bytearray if needed
+        if isinstance(data, str):
+            # If hex string like "cdab01ae11f605..."
+            data = bytes.fromhex(data. replace('\\x', ''))
+        elif isinstance(data, bytes):
+            data = bytearray(data)
+        
+        # Find start frame (CD AB)
+        for i in range(len(data) - 14):  # Need at least 15 bytes
+            if data[i] == 0xCD and data[i+1] == 0xAB:
+                # Found start frame, extract voltage at bytes 5-6
+                volt_lo = data[i + 5]
+                volt_hi = data[i + 6]
+                
+                # Combine (little-endian)
+                voltage_raw = (volt_hi << 8) | volt_lo
+                
+                # Convert to volts
+                voltage = voltage_raw / 100.0
+                
+                return voltage
+        
+        return None  # No valid packet found
     
     def build_packet(self, iSlave: int, iSpeed: int, wState: int) -> bytes:
         """
@@ -120,6 +158,9 @@ class Motor:
         self.send_packet(slave_id, throttle, 32)
         if throttle != 0.0:
             self.stopped = False
+        voltage = self.read_voltage_from_uart(self.read_feedback())
+        if voltage is not None:
+            self.voltage = voltage
 
     def cleanup(self):
         self.set_esc(0, 0)
