@@ -58,17 +58,8 @@ class WebRTCManager:
 
         config = RTCConfiguration(
             iceServers=[
-                RTCIceServer(urls="stun:100.71.211.72:3478"),
-                RTCIceServer(
-                    urls="turn:100.71.211.72:3478",
-                    username="tank",
-                    credential="tankpass"
-                ),
-                RTCIceServer(
-                    urls="turn:100.71.211.72:3478?transport=tcp",
-                    username="tank",
-                    credential="tankpass"
-                )
+                RTCIceServer(urls="stun:stun.l.google.com:19302"),
+                RTCIceServer(urls="stun:stun1.l.google.com:19302")
             ]
         )
         pc = RTCPeerConnection(configuration=config)
