@@ -57,7 +57,11 @@ class WebRTCManager:
         # target_bitrate = params.get("bitrate", 1000) 
 
         config = RTCConfiguration(
-            iceServers=[RTCIceServer(urls="stun:stun.l.google.com:19302")]
+            iceServers=[
+                RTCIceServer(urls="stun:stun.l.google.com:19302"),
+                RTCIceServer(urls="stun:stun1.l.google.com:19302"),
+                RTCIceServer(urls="stun:stun2.l.google.com:19302"),
+            ]
         )
         pc = RTCPeerConnection(configuration=config)
         self.pcs.add(pc)

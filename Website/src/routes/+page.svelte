@@ -194,14 +194,23 @@
 		}
 
 		const configuration = {
-			iceServers: [
-				{
-					urls: 'stun:stun.l.google.com:19302'
-				}
-			]
-		};
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' },
+                { urls: 'stun:stun2.l.google.com:19302' },
+                { urls: 'stun:stun.services.mozilla.com' }
+            ],
+            iceCandidatePoolSize: 10
+        };
 
-		pc = new RTCPeerConnection(configuration);
+        pc = new RTCPeerConnection(configuration);
+
+        pc.oniceconnectionstatechange = () => {
+            console.log("ICE Connection State:", pc?.iceConnectionState);
+            if (pc?.iceConnectionState === 'failed') {
+                status = "ICE Failed - Check Tailscale";
+            }
+        };
 
 		pc.addTransceiver('video', { direction: 'recvonly' });
 
