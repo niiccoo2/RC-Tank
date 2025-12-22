@@ -6,7 +6,7 @@ pixels = neopixel.NeoPixel(board.D18, 30)
 for i in range(30):
     if i < 6:
         pixels[i] = (0, 255, 0)
-    elif i > 26:
+    elif i > 23:
         print(f'{i} is red')
         pixels[i] = (255, 0, 0)
     else:
