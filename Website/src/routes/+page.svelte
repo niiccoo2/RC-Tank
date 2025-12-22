@@ -92,17 +92,17 @@
 	}
 
 	async function updatePing() {
-		ping = await pingAddress(`http://${ip}:5000/stats`);
+		ping = await pingAddress(`https://${ip}:5000/stats`);
 	}
 
 	async function handeLightSwitch(value: boolean) {
 		if (value) {
-			const response = await fetch(`http://${ip}:5000/lights_on`, {
+			const response = await fetch(`https://${ip}:5000/lights_on`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} else {
-			const response = await fetch(`http://${ip}:5000/lights_off`, {
+			const response = await fetch(`https://${ip}:5000/lights_off`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -165,7 +165,7 @@
 		} else {
 			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
 			try {
-				const response = await fetch(`http://${ip}:5000/motor`, {
+				const response = await fetch(`https://${ip}:5000/motor`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ left, right })
@@ -207,7 +207,7 @@
 		await pc.setLocalDescription(offer);
 
 		try {
-			const response = await fetch(`http://${ip}:5000/offer`, {
+			const response = await fetch(`https://${ip}:5000/offer`, {
 				method: 'POST',
 				body: JSON.stringify({
 					sdp: pc.localDescription?.sdp,
@@ -253,7 +253,7 @@
 
 <main>
 	{#if ip}
-		<!-- <img src={`http://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
+		<!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
 		<!-- Test Image -->
 		<div class="layout">
 			<div class="side left">
@@ -286,7 +286,7 @@
 						{:else}
 							<img
 								class="border black_background"
-								src={`http://${ip}:5000/camera`}
+								src={`https://${ip}:5000/camera`}
 								width="640"
 								height="480"
 								alt="RC Tank Camera Feed" />
