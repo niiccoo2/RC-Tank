@@ -1,33 +1,35 @@
-# Stage 1: Build the SvelteKit app
+# Use official Node.js LTS Alpine image
 FROM node:22-alpine AS build
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /Website
 
-# Copy package files first (for caching)
-COPY Website/package*.json ./
+# Copy package.json and package-lock.json first (for caching)
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy all the rest of the code
-COPY Website/ ./
+# Copy the rest of the source code
+COPY . .
 
 # Build the SvelteKit app
 RUN npm run build
 
-# Stage 2: Production image
+# Use a lightweight image to serve the built app
 FROM node:22-alpine
 
 WORKDIR /Website
 
-# Copy built app and dependencies from the build stage
-COPY --from=build /Website/node_modules ./node_modules
-COPY --from=build /Website/package*.json ./
+# Copy built app from previous stage
 COPY --from=build /Website/build ./build
+COPY --from=build /Website/package*.json ./
 
-# Expose port (adjust if needed)
+# Install only production dependencies
+RUN npm install --production
+
+# Expose port (adjust if your app uses a different port)
 EXPOSE 3000
 
-# Start the app using Node
-CMD ["node", "./build"]
+# Start the app
+CMD ["node", "build"]
