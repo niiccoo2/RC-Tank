@@ -18,7 +18,7 @@ class Lights:
     def headlights_off(self):
         for i in range(30):
             if i < 6 and i > 23:
-                self.pixels[i] = (255, 0, 0)
+                self.pixels[i] = (0, 0, 0)
     
     def off(self):
         self.pixels.fill((0, 0, 0))
