@@ -193,7 +193,15 @@
 			pc.close();
 		}
 
-		pc = new RTCPeerConnection();
+		const configuration = {
+			iceServers: [
+				{
+					urls: 'stun:stun.l.google.com:19302'
+				}
+			]
+		};
+
+		pc = new RTCPeerConnection(configuration);
 
 		pc.addTransceiver('video', { direction: 'recvonly' });
 
