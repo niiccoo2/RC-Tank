@@ -146,7 +146,7 @@ async def stop():
 @app.post("/lights_off")
 async def lights_off():
     if lights:
-        lights.off()
+        lights.headlights_off()
     else:
         print('Lights object not defined')
 

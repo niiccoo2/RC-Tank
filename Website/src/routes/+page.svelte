@@ -329,7 +329,7 @@
 
 				<div class="mt-2 space-y-2">
 					<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-						<span class="py-1">Lights:</span>
+						<span class="py-1">Headlight:</span>
 						<label class="switch m-0 ml-auto">
 							<input
 								type="checkbox"
