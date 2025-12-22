@@ -67,20 +67,28 @@ class Motor:
 
     def read_voltage_from_uart(self, data):
         """
-        Read battery voltage from hoverboard UART data. 
+        Read battery voltage from hoverboard UART data.  
         
-        Args:
+        Args: 
             data: bytes or bytearray from UART
             
-        Returns: 
+        Returns:  
             float: Voltage in volts, or None if no valid packet found
         """
+        # Handle None or empty data
+        if data is None or len(data) == 0:
+            return None
+        
         # Convert to bytearray if needed
         if isinstance(data, str):
             # If hex string like "cdab01ae11f605..."
             data = bytes.fromhex(data. replace('\\x', ''))
         elif isinstance(data, bytes):
             data = bytearray(data)
+        
+        # Need at least 15 bytes for a complete packet
+        if len(data) < 15:
+            return None
         
         # Find start frame (CD AB)
         for i in range(len(data) - 14):  # Need at least 15 bytes
@@ -98,6 +106,7 @@ class Motor:
                 return voltage
         
         return None  # No valid packet found
+
     
     def build_packet(self, iSlave: int, iSpeed: int, wState: int) -> bytes:
         """
@@ -158,9 +167,16 @@ class Motor:
         self.send_packet(slave_id, throttle, 32)
         if throttle != 0.0:
             self.stopped = False
-        voltage = self.read_voltage_from_uart(self.read_feedback())
-        if voltage is not None:
-            self.voltage = voltage
+        
+        feedback = self.read_feedback()
+        if feedback is not None:
+            voltage = self.read_voltage_from_uart(feedback)
+            if voltage is not None:
+                self.voltage = voltage
+            else:
+                print('Warning: Could not prase voltage from feedback')
+        else:
+            print('Warning: No feedback data received')
 
     def cleanup(self):
         self.set_esc(0, 0)
