@@ -7,6 +7,7 @@ for i in range(30):
     if i < 6:
         pixels[i] = (0, 255, 0)
     elif i > 26:
+        print(f'{i} is red')
         pixels[i] = (255, 0, 0)
     else:
         pixels[i] = (255, 255, 255)
