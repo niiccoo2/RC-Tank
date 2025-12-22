@@ -1,4 +1,5 @@
 from motor_class import Motor
+from light_class import Lights
 from streamerClass import MJPEGStreamer
 from webrtc_manager import WebRTCManager
 
@@ -44,12 +45,16 @@ streamer = MJPEGStreamer(
 # For now, we initialize it but it only opens camera when requested.
 webrtc = WebRTCManager(cam_src="0") 
 
+lights = Lights()
+
 # --------- Lifespan Manager ---------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
     
     streamer.start()
+
+    lights.run_lights()
 
     # Start the timeout check thread
     timeout_thread = threading.Thread(target=motors.timeout_check, daemon=True)
@@ -63,6 +68,7 @@ async def lifespan(app: FastAPI):
         streamer.stop()
         await webrtc.cleanup()
         motors.cleanup()
+        lights.off()
 
 # --------- FastAPI Application ---------
 app = FastAPI(lifespan=lifespan)
