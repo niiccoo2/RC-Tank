@@ -26,6 +26,25 @@
 	let FrSkyMode = true;
 	let voltage: number = 0;
 	let lights: boolean = true;
+	let statsInterval: number | null = null;
+
+	function logWebRTCStats() {
+		if (!pc) return;
+		
+		pc.getStats().then(stats => {
+			stats.forEach(report => {
+				if (report.type === 'inbound-rtp' && report.kind === 'video') {
+					console.log('📊 WebRTC Stats:', {
+						fps: report.framesPerSecond || 0,
+						packetsLost: report.packetsLost || 0,
+						jitter: (report.jitter * 1000).toFixed(2) + 'ms',
+						framesDropped: report.framesDropped || 0,
+						framesReceived: report.framesReceived || 0
+					});
+				}
+			});
+		});
+	}
 
 	function applyExpo(value: number, expo: number = 0.3) {
 		const sign = value >= 0 ? 1 : -1;
@@ -218,6 +237,10 @@
 		pc.ontrack = (event) => {
 			if (videoEl && event.streams[0]) {
 				videoEl.srcObject = event.streams[0];
+				
+				// Start logging stats every 2 seconds when video starts
+				if (statsInterval) clearInterval(statsInterval);
+				statsInterval = window.setInterval(logWebRTCStats, 2000);
 			}
 		};
 
@@ -279,6 +302,9 @@
 	onDestroy(() => {
 		if (animationFrame) {
 			cancelAnimationFrame(animationFrame);
+		}
+		if (statsInterval) {
+			clearInterval(statsInterval);
 		}
 	});
 </script>
