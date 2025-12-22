@@ -84,16 +84,21 @@ class WebRTCManager:
         answer = await pc.createAnswer()
         await pc.setLocalDescription(answer)
 
-        # Wait for ICE gathering to complete
-        # This ensures the answer contains all candidates (STUN/Tailscale)
-        # before sending it back to the browser
-        while pc.iceGatheringState != "complete":
-            await asyncio.sleep(0.01)
+        # Wait for ICE gathering to complete or timeout after 2 seconds
+        # This ensures we get STUN/Tailscale candidates without hanging forever
+        try:
+            await asyncio.wait_for(self._wait_for_ice_gathering(pc), timeout=2.0)
+        except asyncio.TimeoutError:
+            print("ICE gathering timed out, sending partial answer")
 
         return {
             "sdp": pc.localDescription.sdp,
             "type": pc.localDescription.type
         }
+
+    async def _wait_for_ice_gathering(self, pc):
+        while pc.iceGatheringState != "complete":
+            await asyncio.sleep(0.05)
 
     async def cleanup(self):
         print("Cleaning up WebRTC connections...")

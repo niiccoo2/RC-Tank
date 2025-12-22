@@ -194,23 +194,25 @@
 		}
 
 		const configuration = {
-            iceServers: [
-                { urls: 'stun:stun.l.google.com:19302' },
-                { urls: 'stun:stun1.l.google.com:19302' },
-                { urls: 'stun:stun2.l.google.com:19302' },
-                { urls: 'stun:stun.services.mozilla.com' }
-            ],
-            iceCandidatePoolSize: 10
-        };
+			iceServers: [
+				{ urls: 'stun:stun.l.google.com:19302' },
+				{ urls: 'stun:stun1.l.google.com:19302' },
+				{ urls: 'stun:stun.cloudflare.com:3478' },
+				{ urls: 'stun:stun.anyfirewall.com:3478' },
+				{ urls: 'stun:stun.stunprotocol.org:3478' }
+			],
+			iceCandidatePoolSize: 10,
+			iceTransportPolicy: 'all'
+		};
 
-        pc = new RTCPeerConnection(configuration);
+		pc = new RTCPeerConnection(configuration);
 
-        pc.oniceconnectionstatechange = () => {
-            console.log("ICE Connection State:", pc?.iceConnectionState);
-            if (pc?.iceConnectionState === 'failed') {
-                status = "ICE Failed - Check Tailscale";
-            }
-        };
+		pc.oniceconnectionstatechange = () => {
+			console.log('ICE Connection State:', pc?.iceConnectionState);
+			if (pc?.iceConnectionState === 'failed') {
+				status = 'ICE Failed - Check Tailscale';
+			}
+		};
 
 		pc.addTransceiver('video', { direction: 'recvonly' });
 
@@ -223,20 +225,23 @@
 		const offer = await pc.createOffer();
 		await pc.setLocalDescription(offer);
 
-		// Wait for ICE gathering to complete
-		await new Promise((resolve) => {
-			if (pc && pc.iceGatheringState === 'complete') {
-				resolve(null);
-			} else {
-				const checkState = () => {
-					if (pc && pc.iceGatheringState === 'complete') {
-						pc.removeEventListener('icegatheringstatechange', checkState);
-						resolve(null);
-					}
-				};
-				pc?.addEventListener('icegatheringstatechange', checkState);
-			}
-		});
+		// Wait for ICE gathering to complete or timeout after 1.5s
+		await Promise.race([
+			new Promise((resolve) => {
+				if (pc && pc.iceGatheringState === 'complete') {
+					resolve(null);
+				} else {
+					const checkState = () => {
+						if (pc && pc.iceGatheringState === 'complete') {
+							pc.removeEventListener('icegatheringstatechange', checkState);
+							resolve(null);
+						}
+					};
+					pc?.addEventListener('icegatheringstatechange', checkState);
+				}
+			}),
+			new Promise((resolve) => setTimeout(resolve, 1500))
+		]);
 
 		try {
 			const response = await fetch(`https://${ip}:5000/offer`, {
