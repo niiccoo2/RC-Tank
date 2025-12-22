@@ -203,8 +203,7 @@
 				}
 			],
 			iceCandidatePoolSize: 10,
-			// CHANGE THIS FROM 'all' TO 'relay'
-			iceTransportPolicy: 'relay' 
+			iceTransportPolicy: 'all'
 		};
 
 		pc = new RTCPeerConnection(configuration);
