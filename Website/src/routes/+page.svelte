@@ -214,6 +214,21 @@
 		const offer = await pc.createOffer();
 		await pc.setLocalDescription(offer);
 
+		// Wait for ICE gathering to complete
+		await new Promise((resolve) => {
+			if (pc && pc.iceGatheringState === 'complete') {
+				resolve(null);
+			} else {
+				const checkState = () => {
+					if (pc && pc.iceGatheringState === 'complete') {
+						pc.removeEventListener('icegatheringstatechange', checkState);
+						resolve(null);
+					}
+				};
+				pc?.addEventListener('icegatheringstatechange', checkState);
+			}
+		});
+
 		try {
 			const response = await fetch(`https://${ip}:5000/offer`, {
 				method: 'POST',

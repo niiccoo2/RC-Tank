@@ -2,7 +2,7 @@ import asyncio
 import json
 import logging
 import platform
-from aiortc import RTCPeerConnection, RTCSessionDescription
+from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer
 from aiortc.contrib.media import MediaPlayer, MediaRelay
 
 class WebRTCManager:
@@ -56,7 +56,10 @@ class WebRTCManager:
         # We accept bitrate but ignore it to ensure stability as requested
         # target_bitrate = params.get("bitrate", 1000) 
 
-        pc = RTCPeerConnection()
+        config = RTCConfiguration(
+            iceServers=[RTCIceServer(urls="stun:stun.l.google.com:19302")]
+        )
+        pc = RTCPeerConnection(configuration=config)
         self.pcs.add(pc)
 
         @pc.on("connectionstatechange")
@@ -75,8 +78,13 @@ class WebRTCManager:
 
         await pc.setRemoteDescription(offer)
         answer = await pc.createAnswer()
-
         await pc.setLocalDescription(answer)
+
+        # Wait for ICE gathering to complete
+        # This ensures the answer contains all candidates (STUN/Tailscale)
+        # before sending it back to the browser
+        while pc.iceGatheringState != "complete":
+            await asyncio.sleep(0.01)
 
         return {
             "sdp": pc.localDescription.sdp,
