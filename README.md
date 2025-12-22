@@ -47,6 +47,16 @@ sudo nmcli c mod "mypreferred" conn.autoconnect-priority 10
 
 to set priority; higher number is higher priority.
 
+## Turn off auto for neopixels
+
+```shell
+sudo nano /boot/firmware/config.txt
+
+dtparam=audio=on -> dtparam=audio=off
+```
+
+then reboot
+
 ### Cmd to temp use wifi
 
 ```shell
