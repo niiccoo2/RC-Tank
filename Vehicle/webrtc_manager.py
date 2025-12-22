@@ -58,26 +58,16 @@ class WebRTCManager:
 
         config = RTCConfiguration(
             iceServers=[
-                RTCIceServer(urls="stun:stun.relay.metered.ca:80"),
+                RTCIceServer(urls="stun:100.71.211.72:3478"),
                 RTCIceServer(
-                    urls="turn:standard.relay.metered.ca:80",
-                    username="6be1f04416fc3f226105b121",
-                    credential="HpWT7jrUtFu32x0q"
+                    urls="turn:100.71.211.72:3478",
+                    username="tank",
+                    credential="tankpass"
                 ),
                 RTCIceServer(
-                    urls="turn:standard.relay.metered.ca:80?transport=tcp",
-                    username="6be1f04416fc3f226105b121",
-                    credential="HpWT7jrUtFu32x0q"
-                ),
-                RTCIceServer(
-                    urls="turn:standard.relay.metered.ca:443",
-                    username="6be1f04416fc3f226105b121",
-                    credential="HpWT7jrUtFu32x0q"
-                ),
-                RTCIceServer(
-                    urls="turns:standard.relay.metered.ca:443?transport=tcp",
-                    username="6be1f04416fc3f226105b121",
-                    credential="HpWT7jrUtFu32x0q"
+                    urls="turn:100.71.211.72:3478?transport=tcp",
+                    username="tank",
+                    credential="tankpass"
                 )
             ]
         )
