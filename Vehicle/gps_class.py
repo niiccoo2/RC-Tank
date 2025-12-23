@@ -32,17 +32,21 @@ class GPS:
         self.ser.write(b'AT+CGPSINFO\r')
         
         # Read multiple lines to get past echo and find GPS data
-        for _ in range(5):  # Try up to 5 lines
+        for i in range(5):  # Try up to 5 lines
             line = self.ser.readline()
             msg = line.decode(errors='ignore').strip()
+            print(f"GPS Line {i}: '{msg}' (raw: {line.hex()})")
             
             # Skip empty lines and command echo
             if not msg or msg == "AT+CGPSINFO" or msg == "OK":
+                print(f"  -> Skipping (empty/echo/OK)")
                 continue
                 
             # Found GPS data line
             if "+CGPSINFO:" in msg:
+                print(f"  -> Found GPS data!")
                 fields = msg.replace("+CGPSINFO: ", "").split(",")
+                print(f"  -> Fields ({len(fields)}): {fields}")
                 
                 # Check if we have enough fields
                 if len(fields) < 9:
