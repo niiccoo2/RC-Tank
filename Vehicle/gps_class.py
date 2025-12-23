@@ -20,16 +20,30 @@ class GPS:
     
     def read_data(self):
         if not self.ser:
-            return
-        
-        response = GPSResponse
+            return GPSResponse(
+                lat=0, lon=0, date="", utc="", alt=0, speed=0, course=0
+            )
         
         self.ser.write(b'AT+CGPSINFO\r')
         
         line = self.ser.readline()
         msg = line.decode(errors='ignore').strip()
+        
+        # Check if we got valid GPS data
+        if "+CGPSINFO:" not in msg:
+            print(f"Invalid GPS response: {msg}")
+            return GPSResponse(
+                lat=0, lon=0, date="", utc="", alt=0, speed=0, course=0
+            )
 
         fields = msg.replace("+CGPSINFO: ", "").split(",")
+        
+        # Check if we have enough fields
+        if len(fields) < 9:
+            print(f"Not enough GPS fields: {fields}")
+            return GPSResponse(
+                lat=0, lon=0, date="", utc="", alt=0, speed=0, course=0
+            )
 
         lat_raw, ns, lon_raw, ew, date, utc_time, altitude, speed, course = fields
 
@@ -47,12 +61,12 @@ class GPS:
         speed = float(speed)
         course = float(course)
 
-        response.lat = lat_deg
-        response.lon = lon_deg
-        response.date = date
-        response.utc = utc_time
-        response.alt = altitude
-        response.speed = speed
-        response.course = course
-
-        return response
+        return GPSResponse(
+            lat=lat_deg,
+            lon=lon_deg,
+            date=date,
+            utc=utc_time,
+            alt=altitude,
+            speed=speed,
+            course=course
+        )
