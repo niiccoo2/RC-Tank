@@ -95,11 +95,12 @@
 		let left: number;
 		let right: number;
 		const multiplier: number = 0.2;
+		const cap: number = .9
 
 		if (stick != 0.0) {
 			// Only cap the trottle if turning
-			left = 0.8 * trottle + multiplier * stick;
-			right = 0.8 * trottle - multiplier * stick;
+			left = 0.9 * trottle + multiplier * stick;
+			right = 0.9 * trottle - multiplier * stick;
 		} else {
 			left = trottle;
 			right = trottle;
