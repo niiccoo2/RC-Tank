@@ -56,7 +56,7 @@
 				headers: { 'Content-Type': 'application/json' }
 			});
 		
-			gpsData = response.json;
+			gpsData = await response.json();
 		} else {
 			return
 		}
