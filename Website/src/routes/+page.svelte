@@ -95,7 +95,7 @@
 		let left: number;
 		let right: number;
 		const multiplier: number = 0.2;
-		const cap: number = .9
+		const cap: number = 1
 
 		if (stick != 0.0) {
 			// Only cap the trottle if turning
