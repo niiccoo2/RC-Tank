@@ -2,6 +2,16 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 
+	type GPSResponse = {
+		lat: number
+    	lon: number
+    	date: string
+    	utc: string
+    	alt: number
+    	speed: number
+    	course: number
+	}
+
 	const MULTIPLIER: number = 1000;
 
 	let animationFrame: number;
@@ -27,6 +37,21 @@
 	let voltage: number = 0;
 	let lights: boolean = false;
 	let statsInterval: number | null = null;
+	let gpsData: GPSResponse;
+	let gpsInterval;
+
+	async function updateGPSData() {
+		if (ip) {
+			const response = await fetch(`https://${ip}:5000/gps`, {
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' }
+			});
+		
+			gpsData = response.json;
+		} else {
+			return
+		}
+	}
 
 	function logWebRTCStats() {
 		if (!pc) return;
@@ -111,7 +136,7 @@
 	}
 
 	async function updatePing() {
-		ping = await pingAddress(`https://${ip}:5000/stats`);
+		ping = await pingAddress(`https://${ip}:5000/health`);
 	}
 
 	async function handeLightSwitch(value: boolean) {
@@ -290,6 +315,8 @@
 
 		updatePing();
 
+		gpsInterval = setInterval(updateGPSData, 1000);
+
 		setInterval(() => {
 			updatePing();
 
@@ -305,6 +332,10 @@
 		}
 		if (statsInterval) {
 			clearInterval(statsInterval);
+		}
+
+		if (gpsInterval) {
+			clearInterval(gpsInterval);
 		}
 	});
 </script>
@@ -322,6 +353,16 @@
 				<div class="info_card px-4 py-2">
 					<p>Left Speed: {roundedLeftSpeed}</p>
 					<p>Right Speed: {roundedRightSpeed}</p>
+				</div>
+
+				<div class="info_card px-4 py-2">
+					<p>Lat: {gpsData.lat}</p>
+					<p>Lon: {gpsData.lon}</p>
+					<p>Date: {gpsData.date}</p>
+					<p>UTC: {gpsData.utc}</p>
+					<p>Alt: {gpsData.alt}</p>
+					<p>Speed: {gpsData.speed}</p>
+					<p>Course: {gpsData.course}</p>
 				</div>
 			</div>
 

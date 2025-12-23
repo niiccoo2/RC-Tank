@@ -1,5 +1,6 @@
 from motor_class import Motor
 from light_class import Lights
+from gps_class import GPS, GPSResponse
 from streamerClass import MJPEGStreamer
 from webrtc_manager import WebRTCManager
 
@@ -46,6 +47,7 @@ streamer = MJPEGStreamer(
 webrtc = WebRTCManager(cam_src="0") 
 
 lights = Lights()
+gps = GPS()
 
 # --------- Lifespan Manager ---------
 @asynccontextmanager
@@ -83,6 +85,11 @@ app.add_middleware(
 )
 
 # --------- ROUTES ----------
+@app.get("/gps")
+async def get_gps():
+    response = gps.read_data()
+
+    return response
 
 @app.get("/camera")
 async def camera(fps: int = 24, q: int | None = None):
@@ -159,7 +166,6 @@ async def lights_on():
 
 @app.post("/health")
 async def health():
-    print("/health ran")
     return {"status": "healthy"}
 
 def signal_handler(sig, frame):
