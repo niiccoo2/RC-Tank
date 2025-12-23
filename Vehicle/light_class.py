@@ -6,7 +6,7 @@ class Lights:
         self.pixels = neopixel.NeoPixel(board.D18, 30)
         self.pixels.fill((0, 0, 0))
 
-    def run_lights(self):
+    def all_on(self):
         for i in range(30):
             if i < 6:
                 self.pixels[i] = (0, 255, 0)
@@ -15,10 +15,22 @@ class Lights:
             else:
                 self.pixels[i] = (255, 255, 255)
     
+    def side_on(self):
+        for i in range(30):
+            if i < 6:
+                self.pixels[i] = (0, 255, 0)
+            elif i > 23:
+                self.pixels[i] = (255, 0, 0)
+    
     def headlights_off(self):
         for i in range(30):
             if i > 5 and i < 24:
                 self.pixels[i] = (0, 0, 0)
+
+    def headlights_on(self):
+        for i in range(30):
+            if i > 5 and i < 24:
+                self.pixels[i] = (255, 255, 255)
     
     def off(self):
         self.pixels.fill((0, 0, 0))

@@ -54,7 +54,7 @@ async def lifespan(app: FastAPI):
     
     streamer.start()
 
-    lights.run_lights()
+    lights.side_on()
 
     # Start the timeout check thread
     timeout_thread = threading.Thread(target=motors.timeout_check, daemon=True)
@@ -153,7 +153,7 @@ async def lights_off():
 @app.post("/lights_on")
 async def lights_on():
     if lights:
-        lights.run_lights()
+        lights.headlights_on()
     else:
         print('Lights object not defined')
 

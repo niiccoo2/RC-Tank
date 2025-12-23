@@ -25,7 +25,7 @@
 	let videoEl: HTMLVideoElement;
 	let FrSkyMode = true;
 	let voltage: number = 0;
-	let lights: boolean = true;
+	let lights: boolean = false;
 	let statsInterval: number | null = null;
 
 	function logWebRTCStats() {
