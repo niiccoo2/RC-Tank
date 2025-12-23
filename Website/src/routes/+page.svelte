@@ -37,8 +37,17 @@
 	let voltage: number = 0;
 	let lights: boolean = false;
 	let statsInterval: number | null = null;
-	let gpsData: GPSResponse;
 	let gpsInterval;
+
+	let gpsData: GPSResponse = {
+		lat: 0,
+		lon: 0,
+		date: '',
+		utc: '',
+		alt: 0,
+		speed: 0,
+		course: 0
+	};
 
 	async function updateGPSData() {
 		if (ip) {
