@@ -1,12 +1,23 @@
-<div align="center">
-  <a href="https://moonshot.hackclub.com" target="_blank">
-    <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/35ad2be8c916670f3e1ac63c1df04d76a4b337d1_moonshot.png" 
-         alt="This project is part of Moonshot, a 4-day hackathon in Florida visiting Kennedy Space Center and Universal Studios!" 
-         style="width: 100%;">
-  </a>
-</div>
-
 ## Info
+
+I'm thinking of starting the project again and adding self driving. If I do, here is a list of things I need to do to get it working again:
+
+* New sim card; unlimited
+* Need to set up whatever server I needed for video. Might try to do this with port forwarding at home instead of paying for a vps
+* Clean up this readme; might reverse the journal so you don't need to scroll as much
+* Add a summary of what I added to V3 (Paint, WebRTC, think I hosted the website?)
+
+Then, once it's all working nicely again:
+
+* Get everything working on coral dev board
+* Better headlights
+* Start on self driving
+
+Then once self driving is working:
+
+* See how it can go faster
+* Nicer frame?
+
 
 This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions for Hack Club [Moonshot](https://moonshot.hackclub.com).
 
