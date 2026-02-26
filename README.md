@@ -1,29 +1,5 @@
 ## Info
 
-I'm thinking of starting the project again and adding self driving. If I do, here is a list of things I need to do to get it working again:
-
-- New sim card; unlimited
-- Need to set up whatever server I needed for video. Might try to do this with port forwarding at home instead of paying for a vps
-- Clean up this readme; might reverse the journal so you don't need to scroll as much
-- Add a summary of what I added to V3 (Paint, WebRTC, think I hosted the website?)
-
-Then, once it's all working nicely again:
-
-- Get everything working on coral dev board
-- Start on self driving
-- RTK GPS
-- Get everything working without tailscale
-
-Should start with adding simple GPS (maybe rtk) waypoints to the website, then use vision to make sure it stays on safe areas.
-
-One issue I can think of is how will it know when a road is safe? Because a bike path looks similar to a road, but bike paths are safe and roads are not.
-
-Then once self driving is working:
-
-- See how it can go faster
-- Better headlights
-- Nicer frame?
-
 This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions for Hack Club [Moonshot](https://moonshot.hackclub.com).
 
 The idea of this project was simple, I had a normal rc car with camera, but it coulden't even go around the block, so I wanted something that would have much better range. Thats where using a cell modem comes in. The main (and big) disadvantage with this is latency, you need < 1.5s or else it becomes very hard to drive. I learned a lot doing this project (not done though!), I spent a lot of time learning about motor contollers and reverse engineering some hoverboard ECS's so I could use the motors I had. The main thing I want to keep working on, is the latency over cell, hopefully I can get webRTC working also. After I have a working human controled rover, then I will use it as the testbed for many more projects such as AI vision control, and GPS waypoints.
@@ -90,6 +66,48 @@ sudo ip link set wlan0 up
 ```
 
 ## Journal
+
+### Thursday, Feburary 26th | x hours
+
+#### 20:00 | x hours
+
+Booted up the tank with the pi zero 2w and am seeing what works! Video seems to work but everything else is weird... Going to debug in a few mins. Thought I needed to get a WebRTC TURN, ICE, or STUN server running, but video seems to be working now... Maybe it's because I'm not on cell yet?z
+
+Now fixing the controller mappings bc it's wrong.
+
+Cable meanings:
+
+| Color  | Meaning          |
+| ------ | ---------------- |
+| Orange | Light strip data |
+
+### Wednesday, Feburary 25th | 0 hours
+
+#### 19:00 | 0 hours
+
+I'm thinking of starting the project again and adding self driving. If I do, here is a list of things I need to do to get it working again:
+
+- New sim card; unlimited
+- Need to set up whatever server I needed for video. Might try to do this with port forwarding at home instead of paying for a vps
+- Clean up this readme; might reverse the journal so you don't need to scroll as much
+- Add a summary of what I added to V3 (Paint, WebRTC, think I hosted the website?)
+
+Then, once it's all working nicely again:
+
+- Get everything working on coral dev board
+- Start on self driving
+- RTK GPS
+- Get everything working without tailscale
+
+Should start with adding simple GPS (maybe rtk) waypoints to the website, then use vision to make sure it stays on safe areas.
+
+One issue I can think of is how will it know when a road is safe? Because a bike path looks similar to a road, but bike paths are safe and roads are not.
+
+Then once self driving is working:
+
+- See how it can go faster
+- Better headlights
+- Nicer frame?
 
 ### Sunday, November 30th | 2.33 hours
 

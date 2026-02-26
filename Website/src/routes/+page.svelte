@@ -172,8 +172,8 @@
 
 			if (carMode) {
 				if (FrSkyMode) {
-					trottle = gamepad.axes[0]; // Left stick
-					stick = gamepad.axes[1]; // Right stick
+					trottle = gamepad.axes[1]; // Left stick
+					stick = gamepad.axes[3]; // Right stick
 
 					if (Math.abs(trottle) < 0.1) trottle = 0;
 				} else {
@@ -184,7 +184,7 @@
 				[leftSpeed, rightSpeed] = carToTracks(trottle, stick);
 			} else {
 				if (FrSkyMode) {
-					leftSpeed = gamepad.axes[0]; // Left stick
+					leftSpeed = gamepad.axes[1]; // Left stick
 					rightSpeed = gamepad.axes[2]; // Right stick
 				} else {
 					leftSpeed = -gamepad.axes[1]; // Left stick
