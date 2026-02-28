@@ -94,3 +94,27 @@ class Lights:
         """Clean up SPI resources"""
         self.off()
         self.spi.close()
+
+class Fan:
+    def __init__(self, millidegrees = 00000):
+        self.millidegrees = millidegrees
+    def on(self):
+        try:
+            # You must run the python script with sudo for this to work
+            with open("/sys/devices/virtual/thermal/thermal_zone0/trip_point_4_temp", "w") as f:
+                f.write(str(self.millidegrees))
+            print(f"Fan trip point set to {self.millidegrees // 1000}°C")
+        except PermissionError:
+            print("Error: Run this script with sudo!")
+        except FileNotFoundError:
+            print("Error: Thermal path not found on this Mendel version.")
+    def off(self):
+        try:
+            # You must run the python script with sudo for this to work
+            with open("/sys/devices/virtual/thermal/thermal_zone0/trip_point_4_temp", "w") as f:
+                f.write(str(65000))
+            print(f"Fan trip point set to 65°C")
+        except PermissionError:
+            print("Error: Run this script with sudo!")
+        except FileNotFoundError:
+            print("Error: Thermal path not found on this Mendel version.")

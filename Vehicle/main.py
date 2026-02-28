@@ -1,5 +1,5 @@
 from motor_class import Motor
-from light_class import Lights
+from peripherals import Lights, Fan
 from gps_class import GPS, GPSResponse
 from streamer_class import MJPEGStreamer
 from webrtc_manager import WebRTCManager
@@ -45,6 +45,7 @@ streamer = MJPEGStreamer(
 # For now, we initialize it but it only opens camera when requested.
 webrtc = WebRTCManager(cam_src="0") 
 
+fan = Fan()
 lights = Lights()
 gps = GPS()
 
@@ -52,6 +53,8 @@ gps = GPS()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
+
+    fan.on()
     
     streamer.start()
 
@@ -71,6 +74,7 @@ async def lifespan(app: FastAPI):
         await webrtc.cleanup()
         motors.cleanup()
         lights.off()
+        fan.off()
 
 # --------- FastAPI Application ---------
 app = FastAPI(lifespan=lifespan)
