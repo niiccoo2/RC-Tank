@@ -1,38 +1,96 @@
-import board #type:ignore
-import neopixel #type:ignore
+from periphery import SPI #type:ignore
+import time
 
 class Lights:
-    def __init__(self):
-        self.pixels = neopixel.NeoPixel(board.GPIO_P18, 30)
-        self.pixels.fill((0, 0, 0))
-
+    def __init__(self, num_pixels=30):
+        # Use SPI for NeoPixel control on Coral Dev Board
+        self.spi = SPI("/dev/spidev0.0", 0, 8000000)  # 8MHz SPI
+        self.num_pixels = num_pixels
+        self.pixels = [(0, 0, 0)] * num_pixels  # RGB tuples
         self.side_value = 100
+        self._update_strip()
+    
+    def _rgb_to_spi(self, r, g, b):
+        """Convert RGB values to SPI bit pattern for NeoPixels"""
+        # NeoPixels expect GRB format
+        grb = (g << 16) | (r << 8) | b
+        spi_data = []
+        
+        # Convert each bit to SPI pattern (0 = 100, 1 = 110)
+        for i in range(23, -1, -1):  # 24 bits, MSB first
+            if (grb >> i) & 1:
+                spi_data.extend([0b11100000])  # Logic 1
+            else:
+                spi_data.extend([0b10000000])  # Logic 0
+        
+        return spi_data
+    
+    def _update_strip(self):
+        """Send current pixel data to the strip"""
+        spi_data = []
+        
+        # Convert all pixels to SPI data
+        for r, g, b in self.pixels:
+            spi_data.extend(self._rgb_to_spi(r, g, b))
+        
+        # Add reset signal (zeros)
+        spi_data.extend([0x00] * 75)  # Reset pulse
+        
+        # Send data
+        self.spi.transfer(spi_data)
+        time.sleep(0.001)  # Small delay
+    
+    def set_pixel(self, index, r, g, b):
+        """Set individual pixel color"""
+        if 0 <= index < self.num_pixels:
+            self.pixels[index] = (r, g, b)
+    
+    def fill(self, r, g, b):
+        """Fill all pixels with the same color"""
+        for i in range(self.num_pixels):
+            self.pixels[i] = (r, g, b)
+    
+    def show(self):
+        """Update the physical strip with current pixel values"""
+        self._update_strip()
 
     def all_on(self):
-        for i in range(30):
+        for i in range(self.num_pixels):
             if i < 6:
-                self.pixels[i] = (0, self.side_value, 0)
+                self.set_pixel(i, 0, self.side_value, 0)
             elif i > 23:
-                self.pixels[i] = (self.side_value, 0, 0)
+                self.set_pixel(i, self.side_value, 0, 0)
             else:
-                self.pixels[i] = (255, 255, 255)
+                self.set_pixel(i, 255, 255, 255)
+        self.show()
     
     def side_on(self):
-        for i in range(30):
+        for i in range(self.num_pixels):
             if i < 6:
-                self.pixels[i] = (0, self.side_value, 0)
+                self.set_pixel(i, 0, self.side_value, 0)
             elif i > 23:
-                self.pixels[i] = (self.side_value, 0, 0)
+                self.set_pixel(i, self.side_value, 0, 0)
+            else:
+                self.set_pixel(i, 0, 0, 0)
+        self.show()
     
     def headlights_off(self):
-        for i in range(30):
+        for i in range(self.num_pixels):
             if i > 5 and i < 24:
-                self.pixels[i] = (0, 0, 0)
+                self.set_pixel(i, 0, 0, 0)
+        self.show()
 
     def headlights_on(self):
-        for i in range(30):
+        for i in range(self.num_pixels):
             if i > 5 and i < 24:
-                self.pixels[i] = (255, 255, 255)
+                self.set_pixel(i, 255, 255, 255)
+        self.show()
     
     def off(self):
-        self.pixels.fill((0, 0, 0))
+        self.fill(0, 0, 0)
+        self.show()
+    
+    def cleanup(self):
+        """Clean up SPI resources"""
+        self.off()
+        self.spi.close()
