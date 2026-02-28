@@ -106,8 +106,11 @@ class Fan:
             print(f"Fan trip point set to {self.millidegrees // 1000}°C")
         except PermissionError:
             print("Error: Run this script with sudo!")
+            return False
         except FileNotFoundError:
             print("Error: Thermal path not found on this Mendel version.")
+            return False
+        return True
     def off(self):
         try:
             # You must run the python script with sudo for this to work

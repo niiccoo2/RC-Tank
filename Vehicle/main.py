@@ -54,7 +54,8 @@ gps = GPS()
 async def lifespan(app: FastAPI):
     print("Starting up...")
 
-    fan.on()
+    if not fan.on():
+        print("Warning: Fan control failed - check permissions")
     
     streamer.start()
 
