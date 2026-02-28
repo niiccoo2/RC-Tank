@@ -1,23 +1,5 @@
 ## Info
 
-I'm thinking of starting the project again and adding self driving. If I do, here is a list of things I need to do to get it working again:
-
-- New sim card; unlimited
-- Need to set up whatever server I needed for video. Might try to do this with port forwarding at home instead of paying for a vps
-- Clean up this readme; might reverse the journal so you don't need to scroll as much
-- Add a summary of what I added to V3 (Paint, WebRTC, think I hosted the website?)
-
-Then, once it's all working nicely again:
-
-- Get everything working on coral dev board
-- Better headlights
-- Start on self driving
-
-Then once self driving is working:
-
-- See how it can go faster
-- Nicer frame?
-
 This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions for Hack Club [Moonshot](https://moonshot.hackclub.com).
 
 The idea of this project was simple, I had a normal rc car with camera, but it coulden't even go around the block, so I wanted something that would have much better range. Thats where using a cell modem comes in. The main (and big) disadvantage with this is latency, you need < 1.5s or else it becomes very hard to drive. I learned a lot doing this project (not done though!), I spent a lot of time learning about motor contollers and reverse engineering some hoverboard ECS's so I could use the motors I had. The main thing I want to keep working on, is the latency over cell, hopefully I can get webRTC working also. After I have a working human controled rover, then I will use it as the testbed for many more projects such as AI vision control, and GPS waypoints.
@@ -30,19 +12,12 @@ The idea of this project was simple, I had a normal rc car with camera, but it c
 
 Go to [login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines) and follow instructions for new linux device.
 
+Use this command to start it so ssh will work: `sudo tailscale up --reset --netfilter-mode=off --ssh`.
+
 ### Turn off wifi power saving
 
 ```shell
-sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
-```
-
-```ini
-[connection]
-wifi.powersave = 2
-```
-
-```shell
-sudo systemctl restart NetworkManager
+sudo iw dev wlan0 set power_save off
 ```
 
 ### Add networks and set wifi priority
@@ -56,16 +31,6 @@ sudo nmcli c mod "mypreferred" conn.autoconnect-priority 10
 ```
 
 to set priority; higher number is higher priority.
-
-## Turn off auto for neopixels
-
-```shell
-sudo nano /boot/firmware/config.txt
-
-dtparam=audio=on -> dtparam=audio=off
-```
-
-then reboot
 
 ### Cmd to temp use wifi
 
@@ -705,60 +670,50 @@ DROVE THE CAR. There are a lot of things to add BUT ITS USABLE!!! Things that ha
 
 This is the first part of this project that I am submitting to [Moonshot](https://moonshot.hackclub.com). As of here I am at **65.46** hours!
 
-## CAD designs
+### Wednesday, Feburary 25th | 0 hours
 
-### Riser
+#### 20:00 | 0 hours
 
-#### V3
+I'm thinking of starting the project again and adding self driving. If I do, here is a list of things I need to do to get it working again:
 
-- Holes to mount to chasis
-- Holes for RPI
-- Holes for battery zipties
+- New sim card; unlimited
+- Need to set up whatever server I needed for video. Might try to do this with port forwarding at home instead of paying for a vps
+- Clean up this readme; might reverse the journal so you don't need to scroll as much
+- Add a summary of what I added to V3 (Paint, WebRTC, think I hosted the website?)
 
-#### V4
+Then, once it's all working nicely again:
 
-- Screw holes to mount to chasis
-- Screw holes for RPI
-- Holes for battery zipties
-- Screw holes for cover
+- Get everything working on coral dev board
+- Better headlights
+- Start on self driving
 
-#### V5
+Then once self driving is working:
 
-- Screw holes to mount to chasis
-- Screw holes for RPI
-- Holes for battery zipties
-- Screw holes for cover
-- MAKE ALL M3 HOLES SMALLER
+- See how it can go faster
+- Nicer frame?
 
-### Cover
+### Friday, Feburary 27th | 0 hours
 
-#### V1
+#### 07:00 | 0 hours
 
-- Indents for zipties
+Booted up the tank with the pi zero 2w and am seeing what works! Video seems to work but everything else is weird... Going to debug in a few mins. Thought I needed to get a WebRTC TURN, ICE, or STUN server running, but video seems to be working now... Maybe it's because I'm not on cell yet?
 
-#### V2
+Now fixing the controller mappings bc it's wrong. Now everything seems to be working! Batt voltage reading seems to be a bit slow but other than that its good. Now going to try and get this coral dev board online.
 
-- Indents for zipties
-- Hole for switches
-- Indent for camera mount
-- Hole for cell SMA
-- Hole for LCD cables
+Cable meanings:
 
-#### V3
+| Color  | Meaning          |
+| ------ | ---------------- |
+| Orange | Light strip data |
 
-- Indents for zipties
-- Hole for switches + holes for switch screws
-- Hole for cell SMA
-- Hole for GPS SMA
-- Hole for LCD cables
-- Mounting holes to mount to riser
+#### 17:00 | 0 hours
 
-#### V4
+Got the coral board up and running with ssh. Now going to rewrite the code to use the coral gpio code.
 
-- Indents for zipties
-- Hole for switches + holes for switch screws
-- Hole for cell SMA
-- Hole for GPS SMA
-- Hole for LCD cables
-- Mounting holes to mount to riser
-- MAKE ALL M3 HOLES SMALLER
+### Saturday, Feburary 28th | x hours
+
+#### 10:00 | 1 hour
+
+Starting to rewrite code to coral gpio.
+
+Fixing the GPIO was really easy, just had to change some paths. Going to test in a sec. Was fixing ssh on the dev board. This cmd fixed it `sudo tailscale up --reset --netfilter-mode=off --ssh`.

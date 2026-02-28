@@ -1,4 +1,3 @@
-import RPi.GPIO as GPIO  # type: ignore
 import time
 import struct
 import serial  # type: ignore
@@ -15,7 +14,7 @@ RESET = "\033[0m"
 
 class Motor:
     def __init__(self,
-                 port: str = "/dev/serial0",
+                 port: str = "/dev/ttymxc2",  # UART3 on Coral Dev Board
                  baudrate: int = 4800,
                  send_interval: float = 0.1,
                  max_speed: int = 1000):

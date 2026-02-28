@@ -3,7 +3,7 @@ import neopixel #type:ignore
 
 class Lights:
     def __init__(self):
-        self.pixels = neopixel.NeoPixel(board.D18, 30)
+        self.pixels = neopixel.NeoPixel(board.GPIO_P18, 30)
         self.pixels.fill((0, 0, 0))
 
         self.side_value = 100
