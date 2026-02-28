@@ -712,8 +712,31 @@ Got the coral board up and running with ssh. Now going to rewrite the code to us
 
 ### Saturday, Feburary 28th | x hours
 
-#### 10:00 | 1 hour
+#### 10:00 | .5 hours
 
 Starting to rewrite code to coral gpio.
 
 Fixing the GPIO was really easy, just had to change some paths. Going to test in a sec. Was fixing ssh on the dev board. This cmd fixed it `sudo tailscale up --reset --netfilter-mode=off --ssh`.
+
+#### 11:00 | 1 hour
+
+Working on getting things installed... We seem to have some memory issues and it wants to kill ssh a lot...
+
+#### 14:00 | 1 hour
+
+Still working on getting things installed. It seems like google is keeping their distro using older packages for compatibility but that makes some things annoying. Think I'm almost done though.
+
+Things in general to add:
+
+- Make website work without tailscale
+- E-Stop button on car
+
+Here is the roadmap for self driving right now:
+
+- Simple waypoint following
+  - RTK GPS
+  - Planned from website
+  - Adding full auto route planner is an idea, but won't affect what the car end does
+- Add local vision stuff
+  - Stay on sidewalk / safe areas
+  - Avoid obstacles

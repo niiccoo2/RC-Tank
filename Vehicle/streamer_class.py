@@ -1,4 +1,4 @@
-import cv2
+import cv2 # pip install opencv-python
 import time
 import threading
 from typing import Optional

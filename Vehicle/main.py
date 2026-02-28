@@ -1,7 +1,7 @@
 from motor_class import Motor
 from light_class import Lights
 from gps_class import GPS, GPSResponse
-from streamerClass import MJPEGStreamer
+from streamer_class import MJPEGStreamer
 from webrtc_manager import WebRTCManager
 
 from fastapi import FastAPI, Request, HTTPException
@@ -9,7 +9,6 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
-import asyncio
 import time
 import threading
 import signal
@@ -66,6 +65,7 @@ async def lifespan(app: FastAPI):
         # Application is running
         yield
     finally:
+        # This runs when the program is stopped
         print("Shutting down...")
         streamer.stop()
         await webrtc.cleanup()
