@@ -1,4 +1,4 @@
-## Info
+# Info
 
 This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions for Hack Club [Moonshot](https://moonshot.hackclub.com).
 
@@ -6,7 +6,7 @@ The idea of this project was simple, I had a normal rc car with camera, but it c
 
 ![Top view of new frame](/photos/chassis_top.jpg)
 
-## Setup
+# Setup
 
 ### Install Tailscale
 
@@ -48,7 +48,9 @@ sudo ip link set wlan0 up
 
 ```
 
-## Journal
+# Journal
+
+## **VERSION 1**
 
 I did not count the time building the chassis kit.
 
@@ -280,6 +282,8 @@ New things for v2:
 
 Tested the tank in Boston (hopefully has faster cell). It worked, but has a lot to be wanted... It was night so I could bearly see what I was doing. [filz.cc/f/UVyD.mp4](https://filz.cc/f/UVyD.mp4) [filz.cc/f/diph.mp4](https://filz.cc/f/diph.mp4)
 ![Driving in Boston](/photos/driving_in_boston.jpg)
+
+## **VERSION 2**
 
 ### Tuesday, November 4th | 1.5 hours
 
@@ -670,6 +674,12 @@ DROVE THE CAR. There are a lot of things to add BUT ITS USABLE!!! Things that ha
 
 This is the first part of this project that I am submitting to [Moonshot](https://moonshot.hackclub.com). As of here I am at **65.46** hours!
 
+### After NH test
+
+After the test in NH, I created and painted a nicer wooden frame. Also got WebRTC working, WebRTC was the best change so far. Once I had WebRTC working I was able to do a 7 mile test in Boston.
+
+## **VERSION 3**
+
 ### Wednesday, Feburary 25th | 0 hours
 
 #### 20:00 | 0 hours
@@ -740,6 +750,8 @@ Here is the roadmap for self driving right now:
 - Add local vision stuff
   - Stay on sidewalk / safe areas
   - Avoid obstacles
+
+Next step is to either work on the GPS route planning on the website, or once I am with the car, test if the coral board works.
 
 ### Sunday, March 8th | 0 hours
 
