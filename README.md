@@ -710,7 +710,7 @@ Cable meanings:
 
 Got the coral board up and running with ssh. Now going to rewrite the code to use the coral gpio code.
 
-### Saturday, Feburary 28th | x hours
+### Saturday, Feburary 28th | 2.5 hours
 
 #### 10:00 | .5 hours
 
@@ -740,3 +740,7 @@ Here is the roadmap for self driving right now:
 - Add local vision stuff
   - Stay on sidewalk / safe areas
   - Avoid obstacles
+
+### Sunday, March 8th | 0 hours
+
+Have not had time to work on the tank, but fallout hour tracking started, so going to write some stuff down rn. On Hackatime, RC-Tank is at 32 hours 7 minutes.
