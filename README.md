@@ -757,12 +757,34 @@ Next step is to either work on the GPS route planning on the website, or once I 
 
 Have not had time to work on the tank, but fallout hour tracking started, so going to write some stuff down rn. On Hackatime, RC-Tank is at 32 hours 7 minutes.
 
-### Monday, March 9th | x hours
+### Monday, March 9th | .16 hours
 
-#### 20:30 | x hours
+#### 20:30 | .16 hours
 
 Started testing with the coral board. Going to see if we can connect over the site rn.
 
 Still having the webcam issue. Did some testing and `/dev/video0` was something built into the coral dev board, not the camera. Plugged the camera directly into the board and now its showing as `/dev/video1`, going to see if more things work now. If they do then I will figure out why the usb hub is not working.
 
-Still geting camera error...
+Still geting camera error... FIXED! Seems like the issue was from the old MJPEG streamer that was in the code. Removed all old code so we only have WebRTC now. Now having a gps issue, think ima just comment that out for now. Or get USB hub working.
+
+TODO:
+
+- Get USB hub working with camera
+- Wire motors
+- Wire lights
+- Start on route planing interface (WEBSITE)
+- Get a RTK GPS added and tested
+
+### Tuesday, March 10th | x hours
+
+#### 07:30 | .5 hours
+
+Camera is now working with the USB hub! Seems like this mendel linux is giving a lot of issues... The kernel doesn't have some things that we need to use to modem. Not sure what I'm going to to next... Might find a new dev board, but this one seems pretty nice.
+
+TODO:
+
+- Make new USB-C power cord
+- Wire motors
+- Wire lights
+- Start on route planing interface (WEBSITE)
+- Get a RTK GPS added and tested
