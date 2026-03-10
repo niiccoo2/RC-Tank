@@ -762,3 +762,5 @@ Have not had time to work on the tank, but fallout hour tracking started, so goi
 #### 20:30 | x hours
 
 Started testing with the coral board. Going to see if we can connect over the site rn.
+
+Still having the webcam issue. Did some testing and `/dev/video0` was something built into the coral dev board, not the camera. Plugged the camera directly into the board and now its showing as `/dev/video1`, going to see if more things work now. If they do then I will figure out why the usb hub is not working.
