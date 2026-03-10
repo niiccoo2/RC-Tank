@@ -27,17 +27,18 @@ class RTCOffer(BaseModel):
 motors = Motor()
 
 # MJPEG Streamer (Legacy/Backup)
-streamer = MJPEGStreamer(
-    src=0,
-    width=320,              # Slightly higher resolution
-    height=240,
-    cam_fps=30,
-    fourcc_str="MJPG",
-    rotate_180=True,
-    jpeg_quality=35,        # Lower quality = smaller frames = faster transmission
-    motion_gate=False,      # Disable motion gating to reduce latency
-    share_encoded=True
-)
+# Think this was causing the issue...
+# streamer = MJPEGStreamer(
+#     src=0,
+#     width=320,              # Slightly higher resolution
+#     height=240,
+#     cam_fps=30,
+#     fourcc_str="MJPG",
+#     rotate_180=True,
+#     jpeg_quality=35,        # Lower quality = smaller frames = faster transmission
+#     motion_gate=False,      # Disable motion gating to reduce latency
+#     share_encoded=True
+# )
 
 # WebRTC Manager (New)
 # Note: src=0 might conflict if both MJPEG and WebRTC try to open it.
@@ -57,7 +58,7 @@ async def lifespan(app: FastAPI):
     if not fan.on():
         print("Warning: Fan control failed - check permissions")
     
-    streamer.start()
+    # streamer.start()
 
     lights.side_on()
 
@@ -71,7 +72,7 @@ async def lifespan(app: FastAPI):
     finally:
         # This runs when the program is stopped
         print("Shutting down...")
-        streamer.stop()
+        # streamer.stop()
         await webrtc.cleanup()
         motors.cleanup()
         lights.off()
@@ -105,10 +106,10 @@ async def camera(fps: int = 24, q: int | None = None):
       - q: JPEG quality (only used if share_encoded=False)
     """
     fps = max(1, min(30, fps))  # Clamp FPS between 1 and 30
-    return StreamingResponse(
-        streamer.gen_frames(max_fps=fps, quality_override=q),
-        media_type="multipart/x-mixed-replace; boundary=frame"
-    )
+    # return StreamingResponse(
+    #     streamer.gen_frames(max_fps=fps, quality_override=q),
+    #     media_type="multipart/x-mixed-replace; boundary=frame"
+    # )
 
 @app.post("/offer")
 async def offer(params: RTCOffer):
@@ -117,7 +118,7 @@ async def offer(params: RTCOffer):
     Takes an SDP offer, configures the connection, and returns an SDP answer.
     """
     # If using WebRTC, we might want to stop MJPEG to free the camera
-    streamer.stop() 
+    # streamer.stop() 
     
     return await webrtc.offer(params.model_dump())
 
@@ -175,8 +176,8 @@ async def health():
 
 def signal_handler(sig, frame):
     print("\nShutting down gracefully...")
-    if streamer is not None:
-        streamer.stop()
+    # if streamer is not None:
+    #     streamer.stop()
     if motors is not None:
         motors.cleanup()
     sys.exit(0)
