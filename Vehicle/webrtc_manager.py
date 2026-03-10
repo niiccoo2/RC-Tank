@@ -2,8 +2,8 @@ import asyncio
 import json
 import logging
 import platform
-from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer
-from aiortc.contrib.media import MediaPlayer, MediaRelay
+from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer # type: ignore
+from aiortc.contrib.media import MediaPlayer, MediaRelay # type: ignore
 
 class WebRTCManager:
     def __init__(self, cam_src="/dev/video0"):

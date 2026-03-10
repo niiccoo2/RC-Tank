@@ -756,3 +756,9 @@ Next step is to either work on the GPS route planning on the website, or once I 
 ### Sunday, March 8th | 0 hours
 
 Have not had time to work on the tank, but fallout hour tracking started, so going to write some stuff down rn. On Hackatime, RC-Tank is at 32 hours 7 minutes.
+
+### Monday, March 9th | x hours
+
+#### 20:30 | x hours
+
+Started testing with the coral board. Going to see if we can connect over the site rn.
