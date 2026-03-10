@@ -43,7 +43,7 @@ streamer = MJPEGStreamer(
 # Note: src=0 might conflict if both MJPEG and WebRTC try to open it.
 # You should probably only use one at a time or use a different source.
 # For now, we initialize it but it only opens camera when requested.
-webrtc = WebRTCManager('1')
+webrtc = WebRTCManager("/dev/video1")
 
 fan = Fan()
 lights = Lights()
