@@ -781,6 +781,8 @@ TODO:
 
 Camera is now working with the USB hub! Seems like this mendel linux is giving a lot of issues... The kernel doesn't have some things that we need to use to modem. Not sure what I'm going to to next... Might find a new dev board, but this one seems pretty nice.
 
+Going to look into building my own OS / kernel. Need to enable the USB drivers for the modem, also would be nice if we could have everything up to date.
+
 TODO:
 
 - Make new USB-C power cord
