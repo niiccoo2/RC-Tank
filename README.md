@@ -832,3 +832,5 @@ Mode `0` is 15W, `1` is 25W, `2` is MAXN SUPER. Going to leave at 1 for now.
 Think UART 1 is `/dev/ttyS1`
 
 Server is down... Local website is also not connecting... Was because I did not accept the self signed cert.
+
+![Jetson Pinout](./photos/jetson_pinout.jpg)

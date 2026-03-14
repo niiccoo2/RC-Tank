@@ -27,7 +27,7 @@ motors = Motor()
 
 # You should probably only use one at a time or use a different source.
 # For now, we initialize it but it only opens camera when requested.
-webrtc = WebRTCManager("/dev/video1")
+webrtc = WebRTCManager()
 
 lights = Lights()
 # gps = GPS()
