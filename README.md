@@ -775,7 +775,7 @@ TODO:
 - Start on route planing interface (WEBSITE)
 - Get a RTK GPS added and tested
 
-### Tuesday, March 10th | x hours
+### Tuesday, March 10th | .5 hours
 
 #### 07:30 | .5 hours
 
@@ -790,3 +790,9 @@ TODO:
 - Wire lights
 - Start on route planing interface (WEBSITE)
 - Get a RTK GPS added and tested
+
+### Friday, March 13th | .5 hours
+
+#### 21:00 | .5 hours
+
+Decided to get a Jetson Orin Nano. Finally had time to set up today. Tmr is going to be getting the existing system working with the new device. Then going to get RTK gps waypoints working.
