@@ -130,7 +130,7 @@ async def lights_on():
     else:
         print('Lights object not defined')
 
-@app.get("/health")
+@app.head("/health")
 async def health():
     return {"status": "healthy"}
 
