@@ -819,3 +819,14 @@ sudo nvpmodel -m 1
 #Verify the change:
 sudo nvpmodel -q
 ```
+
+Mode `0` is 15W, `1` is 25W, `2` is MAXN SUPER. Going to leave at 1 for now.
+
+| Color  | Meaning | GPIO |
+| ------ | ------- | ---- |
+| Green  | Ground  | GND  |
+| Blue   | 5v      | null |
+| Orange | TX?     | 10   |
+| Yellow | RX?     | 8    |
+
+Think UART 1 is `/dev/ttyS1`
