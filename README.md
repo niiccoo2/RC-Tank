@@ -834,3 +834,5 @@ Think UART 1 is `/dev/ttyS1`
 Server is down... Local website is also not connecting... Was because I did not accept the self signed cert.
 
 ![Jetson Pinout](./photos/jetson_pinout.jpg)
+
+Got video working. Seems laggy though.
