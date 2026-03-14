@@ -805,7 +805,7 @@ Finally have time to work on the tank!! Going to start by regluing things to the
 
 Wired in the Jetson and new RTK GPS module. Also remounted a bunch of other things. Going to get all the basic functions working again now.
 
-# 16:30 | x hours
+# 16:30 | 1.33 hours
 
 Found how to switch power modes:
 
@@ -836,3 +836,12 @@ Server is down... Local website is also not connecting... Was because I did not 
 ![Jetson Pinout](./photos/jetson_pinout.jpg)
 
 Got video working. Seems laggy though.
+
+TODO:
+
+- Latency
+- Lights
+- RTK GPS
+- Website route planner
+
+Latency seemed to be because of the data refresh rate. 200ms seems to work better.

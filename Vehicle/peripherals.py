@@ -3,8 +3,8 @@ import time
 
 class Lights:
     def __init__(self, num_pixels=30):
-        # Use SPI for NeoPixel control on Coral Dev Board
-        self.spi = SPI("/dev/spidev0.0", 0, 8000000)  # 8MHz SPI
+        # Jetson Orin Nano SPI defaults (spidev0.0 @ 6.4 MHz)
+        self.spi = SPI("/dev/spidev0.0", 0, 6400000)
         self.num_pixels = num_pixels
         self.pixels = [(0, 0, 0)] * num_pixels  # RGB tuples
         self.side_value = 100
@@ -16,12 +16,13 @@ class Lights:
         grb = (g << 16) | (r << 8) | b
         spi_data = []
         
-        # Convert each bit to SPI pattern (0 = 100, 1 = 110)
+        # One LED bit per SPI byte at 6.4MHz gives 1.25us/bit.
+        # 0-bit: ~0.31us high + 0.94us low; 1-bit: ~0.62us high + 0.62us low.
         for i in range(23, -1, -1):  # 24 bits, MSB first
             if (grb >> i) & 1:
-                spi_data.extend([0b11100000])  # Logic 1
+                spi_data.extend([0b11110000])  # Logic 1 pulse
             else:
-                spi_data.extend([0b10000000])  # Logic 0
+                spi_data.extend([0b11000000])  # Logic 0 pulse
         
         return spi_data
     
@@ -34,7 +35,7 @@ class Lights:
             spi_data.extend(self._rgb_to_spi(r, g, b))
         
         # Add reset signal (zeros)
-        spi_data.extend([0x00] * 75)  # Reset pulse
+        spi_data.extend([0x00] * 80)  # >=50us reset pulse
         
         # Send data
         self.spi.transfer(spi_data)
