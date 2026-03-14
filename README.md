@@ -796,3 +796,26 @@ TODO:
 #### 21:00 | .5 hours
 
 Decided to get a Jetson Orin Nano. Finally had time to set up today. Tmr is going to be getting the existing system working with the new device. Then going to get RTK gps waypoints working.
+
+### Saturday, March 14th | x hours
+
+#### 15:20 | 1.16 hours
+
+Finally have time to work on the tank!! Going to start by regluing things to the wood and wiring the jetson power. Ik that glue is not test best bc it comes undone with heat and bumps but its fine for now.
+
+Wired in the Jetson and new RTK GPS module. Also remounted a bunch of other things. Going to get all the basic functions working again now.
+
+# 16:30 | x hours
+
+Found how to switch power modes:
+
+```shell
+#Check current mode:
+sudo nvpmodel -q
+#List all available power modes:
+sudo nvpmodel -q --verbose
+#Switch to 15W mode:
+sudo nvpmodel -m 1
+#Verify the change:
+sudo nvpmodel -q
+```

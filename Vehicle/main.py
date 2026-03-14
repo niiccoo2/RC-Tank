@@ -1,5 +1,5 @@
 from motor_class import Motor
-from peripherals import Lights, Fan
+from peripherals import Lights
 from gps_class import GPS, GPSResponse
 from webrtc_manager import WebRTCManager
 
@@ -29,7 +29,6 @@ motors = Motor()
 # For now, we initialize it but it only opens camera when requested.
 webrtc = WebRTCManager("/dev/video1")
 
-fan = Fan()
 lights = Lights()
 gps = GPS()
 
@@ -37,9 +36,6 @@ gps = GPS()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
-
-    if not fan.on():
-        print("Warning: Fan control failed - check permissions")
 
     lights.side_on()
 
@@ -56,7 +52,6 @@ async def lifespan(app: FastAPI):
         await webrtc.cleanup()
         motors.cleanup()
         lights.off()
-        fan.off()
 
 # --------- FastAPI Application ---------
 app = FastAPI(lifespan=lifespan)
