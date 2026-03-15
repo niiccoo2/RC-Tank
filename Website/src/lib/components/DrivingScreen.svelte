@@ -21,7 +21,6 @@
 	let ip: string = '';
 	let ip_textbox: string = '';
 	let videoSetting = true;
-	let useWebRTC = true; // Toggle for WebRTC
 	let ping: string = 'N/A';
 	let roundedLeftSpeed: number = 0;
 	let roundedRightSpeed: number = 0;
@@ -237,9 +236,7 @@
 
 	function confirmIp() {
 		ip = ip_textbox;
-		if (useWebRTC) {
-			startWebRTC();
-		}
+		startWebRTC();
 	}
 
 	async function startWebRTC() {
@@ -382,7 +379,6 @@
 						alt="Test Cam Feed" />
 					<p style="color: #FF0000; font-weight: bold;">{status}</p>
 				{:else}
-					{#if useWebRTC}
 						<!-- svelte-ignore a11y-media-has-caption -->
 						<video
 							bind:this={videoEl}
@@ -391,14 +387,6 @@
 							class="border black_background"
 							width="640"
 							height="480"></video>
-					{:else}
-						<img
-							class="border black_background"
-							src={`https://${ip}:5000/camera`}
-							width="640"
-							height="480"
-							alt="RC Tank Camera Feed" />
-					{/if}
 					<p style="color: #00FF00; font-weight: bold;">{status}</p>
 				{/if}
 			{:else}
@@ -462,19 +450,6 @@
 						<span class="slider round"></span>
 					</label>
 				</div> -->
-
-				<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">Use WebRTC:</span>
-					<label class="switch m-0 ml-auto">
-						<input
-							type="checkbox"
-							bind:checked={useWebRTC}
-							on:change={() => {
-								if (useWebRTC && ip) startWebRTC();
-							}} />
-						<span class="slider round"></span>
-					</label>
-				</div>
 
 				<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 					<span class="py-1">Refresh:</span>
