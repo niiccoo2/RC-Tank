@@ -1,6 +1,7 @@
 import serial
 import sys
 import types
+import os
 
 # ublox_gps imports spidev unconditionally, but spidev is Linux-only.
 # Provide a minimal stub so this script runs on Windows with UART GPS.
@@ -24,6 +25,29 @@ NTRIP_PWD = "none"
 NTRIP_SERVER = "rtk2go.com" 
 NTRIP_PORT = 2101
 MOUNTPOINT = "Lowell_MA"
+
+
+def resolve_gps_port():
+    """Resolve a usable GPS serial port for current platform."""
+    env_port = os.getenv("GPS_PORT")
+    if env_port:
+        return env_port
+
+    if sys.platform.startswith("win"):
+        return "COM9"
+
+    candidates = [
+        "/dev/ttyACM0",
+        "/dev/ttyTHS1",
+        "/dev/ttyTHS2",
+        "/dev/ttyUSB0",
+    ]
+    for dev in candidates:
+        if os.path.exists(dev):
+            return dev
+
+    # Fall back to common Jetson UART if no candidate is visible yet.
+    return "/dev/ttyTHS1"
 
 def feed_rtcm(port, stop_event, ref_lat, ref_lon):
     """Background task to feed RTCM corrections into the GPS serial port"""
@@ -77,8 +101,9 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
             time.sleep(2)
 
 def run():
-    # Use COM9 for local testing; change for Jetson (for example /dev/ttyTHS1).
-    port = serial.Serial('COM9', baudrate=38400, timeout=1)
+    gps_port = resolve_gps_port()
+    print(f"Using GPS port: {gps_port}")
+    port = serial.Serial(gps_port, baudrate=38400, timeout=1)
     gps = UbloxGps(port)
     stop_event = threading.Event()
 
