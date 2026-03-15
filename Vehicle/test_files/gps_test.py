@@ -30,7 +30,7 @@ MOUNTPOINT = "Ellsworth202Grant"
 
 
 def preflight_ntrip_mountpoint():
-    """Quick raw NTRIP request to show caster status line for this mountpoint."""
+    """Quick raw NTRIP request to show caster status and header details."""
     try:
         auth = base64.b64encode(f"{NTRIP_USER}:{NTRIP_PWD}".encode()).decode()
         request = (
@@ -42,11 +42,21 @@ def preflight_ntrip_mountpoint():
             "\r\n"
         )
 
-        with socket.create_connection((NTRIP_SERVER, NTRIP_PORT), timeout=6) as sock:
+        with socket.create_connection((NTRIP_SERVER, NTRIP_PORT), timeout=8) as sock:
+            sock.settimeout(8)
             sock.sendall(request.encode())
-            header = sock.recv(512).decode(errors="replace")
+            raw = sock.recv(1024)
+            text = raw.decode(errors="replace")
+            header, _, body = text.partition("\r\n\r\n")
             first_line = header.splitlines()[0] if header else "<no response>"
             print(f"NTRIP preflight: {first_line}")
+            if header:
+                print("NTRIP headers:")
+                for line in header.splitlines()[1:8]:
+                    print(f"  {line}")
+            if body:
+                preview = body[:80].replace("\r", " ").replace("\n", " ")
+                print(f"NTRIP body preview: {preview}")
             return "200" in first_line or "ICY" in first_line.upper()
     except Exception as err:
         print(f"NTRIP preflight failed: {err}")
@@ -74,7 +84,7 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
                     "datatype": "RTCM",
                     "version": "1.0",
                     "ggamode": 1,
-                    "ggainterval": 10,
+                    "ggainterval": 2,
                     "reflat": ref_lat,
                     "reflon": ref_lon,
                     "refalt": 0.0,
