@@ -870,3 +870,11 @@ Got normal gps working.
 #### 10:30 | x hours
 
 Going to work on integrating the new gps into the codebase, then am going to work on route planning in website, then making it follow that route.
+
+TODO:
+
+- Add video toggle to website
+- Simple route planner
+- Follow route
+  - Calc heading
+  - Start with simple self driving mode

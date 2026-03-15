@@ -10,7 +10,7 @@
 	let activeIndex: number = 0;
 	let videoStream: MediaStream | null = null;
 
-	type NavItem = { name: string; component: Component };
+	type NavItem = { name: string; component: any };
 	let headerItems: NavItem[] = [
 		{ name: 'Human Driving', component: DrivingScreen },
 		{ name: 'Something Else', component: Something }
@@ -39,11 +39,10 @@
 		{/each}
 	</header>
 	<main>
-		<!-- <DrivingScreen {ip} bind:this={drivingScreen}></DrivingScreen> -->
 		{#each headerItems as item, i}
 			<div style="display: {activeIndex === i ? 'block' : 'none'}">
 				{#if item.component === DrivingScreen}
-					<DrivingScreen {ip} stream={videoStream} />
+					<DrivingScreen {ip} bind:stream={videoStream} startWebRTC={startWebRTC} stopWebRTC={stopWebRTC} />
 				{:else}
 					<svelte:component this={item.component} {ip} />
 				{/if}

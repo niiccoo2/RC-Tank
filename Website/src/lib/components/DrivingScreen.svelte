@@ -12,6 +12,9 @@
 
 	export let ip: string = '';
 	export let stream: MediaStream | null = null;
+	export let startWebRTC: (ip: string) => Promise<MediaStream | null>;
+	export let stopWebRTC: () => void;
+	
 
 	let animationFrame: number;
 	let videoEl: HTMLVideoElement | null = null;
@@ -37,6 +40,14 @@
 		lon: 0,
 		alt: 0,
 	};
+
+	async function toggleVideo() {
+		if (videoSetting == true) {
+			stream = await startWebRTC(ip);
+		} else {
+			stopWebRTC();
+		}
+	}
 
 	async function updateGPSData() {
 		if (ip) {
@@ -319,13 +330,13 @@
 				</label>
 			</div>
 
-			<!-- <div class="info_card inline-flex items-center gap-3 px-3 py-2">
+			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 					<span class="py-1">Show Video:</span>
 					<label class="switch m-0 ml-auto">
-						<input type="checkbox" bind:checked={videoSetting} />
+						<input type="checkbox" bind:checked={videoSetting} on:change={toggleVideo} />
 						<span class="slider round"></span>
 					</label>
-				</div> -->
+			</div>
 
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Refresh:</span>

@@ -31,7 +31,7 @@ class GPS:
                         if isinstance(msg, pynmea2.GGA):
                             fix_quality = int(msg.gps_qual) if msg.gps_qual else 0
                             fix_label = {0: "No Fix", 1: "GPS", 4: "RTK Fixed", 5: "RTK Float"}.get(fix_quality, str(fix_quality))
-                            print(f"Lat: {msg.latitude}, Lon: {msg.longitude}, Fix: {fix_label}")
+                            #print(f"Lat: {msg.latitude}, Lon: {msg.longitude}, Fix: {fix_label}")
 
 
                             return GPSResponse(
