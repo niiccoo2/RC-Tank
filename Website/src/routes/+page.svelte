@@ -1,11 +1,14 @@
 <script lang="ts">
 	import DrivingScreen from '$lib/components/DrivingScreen.svelte';
 	import Something from '$lib/components/Something.svelte';
+	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
+	import { onDestroy } from 'svelte';
 	import { type Component } from 'svelte';
 
-	let ip: string = 'test';
+	let ip: string = '';
 	let ip_textbox: string = '';
 	let activeIndex: number = 0;
+	let videoStream: MediaStream | null = null;
 
 	type NavItem = { name: string; component: Component };
 	let headerItems: NavItem[] = [
@@ -13,10 +16,14 @@
 		{ name: 'Something Else', component: Something }
 	];
 
-	function confirmIp() {
-		// NEED TO START WRBRTC OR THINGS WONT WORK
+	async function confirmIp() {
 		ip = ip_textbox;
+		videoStream = await startWebRTC(ip);
 	}
+
+	onDestroy(() => {
+		stopWebRTC();
+	});
 </script>
 
 <svelte:head>
@@ -35,7 +42,11 @@
 		<!-- <DrivingScreen {ip} bind:this={drivingScreen}></DrivingScreen> -->
 		{#each headerItems as item, i}
 			<div style="display: {activeIndex === i ? 'block' : 'none'}">
-				<svelte:component this={item.component} {ip} />
+				{#if item.component === DrivingScreen}
+					<DrivingScreen {ip} stream={videoStream} />
+				{:else}
+					<svelte:component this={item.component} {ip} />
+				{/if}
 			</div>
 		{/each}
 	</main>

@@ -15,8 +15,10 @@
 	const MULTIPLIER: number = 1000;
 
 	export let ip: string = '';
+	export let stream: MediaStream | null = null;
 
 	let animationFrame: number;
+	let videoEl: HTMLVideoElement | null = null;
 	let lastSendTime: number = 0;
 	let status: string = 'Disconnected';
 	let videoSetting = true;
@@ -29,12 +31,9 @@
 	let trottle: number = 0;
 	let stick: number = 0;
 	let carMode: boolean = true;
-	let pc: RTCPeerConnection | null = null;
-	let videoEl: HTMLVideoElement;
 	let FrSkyMode = true;
 	let voltage: number = 0;
 	let lights: boolean = false;
-	let statsInterval: number | null = null;
 	let gpsInterval: NodeJS.Timeout;
 
 	let gpsData: GPSResponse = {
@@ -58,24 +57,6 @@
 		} else {
 			return;
 		}
-	}
-
-	function logWebRTCStats() {
-		if (!pc) return;
-
-		pc.getStats().then((stats) => {
-			stats.forEach((report) => {
-				if (report.type === 'inbound-rtp' && report.kind === 'video') {
-					console.log('📊 WebRTC Stats:', {
-						fps: report.framesPerSecond || 0,
-						packetsLost: report.packetsLost || 0,
-						jitter: (report.jitter * 1000).toFixed(2) + 'ms',
-						framesDropped: report.framesDropped || 0,
-						framesReceived: report.framesReceived || 0
-					});
-				}
-			});
-		});
 	}
 
 	function changeRefresh(amount: number) {
@@ -226,83 +207,6 @@
 		}
 	}
 
-	export async function startWebRTC() {
-		if (pc) {
-			pc.close();
-		}
-
-		const configuration = {
-			iceServers: [
-				{ urls: 'stun:68.183.59.124:3478' },
-				{
-					urls: 'turn:68.183.59.124:3478',
-					username: 'tank',
-					credential: 'tankpass'
-				}
-			]
-		};
-
-		pc = new RTCPeerConnection(configuration);
-
-		pc.oniceconnectionstatechange = () => {
-			console.log('ICE Connection State:', pc?.iceConnectionState);
-			if (pc?.iceConnectionState === 'failed') {
-				status = 'ICE Failed - Check Tailscale';
-			}
-		};
-
-		pc.addTransceiver('video', { direction: 'recvonly' });
-
-		pc.ontrack = (event) => {
-			if (videoEl && event.streams[0]) {
-				videoEl.srcObject = event.streams[0];
-
-				// Start logging stats every 2 seconds when video starts
-				if (statsInterval) clearInterval(statsInterval);
-				statsInterval = window.setInterval(logWebRTCStats, 2000);
-			}
-		};
-
-		const offer = await pc.createOffer();
-		await pc.setLocalDescription(offer);
-
-		// Wait for ICE gathering to complete or timeout after 1.5s
-		await Promise.race([
-			new Promise((resolve) => {
-				if (pc && pc.iceGatheringState === 'complete') {
-					resolve(null);
-				} else {
-					const checkState = () => {
-						if (pc && pc.iceGatheringState === 'complete') {
-							pc.removeEventListener('icegatheringstatechange', checkState);
-							resolve(null);
-						}
-					};
-					pc?.addEventListener('icegatheringstatechange', checkState);
-				}
-			}),
-			new Promise((resolve) => setTimeout(resolve, 1500))
-		]);
-
-		try {
-			const response = await fetch(`https://${ip}:5000/offer`, {
-				method: 'POST',
-				body: JSON.stringify({
-					sdp: pc.localDescription?.sdp,
-					type: pc.localDescription?.type
-				}),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-
-			const answer = await response.json();
-			await pc.setRemoteDescription(answer);
-		} catch (e) {
-			console.error('WebRTC negotiation failed:', e);
-		}
-	}
-
 	onMount(() => {
 		pollGamepad();
 		sendCommand(0, 0); // Ensure motors are stopped on load and check connection
@@ -324,14 +228,15 @@
 		if (animationFrame) {
 			cancelAnimationFrame(animationFrame);
 		}
-		if (statsInterval) {
-			clearInterval(statsInterval);
-		}
 
 		if (gpsInterval) {
 			clearInterval(gpsInterval);
 		}
 	});
+
+	$: if (videoEl) {
+		videoEl.srcObject = stream;
+	}
 </script>
 
 <!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
@@ -356,7 +261,7 @@
 
 	<div class="center">
 		{#if videoSetting}
-			{#if status !== 'Connected'}
+			{#if !stream}
 				<img
 					class="border black_background"
 					src={`${cam_off_icon}`}
