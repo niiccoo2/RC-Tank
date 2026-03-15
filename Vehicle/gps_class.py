@@ -50,8 +50,9 @@ class GPS:
 
         except KeyboardInterrupt:
             print("Stopping...")
-        finally:
-            self.port.close()
+        
+        def __del__(self):
+            self.close()
 
         # No valid GPS data found
         print("No GPS data found after reading multiple lines")
