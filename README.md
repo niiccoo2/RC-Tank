@@ -843,5 +843,10 @@ TODO:
 - Lights
 - RTK GPS
 - Website route planner
+  - Make toggle to disconnect video / make sure that toggle we have works
 
 Latency seemed to be because of the data refresh rate. 200ms seems to work better.
+
+#### 20:00 | 1.33 hours
+
+Have been working on RTK GPS, seems a bit complicated to use with python but am making good progress.
