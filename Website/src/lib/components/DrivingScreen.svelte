@@ -3,23 +3,22 @@
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 
 	type GPSResponse = {
-		lat: number
-    	lon: number
-    	date: string
-    	utc: string
-    	alt: number
-    	speed: number
-    	course: number
-	}
+		lat: number;
+		lon: number;
+		date: string;
+		utc: string;
+		alt: number;
+		speed: number;
+		course: number;
+	};
 
 	const MULTIPLIER: number = 1000;
+
+	export let ip: string = '';
 
 	let animationFrame: number;
 	let lastSendTime: number = 0;
 	let status: string = 'Disconnected';
-	// let ip: string = '192.168.1.161';
-	let ip: string = '';
-	let ip_textbox: string = '';
 	let videoSetting = true;
 	let ping: string = 'N/A';
 	let roundedLeftSpeed: number = 0;
@@ -54,18 +53,18 @@
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
 			});
-		
+
 			gpsData = await response.json();
 		} else {
-			return
+			return;
 		}
 	}
 
 	function logWebRTCStats() {
 		if (!pc) return;
-		
-		pc.getStats().then(stats => {
-			stats.forEach(report => {
+
+		pc.getStats().then((stats) => {
+			stats.forEach((report) => {
 				if (report.type === 'inbound-rtp' && report.kind === 'video') {
 					console.log('📊 WebRTC Stats:', {
 						fps: report.framesPerSecond || 0,
@@ -79,13 +78,6 @@
 		});
 	}
 
-	function applyExpo(value: number, expo: number = 0.3) {
-		const sign = value >= 0 ? 1 : -1;
-		const abs = Math.abs(value);
-
-		return sign * (expo * abs * abs * abs + (1 - expo) * abs);
-	}
-
 	function changeRefresh(amount: number) {
 		refreshTimeMs = refreshTimeMs + amount;
 	}
@@ -94,7 +86,7 @@
 		let left: number;
 		let right: number;
 		const multiplier: number = 0.2;
-		const cap: number = 1
+		const cap: number = 1;
 
 		if (stick != 0.0) {
 			// Only cap the trottle if turning
@@ -234,12 +226,7 @@
 		}
 	}
 
-	function confirmIp() {
-		ip = ip_textbox;
-		startWebRTC();
-	}
-
-	async function startWebRTC() {
+	export async function startWebRTC() {
 		if (pc) {
 			pc.close();
 		}
@@ -269,7 +256,7 @@
 		pc.ontrack = (event) => {
 			if (videoEl && event.streams[0]) {
 				videoEl.srcObject = event.streams[0];
-				
+
 				// Start logging stats every 2 seconds when video starts
 				if (statsInterval) clearInterval(statsInterval);
 				statsInterval = window.setInterval(logWebRTCStats, 2000);
@@ -347,103 +334,99 @@
 	});
 </script>
 
-{#if ip}
-	<!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
-	<!-- Test Image -->
-	<div class="layout">
-		<div class="side left">
-			<div class="info_card px-4 py-2">
-				<p>Left Speed: {roundedLeftSpeed}</p>
-				<p>Right Speed: {roundedRightSpeed}</p>
-			</div>
-
-			<div class="info_card px-4 py-2">
-				<p>Lat: {gpsData.lat}</p>
-				<p>Lon: {gpsData.lon}</p>
-				<p>Date: {gpsData.date}</p>
-				<p>UTC: {gpsData.utc}</p>
-				<p>Alt: {gpsData.alt}</p>
-				<p>Speed: {gpsData.speed}</p>
-				<p>Course: {gpsData.course}</p>
-			</div>
+<!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
+<!-- Test Image -->
+<div class="layout">
+	<div class="side left">
+		<div class="info_card px-4 py-2">
+			<p>Left Speed: {roundedLeftSpeed}</p>
+			<p>Right Speed: {roundedRightSpeed}</p>
 		</div>
 
-		<div class="center">
-			{#if videoSetting}
-				{#if status !== 'Connected'}
-					<img
-						class="border black_background"
-						src={`${cam_off_icon}`}
-						width="640"
-						height="480"
-						alt="Test Cam Feed" />
-					<p style="color: #FF0000; font-weight: bold;">{status}</p>
-				{:else}
-						<!-- svelte-ignore a11y-media-has-caption -->
-						<video
-							bind:this={videoEl}
-							autoplay
-							playsinline
-							class="border black_background"
-							width="640"
-							height="480"></video>
-					<p style="color: #00FF00; font-weight: bold;">{status}</p>
-				{/if}
-			{:else}
+		<div class="info_card px-4 py-2">
+			<p>Lat: {gpsData.lat}</p>
+			<p>Lon: {gpsData.lon}</p>
+			<p>Date: {gpsData.date}</p>
+			<p>UTC: {gpsData.utc}</p>
+			<p>Alt: {gpsData.alt}</p>
+			<p>Speed: {gpsData.speed}</p>
+			<p>Course: {gpsData.course}</p>
+		</div>
+	</div>
+
+	<div class="center">
+		{#if videoSetting}
+			{#if status !== 'Connected'}
 				<img
 					class="border black_background"
 					src={`${cam_off_icon}`}
 					width="640"
 					height="480"
 					alt="Test Cam Feed" />
-				{#if status === 'Connected'}
-					<p style="color: #00FF00; font-weight: bold;">
-						Camera Off | {status}
-					</p>
-				{:else if status === 'Error'}
-					<p style="color: #FF0000; font-weight: bold;">
-						Camera Off | {status}
-					</p>
-				{:else}
-					<p style="color: #FF0000; font-weight: bold;">
-						Camera Off | {status}
-					</p>
-				{/if}
+				<p style="color: #FF0000; font-weight: bold;">{status}</p>
+			{:else}
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<video
+					bind:this={videoEl}
+					autoplay
+					playsinline
+					class="border black_background"
+					width="640"
+					height="480"></video>
+				<p style="color: #00FF00; font-weight: bold;">{status}</p>
 			{/if}
-		</div>
+		{:else}
+			<img
+				class="border black_background"
+				src={`${cam_off_icon}`}
+				width="640"
+				height="480"
+				alt="Test Cam Feed" />
+			{#if status === 'Connected'}
+				<p style="color: #00FF00; font-weight: bold;">
+					Camera Off | {status}
+				</p>
+			{:else if status === 'Error'}
+				<p style="color: #FF0000; font-weight: bold;">
+					Camera Off | {status}
+				</p>
+			{:else}
+				<p style="color: #FF0000; font-weight: bold;">
+					Camera Off | {status}
+				</p>
+			{/if}
+		{/if}
+	</div>
 
-		<div class="side right">
-			<div class="space-y-2">
-				<div>
-					<p class="info_card px-4 py-2">Ping: {ping}</p>
-				</div>
-
-				<div>
-					<p class="info_card px-4 py-2">Battery Voltage: {voltage}v</p>
-				</div>
+	<div class="side right">
+		<div class="space-y-2">
+			<div>
+				<p class="info_card px-4 py-2">Ping: {ping}</p>
 			</div>
 
-			<div class="mt-2 space-y-2">
-				<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">Headlight:</span>
-					<label class="switch m-0 ml-auto">
-						<input
-							type="checkbox"
-							bind:checked={lights}
-							on:change={() => handeLightSwitch(lights)} />
-						<span class="slider round"></span>
-					</label>
-				</div>
+			<div>
+				<p class="info_card px-4 py-2">Battery Voltage: {voltage}v</p>
+			</div>
+		</div>
 
-				<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">FrSky mode:</span>
-					<label class="switch m-0 ml-auto">
-						<input type="checkbox" bind:checked={FrSkyMode} />
-						<span class="slider round"></span>
-					</label>
-				</div>
+		<div class="mt-2 space-y-2">
+			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+				<span class="py-1">Headlight:</span>
+				<label class="switch m-0 ml-auto">
+					<input type="checkbox" bind:checked={lights} on:change={() => handeLightSwitch(lights)} />
+					<span class="slider round"></span>
+				</label>
+			</div>
 
-				<!-- <div class="info_card inline-flex items-center gap-3 px-3 py-2">
+			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+				<span class="py-1">FrSky mode:</span>
+				<label class="switch m-0 ml-auto">
+					<input type="checkbox" bind:checked={FrSkyMode} />
+					<span class="slider round"></span>
+				</label>
+			</div>
+
+			<!-- <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 					<span class="py-1">Show Video:</span>
 					<label class="switch m-0 ml-auto">
 						<input type="checkbox" bind:checked={videoSetting} />
@@ -451,38 +434,24 @@
 					</label>
 				</div> -->
 
-				<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">Refresh:</span>
-					<div class="inline-flex items-center gap-2 ml-auto">
-						<button on:click={() => changeRefresh(-10)} class="cursor-pointer button px-2 py-1"
-							>-</button>
-						<p class="m-0">{refreshTimeMs}ms</p>
-						<button on:click={() => changeRefresh(10)} class="cursor-pointer button px-2 py-1"
-							>+</button>
-					</div>
+			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+				<span class="py-1">Refresh:</span>
+				<div class="inline-flex items-center gap-2 ml-auto">
+					<button on:click={() => changeRefresh(-10)} class="cursor-pointer button px-2 py-1"
+						>-</button>
+					<p class="m-0">{refreshTimeMs}ms</p>
+					<button on:click={() => changeRefresh(10)} class="cursor-pointer button px-2 py-1"
+						>+</button>
 				</div>
+			</div>
 
-				<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">Car mode:</span>
-					<label class="switch m-0 ml-auto">
-						<input type="checkbox" bind:checked={carMode} />
-						<span class="slider round"></span>
-					</label>
-				</div>
+			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+				<span class="py-1">Car mode:</span>
+				<label class="switch m-0 ml-auto">
+					<input type="checkbox" bind:checked={carMode} />
+					<span class="slider round"></span>
+				</label>
 			</div>
 		</div>
 	</div>
-{:else}
-	<div class="center">
-		<div class="border black_background ip_picker">
-			<input
-				id={'ip_textbox'}
-				bind:value={ip_textbox}
-				placeholder="Tank IP"
-				class="border focus:outline-none px-2 py-1 mt-4" />
-			<button on:click={() => confirmIp()} class="px-4 py-2 cursor-pointer button px-2 py-1 mt-4">
-				Confirm
-			</button>
-		</div>
-	</div>
-{/if}
+</div>

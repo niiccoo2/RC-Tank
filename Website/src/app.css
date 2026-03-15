@@ -13,8 +13,8 @@ main {
 	align-items: center; /* keeps whole layout vertically centered */
 	background-color: #000000;
 	background-image:
-		linear-gradient(#0c0c0c 1px, transparent 1px),
-		linear-gradient(to right, #0c0c0c 1px, transparent 1px);
+		linear-gradient(#3c3c3c 1px, transparent 1px),
+		linear-gradient(to right, #3c3c3c 1px, transparent 1px);
 	background-size: 32px 32px; /* tile the pattern */
 	background-repeat: repeat;
 	background-position: 0 0;
@@ -155,4 +155,31 @@ input:checked + .slider:before {
 	background-color: #fff;
 	color: #000000;
 	/* font-weight: 700; */
+}
+
+header {
+	height: 6vh;
+	background-color: #000000;
+	color: white;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.tab {
+	background: none;
+	border: solid 1px white;
+	color: inherit;
+	font: inherit;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 1.5rem;
+	cursor: pointer;
+	white-space: nowrap;
+	border-radius: 12px 12px 0px 0px;
+}
+
+.tab:hover {
+	filter: brightness(0.9);
 }
