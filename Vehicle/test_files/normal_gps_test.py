@@ -45,7 +45,7 @@ def run():
                         print("--- RTK FIXED (Centimeter Accuracy!) ---")
                 
             except (ValueError, IOError):
-                pass # Ignore occasional dropped packets
+                print("Dropped packets") # Ignore occasional dropped packets
                 
     except KeyboardInterrupt:
         print("Stopping...")
