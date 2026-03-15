@@ -5,18 +5,7 @@ import os
 import sys
 
 # --- Configuration ---
-SERIAL_PORT = os.getenv("GPS_PORT")
-if SERIAL_PORT is None:
-    if sys.platform.startswith("win"):
-        SERIAL_PORT = "COM9"
-    else:
-        candidates = ["/dev/ttyACM0", "/dev/ttyTHS1", "/dev/ttyUSB0"]
-        for dev in candidates:
-            if os.path.exists(dev):
-                SERIAL_PORT = dev
-                break
-        if SERIAL_PORT is None:
-            SERIAL_PORT = "/dev/ttyACM0"
+SERIAL_PORT = "/dev/ttyACM0"
 
 BAUD_RATES = [9600, 38400, 115200, 460800]
 TARGET_BAUD = 38400

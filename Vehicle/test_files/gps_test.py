@@ -30,25 +30,8 @@ MOUNTPOINT = "Ellsworth202Grant"
 
 def resolve_gps_port():
     """Resolve a usable GPS serial port for current platform."""
-    env_port = os.getenv("GPS_PORT")
-    if env_port:
-        return env_port
-
-    if sys.platform.startswith("win"):
-        return "COM9"
-
-    candidates = [
-        "/dev/ttyACM0",
-        "/dev/ttyTHS1",
-        "/dev/ttyTHS2",
-        "/dev/ttyUSB0",
-    ]
-    for dev in candidates:
-        if os.path.exists(dev):
-            return dev
-
-    # Fall back to common Jetson UART if no candidate is visible yet.
-    return "/dev/ttyTHS1"
+    # Hardcoded for the specific u-blox USB device on the Jetson.
+    return "/dev/ttyACM0"
 
 def feed_rtcm(port, stop_event, ref_lat, ref_lon):
     """Background task to feed RTCM corrections into the GPS serial port"""
