@@ -19,7 +19,7 @@ def set_nav_rate(port, rate_ms=200):  # 200ms = 5Hz
 def run():
     gps_port = "/dev/ttyACM0"
     print(f"Using GPS port: {gps_port}")
-    port = serial.Serial(gps_port, baudrate=38400, timeout=1)
+    port = serial.Serial(gps_port, baudrate=38400, timeout=.1)
     set_nav_rate(port)
     gps = UbloxGps(port)
     stop_event = threading.Event()
