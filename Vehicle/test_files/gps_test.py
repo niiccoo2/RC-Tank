@@ -24,7 +24,8 @@ NTRIP_USER = "rtk@a.nicosmith.net"
 NTRIP_PWD = "none"
 NTRIP_SERVER = "rtk2go.com" 
 NTRIP_PORT = 2101
-MOUNTPOINT = "Lowell_MA"
+# MOUNTPOINT = "Lowell_MA"
+MOUNTPOINT = "Ellsworth202Grant"
 
 
 def resolve_gps_port():
