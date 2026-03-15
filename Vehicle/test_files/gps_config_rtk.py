@@ -83,7 +83,7 @@ def verify_connection(port_name, baud_rate):
             from ublox_gps import UbloxGps
             gps = UbloxGps(port)
             for _ in range(5):
-                if gps.nav_status():
+                if gps.geo_coords():
                     return True
     except (serial.SerialException, ImportError):
         return False
