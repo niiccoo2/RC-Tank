@@ -1,21 +1,6 @@
 import serial
-import sys
-import types
 import base64
 import socket
-
-# ublox_gps imports spidev unconditionally, but spidev is Linux-only.
-# Provide a minimal stub so this script runs on Windows with UART GPS.
-if sys.platform.startswith("win"):
-    spidev_stub = types.ModuleType("spidev")
-
-    class _DummySpiDev:
-        def __init__(self, *args, **kwargs):
-            raise RuntimeError("spidev is not available on Windows")
-
-    setattr(spidev_stub, "SpiDev", _DummySpiDev)
-    sys.modules.setdefault("spidev", spidev_stub)
-
 from ublox_gps import UbloxGps
 from pygnssutils import GNSSNTRIPClient
 import threading
@@ -74,12 +59,6 @@ def preflight_ntrip_mountpoint():
             "banned": False,
             "first_line": str(err),
         }
-
-
-def resolve_gps_port():
-    """Resolve a usable GPS serial port for current platform."""
-    # Hardcoded for the specific u-blox USB device on the Jetson.
-    return "/dev/ttyACM0"
 
 def feed_rtcm(port, stop_event, ref_lat, ref_lon):
     """Background task to feed RTCM corrections into the GPS serial port"""
@@ -142,7 +121,7 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
             retries += 1
 
 def run():
-    gps_port = resolve_gps_port()
+    gps_port = "/dev/ttyACM0"
     print(f"Using GPS port: {gps_port}")
     port = serial.Serial(gps_port, baudrate=38400, timeout=1)
     gps = UbloxGps(port)

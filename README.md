@@ -797,7 +797,7 @@ TODO:
 
 Decided to get a Jetson Orin Nano. Finally had time to set up today. Tmr is going to be getting the existing system working with the new device. Then going to get RTK gps waypoints working.
 
-### Saturday, March 14th | x hours
+### Saturday, March 14th | 5.32 hours
 
 #### 15:20 | 1.16 hours
 
@@ -856,3 +856,11 @@ Got temp banned from the site for spam (uhhhh) so going to work on this in morni
 #### 22:00 1.5 hours
 
 Worked on website a bunch, now have tabs. Need to work on route planning and gps in morning.
+
+### Sunday, March 15th | x hours
+
+#### 09:00 | x hours
+
+Going to try and get gps working. No AI this time lol.
+
+RTK GPS is being a pain, going to just do some tests with normal GPS for now.
