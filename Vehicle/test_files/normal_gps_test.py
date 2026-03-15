@@ -1,55 +1,34 @@
 import serial
-
-from ublox_gps import UbloxGps
-import threading
+import pynmea2 # type:ignore
 import time
 
 def run():
     gps_port = "/dev/ttyACM0"
-    print(f"Using GPS port: {gps_port}")
-    port = serial.Serial(gps_port, baudrate=38400, timeout=.1)
-    gps = UbloxGps(port)
-    stop_event = threading.Event()
+    port = serial.Serial(gps_port, baudrate=38400, timeout=1)
 
-    # Grab one valid position to seed fixed-reference GGA for NTRIP caster.
-    ref_lat = None
-    ref_lon = None
-    for _ in range(150):
-        try:
-            seed = gps.geo_coords()
-            if seed:
-                ref_lat = seed.lat
-                ref_lon = seed.lon
-                break
-        except (ValueError, IOError):
-            pass
-        time.sleep(0.2)
-
-    if ref_lat is None or ref_lon is None:
-        print("No valid GNSS fix yet, cannot start NTRIP with GGA enabled.")
-        print("Move antenna to open sky and restart.")
-        port.close()
-        return
-    
-    try: 
+    print("Waiting for fix...")
+    try:
         while True:
-            try: 
-                coords = gps.geo_coords()
-                # NAV-PVT message tells us the 'fix' type:
-                # 3 = 3D Fix, 4 = RTK Fixed (1cm), 5 = RTK Float (decimeters)
-                if coords:
-                    print(f"Lat: {coords.lat}, Lon: {coords.lon}, FixType: {coords.fixType}")
-                
-                    if coords.fixType == 4:
-                        print("--- RTK FIXED (Centimeter Accuracy!) ---")
-                
-            except (ValueError, IOError):
-                print("Dropped packets") # Ignore occasional dropped packets
-                
+            try:
+                line = port.readline().decode('ascii', errors='replace').strip()
+                if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
+                    msg = pynmea2.parse(line)
+
+                    if isinstance(msg, pynmea2.GGA):
+                        fix_quality = int(msg.gps_qual) if msg.gps_qual else 0
+                        fix_label = {0: "No Fix", 1: "GPS", 4: "RTK Fixed", 5: "RTK Float"}.get(fix_quality, str(fix_quality))
+                        print(f"Lat: {msg.latitude}, Lon: {msg.longitude}, Fix: {fix_label}")
+                        if fix_quality == 4:
+                            print("--- RTK FIXED (Centimeter Accuracy!) ---")
+
+            except pynmea2.ParseError:
+                pass
+            except (ValueError, IOError) as e:
+                print(f"Dropped packet: {e}")
+
     except KeyboardInterrupt:
         print("Stopping...")
     finally:
-        stop_event.set()
         port.close()
 
 if __name__ == '__main__':
