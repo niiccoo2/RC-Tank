@@ -859,8 +859,14 @@ Worked on website a bunch, now have tabs. Need to work on route planning and gps
 
 ### Sunday, March 15th | x hours
 
-#### 09:00 | x hours
+#### 09:00 | .66 hours
 
 Going to try and get gps working. No AI this time lol.
 
 RTK GPS is being a pain, going to just do some tests with normal GPS for now.
+
+Got normal gps working.
+
+#### 10:30 | x hours
+
+Going to work on integrating the new gps into the codebase, then am going to work on route planning in website, then making it follow that route.

@@ -3,8 +3,7 @@ import pynmea2 # type:ignore
 import time
 
 def run():
-    gps_port = "/dev/ttyACM0"
-    port = serial.Serial(gps_port, baudrate=38400, timeout=1)
+    port = serial.Serial("/dev/ttyACM0", baudrate=38400, timeout=1)
 
     print("Waiting for fix...")
     try:

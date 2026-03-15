@@ -5,11 +5,7 @@
 	type GPSResponse = {
 		lat: number;
 		lon: number;
-		date: string;
-		utc: string;
 		alt: number;
-		speed: number;
-		course: number;
 	};
 
 	const MULTIPLIER: number = 1000;
@@ -39,11 +35,7 @@
 	let gpsData: GPSResponse = {
 		lat: 0,
 		lon: 0,
-		date: '',
-		utc: '',
 		alt: 0,
-		speed: 0,
-		course: 0
 	};
 
 	async function updateGPSData() {
@@ -251,11 +243,7 @@
 		<div class="info_card px-4 py-2">
 			<p>Lat: {gpsData.lat}</p>
 			<p>Lon: {gpsData.lon}</p>
-			<p>Date: {gpsData.date}</p>
-			<p>UTC: {gpsData.utc}</p>
 			<p>Alt: {gpsData.alt}</p>
-			<p>Speed: {gpsData.speed}</p>
-			<p>Course: {gpsData.course}</p>
 		</div>
 	</div>
 
