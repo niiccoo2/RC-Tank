@@ -852,3 +852,7 @@ Latency seemed to be because of the data refresh rate. 200ms seems to work bette
 Have been working on RTK GPS, seems a bit complicated to use with python but am making good progress.
 
 Got temp banned from the site for spam (uhhhh) so going to work on this in morning. Going to try an work on the website right now.
+
+#### 22:00 1.5 hours
+
+Worked on website a bunch, now have tabs. Need to work on route planning and gps in morning.
