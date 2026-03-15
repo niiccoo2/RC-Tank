@@ -30,7 +30,7 @@ motors = Motor()
 webrtc = WebRTCManager()
 
 lights = Lights()
-# gps = GPS()
+gps = GPS()
 
 # --------- Lifespan Manager ---------
 @asynccontextmanager
@@ -68,7 +68,6 @@ app.add_middleware(
 # --------- ROUTES ----------
 @app.get("/gps")
 async def get_gps():
-    return ''
     response = gps.read_data()
 
     return response
