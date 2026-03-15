@@ -5,10 +5,22 @@ from ublox_gps import UbloxGps
 import threading
 import time
 
+def set_nav_rate(port, rate_ms=200):  # 200ms = 5Hz
+    # UBX CFG-RATE: measRate, navRate, timeRef
+    payload = rate_ms.to_bytes(2, 'little') + b'\x01\x00\x01\x00'
+    msg = b'\xb5\x62\x06\x08' + len(payload).to_bytes(2, 'little') + payload
+    ck_a, ck_b = 0, 0
+    for byte in msg[2:]:
+        ck_a = (ck_a + byte) & 0xFF
+        ck_b = (ck_b + ck_a) & 0xFF
+    port.write(msg + bytes([ck_a, ck_b]))
+    time.sleep(0.1)
+
 def run():
     gps_port = "/dev/ttyACM0"
     print(f"Using GPS port: {gps_port}")
     port = serial.Serial(gps_port, baudrate=38400, timeout=1)
+    set_nav_rate(port)
     gps = UbloxGps(port)
     stop_event = threading.Event()
 
