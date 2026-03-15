@@ -27,6 +27,7 @@ NTRIP_SERVER = "rtk2go.com"
 NTRIP_PORT = 2101
 # MOUNTPOINT = "Lowell_MA"
 MOUNTPOINT = "Ellsworth202Grant"
+GGA_INTERVAL_S = 2
 
 
 def preflight_ntrip_mountpoint():
@@ -57,10 +58,22 @@ def preflight_ntrip_mountpoint():
             if body:
                 preview = body[:80].replace("\r", " ").replace("\n", " ")
                 print(f"NTRIP body preview: {preview}")
-            return "200" in first_line or "ICY" in first_line.upper()
+
+            lower_blob = (header + "\n" + body).lower()
+            banned = "banned your ip" in lower_blob or "forbidden" in lower_blob
+            ok = "200" in first_line or "icy" in first_line.lower()
+            return {
+                "ok": ok,
+                "banned": banned,
+                "first_line": first_line,
+            }
     except Exception as err:
         print(f"NTRIP preflight failed: {err}")
-        return False
+        return {
+            "ok": False,
+            "banned": False,
+            "first_line": str(err),
+        }
 
 
 def resolve_gps_port():
@@ -70,8 +83,13 @@ def resolve_gps_port():
 
 def feed_rtcm(port, stop_event, ref_lat, ref_lon):
     """Background task to feed RTCM corrections into the GPS serial port"""
-    retry_delay_s = 2
+    retry_delay_s = 15
+    retries = 0
+    max_retries = 6
     while not stop_event.is_set():
+        if retries >= max_retries:
+            print("NTRIP stopped after max retries to avoid caster spam.")
+            break
         try:
             with GNSSNTRIPClient() as gnc:
                 # Start NTRIP client and keep it alive until stop/reconnect.
@@ -84,7 +102,7 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
                     "datatype": "RTCM",
                     "version": "1.0",
                     "ggamode": 1,
-                    "ggainterval": 2,
+                    "ggainterval": GGA_INTERVAL_S,
                     "reflat": ref_lat,
                     "reflon": ref_lon,
                     "refalt": 0.0,
@@ -96,7 +114,8 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
                 gnc.run(**run_args)
                 while gnc.connected and not stop_event.is_set():
                     time.sleep(0.5)
-            retry_delay_s = 2
+            retry_delay_s = 15
+            retries = 0
         except KeyError as err:
             if stop_event.is_set():
                 break
@@ -112,12 +131,15 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
                 print(f"NTRIP key error, reconnecting: {err}")
 
             time.sleep(retry_delay_s)
-            retry_delay_s = min(retry_delay_s * 2, 15)
+            retry_delay_s = min(retry_delay_s * 2, 120)
+            retries += 1
         except Exception as err:
             if stop_event.is_set():
                 break
             print(f"NTRIP error, reconnecting: {err}")
-            time.sleep(2)
+            time.sleep(retry_delay_s)
+            retry_delay_s = min(retry_delay_s * 2, 120)
+            retries += 1
 
 def run():
     gps_port = resolve_gps_port()
@@ -146,8 +168,17 @@ def run():
         port.close()
         return
 
-    print(f"NTRIP GGA enabled: interval=10s, ref=({ref_lat}, {ref_lon})")
-    preflight_ntrip_mountpoint()
+    print(f"NTRIP GGA enabled: interval={GGA_INTERVAL_S}s, ref=({ref_lat}, {ref_lon})")
+    preflight = preflight_ntrip_mountpoint()
+    if preflight.get("banned"):
+        print("Caster reported IP ban. Not starting NTRIP stream to avoid extending ban.")
+        print("Wait for ban timeout or use a different network IP/mountpoint.")
+        port.close()
+        return
+    if not preflight.get("ok"):
+        print("NTRIP preflight did not return a stream-OK status. Not starting stream.")
+        port.close()
+        return
 
     # Start the NTRIP client in a separate thread
     ntrip_thread = threading.Thread(
