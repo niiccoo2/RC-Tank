@@ -3,7 +3,7 @@ import pynmea2 # type:ignore
 import time
 
 def run():
-    port = serial.Serial("/dev/ttyACM0", baudrate=38400, timeout=1)
+    port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=1)
 
     print("Waiting for fix...")
     try:

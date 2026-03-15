@@ -11,7 +11,7 @@ class GPSResponse(BaseModel):
 class GPS:
     def __init__(self):
         print('Initializing GPS')
-        self.port = serial.Serial("/dev/ttyACM0", baudrate=38400, timeout=1)
+        self.port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=1)
         time.sleep(.5)
         print('GPS Intitalized')
     
@@ -32,7 +32,7 @@ class GPS:
                             fix_quality = int(msg.gps_qual) if msg.gps_qual else 0
                             fix_label = {0: "No Fix", 1: "GPS", 4: "RTK Fixed", 5: "RTK Float"}.get(fix_quality, str(fix_quality))
                             print(f"Lat: {msg.latitude}, Lon: {msg.longitude}, Fix: {fix_label}")
-                            
+
 
                             return GPSResponse(
                                 lat=msg.latitude,
