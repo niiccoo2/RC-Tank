@@ -1,7 +1,8 @@
 import serial
 import sys
 import types
-import os
+import base64
+import socket
 
 # ublox_gps imports spidev unconditionally, but spidev is Linux-only.
 # Provide a minimal stub so this script runs on Windows with UART GPS.
@@ -28,6 +29,30 @@ NTRIP_PORT = 2101
 MOUNTPOINT = "Ellsworth202Grant"
 
 
+def preflight_ntrip_mountpoint():
+    """Quick raw NTRIP request to show caster status line for this mountpoint."""
+    try:
+        auth = base64.b64encode(f"{NTRIP_USER}:{NTRIP_PWD}".encode()).decode()
+        request = (
+            f"GET /{MOUNTPOINT} HTTP/1.0\r\n"
+            f"Host: {NTRIP_SERVER}:{NTRIP_PORT}\r\n"
+            "User-Agent: NTRIP RC-Tank/1.0\r\n"
+            f"Authorization: Basic {auth}\r\n"
+            "Connection: close\r\n"
+            "\r\n"
+        )
+
+        with socket.create_connection((NTRIP_SERVER, NTRIP_PORT), timeout=6) as sock:
+            sock.sendall(request.encode())
+            header = sock.recv(512).decode(errors="replace")
+            first_line = header.splitlines()[0] if header else "<no response>"
+            print(f"NTRIP preflight: {first_line}")
+            return "200" in first_line or "ICY" in first_line.upper()
+    except Exception as err:
+        print(f"NTRIP preflight failed: {err}")
+        return False
+
+
 def resolve_gps_port():
     """Resolve a usable GPS serial port for current platform."""
     # Hardcoded for the specific u-blox USB device on the Jetson.
@@ -47,7 +72,7 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
                     "ntripuser": NTRIP_USER,
                     "ntrippassword": NTRIP_PWD,
                     "datatype": "RTCM",
-                    "version": "2.0",
+                    "version": "1.0",
                     "ggamode": 1,
                     "ggainterval": 10,
                     "reflat": ref_lat,
@@ -112,6 +137,7 @@ def run():
         return
 
     print(f"NTRIP GGA enabled: interval=10s, ref=({ref_lat}, {ref_lon})")
+    preflight_ntrip_mountpoint()
 
     # Start the NTRIP client in a separate thread
     ntrip_thread = threading.Thread(
