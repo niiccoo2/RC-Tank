@@ -1,7 +1,6 @@
 
 import serial
 import time
-import os
 import sys
 
 # --- Configuration ---
@@ -99,19 +98,31 @@ def run():
 
     # 2. Configure the module
     try:
+        is_usb_acm = SERIAL_PORT.startswith("/dev/ttyACM")
+        final_baud = current_baud if is_usb_acm else TARGET_BAUD
+
         with serial.Serial(SERIAL_PORT, current_baud, timeout=2) as port:
-            # Set port to target baud rate first
-            send_ubx_msg(port, b'\x06\x00\x14\x00\x01\x00\x00\x00\xc0\x08\x00\x00' + TARGET_BAUD.to_bytes(4, 'little') + b'\x01\x00\x01\x00\x00\x00\x00\x00')
-            print(f"Switched module to {TARGET_BAUD} bps temporarily.")
-            port.baudrate = TARGET_BAUD
+            # USB ACM links do not use UART baud in the same way as ttyTHS/ttyUSB.
+            if not is_usb_acm and current_baud != TARGET_BAUD:
+                send_ubx_msg(
+                    port,
+                    b'\x06\x00\x14\x00\x01\x00\x00\x00\xc0\x08\x00\x00'
+                    + TARGET_BAUD.to_bytes(4, 'little')
+                    + b'\x01\x00\x01\x00\x00\x00\x00\x00',
+                )
+                print(f"Switched module to {TARGET_BAUD} bps temporarily.")
+                time.sleep(0.5)
+                port.baudrate = TARGET_BAUD
+            elif is_usb_acm:
+                print("USB ACM detected; skipping UART baud-switch step.")
             
             # Send the full RTK configuration
             configure_for_rtk(port)
 
         # 3. Verify configuration
         print("\n--- Verifying Configuration ---")
-        if verify_connection(SERIAL_PORT, TARGET_BAUD):
-            print(f"Successfully re-connected at {TARGET_BAUD} bps.")
+        if verify_connection(SERIAL_PORT, final_baud):
+            print(f"Successfully re-connected at {final_baud} bps.")
             print("Configuration appears successful. The module is now ready for RTK.")
         else:
             print("Error: Failed to reconnect after configuration. Please power-cycle the GPS and re-run.")
