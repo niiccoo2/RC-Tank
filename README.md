@@ -881,6 +881,22 @@ TODO:
 
 Added video toggle, now going to work on simple route planner.
 
-#### 21:00
+#### 21:00 | 0 hours
 
 Switching the Jetson from a 32GB SD card to a 512 GB NVMe drive.
+
+### Sunday, March 22nd | x hours
+
+#### 09:00 | .2 hours
+
+Started working on the route planner... Need to make it so you can click locations, it saves them, and draws lines between them.
+
+Once I have a way to plot locations, will wire up the compass and other stuff...
+
+Still have to get jetson working on ssd.
+
+#### 10:30 | .5 hours
+
+Increased max zoom (Leaflet.svelte:39)
+
+Made it so when you click it adds a new waypoint. At some point I should switch from all these REST APIs to webhooks...

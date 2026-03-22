@@ -20,7 +20,22 @@
 <button
 	type="button"
 	class="single-click"
-	on:click={() => dispatch('click-reset')}
+	on:click|stopPropagation={() => dispatch('click-send')}
+	title="Send Route to tank">
+	<svg
+		fill="none"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		stroke-width="2"
+		viewBox="0 0 24 24"
+		stroke="currentColor"
+		><path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+</button>
+
+<button
+	type="button"
+	class="single-click"
+	on:click|stopPropagation={() => dispatch('click-reset')}
 	title="Reset View">
 	<svg
 		fill="none"
@@ -33,7 +48,7 @@
 			d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
 </button>
 
-<button type="button" on:click={clickEye} class:selected={eye} title="Show Markers">
+<button type="button" on:click|stopPropagation={clickEye} class:selected={eye} title="Show Markers">
 	<svg
 		fill="none"
 		stroke-linecap="round"
@@ -51,7 +66,7 @@
 	</svg>
 </button>
 
-<button type="button" on:click={clickLines} class:selected={lines} title="Show Lines">
+<button type="button" on:click|stopPropagation={clickLines} class:selected={lines} title="Show Lines">
 	<svg
 		fill="none"
 		stroke-linecap="round"

@@ -1,31 +1,21 @@
 <script lang="ts">
-	import L from 'leaflet';
+	import L, { latLng } from 'leaflet';
 	import Leaflet from './Leaflet.svelte';
 	import Control from './Control.svelte';
 	import Marker from './Marker.svelte';
 	import Popup from './Popup.svelte';
 	import Polyline from './Polyline.svelte';
 	import MapToolbar from './MapToolbar.svelte';
-	import { scaleSequential } from 'd3-scale';
-	import { interpolateRainbow } from 'd3-scale-chromatic';
 	let map: L.Map;
 
-	const markerLocations: [number, number][] = [
-		[29.8283, -96.5795],
-		[37.8283, -90.5795],
-		[43.8283, -102.5795],
-		[48.4, -122.5795],
-		[43.6, -79.5795],
-		[36.8283, -100.5795],
-		[38.4, -122.5795]
-	];
+	let markerLocations: { ID: number, latLng: [number, number] }[] = [];
+	let markerIdCount: number = 0;
 
-	const colors = scaleSequential(interpolateRainbow).domain([0, markerLocations.length - 1]);
-	const lines = markerLocations.slice(1).map((latLng, i) => {
+	$: lines = markerLocations.slice(1).map((latLng, i) => {
 		let prev = markerLocations[i];
 		return {
-			latLngs: [prev, latLng],
-			color: colors(i)
+			latLngs: [prev.latLng, latLng.latLng],
+			color: "red"
 		};
 	});
 
@@ -43,30 +33,52 @@
 	function resetMapView() {
 		map.setView(initialView, 5);
 	}
+
+	function handleMapClick(event: CustomEvent<L.LeafletMouseEvent>) {
+		const { lat, lng } = event.detail.latlng;
+		console.log(`Map clicked at ${lat}, ${lng}. ID: ${markerIdCount}`);
+		markerLocations = [...markerLocations, { ID: markerIdCount, latLng: [lat, lng] }];
+		markerIdCount++;
+	} 
+
+	function clearMarkers() {
+		markerLocations = [];
+		markerIdCount = 0;
+	}
+
+	function removeLocationFromArray(ID: number) {
+		markerLocations = markerLocations.filter((p) => p.ID !== ID);
+	}
+
+	function sendWaypointsToTank() {
+		// send all waypoint data to tank here
+	}
 </script>
 
 <svelte:window on:resize={resizeMap} />
 
-<div style="height: 92vh; width: 100%">
-	<Leaflet bind:map view={initialView} zoom={4}>
+<div style="height: 94vh; width: 100%;">
+	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={4}>
 		<Control position="topright">
-			<MapToolbar bind:eye bind:lines={showLines} on:click-reset={resetMapView} />
+			<MapToolbar bind:eye bind:lines={showLines} on:click-reset={resetMapView} on:click-send={sendWaypointsToTank} />
 		</Control>
 
 		{#if eye}
-			{#each markerLocations as latLng}
-				<Marker {latLng} width={30} height={30}>
+			{#each markerLocations as location (location.ID)}
+				<Marker latLng={location.latLng} width={30} height={30}>
 					<svg
 						style="width:30px;height:30px"
 						fill="none"
 						stroke-linecap="round"
 						stroke-linejoin="round"
-						stroke-width="2"
+						stroke-width="0"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
-						><path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" /></svg>
+						><circle r="2" cx="12" cy="12" fill="red" /></svg>
 
-					<Popup>A popup!</Popup>
+					<Popup>
+						<button on:click|stopPropagation={() => {removeLocationFromArray(location.ID)}} class="remove_waypoint_button">Remove</button>
+					</Popup>
 				</Marker>
 			{/each}
 		{/if}

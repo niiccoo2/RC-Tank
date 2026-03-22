@@ -25,19 +25,23 @@
 	setContext('map', getMap);
 
 	function createLeaflet(node: HTMLElement) {
-		map = L.map(node).on('zoom', (e) => dispatch('zoom', e));
+		map = L.map(node)
+		.on('zoom', (e) => dispatch('zoom', e))
+		.on('click', (e) => dispatch('click', e));
 		if (bounds) {
 			map.fitBounds(bounds);
 		} else if (view !== undefined && zoom !== undefined) {
 			map.setView(view, zoom);
 		}
 
-		L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-			attribution: `&copy;<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>,
-          &copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
-			subdomains: 'abcd',
-			maxZoom: 14
-		}).addTo(map);
+		L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    {
+        attribution:
+            'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+        maxZoom: 19
+    }
+).addTo(map);
 
 		return {
 			destroy() {

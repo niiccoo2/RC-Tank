@@ -1,10 +1,8 @@
 <script lang="ts">
 	import DrivingScreen from '$lib/components/DrivingScreen.svelte';
 	import RoutePlanner from '$lib/components/RoutePlanner.svelte';
-	import Something from '$lib/components/Something.svelte';
-	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
+		import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
-	import { type Component } from 'svelte';
 
 	let ip: string = '';
 	let ip_textbox: string = '';
@@ -62,7 +60,7 @@
 		{/each}
 	</main>
 {:else}
-	<main>
+	<main style="min-height: 100vh;">
 		<div class="center">
 			<div class="border black_background ip_picker">
 				<input

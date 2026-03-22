@@ -18,7 +18,8 @@
 		let icon = L.divIcon({
 			html: markerElement,
 			className: 'map-marker',
-			iconSize: L.point(width, height)
+			iconSize: L.point(width/2, height/2),
+			iconAnchor: L.point(width/2, height/2)
 		});
 		marker = L.marker(latLng, { icon }).addTo(layerGroup);
 
