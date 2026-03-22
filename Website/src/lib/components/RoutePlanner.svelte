@@ -10,6 +10,7 @@
 
 	let markerLocations: { ID: number, latLng: [number, number] }[] = [];
 	let markerIdCount: number = 0;
+	let initialView: [number, number] = [0, 0];
 
 	$: lines = markerLocations.slice(1).map((latLng, i) => {
 		let prev = markerLocations[i];
@@ -19,7 +20,7 @@
 		};
 	});
 
-	const initialView: [number, number] = [39.8283, -98.5795];
+	navigator.geolocation.getCurrentPosition(setInitialView);
 
 	let eye = true;
 	let showLines = true;
@@ -30,8 +31,12 @@
 		}
 	}
 
+	function setInitialView(geolocationPosition: GeolocationPosition) {
+		initialView = [geolocationPosition.coords.latitude, geolocationPosition.coords.longitude];
+	}
+
 	function resetMapView() {
-		map.setView(initialView, 5);
+		map.setView(initialView, 15);
 	}
 
 	function handleMapClick(event: CustomEvent<L.LeafletMouseEvent>) {
@@ -58,7 +63,7 @@
 <svelte:window on:resize={resizeMap} />
 
 <div style="height: 94vh; width: 100%;">
-	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={4}>
+	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={15}>
 		<Control position="topright">
 			<MapToolbar bind:eye bind:lines={showLines} on:click-reset={resetMapView} on:click-send={sendWaypointsToTank} />
 		</Control>

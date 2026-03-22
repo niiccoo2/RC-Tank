@@ -895,8 +895,22 @@ Once I have a way to plot locations, will wire up the compass and other stuff...
 
 Still have to get jetson working on ssd.
 
-#### 10:30 | .5 hours
+#### 10:30 | 1.33 hours
 
 Increased max zoom (Leaflet.svelte:39)
 
 Made it so when you click it adds a new waypoint. At some point I should switch from all these REST APIs to webhooks...
+
+Got most of the route planning tab done, you can now add new points, remove points, and there is a button to send them to tank. Need to write the code to send them to tank. Then need to work on tank code to follow them and a basic self driving screen with start, stop, and a console.
+
+#### 14:30 | x hours
+
+TODO:
+
+[x] Set new default start location
+[ ] Get self driving page on site polling gps and compass
+[ ] Maybe add map to self driving page?
+[ ] Write code to follow gps
+[ ] Find better map tiles that allow more zoom
+[ ] Get Jetson booting from SSD
+[ ] Add compass
