@@ -857,7 +857,7 @@ Got temp banned from the site for spam (uhhhh) so going to work on this in morni
 
 Worked on website a bunch, now have tabs. Need to work on route planning and gps in morning.
 
-### Sunday, March 15th | x hours
+### Sunday, March 15th | 1.66 hours
 
 #### 09:00 | .66 hours
 
@@ -867,7 +867,7 @@ RTK GPS is being a pain, going to just do some tests with normal GPS for now.
 
 Got normal gps working.
 
-#### 10:30 | x hours
+#### 10:30 | 1 hour
 
 Going to work on integrating the new gps into the codebase, then am going to work on route planning in website, then making it follow that route.
 
@@ -878,3 +878,9 @@ TODO:
 - Follow route
   - Calc heading
   - Start with simple self driving mode
+
+Added video toggle, now going to work on simple route planner.
+
+#### 21:00
+
+Switching the Jetson from a 32GB SD card to a 512 GB NVMe drive.

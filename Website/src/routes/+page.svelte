@@ -1,24 +1,34 @@
 <script lang="ts">
 	import DrivingScreen from '$lib/components/DrivingScreen.svelte';
+	import RoutePlanner from '$lib/components/RoutePlanner.svelte';
 	import Something from '$lib/components/Something.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import { type Component } from 'svelte';
 
 	let ip: string = '';
 	let ip_textbox: string = '';
 	let activeIndex: number = 0;
 	let videoStream: MediaStream | null = null;
+	let routePlanner: RoutePlanner;
 
 	type NavItem = { name: string; component: any };
 	let headerItems: NavItem[] = [
 		{ name: 'Human Driving', component: DrivingScreen },
-		{ name: 'Something Else', component: Something }
+		{ name: 'Route Planner', component: RoutePlanner }
 	];
 
 	async function confirmIp() {
 		ip = ip_textbox;
 		videoStream = await startWebRTC(ip);
+	}
+
+	async function switchTab(i: number) {
+		activeIndex = i;
+		if (headerItems[i].component === RoutePlanner) {
+			await tick();
+			routePlanner?.resizeMap();
+		}
 	}
 
 	onDestroy(() => {
@@ -33,16 +43,18 @@
 {#if ip}
 	<header>
 		{#each headerItems as item, i}
-			<button class="tab" class:active={activeIndex === i} on:click={() => (activeIndex = i)}>
+			<button class="tab" class:active={activeIndex === i} on:click={() => switchTab(i)}>
 				{item.name}
 			</button>
 		{/each}
 	</header>
 	<main>
 		{#each headerItems as item, i}
-			<div style="display: {activeIndex === i ? 'block' : 'none'}">
+			<div style="display: {activeIndex === i ? 'block' : 'none'}; width: 100%">
 				{#if item.component === DrivingScreen}
-					<DrivingScreen {ip} bind:stream={videoStream} startWebRTC={startWebRTC} stopWebRTC={stopWebRTC} />
+					<DrivingScreen {ip} bind:stream={videoStream} {startWebRTC} {stopWebRTC} />
+				{:else if item.component === RoutePlanner}
+					<RoutePlanner bind:this={routePlanner} />
 				{:else}
 					<svelte:component this={item.component} {ip} />
 				{/if}
