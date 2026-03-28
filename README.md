@@ -20,6 +20,8 @@ Use this command to start it so ssh will work: `sudo tailscale up --reset --netf
 sudo iw dev wlan0 set power_save off
 ```
 
+You might need to use something like `ifconfig -a` to find the right network interface.
+
 ### Add networks and set wifi priority
 
 ```shell
@@ -914,3 +916,9 @@ TODO:
 [ ] Find better map tiles that allow more zoom
 [ ] Get Jetson booting from SSD
 [ ] Add compass
+
+### Saturday, March 28th | x hours
+
+#### 12:00 | 0 hours
+
+Spent forever getting the Jetson to boot from NVMe. This was the thing that finally made it work: [jetsonhacks/migrate-jetson-to-ssd](https://github.com/jetsonhacks/migrate-jetson-to-ssd).
