@@ -4,3 +4,4 @@ pydantic
 pynmea2
 aiortc
 fastapi
+uvicorn

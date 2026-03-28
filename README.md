@@ -926,3 +926,5 @@ Spent forever getting the Jetson to boot from NVMe. This was the thing that fina
 #### 18:10 | x hours
 
 Going to start by installing everything needed to run the program, then making a `requirements.txt` file.
+
+Now going to make sure everything works, then wire the compass module.

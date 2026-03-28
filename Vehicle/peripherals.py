@@ -66,6 +66,7 @@ class Lights:
         self.show()
     
     def side_on(self):
+        print("Turning side lights on")
         for i in range(self.num_pixels):
             if i < 6:
                 self.set_pixel(i, 0, self.side_value, 0)
