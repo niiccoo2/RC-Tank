@@ -12,6 +12,7 @@ import time
 import threading
 import signal
 import sys
+import traceback
 
 # --------- Classes for HTTP Requests ----------
 class MotorCommand(BaseModel):
@@ -23,23 +24,68 @@ class RTCOffer(BaseModel):
     type: str
 
 # --------- Global Objects Initialization ----------
-motors = Motor()
+motors = None
+webrtc = None
+lights = None
+gps = None
 
-webrtc = WebRTCManager()
 
-lights = Lights()
-gps = GPS()
+def initialize_components():
+    global motors, webrtc, lights, gps
+
+    print("Initializing Motor...")
+    try:
+        motors = Motor()
+        print("Motor initialized")
+    except Exception as e:
+        motors = None
+        print(f"Motor init failed: {e}")
+        traceback.print_exc()
+
+    print("Initializing WebRTC...")
+    try:
+        webrtc = WebRTCManager()
+        print("WebRTC initialized")
+    except Exception as e:
+        webrtc = None
+        print(f"WebRTC init failed: {e}")
+        traceback.print_exc()
+
+    print("Initializing Lights...")
+    try:
+        lights = Lights()
+        print("Lights initialized")
+    except Exception as e:
+        lights = None
+        print(f"Lights init failed: {e}")
+        traceback.print_exc()
+
+    print("Initializing GPS...")
+    try:
+        gps = GPS()
+        print("GPS initialized")
+    except Exception as e:
+        gps = None
+        print(f"GPS init failed: {e}")
+        traceback.print_exc()
 
 # --------- Lifespan Manager ---------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up...")
+    initialize_components()
 
-    lights.side_on()
+    if lights is not None:
+        lights.side_on()
+    else:
+        print("Skipping lights startup: Lights unavailable")
 
     # Start the timeout check thread
-    timeout_thread = threading.Thread(target=motors.timeout_check, daemon=True)
-    timeout_thread.start()
+    if motors is not None:
+        timeout_thread = threading.Thread(target=motors.timeout_check, daemon=True)
+        timeout_thread.start()
+    else:
+        print("Skipping motor timeout thread: Motor unavailable")
 
     try:
         # Application is running
@@ -47,9 +93,12 @@ async def lifespan(app: FastAPI):
     finally:
         # This runs when the program is stopped
         print("Shutting down...")
-        await webrtc.cleanup()
-        motors.cleanup()
-        lights.off()
+        if webrtc is not None:
+            await webrtc.cleanup()
+        if motors is not None:
+            motors.cleanup()
+        if lights is not None:
+            lights.off()
 
 # --------- FastAPI Application ---------
 app = FastAPI(lifespan=lifespan)
@@ -66,6 +115,9 @@ app.add_middleware(
 # --------- ROUTES ----------
 @app.get("/gps")
 async def get_gps():
+    if gps is None:
+        raise HTTPException(status_code=503, detail="GPS unavailable")
+
     response = gps.read_data()
 
     return response
@@ -77,6 +129,9 @@ async def offer(params: RTCOffer):
     Takes an SDP offer, configures the connection, and returns an SDP answer.
     """
     
+    if webrtc is None:
+        raise HTTPException(status_code=503, detail="WebRTC unavailable")
+
     return await webrtc.offer(params.model_dump())
 
 @app.post("/motor")
@@ -90,6 +145,9 @@ async def set_motor(command: MotorCommand):
         "right": -0.5
     }
     """
+    if motors is None:
+        raise HTTPException(status_code=503, detail="Motor unavailable")
+
     motors.last_update_time = time.time()
 
     left_speed = int(-command.left)
@@ -107,6 +165,9 @@ async def stop():
     """
     Stop both motors.
     """
+    if motors is None:
+        raise HTTPException(status_code=503, detail="Motor unavailable")
+
     motors.set_esc(1, 0)
     motors.set_esc(0, 1)
 
@@ -117,19 +178,29 @@ async def stop():
 async def lights_off():
     if lights:
         lights.headlights_off()
+        return {"status": "lights_off"}
     else:
-        print('Lights object not defined')
+        raise HTTPException(status_code=503, detail="Lights unavailable")
 
 @app.post("/lights_on")
 async def lights_on():
     if lights:
         lights.headlights_on()
+        return {"status": "lights_on"}
     else:
-        print('Lights object not defined')
+        raise HTTPException(status_code=503, detail="Lights unavailable")
 
 @app.head("/health")
 async def health():
-    return {"status": "healthy"}
+    return {
+        "status": "healthy",
+        "components": {
+            "motor": motors is not None,
+            "lights": lights is not None,
+            "gps": gps is not None,
+            "webrtc": webrtc is not None,
+        },
+    }
 
 def signal_handler(sig, frame):
     print("\nShutting down gracefully...")
