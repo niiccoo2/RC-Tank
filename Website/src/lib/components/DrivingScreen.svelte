@@ -14,6 +14,19 @@
 	export let stream: MediaStream | null = null;
 	export let startWebRTC: (ip: string) => Promise<MediaStream | null>;
 	export let stopWebRTC: () => void;
+
+	function getApiBase(input: string): string {
+		const raw = input.trim().replace(/\/+$/, '');
+		if (!raw) return '';
+
+		if (raw.startsWith('http://') || raw.startsWith('https://')) {
+			const url = new URL(raw);
+			const port = url.port || '5000';
+			return `${url.protocol}//${url.hostname}:${port}`;
+		}
+
+		return `http://${raw}:5000`;
+	}
 	
 
 	let animationFrame: number;
@@ -50,8 +63,9 @@
 	}
 
 	async function updateGPSData() {
-		if (ip) {
-			const response = await fetch(`https://${ip}:5000/gps`, {
+		const apiBase = getApiBase(ip);
+		if (apiBase) {
+			const response = await fetch(`${apiBase}/gps`, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -121,17 +135,20 @@
 	}
 
 	async function updatePing() {
-		ping = await pingAddress(`https://${ip}:5000/health`);
+		ping = await pingAddress(`${getApiBase(ip)}/health`);
 	}
 
 	async function handeLightSwitch(value: boolean) {
+		const apiBase = getApiBase(ip);
+		if (!apiBase) return;
+
 		if (value) {
-			const response = await fetch(`https://${ip}:5000/lights_on`, {
+			const response = await fetch(`${apiBase}/lights_on`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} else {
-			const response = await fetch(`https://${ip}:5000/lights_off`, {
+			const response = await fetch(`${apiBase}/lights_off`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -188,13 +205,14 @@
 		// left = applyExpo(left);
 		// right = applyExpo(right);
 
-		if (!ip) {
+		const apiBase = getApiBase(ip);
+		if (!apiBase) {
 			console.log('IP is not set. sendCommand returning.');
 			return;
 		} else {
 			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
 			try {
-				const response = await fetch(`https://${ip}:5000/motor`, {
+				const response = await fetch(`${apiBase}/motor`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ left, right })

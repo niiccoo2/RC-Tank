@@ -13,6 +13,7 @@ import threading
 import signal
 import sys
 import traceback
+import asyncio
 
 # --------- Classes for HTTP Requests ----------
 class MotorCommand(BaseModel):
@@ -118,7 +119,7 @@ async def get_gps():
     if gps is None:
         raise HTTPException(status_code=503, detail="GPS unavailable")
 
-    response = gps.read_data()
+    response = await asyncio.to_thread(gps.read_data)
 
     return response
 

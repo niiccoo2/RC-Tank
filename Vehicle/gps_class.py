@@ -15,14 +15,16 @@ class GPS:
         time.sleep(.5)
         print('GPS Intitalized')
     
-    def read_data(self):
+    def read_data(self, max_wait_seconds: float = 0.8):
         if not self.port:
             return GPSResponse(
                 lat=0, lon=0, alt=0
             )
         
+        deadline = time.time() + max_wait_seconds
+        
         try:
-            while True:
+            while time.time() < deadline:
                 try:
                     line = self.port.readline().decode('ascii', errors='replace').strip()
                     if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
@@ -50,12 +52,15 @@ class GPS:
 
         except KeyboardInterrupt:
             print("Stopping...")
-        
-        def __del__(self):
-            self.close()
 
         # No valid GPS data found
-        print("No GPS data found after reading multiple lines")
         return GPSResponse(
             lat=0, lon=0, alt=0
         )
+
+    def close(self):
+        if self.port:
+            self.port.close()
+
+    def __del__(self):
+        self.close()
