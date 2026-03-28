@@ -922,3 +922,7 @@ TODO:
 #### 12:00 | 0 hours
 
 Spent forever getting the Jetson to boot from NVMe. This was the thing that finally made it work: [jetsonhacks/migrate-jetson-to-ssd](https://github.com/jetsonhacks/migrate-jetson-to-ssd).
+
+#### 18:10 | x hours
+
+Going to start by installing everything needed to run the program, then making a `requirements.txt` file.

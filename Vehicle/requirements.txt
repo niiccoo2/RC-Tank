@@ -1,0 +1,6 @@
+pyserial
+python-periphery
+pydantic
+pynmea2
+aiortc
+fastapi
