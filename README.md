@@ -64,7 +64,7 @@ sudo /opt/nvidia/jetson-io/jetson-io.py
 
 ## Website
 
-You first need to directly go to one of the API endpoints to accept the self signed cert.
+You first need to directly go to one of the API endpoints to accept the self signed cert. _Remember that you have to use the :5000 port!_
 
 # Journal
 
@@ -957,4 +957,4 @@ Going to start by debugging this issue causing it to not run the script.
 
 Found one issue, not sure if this fixes everything, but you need to remember to use the Jetson-IO python script to configure the pins for SPI data for the lights. Might still have to do this for the motors, not sure yet.
 
-Found other issue. You must be going to HTTP**S**. Not plain HTTP. Then you must accept the unsigned cert.
+Found other issue. You must be going to HTTP**S**. Not plain HTTP. Then you must accept the unsigned cert. Also make sure you use the :5000 port.
