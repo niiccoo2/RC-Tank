@@ -951,7 +951,7 @@ Still stuck on something. I'm not getting any errors, but it seems like it is si
 
 ### Sunday, March 29th | x hours
 
-### 14:00 | x hours
+### 14:00 | 1 hour
 
 Going to start by debugging this issue causing it to not run the script.
 
@@ -963,6 +963,8 @@ Everything on website seems to be working now. Just need to figure out why the d
 
 MOTORS WORK!! Now going to figure out how to wire this compass and write a test script. Also looking at the GPS data we should try to get RTK gps working again.
 
+### 16:00 | 1 hour
+
 Wiring chart for compass:
 
 | Color  | Meaning |
@@ -971,3 +973,5 @@ Wiring chart for compass:
 | Red    | 5v      |
 | Brown  | SCL     |
 | Orange | SDA     |
+
+Wired the compass to the car, now working on some test code to read it.
