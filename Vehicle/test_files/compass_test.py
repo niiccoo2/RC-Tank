@@ -1,6 +1,6 @@
 
+import math
 import time
-import sys
 from qmc5883 import QMC5883
 
 #initialize with the offsets read with example.getCalibration.py
@@ -14,9 +14,15 @@ compass = QMC5883(
     zOffset=0
 )
 
+print("Done with init")
+
 while True:
-	(dataReady,dataOverflow,dataSkippedForReading) = compass.status()
-	if (dataReady == 1):
-		(x,y,z,rotX,rotY,rotZ) = compass.heading()
-		print(f"Heading: rotX={rotX}° rotY={rotY}° rotZ={rotZ}° [x={x},y={y},z={z}], overflow={dataOverflow}, skip={dataSkippedForReading}, Temp={compass.getTemperature()}°C")
-	time.sleep(0.5)
+	try:
+		x, y, z = compass.axes()
+		heading = (math.degrees(math.atan2(y, x)) + 360.0) % 360.0
+		temp_c = compass.getTemperature()
+		print(f"Heading={heading:6.1f} deg | x={x:6.0f} y={y:6.0f} z={z:6.0f} | temp={temp_c:5.1f} C")
+	except Exception as e:
+		print(f"Read failed: {e}")
+
+	time.sleep(0.2)
