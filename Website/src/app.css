@@ -30,6 +30,7 @@ main {
 	gap: 1rem;
 	width: 100%;
 	max-width: 1280px;
+	margin: 0 auto;
 
 	/* instead of full height, just match center content height */
 	height: 480px; /* same as camera image height */

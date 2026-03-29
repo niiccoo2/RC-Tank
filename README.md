@@ -958,3 +958,16 @@ Going to start by debugging this issue causing it to not run the script.
 Found one issue, not sure if this fixes everything, but you need to remember to use the Jetson-IO python script to configure the pins for SPI data for the lights. Might still have to do this for the motors, not sure yet.
 
 Found other issue. You must be going to HTTP**S**. Not plain HTTP. Then you must accept the unsigned cert. Also make sure you use the :5000 port.
+
+Everything on website seems to be working now. Just need to figure out why the driving screen is off center.
+
+MOTORS WORK!! Now going to figure out how to wire this compass and write a test script. Also looking at the GPS data we should try to get RTK gps working again.
+
+Wiring chart for compass:
+
+| Color  | Meaning |
+| ------ | ------- |
+| Black  | Ground  |
+| Red    | 5v      |
+| Brown  | SCL     |
+| Orange | SDA     |
