@@ -1,19 +1,6 @@
 let pc: RTCPeerConnection | null = null;
 let statsInterval: number | null = null;
 
-function getApiBase(input: string): string {
-	const raw = input.trim().replace(/\/+$/, '');
-	if (!raw) return '';
-
-	if (raw.startsWith('http://') || raw.startsWith('https://')) {
-		const url = new URL(raw);
-		const port = url.port || '5000';
-		return `${url.protocol}//${url.hostname}:${port}`;
-	}
-
-	return `http://${raw}:5000`;
-}
-
 function logWebRTCStats() {
 	if (!pc) return;
 
@@ -101,7 +88,7 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 	]);
 
 	try {
-		const response = await fetch(`${getApiBase(ip)}/offer`, {
+		const response = await fetch(`https://${ip}:5000/offer`, {
 			method: 'POST',
 			body: JSON.stringify({
 				sdp: pc.localDescription?.sdp,
