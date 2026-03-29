@@ -883,11 +883,13 @@ TODO:
 
 Added video toggle, now going to work on simple route planner.
 
+Ended up spending most of today messing with the GPS trying to get it to work...
+
 #### 21:00 | 0 hours
 
 Switching the Jetson from a 32GB SD card to a 512 GB NVMe drive.
 
-### Sunday, March 22nd | x hours
+### Sunday, March 22nd | 2.5 hours
 
 #### 09:00 | .2 hours
 
@@ -905,7 +907,7 @@ Made it so when you click it adds a new waypoint. At some point I should switch 
 
 Got most of the route planning tab done, you can now add new points, remove points, and there is a button to send them to tank. Need to write the code to send them to tank. Then need to work on tank code to follow them and a basic self driving screen with start, stop, and a console.
 
-#### 14:30 | x hours
+#### 14:30 | 1 hour
 
 TODO:
 
@@ -917,7 +919,7 @@ TODO:
 [ ] Get Jetson booting from SSD
 [ ] Add compass
 
-### Saturday, March 28th | x hours
+### Saturday, March 28th | 1 hour
 
 #### 12:00 | 0 hours
 
