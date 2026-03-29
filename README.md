@@ -62,6 +62,10 @@ To use SPI on the GPIO pins, you must first run the Jetson-IO python script and 
 sudo /opt/nvidia/jetson-io/jetson-io.py
 ```
 
+## Website
+
+First
+
 # Journal
 
 ## **VERSION 1**
@@ -952,3 +956,5 @@ Still stuck on something. I'm not getting any errors, but it seems like it is si
 Going to start by debugging this issue causing it to not run the script.
 
 Found one issue, not sure if this fixes everything, but you need to remember to use the Jetson-IO python script to configure the pins for SPI data for the lights. Might still have to do this for the motors, not sure yet.
+
+Found other issue. You must be going to HTTP**S**. Not plain HTTP. Then you must accept the unsigned cert.

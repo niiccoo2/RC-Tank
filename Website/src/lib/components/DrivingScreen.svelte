@@ -15,20 +15,6 @@
 	export let startWebRTC: (ip: string) => Promise<MediaStream | null>;
 	export let stopWebRTC: () => void;
 
-	function getApiBase(input: string): string {
-		const raw = input.trim().replace(/\/+$/, '');
-		if (!raw) return '';
-
-		if (raw.startsWith('http://') || raw.startsWith('https://')) {
-			const url = new URL(raw);
-			const port = url.port || '5000';
-			return `${url.protocol}//${url.hostname}:${port}`;
-		}
-
-		return `http://${raw}:5000`;
-	}
-	
-
 	let animationFrame: number;
 	let videoEl: HTMLVideoElement | null = null;
 	let lastSendTime: number = 0;
@@ -63,9 +49,8 @@
 	}
 
 	async function updateGPSData() {
-		const apiBase = getApiBase(ip);
-		if (apiBase) {
-			const response = await fetch(`${apiBase}/gps`, {
+		if (ip) {
+			const response = await fetch(`https://${ip}/gps`, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -135,20 +120,19 @@
 	}
 
 	async function updatePing() {
-		ping = await pingAddress(`${getApiBase(ip)}/health`);
+		ping = await pingAddress(`https://${ip}/health`);
 	}
 
 	async function handeLightSwitch(value: boolean) {
-		const apiBase = getApiBase(ip);
-		if (!apiBase) return;
+		if (!ip) return;
 
 		if (value) {
-			const response = await fetch(`${apiBase}/lights_on`, {
+			const response = await fetch(`https://${ip}/lights_on`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} else {
-			const response = await fetch(`${apiBase}/lights_off`, {
+			const response = await fetch(`https://${ip}/lights_off`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -205,14 +189,13 @@
 		// left = applyExpo(left);
 		// right = applyExpo(right);
 
-		const apiBase = getApiBase(ip);
-		if (!apiBase) {
+		if (!ip) {
 			console.log('IP is not set. sendCommand returning.');
 			return;
 		} else {
 			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
 			try {
-				const response = await fetch(`${apiBase}/motor`, {
+				const response = await fetch(`https://${ip}/motor`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ left, right })
