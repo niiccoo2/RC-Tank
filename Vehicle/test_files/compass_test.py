@@ -1,28 +1,43 @@
 
-import math
 import time
-from qmc5883 import QMC5883
+from gy271_compass import CompassError, GY271Compass
 
-#initialize with the offsets read with example.getCalibration.py
-#example output:
-#xMin[-5510],xMax[5740],xOffset[-115],yMin[-8215],yMax[2977],yOffset[2619],zMin[-5610],zMax[5025],zOffset[292]
-compass = QMC5883(
-    busNumber=7,
-    deviceAddress=0x2c,
-    xOffset=0,
-    yOffset=0,
-    zOffset=0
-)
 
-print("Done with init")
-
-while True:
+def main() -> None:
 	try:
-		x, y, z = compass.axes()
-		heading = (math.degrees(math.atan2(y, x)) + 360.0) % 360.0
-		temp_c = compass.getTemperature()
-		print(f"Heading={heading:6.1f} deg | x={x:6.0f} y={y:6.0f} z={z:6.0f} | temp={temp_c:5.1f} C")
+		compass = GY271Compass(
+			bus_number=7,
+			# address=None auto-scans: 0x2C, 0x0D, 0x1E
+			address=None,
+			declination_deg=0.0,
+			x_offset=0.0,
+			y_offset=0.0,
+		)
+	except CompassError as e:
+		print(f"Compass init failed: {e}")
+		return
+	except Exception as e:
+		print(f"Unexpected init error: {e}")
+		return
+
+	print(
+		f"Compass online | bus={compass.bus_number} addr={hex(compass.address)} protocol={compass.protocol}"
+	)
+	print("Press Ctrl+C to stop")
+
+	try:
+		while True:
+			sample = compass.read()
+			print(
+				f"Heading={sample['heading']:6.1f} deg | "
+				f"x={sample['x']:8.0f} y={sample['y']:8.0f} z={sample['z']:8.0f}"
+			)
+			time.sleep(0.2)
+	except KeyboardInterrupt:
+		print("Stopped")
 	except Exception as e:
 		print(f"Read failed: {e}")
 
-	time.sleep(0.2)
+
+if __name__ == "__main__":
+	main()
