@@ -10,10 +10,10 @@ class GPSResponse(BaseModel):
 
 class GPS:
     def __init__(self):
-        print('Initializing GPS')
+        # print('Initializing GPS')
         self.port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=1)
         time.sleep(.5)
-        print('GPS Intitalized')
+        # print('GPS Intitalized')
     
     def read_data(self, max_wait_seconds: float = 0.8):
         if not self.port:

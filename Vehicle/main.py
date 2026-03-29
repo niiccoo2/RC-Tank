@@ -118,10 +118,13 @@ app.add_middleware(
 async def get_gps():
     if gps is None:
         raise HTTPException(status_code=503, detail="GPS unavailable")
-
-    response = await asyncio.to_thread(gps.read_data)
-
-    return response
+    try:
+        response = await asyncio.to_thread(gps.read_data)
+        return response
+    except Exception as e:
+        print(f"GPS read failed: {e}")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail="GPS read failed") from e
 
 @app.post("/offer")
 async def offer(params: RTCOffer):

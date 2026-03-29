@@ -8,6 +8,8 @@ The idea of this project was simple, I had a normal rc car with camera, but it c
 
 # Setup
 
+## Internet
+
 ### Install Tailscale
 
 Go to [login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines) and follow instructions for new linux device.
@@ -41,13 +43,23 @@ sudo ip route del default via 192.168.1.1 dev wlan0
 sudo ip route add default via 192.168.1.1 dev wlan0 metric 50
 ```
 
-## Cmd to dissconnect from WiFi
+### Cmd to dissconnect from WiFi
 
 ```shell
 sudo ip link set wlan0 down
 
 sudo ip link set wlan0 up
 
+```
+
+## Jetson specific
+
+### Configure GPIO for SPI
+
+To use SPI on the GPIO pins, you must first run the Jetson-IO python script and enable SPI.
+
+```shell
+sudo /opt/nvidia/jetson-io/jetson-io.py
 ```
 
 # Journal
@@ -932,3 +944,11 @@ Going to start by installing everything needed to run the program, then making a
 Now going to make sure everything works, then wire the compass module.
 
 Still stuck on something. I'm not getting any errors, but it seems like it is silently crashing on something before the lights... Not sure what though because this didn't happen last week and I haven't changed anything. There also isn't much it even does before lights, iirc lights are the first thing it does on start...
+
+### Sunday, March 29th | x hours
+
+### 14:00 | x hours
+
+Going to start by debugging this issue causing it to not run the script.
+
+Found one issue, not sure if this fixes everything, but you need to remember to use the Jetson-IO python script to configure the pins for SPI data for the lights. Might still have to do this for the motors, not sure yet.
