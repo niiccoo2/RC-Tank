@@ -50,7 +50,7 @@
 
 	async function updateGPSData() {
 		if (ip) {
-			const response = await fetch(`https://${ip}/gps`, {
+			const response = await fetch(`https://${ip}:5000/gps`, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -120,19 +120,19 @@
 	}
 
 	async function updatePing() {
-		ping = await pingAddress(`https://${ip}/health`);
+		ping = await pingAddress(`https://${ip}:5000/health`);
 	}
 
 	async function handeLightSwitch(value: boolean) {
 		if (!ip) return;
 
 		if (value) {
-			const response = await fetch(`https://${ip}/lights_on`, {
+			const response = await fetch(`https://${ip}:5000/lights_on`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} else {
-			const response = await fetch(`https://${ip}/lights_off`, {
+			const response = await fetch(`https://${ip}:5000/lights_off`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' }
 			});
@@ -195,7 +195,7 @@
 		} else {
 			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
 			try {
-				const response = await fetch(`https://${ip}/motor`, {
+				const response = await fetch(`https://${ip}:5000/motor`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ left, right })

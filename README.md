@@ -64,7 +64,7 @@ sudo /opt/nvidia/jetson-io/jetson-io.py
 
 ## Website
 
-First
+You first need to directly go to one of the API endpoints to accept the self signed cert.
 
 # Journal
 
