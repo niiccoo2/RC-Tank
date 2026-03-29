@@ -949,9 +949,9 @@ Now going to make sure everything works, then wire the compass module.
 
 Still stuck on something. I'm not getting any errors, but it seems like it is silently crashing on something before the lights... Not sure what though because this didn't happen last week and I haven't changed anything. There also isn't much it even does before lights, iirc lights are the first thing it does on start...
 
-### Sunday, March 29th | x hours
+### Sunday, March 29th | 3 hours
 
-### 14:00 | 1 hour
+#### 14:00 | 1 hour
 
 Going to start by debugging this issue causing it to not run the script.
 
@@ -963,7 +963,7 @@ Everything on website seems to be working now. Just need to figure out why the d
 
 MOTORS WORK!! Now going to figure out how to wire this compass and write a test script. Also looking at the GPS data we should try to get RTK gps working again.
 
-### 16:00 | 1 hour
+#### 16:00 | 1 hour
 
 Wiring chart for compass:
 
@@ -975,3 +975,7 @@ Wiring chart for compass:
 | Orange | SDA     |
 
 Wired the compass to the car, now working on some test code to read it.
+
+#### 17:00 | 1 hour
+
+Worked on finding drivers for this compass but couldn't find anything... Going to stop for now and try again later...
