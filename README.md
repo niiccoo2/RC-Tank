@@ -923,8 +923,10 @@ TODO:
 
 Spent forever getting the Jetson to boot from NVMe. This was the thing that finally made it work: [jetsonhacks/migrate-jetson-to-ssd](https://github.com/jetsonhacks/migrate-jetson-to-ssd).
 
-#### 18:10 | x hours
+#### 18:10 | 1 hour
 
 Going to start by installing everything needed to run the program, then making a `requirements.txt` file.
 
 Now going to make sure everything works, then wire the compass module.
+
+Still stuck on something. I'm not getting any errors, but it seems like it is silently crashing on something before the lights... Not sure what though because this didn't happen last week and I haven't changed anything. There also isn't much it even does before lights, iirc lights are the first thing it does on start...
