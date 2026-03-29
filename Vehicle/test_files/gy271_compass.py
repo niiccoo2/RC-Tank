@@ -35,6 +35,7 @@ class GY271Compass:
         self.x_offset = x_offset
         self.y_offset = y_offset
         self.protocol = ""
+        self.detection_warning: Optional[str] = None
         self._last_sample: Optional[Tuple[int, int, int]] = None
 
         self.protocol = self._detect_and_configure()
@@ -52,26 +53,39 @@ class GY271Compass:
         )
 
     def _detect_and_configure(self) -> str:
-        protocols = ["qmc", "hmc"]
+        protocols = ["qmc", "qmc_rev", "hmc"]
         if self.address == 0x1E:
-            protocols = ["hmc", "qmc"]
+            protocols = ["hmc", "qmc", "qmc_rev"]
+
+        best_proto: Optional[str] = None
+        best_score = -999
 
         for proto in protocols:
             try:
-                if proto == "qmc":
+                if proto in ("qmc", "qmc_rev"):
                     self._configure_qmc()
                 else:
                     self._configure_hmc()
 
-                ok = self._probe_signal(proto, samples=8, delay_s=0.04)
-                if ok:
-                    return proto
+                score = self._probe_signal(proto, samples=8, delay_s=0.04)
+                if score > best_score:
+                    best_score = score
+                    best_proto = proto
             except OSError:
                 continue
 
-        raise CompassError(
-            f"Could not initialize a supported protocol at address {hex(self.address)} on bus {self.bus_number}."
-        )
+        if best_proto is None:
+            raise CompassError(
+                f"Could not initialize a supported protocol at address {hex(self.address)} on bus {self.bus_number}."
+            )
+
+        if best_score <= 0:
+            self.detection_warning = (
+                "Compass protocol selected with weak confidence. "
+                "If heading is stuck, chip/register map may be different."
+            )
+
+        return best_proto
 
     def _configure_qmc(self) -> None:
         # Set/reset period register
@@ -89,15 +103,19 @@ class GY271Compass:
         # Continuous measurement mode
         self.bus.write_byte_data(self.address, 0x02, 0x00)
 
-    def _probe_signal(self, proto: str, samples: int, delay_s: float) -> bool:
+    def _probe_signal(self, proto: str, samples: int, delay_s: float) -> int:
         seen = set()
         for _ in range(samples):
             xyz = self._read_xyz(proto)
             seen.add(xyz)
             time.sleep(delay_s)
 
-        # Require at least two distinct samples to reject stuck placeholder data.
-        return len(seen) >= 2
+        score = len(seen)
+        if (128, 0, 0) in seen:
+            score -= 5
+        if (0, 0, 0) in seen:
+            score -= 3
+        return score
 
     @staticmethod
     def _to_int16(lsb: int, msb: int) -> int:
@@ -112,6 +130,13 @@ class GY271Compass:
             x = self._to_int16(data[0], data[1])
             y = self._to_int16(data[2], data[3])
             z = self._to_int16(data[4], data[5])
+            return x, y, z
+
+        if proto == "qmc_rev":
+            data = self.bus.read_i2c_block_data(self.address, 0x00, 6)
+            x = self._to_int16(data[1], data[0])
+            y = self._to_int16(data[3], data[2])
+            z = self._to_int16(data[5], data[4])
             return x, y, z
 
         # HMC register order: X, Z, Y as big-endian pairs starting at 0x03
