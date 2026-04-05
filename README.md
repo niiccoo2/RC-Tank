@@ -979,3 +979,9 @@ Wired the compass to the car, now working on some test code to read it.
 #### 17:00 | 1 hour
 
 Worked on finding drivers for this compass but couldn't find anything... Going to stop for now and try again later...
+
+### Sunday, April 5th | x hours
+
+#### 14:00 | x hours
+
+Going to try and get the compass working today.
