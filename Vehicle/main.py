@@ -24,6 +24,9 @@ class RTCOffer(BaseModel):
     sdp: str
     type: str
 
+class Location(BaseModel):
+    ID: int
+    latLng: list[float]
 # --------- Global Objects Initialization ----------
 motors = None
 webrtc = None
@@ -205,6 +208,11 @@ async def health():
             "webrtc": webrtc is not None,
         },
     }
+
+@app.post("/start_self_driving")
+async def start_self_driving(locations: list[Location] = []):
+    print(f"Got a call to start self driving!")
+    print(locations)
 
 def signal_handler(sig, frame):
     print("\nShutting down gracefully...")

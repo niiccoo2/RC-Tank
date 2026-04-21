@@ -991,16 +991,20 @@ Ended up getting stuck on this command due to the internet here lol. `scp arch/a
 
 #### 19:30 | 0 hours
 
-Theoretically I got the kernal fixed? Not sure, I will test more in the morning.
+Theoretically I got the kernel fixed? Not sure, I will test more in the morning.
 
 ### Tuesday, April 21st | x hours
 
 #### 08:00 | 0 hours
 
-I think I broke the kernal last night. Have no idea why is is not booting right now. Going to start fresh with a new flash in SD card and try to restart with all this debugging becuase I don't really remember what I was trying to do last time. It was almost a month ago. Not going to count this time hor horizons becuase idk if it even counts and I don't want to track it.
+I think I broke the kernel last night. Have no idea why is is not booting right now. Going to start fresh with a new flash in SD card and try to restart with all this debugging becuase I don't really remember what I was trying to do last time. It was almost a month ago. Not going to count this time hor horizons becuase idk if it even counts and I don't want to track it.
 
 Think I figured out why the compass isn't working!! Need to export a var when running the cmd via sudo. Like this: `sudo JETSON_MODEL_NAME=JETSON_ORIN_NANO python3 ./test_files/ada_compass_test.py`.
 
 #### 13:00 | x hours
 
 Am getting numbers from the compass, they seem to be decent! Going to now write a library for the main code and start outlining the main code.
+
+Have been thinking and I am going to get basic waypoint driving working with the REST layout that we have right now, but once that is working I really need to switch to webhooks (I think thats the right name).
+
+Think a good plan for how to do self driving for now is to just have a function that starts when you call an api with a route. Ofc we need to add logging / telemetry and the ability to stop it, but this should be good enough for now.

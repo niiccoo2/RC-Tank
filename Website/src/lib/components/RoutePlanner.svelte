@@ -8,6 +8,8 @@
 	import MapToolbar from './MapToolbar.svelte';
 	let map: L.Map;
 
+	export let ip: string = '';
+
 	let markerLocations: { ID: number, latLng: [number, number] }[] = [];
 	let markerIdCount: number = 0;
 	let initialView: [number, number] = [0, 0];
@@ -55,8 +57,20 @@
 		markerLocations = markerLocations.filter((p) => p.ID !== ID);
 	}
 
-	function sendWaypointsToTank() {
+	async function sendWaypointsToTank() {
+		console.log('Sending locations:', markerLocations);
+		
 		// send all waypoint data to tank here
+
+		try {
+				const response = await fetch(`https://${ip}:5000/motor`, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(markerLocations)
+				});
+			} catch (e) {
+				console.error(e);
+			}
 	}
 </script>
 

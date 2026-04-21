@@ -54,7 +54,7 @@
 				{#if item.component === DrivingScreen}
 					<DrivingScreen {ip} bind:stream={videoStream} {startWebRTC} {stopWebRTC} />
 				{:else if item.component === RoutePlanner}
-					<RoutePlanner bind:this={routePlanner} />
+					<RoutePlanner {ip} bind:this={routePlanner} />
 				{:else}
 					<svelte:component this={item.component} {ip} />
 				{/if}
