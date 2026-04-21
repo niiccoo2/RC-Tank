@@ -980,8 +980,27 @@ Wired the compass to the car, now working on some test code to read it.
 
 Worked on finding drivers for this compass but couldn't find anything... Going to stop for now and try again later...
 
-### Sunday, April 5th | x hours
+### Sunday, April 5th | .66 hours
 
-#### 14:00 | x hours
+#### 14:00 | .66 hours
 
 Going to try and get the compass working today.
+Ended up getting stuck on this command due to the internet here lol. `scp arch/arm64/boot/Image nico@tank:/tmp/` Once back in mass I'll try to work on this some more.
+
+### Monday, April 20th | 0 hours
+
+#### 19:30 | 0 hours
+
+Theoretically I got the kernal fixed? Not sure, I will test more in the morning.
+
+### Tuesday, April 21st | x hours
+
+#### 08:00 | 0 hours
+
+I think I broke the kernal last night. Have no idea why is is not booting right now. Going to start fresh with a new flash in SD card and try to restart with all this debugging becuase I don't really remember what I was trying to do last time. It was almost a month ago. Not going to count this time hor horizons becuase idk if it even counts and I don't want to track it.
+
+Think I figured out why the compass isn't working!! Need to export a var when running the cmd via sudo. Like this: `sudo JETSON_MODEL_NAME=JETSON_ORIN_NANO python3 ./test_files/ada_compass_test.py`.
+
+#### 13:00 | x hours
+
+Am getting numbers from the compass, they seem to be decent! Going to now write a library for the main code and start outlining the main code.

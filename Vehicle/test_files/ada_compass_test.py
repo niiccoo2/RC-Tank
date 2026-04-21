@@ -1,6 +1,6 @@
 import time
-import board
-import adafruit_qmc5883p
+import board #type:ignore
+import adafruit_qmc5883p #type:ignore
 
 i2c = board.I2C()
 
