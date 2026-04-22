@@ -32,6 +32,7 @@ motors = None
 webrtc = None
 lights = None
 gps = None
+locations: list[Location] = []
 
 
 def initialize_components():
@@ -209,10 +210,17 @@ async def health():
         },
     }
 
+@app.post("/save_waypoint_data")
+async def save_waypoint_data(sent_locations: list[Location] = []):
+    global locations
+
+    locations = sent_locations
+
 @app.post("/start_self_driving")
-async def start_self_driving(locations: list[Location] = []):
-    print(f"Got a call to start self driving!")
-    print(locations)
+async def start_self_driving():
+   global locations
+
+   # do something with all the data to decide what to do here
 
 def signal_handler(sig, frame):
     print("\nShutting down gracefully...")

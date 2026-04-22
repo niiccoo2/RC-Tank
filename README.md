@@ -62,6 +62,14 @@ To use SPI on the GPIO pins, you must first run the Jetson-IO python script and 
 sudo /opt/nvidia/jetson-io/jetson-io.py
 ```
 
+### Resize file system after copying from SD to SSD
+
+```shell
+sudo apt install cloud-utils
+sudo growpart /dev/nvme0n1 1
+sudo resize2fs /dev/nvme0n1p1
+```
+
 ## Website
 
 You first need to directly go to one of the API endpoints to accept the self signed cert. _Remember that you have to use the :5000 port!_
@@ -82,3 +90,7 @@ You first need to directly go to one of the API endpoints to accept the self sig
 | 9     | GND      | Compass Ground    | Black      |
 | 10    | UART1_RX | ESC UART_TX       | Yellow     |
 | 19    | SPI_0    | Lights Control    | Orange     |
+
+# Running the tank
+
+`sudo JETSON_MODEL_NAME=JETSON_ORIN_NANO python3 ./main.py`

@@ -60,10 +60,8 @@
 	async function sendWaypointsToTank() {
 		console.log('Sending locations:', markerLocations);
 		
-		// send all waypoint data to tank here
-
 		try {
-				const response = await fetch(`https://${ip}:5000/motor`, {
+				const response = await fetch(`https://${ip}:5000/start_self_driving`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(markerLocations)

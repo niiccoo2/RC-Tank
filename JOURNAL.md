@@ -925,7 +925,7 @@ Ended up getting stuck on this command due to the internet here lol. `scp arch/a
 
 Theoretically I got the kernel fixed? Not sure, I will test more in the morning.
 
-### Tuesday, April 21st | x hours
+### Tuesday, April 21st | 2.33 hours
 
 #### 08:00 | 0 hours
 
@@ -943,6 +943,20 @@ Think a good plan for how to do self driving for now is to just have a function 
 
 Should still definitely add websockets later. Need to finish a few things, but once we have the waypoints, we need to figure out how to calc heading using current position and next waypoint, then use current heading and needed heading to go the right direction.
 
-#### 19:30 | x hours
+#### 19:30 | 1 hour
 
-Started by adding other WiFi networks and moving everything to SSD (did not track time for this).
+Started by adding other WiFi networks (did not track time for this). Then it took a bit moving everything to SSD and labeling all the connections via GPIO so that it isn't hard to know where everything goes.
+
+#### 20:30 | .33 hours
+
+Lights stoppped working again... Going to fix these then start on calculating bearing to next waypoint using current and final position.
+
+Fixed lights, I may have not read my own guide on how to set up a fresh jetson. I may have also made that guide because this exact same scenario has happened...
+
+### Wednesday, April 22nd | x hours
+
+#### 17:30 | x hours
+
+Going to start by figuring out how to calulate a bearing using two points on a sphere. One issue is that anything involving spheres gets really complicated... I think I am going to pretend that the earth is flat to make the math simpler. It shouldn't matter much becuase the car isn't going far enough to make a difference and even if it was, there would be many waypoints.
+
+This code is getting really messy, tomorrow I am going to try and transition everything to websocket to make this more simple.
