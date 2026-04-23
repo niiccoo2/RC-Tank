@@ -5,7 +5,7 @@ from pathlib import Path
 from core.lifecycle import lifespan
 from api import gps, health, lights, motor, self_driving, webrtc
 
-BASE_DIR = Path(__file__).resolve().parent.parent  # adjust as needed
+BASE_DIR = Path(__file__).resolve().parents[2]
 ssl_keyfile = BASE_DIR / "config" / "key.pem"
 ssl_certfile = BASE_DIR / "config" / "cert.pem"
 
