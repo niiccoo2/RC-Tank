@@ -1,5 +1,5 @@
-from fastrtc import Stream
-import numpy as np
+from fastrtc import Stream #type:ignore
+import numpy as np #type:ignore
 
 
 def flip_vertically(image):

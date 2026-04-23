@@ -1,5 +1,5 @@
-Import("env")
-env.AddCustomTarget(
+Import("env") #type:ignore
+env.AddCustomTarget( #type:ignore
     "RTT Start",
     None,
     "\"$PROJECT_PACKAGES_DIR/tool-openocd/bin/openocd\"" + 

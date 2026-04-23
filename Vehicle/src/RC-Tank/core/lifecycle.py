@@ -3,10 +3,10 @@ import threading, traceback
 from fastapi import FastAPI
 from .services import motors, webrtc, lights, gps
 from . import services
-from motor_class import Motor
-from peripherals import Lights
-from gps_class import GPS
-from webrtc_manager import WebRTCManager
+from drivers.motor import Motor
+from drivers.lights import Lights
+from drivers.gps import GPS
+from drivers.webrtc import WebRTCManager
 
 def initialize_components():
     global motors, webrtc, lights, gps

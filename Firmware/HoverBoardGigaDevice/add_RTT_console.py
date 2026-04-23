@@ -1,4 +1,4 @@
-Import("env")
+Import("env") #type:ignore
 import sys
 import socket
 import threading
@@ -39,7 +39,7 @@ def rtt_console(*args, **kwargs):
         s.close()
 
 # Add as custom target
-env.AddCustomTarget(
+env.AddCustomTarget( #type:ignore
     "rtt_console",
     None,
     rtt_console,
