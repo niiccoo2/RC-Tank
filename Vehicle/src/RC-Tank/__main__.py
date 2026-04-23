@@ -1,8 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
 
 from core.lifecycle import lifespan
 from api import gps, health, lights, motor, self_driving, webrtc
+
+BASE_DIR = Path(__file__).resolve().parent.parent  # adjust as needed
+ssl_keyfile = BASE_DIR / "config" / "key.pem"
+ssl_certfile = BASE_DIR / "config" / "cert.pem"
 
 app = FastAPI(lifespan=lifespan)
 
@@ -29,6 +34,6 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=5000,
         timeout_graceful_shutdown=1,
-        ssl_keyfile="./../../config/key.pem",
-        ssl_certfile="./../../config/cert.pem",
+        ssl_keyfile=ssl_keyfile,
+        ssl_certfile=ssl_certfile
     )
