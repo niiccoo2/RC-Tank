@@ -953,10 +953,16 @@ Lights stoppped working again... Going to fix these then start on calculating be
 
 Fixed lights, I may have not read my own guide on how to set up a fresh jetson. I may have also made that guide because this exact same scenario has happened...
 
-### Wednesday, April 22nd | x hours
+### Wednesday, April 22nd | 1 hour
 
-#### 17:30 | x hours
+#### 17:30 | 1 hour
 
 Going to start by figuring out how to calulate a bearing using two points on a sphere. One issue is that anything involving spheres gets really complicated... I think I am going to pretend that the earth is flat to make the math simpler. It shouldn't matter much becuase the car isn't going far enough to make a difference and even if it was, there would be many waypoints.
 
 This code is getting really messy, tomorrow I am going to try and transition everything to websocket to make this more simple.
+
+Got the code that calculates heading kinda done. As I am writing, I realize that it will only give numbers from -180 to 180, although that might be fine, not sure yet. Also started reorganizing the python code, it will take me a bit more to get it done but I think it is starting to look much better, and be ready for the websocket switch. Goals for next time are finish cleaning code, then either work on waypoints or refactor to use websockets.
+
+### Thursday, April 23rd | x hours
+
+#### 17:00 | x hours
