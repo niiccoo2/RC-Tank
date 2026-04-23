@@ -34,6 +34,6 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=5000,
         timeout_graceful_shutdown=1,
-        ssl_keyfile=ssl_keyfile,
-        ssl_certfile=ssl_certfile
+        ssl_keyfile=str(ssl_keyfile),
+        ssl_certfile=str(ssl_certfile)
     )
