@@ -29,6 +29,6 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=5000,
         timeout_graceful_shutdown=1,
-        ssl_keyfile="../../config/key.pem",
-        ssl_certfile="../../config/cert.pem",
+        ssl_keyfile="./../../config/key.pem",
+        ssl_certfile="./../../config/cert.pem",
     )
