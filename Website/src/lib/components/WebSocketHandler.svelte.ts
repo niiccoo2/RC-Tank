@@ -37,7 +37,7 @@ class WebSocketHandler {
 		}
 	}
 
-	async twoWayMessage(type: string, data: any) {
+	async twoWayMessage(type: string, data: any, timeout: number = 5000) {
 		return new Promise((resolve, reject) => {
 			const id = this.send(`two_way_message:${type}`, data);
 
@@ -48,7 +48,7 @@ class WebSocketHandler {
 					this.pendingRequests.delete(id);
 					reject(new Error('Request timed out'));
 				}
-			}, 5000);
+			}, timeout);
 		});
 	}
 }
