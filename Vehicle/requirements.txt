@@ -5,3 +5,4 @@ pynmea2
 aiortc
 fastapi
 uvicorn
+websockets

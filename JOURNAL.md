@@ -965,4 +965,8 @@ Got the code that calculates heading kinda done. As I am writing, I realize that
 
 ### Thursday, April 23rd | x hours
 
-#### 17:00 | x hours
+#### 17:00 | .75 hours
+
+Getting no errors with the new code, now going to test that everything is working. Everything is working, now going to look into a better way to do everything than REST API.
+
+Now thinking about how I will switch to websockets. I think it makes sense to have one connection for everything and use prefixes to route it to the correct place. Also now that we have a bidiretional communication channel we don't need to request GPS anymore, we can just send it automaticlly.
