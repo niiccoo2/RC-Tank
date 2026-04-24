@@ -41,6 +41,8 @@ class WebSocketHandler {
 		return new Promise((resolve, reject) => {
 			const id = this.send(`two_way_message:${type}`, data);
 
+			if (!id) reject(new Error('WebSocket connection not open'));
+
 			this.pendingRequests.set(id, { resolve, reject });
 
 			setTimeout(() => {

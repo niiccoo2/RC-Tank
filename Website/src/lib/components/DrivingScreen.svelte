@@ -97,14 +97,19 @@
 	}
 
 	async function updatePing() {
-		let timeSent = await ws.twoWayMessage('ping', performance.now());
+		try {
+			let timeSent = await ws.twoWayMessage('ping', performance.now());
 
-		if (typeof timeSent !== 'number') {
-			console.error('ping did not return a number');
-			return;
+			if (typeof timeSent !== 'number') {
+				console.error('ping did not return a number');
+				return;
+			}
+
+			ping = `${Math.round(performance.now() - timeSent)}ms`;
+		} catch (e) {
+			console.error('Ping failed', e);
+			ping = 'N/A';
 		}
-
-		ping = `${Math.round(performance.now() - timeSent)}ms`;
 	}
 
 	async function handeLightSwitch(value: boolean) {
