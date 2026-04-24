@@ -3,6 +3,7 @@ import struct
 import serial  # type: ignore
 import time
 import threading
+from core.types import MotorCommand
 
 BLACK = "\033[0;30m"
 RED = "\033[0;31m"
@@ -176,6 +177,29 @@ class Motor:
                 print('Warning: Could not prase voltage from feedback')
         else:
             print('Warning: No feedback data received')
+    
+    def set_motor(self, command: MotorCommand):
+        """
+        Set the speed of the tank's motors.
+        Takes left and right speeds, -1000 to 1000.
+        Example:
+        {
+            "left": 500,
+            "right": -500
+        }
+        """
+
+        self.last_update_time = time.time()
+
+        left_speed = int(-command.left)
+        right_speed = int(command.right)
+
+        self.set_esc(0, left_speed) # slave 0 is left
+        self.set_esc(1, right_speed) # slave 1 is right
+
+        print(f'/motor ran, left: {left_speed}, right: {right_speed}')
+
+        return {"status": "ok", "left": left_speed, "right": right_speed, 'voltage': self.voltage}
 
     def cleanup(self):
         self.set_esc(0, 0)

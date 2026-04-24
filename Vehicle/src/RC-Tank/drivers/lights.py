@@ -75,16 +75,12 @@ class Lights:
                 self.set_pixel(i, 0, 0, 0)
         self.show()
     
-    def headlights_off(self):
-        for i in range(self.num_pixels):
-            if i > 5 and i < 24:
-                self.set_pixel(i, 0, 0, 0)
-        self.show()
+    def headlights(self, level: int):
+        level = int((level/100)*255)
 
-    def headlights_on(self):
         for i in range(self.num_pixels):
             if i > 5 and i < 24:
-                self.set_pixel(i, 255, 255, 255)
+                self.set_pixel(i, level, level, level)
         self.show()
     
     def off(self):

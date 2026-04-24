@@ -23,7 +23,6 @@ app.add_middleware(
 app.include_router(ws.router)
 app.include_router(gps.router)
 app.include_router(health.router)
-app.include_router(lights.router)
 app.include_router(self_driving.router)
 app.include_router(webrtc.router)
 
