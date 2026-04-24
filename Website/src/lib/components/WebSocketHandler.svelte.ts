@@ -24,6 +24,7 @@ class WebSocketHandler {
 		if (splitMessage.length > 1) {
 			// then has a prefix. in this case that means two way message
 			if (this.pendingRequests.has(message.id)) {
+				console.log('found message with id');
 				const { resolve } = this.pendingRequests.get(message.id); // the brackets destructure the object,
 				// so we set resolve to the resolve item from the object
 				resolve(message.data);
@@ -35,12 +36,6 @@ class WebSocketHandler {
 
 			// do normal stuff here
 		}
-
-		// if (message.type === 'pong') {
-		// 	// this needs to be switched to using the new two way message
-		// 	const rtt = Math.round(performance.now() - message.data);
-		// 	this.ping = `${rtt}ms`;
-		// }
 	}
 
 	async twoWayMessage(type: string, data: any) {
