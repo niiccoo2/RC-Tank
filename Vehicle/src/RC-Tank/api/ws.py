@@ -19,7 +19,8 @@ async def ws(ws: WebSocket):
 
             if msg_type == "ping":
                 await ws.send_json({"id": msg["id"], "type": "pong", "data": msg["data"]})
-                print(msg["id"])
+                print(msg)
+                print("found ping message")
             elif msg_type == "webrtc":
                 params = RTCOffer(**msg["data"])
 
