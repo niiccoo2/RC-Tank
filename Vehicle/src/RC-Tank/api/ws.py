@@ -19,11 +19,11 @@ async def ws(ws: WebSocket):
 
             if msg_type == "ping":
                 await ws.send_json({"id": msg["id"], "type": "pong", "data": msg["data"]})
+                print(msg["id"])
             elif msg_type == "webrtc":
                 params = RTCOffer(**msg["data"])
 
                 if services.webrtc:
-                    print(msg["id"])
                     await ws.send_json({"id": msg["id"], "type": "webrtc_offer_response", "data": services.webrtc.offer(params.model_dump())})
                 else:
                     pass # need to raise an error here
