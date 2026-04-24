@@ -12,7 +12,7 @@ async def ws(ws: WebSocket):
         msg = await ws.receive_json()
         msg_type = msg.get("type")
 
-        print(f"{msg_type.upper()}: {msg["data"]}")
+        print(f"{msg_type.upper()}: {msg['data']}")
 
         if msg_type == "motor":
             cmd = MotorCommand(**msg["data"]) # ** makes it unpack a dict into a typed object
