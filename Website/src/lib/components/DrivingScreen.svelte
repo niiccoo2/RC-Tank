@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
-	import { ws } from '$lib/components/WebSocketHandler';
+	import { ws, ping } from '$lib/components/WebSocketHandler';
 
 	type GPSResponse = {
 		lat: number;
@@ -21,7 +21,6 @@
 	let lastSendTime: number = 0;
 	let status: string = 'Disconnected';
 	let videoSetting = true;
-	let ping: string = 'N/A';
 	let roundedLeftSpeed: number = 0;
 	let roundedRightSpeed: number = 0;
 	let refreshTimeMs: number = 100;
@@ -96,32 +95,9 @@
 		return [left, right];
 	}
 
-	async function pingAddress(ip: string) {
-		let latency: number | null = null;
-		let error: string | null = null;
-
-		if (!ip) {
-			console.log('IP is not set. pingAddress is returning.');
-			return 'IP is not set.';
-		}
-
-		try {
-			const start = performance.now();
-			// request a small resource
-			await fetch(ip, { method: 'HEAD', mode: 'no-cors' });
-			const end = performance.now();
-			latency = Math.round(end - start);
-			error = null;
-			return String(latency + 'ms');
-		} catch (e) {
-			latency = null;
-			error = 'Error';
-			return error;
-		}
-	}
-
 	async function updatePing() {
-		ping = await pingAddress(`https://${ip}:5000/health`);
+		const timeStamp = performance.now();
+		ws.send("ping", timeStamp);
 	}
 
 	async function handeLightSwitch(value: boolean) {

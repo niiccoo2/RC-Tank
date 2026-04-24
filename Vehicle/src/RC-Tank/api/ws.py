@@ -26,7 +26,7 @@ async def ws(ws: WebSocket):
             else:
                 pass # need to raise an error here
         elif msg_type == "ping":
-            await ws.send_json({"type":"pong"})
+            await ws.send_json({"type": "pong", "data": {msg["data"]}})
         elif msg_type == "webrtc":
             params = RTCOffer(**msg["data"])
 
