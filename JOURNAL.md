@@ -977,7 +977,7 @@ Worked on websockets a bit. Hopefully I can get everything working on websockets
 
 ### Friday, April 24th | x hours
 
-#### 10:00 | x hours
+#### 10:00 | 2 hours
 
 Working on moving everything to websockets right now. Here is a list of things to still move on the server (tank) end:
 
@@ -986,3 +986,5 @@ Working on moving everything to websockets right now. Here is a list of things t
 - WebRTC
 
 The issue is that some of these work better if the tank just auto sends it every x secs so I need to change that...
+
+So far I have gotten motors, lights, and ping working. Ping took a while because it gets messy when using a single tunnel for communication. WebRTC shouldn't be super hard, I just need to find where we use the API for connecting. The only other thing we need to do is have the tank use a background process to send telemetry every second or so. Then in all the functions that do things like read voltage or gps, instead of returning it, we need to update the values in the telemetry process. Also need to figure out how we should report issues with a command that was sent.
