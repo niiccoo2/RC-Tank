@@ -37,7 +37,32 @@ class WebSocketHandler {
 		}
 	}
 
+	waitForOpen(timeout = 3000) {
+		return new Promise<void>((resolve, reject) => {
+			if (this.ws?.readyState === WebSocket.OPEN) return resolve();
+			const onOpen = () => {
+				cleanup();
+				resolve();
+			};
+			const onError = () => {
+				cleanup();
+				reject(new Error('WebSocket failed to open'));
+			};
+			const cleanup = () => {
+				this.ws?.removeEventListener('open', onOpen);
+				this.ws?.removeEventListener('error', onError);
+			};
+			this.ws?.addEventListener('open', onOpen);
+			this.ws?.addEventListener('error', onError);
+			setTimeout(() => {
+				cleanup();
+				reject(new Error('WebSocket open timeout'));
+			}, timeout);
+		});
+	}
+
 	async twoWayMessage(type: string, data: any, timeout: number = 5000) {
+		await this.waitForOpen();
 		return new Promise((resolve, reject) => {
 			const id = this.send(`two_way_message:${type}`, data);
 
