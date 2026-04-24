@@ -22,7 +22,7 @@ async def ws(ws: WebSocket):
                 pass # need to raise an error here
         elif msg_type == "lights":
             if services.lights:
-                services.lights.set_headlights(msg["data"]["level"])
+                services.lights.set_headlights(msg["data"])
             else:
                 pass # need to raise an error here
         elif msg_type == "ping":

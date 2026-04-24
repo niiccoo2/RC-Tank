@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
+	import { ws } from '$lib/components/WebSocketHandler';
 
 	type GPSResponse = {
 		lat: number;
@@ -126,16 +127,10 @@
 	async function handeLightSwitch(value: boolean) {
 		if (!ip) return;
 
-		if (value) {
-			const response = await fetch(`https://${ip}:5000/lights_on`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' }
-			});
-		} else {
-			const response = await fetch(`https://${ip}:5000/lights_off`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' }
-			});
+		if (value) { // if on
+			ws.send("lights", 100);
+		} else { // if off
+			ws.send("lights", 0);
 		}
 	}
 
@@ -189,26 +184,30 @@
 		// left = applyExpo(left);
 		// right = applyExpo(right);
 
-		if (!ip) {
-			console.log('IP is not set. sendCommand returning.');
-			return;
-		} else {
-			// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
-			try {
-				const response = await fetch(`https://${ip}:5000/motor`, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ left, right })
-				});
-				const data = await response.json();
-				voltage = data.voltage;
-				status = 'Connected';
-				return data;
-			} catch (e) {
-				status = 'Error';
-				console.error(e);
-			}
-		}
+		// if (!ip) {
+		// 	console.log('IP is not set. sendCommand returning.');
+		// 	return;
+		// } else {
+		// 	// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
+		// 	try {
+		// 		const response = await fetch(`https://${ip}:5000/motor`, {
+		// 			method: 'POST',
+		// 			headers: { 'Content-Type': 'application/json' },
+		// 			body: JSON.stringify({ left, right })
+		// 		});
+		// 		const data = await response.json();
+		// 		voltage = data.voltage;
+		// 		status = 'Connected';
+		// 		return data;
+		// 	} catch (e) {
+		// 		status = 'Error';
+		// 		console.error(e);
+		// 	}
+		// }
+
+		if (ws.send("motor", {left, right}) == 0) {
+			status = 'Connected'
+		} else status = 'Error';
 	}
 
 	onMount(() => {
