@@ -17,10 +17,8 @@ class WebSocketHandler {
 	}
 
 	handleMessage(message: any) {
-		const msg = JSON.parse(message.data);
-
-		if (msg.type === 'pong') {
-			const rtt = Math.round(performance.now() - msg.data.timeStamp);
+		if (message.type === 'pong') {
+			const rtt = Math.round(performance.now() - message.data);
 			this.ping = `${rtt}ms`;
 		}
 		// do some stuff here

@@ -96,7 +96,6 @@
 	}
 
 	async function updatePing() {
-		console.log(`Updating ping`)
 		const timeStamp = performance.now();
 		ws.send("ping", timeStamp);
 	}
@@ -201,7 +200,7 @@
 			if (status === 'Disconnected') {
 				sendCommand(0, 0);
 			}
-		}, 5000);
+		}, 1000);
 	});
 
 	onDestroy(() => {
