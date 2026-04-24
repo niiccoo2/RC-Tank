@@ -1,5 +1,6 @@
 from fastapi import APIRouter, WebSocket
 from api import motor
+from core.types import MotorCommand
 
 router = APIRouter()
 
@@ -12,8 +13,9 @@ async def ws(ws: WebSocket):
 
         print(f"Got request: {msg_type}")
 
-        if msg_type == "motor":  
-            motor.set_motor(msg["data"])
+        if msg_type == "motor":
+            cmd = MotorCommand(**msg["data"]) # ** makes it unpack a dict into a typed object
+            motor.set_motor(cmd)
         elif msg_type == "ping":
             # await ws.send_json({"type":"pong"})
             pass
