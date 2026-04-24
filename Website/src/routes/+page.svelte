@@ -22,6 +22,7 @@
 	async function confirmIp() {
 		ip = ip_textbox;
 		ws.connect(ip);
+		await ws.waitForOpen();
 		videoStream = await startWebRTC(ip);
 	}
 

@@ -995,6 +995,8 @@ Going to start geting WebRTC working again. Have just been thinking about how to
 
 Done with the hour, ended up learning a lot about promises and await. I am working on a function that will let you send a message and it returns the response. This is useful for things like pings or setting up WebRTC. It adds a lot of flexability so now we can have 3 different messages: one way to tank (motor commands, lights), one way to website (telemetry), and two way linked (pings, items that require a response).
 
-#### 16:00 | x hours
+#### 16:00 | 1.5 hours
 
 Just writing this down so I don't forget. The type of a two way message isn't needed from the client (website) end, but it is needed on the server (tank) so that it knows how to process the data. I will keep a type in the resopnse just for uniformity.
+
+Going to take a break now. Stuck on the timing for WebRTC handshake.
