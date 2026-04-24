@@ -1,6 +1,8 @@
 class WebSocketHandler {
 	ws: WebSocket | null = null;
 
+	ping = $state('N/A');
+
 	connect(ip: string) {
 		this.ws = new WebSocket(`wss://${ip}:5000/ws`);
 		this.ws.onmessage = (e) => this.handleMessage(JSON.parse(e.data));
@@ -19,7 +21,7 @@ class WebSocketHandler {
 
 		if (msg.type === 'pong') {
 			const rtt = Math.round(performance.now() - msg.data.timeStamp);
-			ping = `${rtt}ms`;
+			this.ping = `${rtt}ms`;
 		}
 		// do some stuff here
 		// we will have to sort the messages and decide what to do here
@@ -27,4 +29,3 @@ class WebSocketHandler {
 }
 
 export const ws = new WebSocketHandler();
-export let ping: string = `N/A`;

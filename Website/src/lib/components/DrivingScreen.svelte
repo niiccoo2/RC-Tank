@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
-	import { ws, ping } from '$lib/components/WebSocketHandler';
+	import { ws } from '$lib/components/WebSocketHandler.svelte';
 
 	type GPSResponse = {
 		lat: number;
@@ -96,6 +96,7 @@
 	}
 
 	async function updatePing() {
+		console.log(`Updating ping`)
 		const timeStamp = performance.now();
 		ws.send("ping", timeStamp);
 	}
@@ -281,7 +282,7 @@
 	<div class="side right">
 		<div class="space-y-2">
 			<div>
-				<p class="info_card px-4 py-2">Ping: {ping}</p>
+				<p class="info_card px-4 py-2">Ping: {ws.ping}</p>
 			</div>
 
 			<div>

@@ -4,7 +4,7 @@
 	// import SelfDriving from '$lib/components/SelfDriving.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
-	import { ws } from '$lib/components/WebSocketHandler';
+	import { ws } from '$lib/components/WebSocketHandler.svelte';
 
 	let ip: string = '';
 	let ip_textbox: string = '';
