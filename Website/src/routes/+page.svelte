@@ -15,14 +15,14 @@
 	type NavItem = { name: string; component: any };
 	let headerItems: NavItem[] = [
 		{ name: 'Human Driving', component: DrivingScreen },
-		{ name: 'Route Planner', component: RoutePlanner },
+		{ name: 'Route Planner', component: RoutePlanner }
 		// { name: 'Self Driving', component: SelfDriving },
 	];
 
 	async function confirmIp() {
 		ip = ip_textbox;
-		videoStream = await startWebRTC(ip);
 		ws.connect(ip);
+		videoStream = await startWebRTC(ip);
 	}
 
 	async function switchTab(i: number) {

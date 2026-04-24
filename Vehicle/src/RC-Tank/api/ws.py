@@ -22,7 +22,8 @@ async def ws(ws: WebSocket):
                 params = RTCOffer(**msg["data"])
 
                 if services.webrtc:
-                    await ws.send_json({"id": msg["id"], "type": "two_way_message:webrtc_offer_response", "data": services.webrtc.offer(params.model_dump())})
+                    answer = await services.webrtc.offer(params.model_dump())
+                    await ws.send_json({"id": msg["id"], "type": "two_way_message:webrtc_offer_response", "data": answer})
                 else:
                     pass # need to raise an error here
 
