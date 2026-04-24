@@ -963,10 +963,14 @@ This code is getting really messy, tomorrow I am going to try and transition eve
 
 Got the code that calculates heading kinda done. As I am writing, I realize that it will only give numbers from -180 to 180, although that might be fine, not sure yet. Also started reorganizing the python code, it will take me a bit more to get it done but I think it is starting to look much better, and be ready for the websocket switch. Goals for next time are finish cleaning code, then either work on waypoints or refactor to use websockets.
 
-### Thursday, April 23rd | x hours
+### Thursday, April 23rd | 1 hour
 
 #### 17:00 | .75 hours
 
 Getting no errors with the new code, now going to test that everything is working. Everything is working, now going to look into a better way to do everything than REST API.
 
 Now thinking about how I will switch to websockets. I think it makes sense to have one connection for everything and use prefixes to route it to the correct place. Also now that we have a bidiretional communication channel we don't need to request GPS anymore, we can just send it automaticlly.
+
+#### 19:00 | .25 hours
+
+Worked on websockets a bit. Hopefully I can get everything working on websockets tomorrow and then start working on self driving and or learning how to stay on sidewalks. I think the end goal for this basic self driving is to have it try to follow waypoints while staying on sidewalks.
