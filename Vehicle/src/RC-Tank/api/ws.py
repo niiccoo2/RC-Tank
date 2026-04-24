@@ -1,6 +1,5 @@
 from fastapi import APIRouter, WebSocket
-from api import lights
-from core.types import MotorCommand
+from core.types import MotorCommand, RTCOffer
 from core import services
 
 router = APIRouter()
@@ -17,12 +16,21 @@ async def ws(ws: WebSocket):
         if msg_type == "motor":
             cmd = MotorCommand(**msg["data"]) # ** makes it unpack a dict into a typed object
 
-            if services.motors is not None:
-                services.motors.set_motor(cmd)
+            if services.motors:
+                services.motors.set_motor(cmd) # this returns data such as voltage that we need to somehow send to client
             else:
-                pass # need to raise ann error here
+                pass # need to raise an error here
         elif msg_type == "lights":
-            lights.set_headlights
-        elif msg_type == "config":
-            # handle_config(msg["data"])
-            pass
+            if services.lights:
+                services.lights.set_headlights(msg["data"]["level"])
+            else:
+                pass # need to raise an error here
+        elif msg_type == "ping":
+            await ws.send_json({"type":"pong"})
+        elif msg_type == "webrtc":
+            params = RTCOffer(**msg["data"])
+
+            if services.webrtc:
+                await ws.send_json(services.webrtc.offer(params.model_dump()))
+            else:
+                pass # need to raise an error here

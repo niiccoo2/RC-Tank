@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 from core.lifecycle import lifespan
-from api import gps, health, lights, self_driving, webrtc, ws
+from api import gps, self_driving, ws
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 ssl_keyfile = BASE_DIR / "config" / "key.pem"
@@ -22,9 +22,7 @@ app.add_middleware(
 # register routes
 app.include_router(ws.router)
 app.include_router(gps.router)
-app.include_router(health.router)
 app.include_router(self_driving.router)
-app.include_router(webrtc.router)
 
 if __name__ == "__main__":
     import uvicorn

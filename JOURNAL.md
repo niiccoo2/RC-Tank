@@ -974,3 +974,15 @@ Now thinking about how I will switch to websockets. I think it makes sense to ha
 #### 19:00 | .25 hours
 
 Worked on websockets a bit. Hopefully I can get everything working on websockets tomorrow and then start working on self driving and or learning how to stay on sidewalks. I think the end goal for this basic self driving is to have it try to follow waypoints while staying on sidewalks.
+
+### Friday, April 24th | x hours
+
+#### 10:00 | x hours
+
+Working on moving everything to websockets right now. Here is a list of things to still move on the server (tank) end:
+
+- GPS
+- Health check
+- WebRTC
+
+The issue is that some of these work better if the tank just auto sends it every x secs so I need to change that...

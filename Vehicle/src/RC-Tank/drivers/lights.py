@@ -75,13 +75,15 @@ class Lights:
                 self.set_pixel(i, 0, 0, 0)
         self.show()
     
-    def headlights(self, level: int):
+    def set_headlights(self, level: int):
         level = int((level/100)*255)
 
         for i in range(self.num_pixels):
             if i > 5 and i < 24:
                 self.set_pixel(i, level, level, level)
         self.show()
+
+        return {"status": "ok", "level": f"{level}"}
     
     def off(self):
         self.fill(0, 0, 0)
