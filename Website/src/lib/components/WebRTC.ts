@@ -1,3 +1,5 @@
+import { ws } from '$lib/components/WebSocketHandler.svelte';
+
 let pc: RTCPeerConnection | null = null;
 let statsInterval: number | null = null;
 
@@ -88,19 +90,23 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 	]);
 
 	try {
-		const response = await fetch(`https://${ip}:5000/offer`, {
-			method: 'POST',
-			body: JSON.stringify({
-				sdp: pc.localDescription?.sdp,
-				type: pc.localDescription?.type
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
+		// const response = await fetch(`https://${ip}:5000/offer`, {
+		// 	method: 'POST',
+		// 	body: JSON.stringify({
+		// 		sdp: pc.localDescription?.sdp,
+		// 		type: pc.localDescription?.type
+		// 	}),
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	}
+		// });
+
+		const response: any = await ws.twoWayMessage('webrtc_offer_request', {
+			sdp: pc.localDescription?.sdp,
+			type: pc.localDescription?.type
 		});
 
-		const answer = await response.json();
-		await pc.setRemoteDescription(answer);
+		await pc.setRemoteDescription(response);
 		return remoteStream;
 	} catch (e) {
 		console.error('WebRTC negotiation failed:', e);

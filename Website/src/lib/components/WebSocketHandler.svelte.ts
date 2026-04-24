@@ -24,7 +24,6 @@ class WebSocketHandler {
 		if (splitMessage.length > 1) {
 			// then has a prefix. in this case that means two way message
 			if (this.pendingRequests.has(message.id)) {
-				console.log('found message with id');
 				const { resolve } = this.pendingRequests.get(message.id); // the brackets destructure the object,
 				// so we set resolve to the resolve item from the object
 				resolve(message.data);

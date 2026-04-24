@@ -14,13 +14,11 @@ async def ws(ws: WebSocket):
         print(f"{msg_type.upper()}: {msg['data']}")
 
         if len(msg_type.split(":")) > 1: # if has a prefix, in this case can only be two way
-            print(f"Found two way message: {msg}")
             msg_type = msg_type.split(":")[1] # now set type to the minor type. we can now treat all these messages as two way
 
             if msg_type == "ping":
                 await ws.send_json({"id": msg["id"], "type": "two_way_message:pong", "data": msg["data"]})
-                print("found ping message")
-            elif msg_type == "webrtc":
+            elif msg_type == "webrtc_offer_request":
                 params = RTCOffer(**msg["data"])
 
                 if services.webrtc:

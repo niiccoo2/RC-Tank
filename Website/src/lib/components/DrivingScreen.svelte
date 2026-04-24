@@ -210,7 +210,7 @@
 			if (status === 'Disconnected') {
 				sendCommand(0, 0);
 			}
-		}, 10000);
+		}, 1000);
 	});
 
 	onDestroy(() => {
