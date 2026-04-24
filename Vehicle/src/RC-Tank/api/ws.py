@@ -15,7 +15,7 @@ async def ws(ws: WebSocket):
 
         if len(msg_type.split(":")) > 1: # if has a prefix, in this case can only be two way
             print(f"Found two way message: {msg}")
-            msg_type = msg_type[1] # now set type to the minor type. we can now treat all these messages as two way
+            msg_type = msg_type.split(":")[1] # now set type to the minor type. we can now treat all these messages as two way
 
             if msg_type == "ping":
                 await ws.send_json({"id": msg["id"], "type": "pong", "data": msg["data"]})
@@ -29,7 +29,7 @@ async def ws(ws: WebSocket):
                     pass # need to raise an error here
 
         else:
-            msg_type = msg_type[0]
+            msg_type = msg_type.split(":")[0]
 
             if msg_type == "motor":
                 cmd = MotorCommand(**msg["data"]) # ** makes it unpack a dict into a typed object
