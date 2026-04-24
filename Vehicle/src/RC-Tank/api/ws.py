@@ -1,4 +1,5 @@
 from fastapi import APIRouter, WebSocket
+from api import motor
 
 router = APIRouter()
 
@@ -11,9 +12,8 @@ async def ws(ws: WebSocket):
 
         print(f"Got request: {msg_type}")
 
-        if msg_type == "control":
-            # handle_control(msg["data"])
-            pass
+        if msg_type == "control":  
+            motor.set_motor(msg["data"])
         elif msg_type == "ping":
             # await ws.send_json({"type":"pong"})
             pass

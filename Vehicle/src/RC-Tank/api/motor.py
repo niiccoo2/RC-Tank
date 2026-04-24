@@ -3,10 +3,7 @@ from core import services
 from core.types import MotorCommand
 import time
 
-router = APIRouter()
-
-@router.post("/motor")
-async def set_motor(command: MotorCommand):
+def set_motor(command: MotorCommand):
     """
     Set the speed of the tank's motors.
     POST body takes left and right speeds, -1.0 to 1.0.
@@ -17,7 +14,7 @@ async def set_motor(command: MotorCommand):
     }
     """
     if services.motors is None:
-        raise HTTPException(status_code=503, detail="Motor unavailable")
+        return "Motor unavailable"
 
     services.motors.last_update_time = time.time()
 
@@ -30,17 +27,3 @@ async def set_motor(command: MotorCommand):
     print(f'/motor ran, left: {left_speed}, right: {right_speed}')
 
     return {"status": "ok", "left": left_speed, "right": right_speed, 'voltage': services.motors.voltage}
-
-@router.post("/stop")
-async def stop():
-    """
-    Stop both motors.
-    """
-    if services.motors is None:
-        raise HTTPException(status_code=503, detail="Motor unavailable")
-
-    services.motors.set_esc(1, 0)
-    services.motors.set_esc(0, 0)
-
-    print("/stop ran")
-    return {"status": "stopped"}
