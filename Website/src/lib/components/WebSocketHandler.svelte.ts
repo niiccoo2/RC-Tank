@@ -2,6 +2,7 @@ class WebSocketHandler {
 	ws: WebSocket | null = null;
 
 	ping = $state('N/A');
+	pendingRequests = new Map();
 
 	connect(ip: string) {
 		this.ws = new WebSocket(`wss://${ip}:5000/ws`);
@@ -10,19 +11,51 @@ class WebSocketHandler {
 
 	send(type: string, data: any) {
 		if (this.ws?.readyState === WebSocket.OPEN) {
+			const id = crypto.randomUUID();
 			type = type.toLowerCase();
-			this.ws.send(JSON.stringify({ type, data }));
-			return 0; // success
-		} else return 1; // error
+			this.ws.send(JSON.stringify({ id, type, data }));
+			return id; // success
+		} else return false; // error
 	}
 
 	handleMessage(message: any) {
-		if (message.type === 'pong') {
-			const rtt = Math.round(performance.now() - message.data);
-			this.ping = `${rtt}ms`;
+		const splitMessage = message.type.split(':');
+
+		if (splitMessage.length > 1) {
+			// then has a prefix. in this case that means two way message
+			if (this.pendingRequests.has(message.id)) {
+				const { resolve } = this.pendingRequests.get(message.id); // the brackets destructure the object,
+				// so we set resolve to the resolve item from the object
+				resolve(message.data);
+				this.pendingRequests.delete(message.id);
+			}
+		} else {
+			// if normal message
+			const messageType = splitMessage[0];
+
+			// do normal stuff here
 		}
-		// do some stuff here
-		// we will have to sort the messages and decide what to do here
+
+		// if (message.type === 'pong') {
+		// 	// this needs to be switched to using the new two way message
+		// 	const rtt = Math.round(performance.now() - message.data);
+		// 	this.ping = `${rtt}ms`;
+		// }
+	}
+
+	async twoWayMessage(type: string, data: any) {
+		return new Promise((resolve, reject) => {
+			const id = this.send(`two_way_message:${type}`, data);
+
+			this.pendingRequests.set(id, { resolve, reject });
+
+			setTimeout(() => {
+				if (this.pendingRequests.has(id)) {
+					this.pendingRequests.delete(id);
+					reject(new Error('Request timed out'));
+				}
+			}, 5000);
+		});
 	}
 }
 

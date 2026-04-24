@@ -17,6 +17,7 @@
 	export let stopWebRTC: () => void;
 
 	let animationFrame: number;
+	let ping: string = 'N/A';
 	let videoEl: HTMLVideoElement | null = null;
 	let lastSendTime: number = 0;
 	let status: string = 'Disconnected';
@@ -37,7 +38,7 @@
 	let gpsData: GPSResponse = {
 		lat: 0,
 		lon: 0,
-		alt: 0,
+		alt: 0
 	};
 
 	async function toggleVideo() {
@@ -96,17 +97,25 @@
 	}
 
 	async function updatePing() {
-		const timeStamp = performance.now();
-		ws.send("ping", timeStamp);
+		let timeSent = await ws.twoWayMessage('ping', performance.now());
+
+		if (typeof timeSent !== 'number') {
+			console.error('ping did not return a number');
+			return;
+		}
+
+		ping = `${Math.round(performance.now() - timeSent)}ms`;
 	}
 
 	async function handeLightSwitch(value: boolean) {
 		if (!ip) return;
 
-		if (value) { // if on
-			ws.send("lights", 100);
-		} else { // if off
-			ws.send("lights", 0);
+		if (value) {
+			// if on
+			ws.send('lights', 100);
+		} else {
+			// if off
+			ws.send('lights', 0);
 		}
 	}
 
@@ -181,9 +190,10 @@
 		// 	}
 		// }
 
-		if (ws.send("motor", {left, right}) == 0) {
-			status = 'Connected'
-		} else status = 'Error';
+		if (!ws.send('motor', { left, right })) {
+			// if = false or ''
+			status = 'Error';
+		} else status = 'Connected';
 	}
 
 	onMount(() => {
@@ -281,7 +291,7 @@
 	<div class="side right">
 		<div class="space-y-2">
 			<div>
-				<p class="info_card px-4 py-2">Ping: {ws.ping}</p>
+				<p class="info_card px-4 py-2">Ping: {ping}</p>
 			</div>
 
 			<div>
@@ -307,11 +317,11 @@
 			</div>
 
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">Show Video:</span>
-					<label class="switch m-0 ml-auto">
-						<input type="checkbox" bind:checked={videoSetting} on:change={toggleVideo} />
-						<span class="slider round"></span>
-					</label>
+				<span class="py-1">Show Video:</span>
+				<label class="switch m-0 ml-auto">
+					<input type="checkbox" bind:checked={videoSetting} on:change={toggleVideo} />
+					<span class="slider round"></span>
+				</label>
 			</div>
 
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">

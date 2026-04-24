@@ -988,3 +988,13 @@ Working on moving everything to websockets right now. Here is a list of things t
 The issue is that some of these work better if the tank just auto sends it every x secs so I need to change that...
 
 So far I have gotten motors, lights, and ping working. Ping took a while because it gets messy when using a single tunnel for communication. WebRTC shouldn't be super hard, I just need to find where we use the API for connecting. The only other thing we need to do is have the tank use a background process to send telemetry every second or so. Then in all the functions that do things like read voltage or gps, instead of returning it, we need to update the values in the telemetry process. Also need to figure out how we should report issues with a command that was sent.
+
+#### 15:00 | 1 hour
+
+Going to start geting WebRTC working again. Have just been thinking about how to remove tailscale though, because I want this project to work standalone without external services, but I think tailscale, or at least something similar will be needed. Also not sure how to set up self driving on the UI side... Anyways those can be figured out once its time.
+
+Done with the hour, ended up learning a lot about promises and await. I am working on a function that will let you send a message and it returns the response. This is useful for things like pings or setting up WebRTC. It adds a lot of flexability so now we can have 3 different messages: one way to tank (motor commands, lights), one way to website (telemetry), and two way linked (pings, items that require a response).
+
+#### 16:00 | x hours
+
+Just writing this down so I don't forget. The type of a two way message isn't needed from the client (website) end, but it is needed on the server (tank) so that it knows how to process the data. I will keep a type in the resopnse just for uniformity.
