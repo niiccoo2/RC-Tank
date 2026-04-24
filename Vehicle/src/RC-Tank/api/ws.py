@@ -17,7 +17,7 @@ async def ws(ws: WebSocket):
         if msg_type == "motor":
             cmd = MotorCommand(**msg["data"]) # ** makes it unpack a dict into a typed object
 
-            if motors:
+            if motors is not None:
                 motors.set_motor(cmd)
             else:
                 pass # need to raise ann error here
