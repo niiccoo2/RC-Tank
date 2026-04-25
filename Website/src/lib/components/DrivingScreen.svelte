@@ -211,6 +211,7 @@
 
 		setInterval(() => {
 			updatePing();
+			console.log(performance.now());
 
 			if (status === 'Disconnected') {
 				sendCommand(0, 0);

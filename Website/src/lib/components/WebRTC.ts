@@ -101,10 +101,14 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 		// 	}
 		// });
 
-		const response: any = await ws.twoWayMessage('webrtc_offer_request', {
-			sdp: pc.localDescription?.sdp,
-			type: pc.localDescription?.type
-		});
+		const response: any = await ws.twoWayMessage(
+			'webrtc_offer_request',
+			{
+				sdp: pc.localDescription?.sdp,
+				type: pc.localDescription?.type
+			},
+			20000
+		);
 
 		await pc.setRemoteDescription(response);
 		return remoteStream;

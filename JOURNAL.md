@@ -975,7 +975,7 @@ Now thinking about how I will switch to websockets. I think it makes sense to ha
 
 Worked on websockets a bit. Hopefully I can get everything working on websockets tomorrow and then start working on self driving and or learning how to stay on sidewalks. I think the end goal for this basic self driving is to have it try to follow waypoints while staying on sidewalks.
 
-### Friday, April 24th | x hours
+### Friday, April 24th | 4.5 hours
 
 #### 10:00 | 2 hours
 
@@ -1000,3 +1000,9 @@ Done with the hour, ended up learning a lot about promises and await. I am worki
 Just writing this down so I don't forget. The type of a two way message isn't needed from the client (website) end, but it is needed on the server (tank) so that it knows how to process the data. I will keep a type in the resopnse just for uniformity.
 
 Going to take a break now. Stuck on the timing for WebRTC handshake.
+
+### Saturday, April 25th | x hours
+
+#### 10:00 | x hours
+
+Going to see if we can get webrtc working over WebSockets.
