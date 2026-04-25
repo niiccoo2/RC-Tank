@@ -58,9 +58,15 @@ class WebRTCManager:
 
         config = RTCConfiguration(
             iceServers=[
-                RTCIceServer(urls="stun:134.209.220.119:3478"),
+                # RTCIceServer(urls="stun:134.209.220.119:3478"),
+                # RTCIceServer(
+                #     urls="turn:134.209.220.119:3478",
+                #     username="tank",
+                #     credential="tankpass"
+                # )
+                RTCIceServer(urls="stun:173.48.62.89:3478"),
                 RTCIceServer(
-                    urls="turn:134.209.220.119:3478",
+                    urls="turn:173.48.62.89:3478",
                     username="tank",
                     credential="tankpass"
                 )

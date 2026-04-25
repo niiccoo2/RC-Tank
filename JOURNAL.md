@@ -1006,3 +1006,5 @@ Going to take a break now. Stuck on the timing for WebRTC handshake.
 #### 10:00 | x hours
 
 Going to see if we can get webrtc working over WebSockets.
+
+Took a while, but I finally got WebRTC video connecting over websockets. Now am going to figure out why the website says a green `error` at the bottom of the page. But first going to see if webrtc will work using my server as a turn server.

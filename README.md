@@ -70,11 +70,7 @@ sudo growpart /dev/nvme0n1 1
 sudo resize2fs /dev/nvme0n1p1
 ```
 
-## Website
-
-You first need to directly go to one of the API endpoints to accept the self signed cert. _Remember that you have to use the :5000 port!_
-
-## Wiring
+### Wiring
 
 ![Jetson Pinout](./photos/jetson_pinout.jpg)
 
@@ -90,6 +86,34 @@ You first need to directly go to one of the API endpoints to accept the self sig
 | 9     | GND      | Compass Ground    | Black      |
 | 10    | UART1_RX | ESC UART_TX       | Yellow     |
 | 19    | SPI_0    | Lights Control    | Orange     |
+
+## Website
+
+You first need to directly go to one of the API endpoints to accept the self signed cert. _Remember that you have to use the :5000 port!_
+
+## Custom TURN / STUN server
+
+`sudo apt install coturn`
+
+`sudo ufw allow 3478/udp`
+`sudo ufw allow 3478/tcp`
+
+Edit `/etc/turnserver.conf`
+
+```conf
+listening-port=3478
+listening-ip=<YOUR_PUBLIC_IP>
+external-ip=<YOUR_PUBLIC_IP>
+realm=rc-tank
+user=tank:tankpass
+lt-cred-mech
+fingerprint
+```
+
+`sudo systemctl restart coturn`
+`sudo systemctl enable coturn`
+
+Set the correct IP inside of `webrtc.py` and `webrtc.ts`
 
 # Running the tank
 
