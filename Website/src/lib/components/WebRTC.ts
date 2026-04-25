@@ -40,9 +40,9 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 
 	const configuration = {
 		iceServers: [
-			{ urls: 'stun:68.183.59.124:3478' },
+			{ urls: 'stun:134.209.220.119:3478' },
 			{
-				urls: 'turn:68.183.59.124:3478',
+				urls: 'turn:134.209.220.119:3478',
 				username: 'tank',
 				credential: 'tankpass'
 			}
