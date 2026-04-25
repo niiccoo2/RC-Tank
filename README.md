@@ -97,6 +97,7 @@ You first need to directly go to one of the API endpoints to accept the self sig
 
 `sudo ufw allow 3478/udp`
 `sudo ufw allow 3478/tcp`
+`sudo ufw allow 50000:50050/udp`
 
 Edit `/etc/turnserver.conf`
 
@@ -108,6 +109,9 @@ realm=rc-tank
 user=tank:tankpass
 lt-cred-mech
 fingerprint
+
+min-port=50000
+max-port=50050
 ```
 
 `sudo systemctl restart coturn`
