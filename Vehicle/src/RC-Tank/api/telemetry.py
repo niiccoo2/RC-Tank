@@ -21,7 +21,13 @@ async def send_telemetry(ws: WebSocket):
     #   }
     # }
 
-    data = {"WOW": "WOAH"}
+    data = {
+      "type": "telemetry", 
+      "data": {
+        "gps": "Some data",
+        "voltage": services.motors.voltage
+      }
+    }
 
     await ws.send_json(data)
     print(f"Sending telemetry: {data}")
