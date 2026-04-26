@@ -12,7 +12,7 @@ async def send_telemetry(ws: WebSocket):
     print("Motors unavailable")
     raise WebSocketException(1011, "Motors unavailable")
   while True:
-    # gps_data = await asyncio.to_thread(services.gps.read_data)
+    gps_data = await asyncio.to_thread(services.gps.read_data)
     # data = {
     #   "type": "telemetry", 
     #   "data": {
