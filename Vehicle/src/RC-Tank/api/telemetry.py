@@ -4,9 +4,12 @@ import traceback
 import asyncio
 
 async def send_telemetry(ws: WebSocket):
+  print("Starting telemetry")
   if services.gps is None:
+    print("GPS unavailable")
     raise WebSocketException(1011, "GPS unavailable")
   if services.motors is None:
+    print("Motors unavailable")
     raise WebSocketException(1011, "Motors unavailable")
   while True:
     gps_data = await asyncio.to_thread(services.gps.read_data)
