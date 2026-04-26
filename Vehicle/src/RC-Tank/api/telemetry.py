@@ -9,7 +9,14 @@ async def send_telemetry(ws: WebSocket):
   if services.motors is None:
     raise WebSocketException(1011, "Motors unavailable")
   while True:
-    data = {"type": "telemetry", "data": {"gps": services.gps.read_data, "voltage": services.motors.voltage}}
+    gps_data = await asyncio.to_thread(services.gps.read_data)
+    data = {
+      "type": "telemetry", 
+      "data": {
+        "gps": gps_data,
+        "voltage": services.motors.voltage
+      }
+    }
 
     await ws.send_json(data)
     print(f"Sending telemetry: {data}")
