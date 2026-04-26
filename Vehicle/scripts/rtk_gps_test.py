@@ -34,7 +34,7 @@ def preflight_ntrip_mountpoint():
             raw = sock.recv(1024)
             text = raw.decode(errors="replace")
             header, _, body = text.partition("\r\n\r\n")
-            first_line = header.splitlines()[0] if header else "<no response>"
+            first_line = header.splitlines()[0] if header else "<no response>" # type: ignore
             print(f"NTRIP preflight: {first_line}")
             if header:
                 print("NTRIP headers:")

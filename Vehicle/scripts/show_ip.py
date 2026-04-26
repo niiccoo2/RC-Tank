@@ -10,7 +10,7 @@ sleep(10)  # wait for WIFI to initialize
 def get_ip():
     try:
         result = subprocess.check_output("hostname -I", shell=True).decode().split()
-        return result[0] if result else "No IP"
+        return result[0] if result else "No IP" # type: ignore
     except:
         return "Error"
 
