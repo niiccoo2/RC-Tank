@@ -13,18 +13,18 @@ async def send_telemetry(ws: WebSocket):
     raise WebSocketException(1011, "Motors unavailable")
   while True:
     gps_data = await asyncio.to_thread(services.gps.read_data)
-    # data = {
-    #   "type": "telemetry", 
-    #   "data": {
-    #     "gps": gps_data,
-    #     "voltage": services.motors.voltage
-    #   }
-    # }
+    
+    if hasattr(gps_data, "model_dump"):
+      gps_value = gps_data.model_dump()
+    elif hasattr(gps_data, "dict"):
+      gps_value = gps_data.dict()
+    else:
+      gps_value = gps_data
 
     data = {
       "type": "telemetry", 
       "data": {
-        "gps": "Some data",
+        "gps": gps_value,
         "voltage": services.motors.voltage
       }
     }
