@@ -1,4 +1,5 @@
 import { ws } from '$lib/components/WebSocketHandler.svelte';
+import { status } from '$lib/stores';
 
 let pc: RTCPeerConnection | null = null;
 let statsInterval: number | null = null;
@@ -117,6 +118,7 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 		);
 
 		await pc.setRemoteDescription(response);
+		status.set('Connected');
 		return remoteStream;
 	} catch (e) {
 		console.error('WebRTC negotiation failed:', e);

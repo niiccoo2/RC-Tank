@@ -1001,10 +1001,18 @@ Just writing this down so I don't forget. The type of a two way message isn't ne
 
 Going to take a break now. Stuck on the timing for WebRTC handshake.
 
-### Saturday, April 25th | x hours
+### Saturday, April 25th | 1 hour
 
-#### 10:00 | x hours
+#### 10:00 | 1 hour
 
 Going to see if we can get webrtc working over WebSockets.
 
 Took a while, but I finally got WebRTC video connecting over websockets. Now am going to figure out why the website says a green `error` at the bottom of the page. But first going to see if webrtc will work using my server as a turn server.
+
+Did some stuff. I got a TURN server working and I think I know what I need to do to get the TURN server working on my own hardware. Going to try and get telemetery working tomorrow.
+
+### Sunday, April 26th | x hours
+
+### 12:00 | x hours
+
+Going to start by figuring out why there is a green error message when everything is working. Almost done fixing the green error message, I think I know what is causing it: when it sends to first motor cmd of `0, 0` the WebSocket connection isn't open yet, so it returns false, that sets it to error. It will change to connected if you have a controller plugged in. Also finally added some code to remember the last IP through reloads. It was literally 2 lines of code, and super easy.

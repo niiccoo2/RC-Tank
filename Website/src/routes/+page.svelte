@@ -5,9 +5,9 @@
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
+	import { ip, status } from '$lib/stores';
 
-	let ip: string = '';
-	let ip_textbox: string = '';
+	let ip_textbox: string = localStorage.getItem('ip') ?? ''; // ?? means if null
 	let activeIndex: number = 0;
 	let videoStream: MediaStream | null = null;
 	let routePlanner: RoutePlanner;
@@ -20,10 +20,11 @@
 	];
 
 	async function confirmIp() {
-		ip = ip_textbox;
-		ws.connect(ip);
+		localStorage.setItem('ip', ip_textbox);
+		ip.set(ip_textbox);
+		ws.connect($ip);
 		await ws.waitForOpen();
-		videoStream = await startWebRTC(ip);
+		videoStream = await startWebRTC($ip);
 	}
 
 	async function switchTab(i: number) {
@@ -43,7 +44,7 @@
 	<title>RC Tank Controller</title>
 </svelte:head>
 
-{#if ip}
+{#if $ip}
 	<header>
 		{#each headerItems as item, i}
 			<button class="tab" class:active={activeIndex === i} on:click={() => switchTab(i)}>
@@ -55,9 +56,9 @@
 		{#each headerItems as item, i}
 			<div style="display: {activeIndex === i ? 'block' : 'none'}; width: 100%">
 				{#if item.component === DrivingScreen}
-					<DrivingScreen {ip} bind:stream={videoStream} {startWebRTC} {stopWebRTC} />
+					<DrivingScreen bind:stream={videoStream} {startWebRTC} {stopWebRTC} />
 				{:else if item.component === RoutePlanner}
-					<RoutePlanner {ip} bind:this={routePlanner} />
+					<RoutePlanner bind:this={routePlanner} />
 				{:else}
 					<svelte:component this={item.component} {ip} />
 				{/if}

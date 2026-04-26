@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
+	import { ip, status } from '$lib/stores';
 
 	type GPSResponse = {
 		lat: number;
@@ -11,7 +12,6 @@
 
 	const MULTIPLIER: number = 1000;
 
-	export let ip: string = '';
 	export let stream: MediaStream | null = null;
 	export let startWebRTC: (ip: string) => Promise<MediaStream | null>;
 	export let stopWebRTC: () => void;
@@ -20,7 +20,6 @@
 	let ping: string = 'N/A';
 	let videoEl: HTMLVideoElement | null = null;
 	let lastSendTime: number = 0;
-	let status: string = 'Disconnected';
 	let videoSetting = true;
 	let roundedLeftSpeed: number = 0;
 	let roundedRightSpeed: number = 0;
@@ -43,7 +42,7 @@
 
 	async function toggleVideo() {
 		if (videoSetting == true) {
-			stream = await startWebRTC(ip);
+			stream = await startWebRTC($ip);
 		} else {
 			stopWebRTC();
 		}
@@ -195,10 +194,10 @@
 		// 	}
 		// }
 
-		if (!ws.send('motor', { left, right })) {
-			// if = false or ''
-			status = 'Error';
-		} else status = 'Connected';
+		if (ws.send('motor', { left, right }) == false) {
+			console.log('WS Send error');
+			status.set('Error');
+		} else status.set('Connected');
 	}
 
 	onMount(() => {
@@ -212,7 +211,7 @@
 		setInterval(() => {
 			updatePing();
 
-			if (status === 'Disconnected') {
+			if ($status === 'Disconnected') {
 				sendCommand(0, 0);
 			}
 		}, 1000);
@@ -258,7 +257,7 @@
 					width="640"
 					height="480"
 					alt="Test Cam Feed" />
-				<p style="color: #FF0000; font-weight: bold;">{status}</p>
+				<p style="color: #FF0000; font-weight: bold;">{$status}</p>
 			{:else}
 				<!-- svelte-ignore a11y-media-has-caption -->
 				<video
@@ -268,7 +267,7 @@
 					class="border black_background"
 					width="640"
 					height="480"></video>
-				<p style="color: #00FF00; font-weight: bold;">{status}</p>
+				<p style="color: #00FF00; font-weight: bold;">{$status}</p>
 			{/if}
 		{:else}
 			<img
@@ -277,17 +276,17 @@
 				width="640"
 				height="480"
 				alt="Test Cam Feed" />
-			{#if status === 'Connected'}
+			{#if $status === 'Connected'}
 				<p style="color: #00FF00; font-weight: bold;">
-					Camera Off | {status}
+					Camera Off | {$status}
 				</p>
-			{:else if status === 'Error'}
+			{:else if $status === 'Error'}
 				<p style="color: #FF0000; font-weight: bold;">
-					Camera Off | {status}
+					Camera Off | {$status}
 				</p>
 			{:else}
 				<p style="color: #FF0000; font-weight: bold;">
-					Camera Off | {status}
+					Camera Off | {$status}
 				</p>
 			{/if}
 		{/if}
