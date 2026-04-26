@@ -2,13 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import { ip, status } from '$lib/stores';
-
-	type GPSResponse = {
-		lat: number;
-		lon: number;
-		alt: number;
-	};
+	import { ip, status, gpsData } from '$lib/stores';
 
 	const MULTIPLIER: number = 1000;
 
@@ -32,32 +26,12 @@
 	let FrSkyMode = true;
 	let voltage: number = 0;
 	let lights: boolean = false;
-	let gpsInterval: NodeJS.Timeout;
-
-	let gpsData: GPSResponse = {
-		lat: 0,
-		lon: 0,
-		alt: 0
-	};
 
 	async function toggleVideo() {
 		if (videoSetting == true) {
 			stream = await startWebRTC($ip);
 		} else {
 			stopWebRTC();
-		}
-	}
-
-	async function updateGPSData() {
-		if (ip) {
-			const response = await fetch(`https://${ip}:5000/gps`, {
-				method: 'GET',
-				headers: { 'Content-Type': 'application/json' }
-			});
-
-			gpsData = await response.json();
-		} else {
-			return;
 		}
 	}
 
@@ -206,8 +180,6 @@
 
 		updatePing();
 
-		gpsInterval = setInterval(updateGPSData, 1000);
-
 		setInterval(() => {
 			updatePing();
 
@@ -220,10 +192,6 @@
 	onDestroy(() => {
 		if (animationFrame) {
 			cancelAnimationFrame(animationFrame);
-		}
-
-		if (gpsInterval) {
-			clearInterval(gpsInterval);
 		}
 	});
 
@@ -242,9 +210,9 @@
 		</div>
 
 		<div class="info_card px-4 py-2">
-			<p>Lat: {gpsData.lat}</p>
-			<p>Lon: {gpsData.lon}</p>
-			<p>Alt: {gpsData.alt}</p>
+			<p>Lat: {$gpsData.lat}</p>
+			<p>Lon: {$gpsData.lon}</p>
+			<p>Alt: {$gpsData.alt}</p>
 		</div>
 	</div>
 

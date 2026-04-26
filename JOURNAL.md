@@ -1013,8 +1013,14 @@ Did some stuff. I got a TURN server working and I think I know what I need to do
 
 ### Sunday, April 26th | x hours
 
-### 12:00 | x hours
+### 12:00 | 1.5 hours
 
 Going to start by figuring out why there is a green error message when everything is working. Almost done fixing the green error message, I think I know what is causing it: when it sends to first motor cmd of `0, 0` the WebSocket connection isn't open yet, so it returns false, that sets it to error. It will change to connected if you have a controller plugged in. Also finally added some code to remember the last IP through reloads. It was literally 2 lines of code, and super easy.
 
 Going to start working on getting telemetry working now. I think all we need to send is GPS and voltage now.
+
+Got telemetry sending from the tank, now just need to read it on the website.
+
+### 14:30 | x hours
+
+Going to start by getting telemetry decoding on the website working.

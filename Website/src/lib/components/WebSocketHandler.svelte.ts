@@ -1,3 +1,5 @@
+import { gpsData, voltage } from '$lib/stores';
+
 class WebSocketHandler {
 	ws: WebSocket | null = null;
 
@@ -33,7 +35,15 @@ class WebSocketHandler {
 			// if normal message
 			const messageType = splitMessage[0];
 
-			// do normal stuff here
+			if (messageType === 'telemetry') {
+				voltage.set(message.data.voltage);
+
+				gpsData.set({
+					lat: message.data.gps.lat,
+					lon: message.data.gps.lon,
+					alt: message.data.gps.alt
+				});
+			}
 		}
 	}
 
