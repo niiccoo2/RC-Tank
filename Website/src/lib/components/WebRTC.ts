@@ -41,18 +41,18 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 
 	const configuration = {
 		iceServers: [
-			{ urls: 'stun:134.209.220.119:3478' }, // do droplet
-			{
-				urls: 'turn:134.209.220.119:3478',
-				username: 'tank',
-				credential: 'tankpass'
-			}
-			// { urls: 'stun:173.48.62.89:3478' }, // home-server
+			// { urls: 'stun:134.209.220.119:3478' }, // do droplet
 			// {
-			// 	urls: 'turn:173.48.62.89:3478',
+			// 	urls: 'turn:134.209.220.119:3478',
 			// 	username: 'tank',
 			// 	credential: 'tankpass'
 			// }
+			{ urls: 'stun:173.48.62.89:3478' }, // home-server
+			{
+				urls: 'turn:173.48.62.89:3478',
+				username: 'tank',
+				credential: 'tankpass'
+			}
 		]
 	};
 
@@ -97,17 +97,6 @@ export async function startWebRTC(ip: string): Promise<MediaStream | null> {
 	]);
 
 	try {
-		// const response = await fetch(`https://${ip}:5000/offer`, {
-		// 	method: 'POST',
-		// 	body: JSON.stringify({
-		// 		sdp: pc.localDescription?.sdp,
-		// 		type: pc.localDescription?.type
-		// 	}),
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	}
-		// });
-
 		const response: any = await ws.twoWayMessage(
 			'webrtc_offer_request',
 			{
