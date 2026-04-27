@@ -30,6 +30,7 @@ class SelfDrivingManager:
   
   def _run(self):
     print("Self driving run loop running")
+    last_mode = 0
     while self._running:
       if services.motors is None:
         print("Self driving can't find motors")
@@ -39,9 +40,10 @@ class SelfDrivingManager:
       print(f"Self driving mode: {self.mode}")
       if self.mode == 1:
         self._waypoint_navigation()
-      else:
-        #services.motors.set_motor(MotorCommand(left=0, right=0))
-        pass
+      elif last_mode != 0:
+        services.motors.set_motor(MotorCommand(left=0, right=0))
+
+      last_mode = self.mode
       sleep(.05)
     print("Exiting self-driving loop")
   
@@ -63,8 +65,10 @@ class SelfDrivingManager:
 
         print(f"Difference: {normalized_difference}")
 
-        left_speed = max_speed-(max_speed*(-normalized_difference))
-        right_speed = max_speed-(max_speed*(normalized_difference))
+        TURNING_CONSTANT = 800
+
+        left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
+        right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
 
         print(f"Self driving speeds: {left_speed}, {right_speed}")
 
