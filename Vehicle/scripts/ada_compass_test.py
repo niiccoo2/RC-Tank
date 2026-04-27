@@ -61,7 +61,7 @@ def get_heading():
     # Ensure heading is 0-360
     if heading < 0:
         heading += 360
-    return heading-13.75 # that is the magnetic difference for boston
+    return heading-13.75-80 # that is the magnetic difference for boston and offset of how the compass is placed
 
 while True:
     print(get_heading())
