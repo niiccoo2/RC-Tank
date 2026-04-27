@@ -63,7 +63,7 @@ def get_heading():
     # Calculate angle in radians, then convert to degrees
     heading = math.atan2(cal_y, cal_x) * (180 / math.pi)
     
-    heading = heading-13.75-80
+    heading = heading-13.75
 
     # Ensure heading is 0-360
     if heading < 0:
