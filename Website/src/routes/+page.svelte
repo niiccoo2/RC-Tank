@@ -56,7 +56,11 @@
 		{#each headerItems as item, i}
 			<div style="display: {activeIndex === i ? 'block' : 'none'}; width: 100%">
 				{#if item.component === DrivingScreen}
-					<DrivingScreen bind:stream={videoStream} {startWebRTC} {stopWebRTC} />
+					<DrivingScreen
+						bind:stream={videoStream}
+						{startWebRTC}
+						{stopWebRTC}
+						active={activeIndex === 0} />
 				{:else if item.component === RoutePlanner}
 					<RoutePlanner bind:this={routePlanner} />
 				{:else}

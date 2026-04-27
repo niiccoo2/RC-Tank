@@ -9,6 +9,7 @@
 	export let stream: MediaStream | null = null;
 	export let startWebRTC: (ip: string) => Promise<MediaStream | null>;
 	export let stopWebRTC: () => void;
+	export let active: boolean = false;
 
 	let animationFrame: number;
 	let videoEl: HTMLVideoElement | null = null;
@@ -96,6 +97,11 @@
 	}
 
 	function pollGamepad() {
+		if (!active) {
+			animationFrame = requestAnimationFrame(pollGamepad);
+			return;
+		}
+
 		const gamepads = navigator.getGamepads();
 		const gamepad = gamepads[0];
 
