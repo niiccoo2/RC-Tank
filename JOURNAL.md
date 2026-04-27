@@ -1050,3 +1050,11 @@ Added the self driving screen to the website. Right now it is just a copy of the
 #### 15:00 | x hours
 
 There seem to be a few issues regarding who can control the motor. Sometimes it seems like the self driving thread crashes because it tries to control the motors at the same time as a human driving...
+
+### 17:00 | x hours
+
+Did a bunch of field testing today and here are the main issues:
+
+- Compass still has a lot of issues
+- Waypoint following seems to be pretty good, but still need to add the logic to decide when to go to the next waypoint in the list.
+- Now that I think about it, the apparent compass issues could also be from the GPS not being accurate
