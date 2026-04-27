@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import { ip, status, gpsData, ping } from '$lib/stores';
+	import { ip, status, gpsData, ping, voltage } from '$lib/stores';
 
 	const MULTIPLIER: number = 1000;
 
@@ -23,7 +23,6 @@
 	let stick: number = 0;
 	let carMode: boolean = true;
 	let FrSkyMode = true;
-	let voltage: number = 0;
 	let lights: boolean = false;
 
 	async function toggleVideo() {
@@ -266,7 +265,7 @@
 			</div>
 
 			<div>
-				<p class="info_card px-4 py-2">Battery Voltage: {voltage}v</p>
+				<p class="info_card px-4 py-2">Battery Voltage: {$voltage}v</p>
 			</div>
 		</div>
 
