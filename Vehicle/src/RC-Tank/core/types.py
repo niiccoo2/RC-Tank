@@ -11,3 +11,8 @@ class RTCOffer(BaseModel):
 class MotorCommand(BaseModel):
     left: float
     right: float
+
+class GPSResponse(BaseModel):
+    lat: float
+    lon: float
+    alt: float

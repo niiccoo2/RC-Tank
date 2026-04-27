@@ -1,4 +1,4 @@
-from core import services
+from core import services, states
 from fastapi import WebSocket, WebSocketException
 import traceback
 import asyncio
@@ -12,7 +12,7 @@ async def send_telemetry(ws: WebSocket):
     print("Motors unavailable")
     raise WebSocketException(1011, "Motors unavailable")
   while True:
-    gps_data = await asyncio.to_thread(services.gps.read_data)
+    gps_data = states.gps_location
     
     if hasattr(gps_data, "model_dump"):
       gps_value = gps_data.model_dump()

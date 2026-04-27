@@ -7,6 +7,7 @@ from drivers.motor import Motor
 from drivers.lights import Lights
 from drivers.gps import GPS
 from drivers.webrtc import WebRTCManager
+from drivers.compass import Compass
 
 def initialize_components():
     global motors, webrtc, lights, gps
@@ -46,6 +47,15 @@ def initialize_components():
         services.gps = None
         print(f"GPS init failed: {e}")
         traceback.print_exc()
+    
+    print("Initializing Compass...")
+    try:
+        services.compass = Compass()
+        print("Compass initialized")
+    except Exception as e:
+        services.compass = None
+        print(f"Compass init failed: {e}")
+        traceback.print_exc()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -53,6 +63,8 @@ async def lifespan(app: FastAPI):
     if services.lights: services.lights.side_on()
     if services.motors:
         threading.Thread(target=services.motors.timeout_check, daemon=True).start()
+    if services.gps:
+        threading.Thread(target=services.gps.update_gps_thread, daemon=True).start()
     yield
     if services.webrtc: await services.webrtc.cleanup()
     if services.motors: services.motors.cleanup()

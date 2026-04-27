@@ -1,21 +1,63 @@
-from core.states import self_driving_mode, locations
-from core import services
-from core.types import MotorCommand
+from core import services, states
+from core.types import MotorCommand, Location, GPSResponse
 from time import sleep
+import threading
+import math
 
-def self_driving():
-  if services.motors:
-    while True:
-      if self_driving_mode != 0: # if ANY form of self driving mode is on
-        # this looks redundant but once we have more modes it will help
-        if self_driving_mode == 1:
-          waypoint_navigation()
-        
-        services.motors.set_motor(MotorCommand(left = 0, right = 0))
+class SelfDrivingManager:
+  MODE_OFF = 0
+  MODE_WAYPOINT = 1
+
+  def __init__(self):
+    self.mode = SelfDrivingManager.MODE_OFF
+    self._thread = None
+    self._running = False
+  
+  def start(self):
+    if self._thread is None or not self._thread.is_alive():
+      self._running = True
+      self._thread = threading.Thread(target=self._run, daemon=True)
+      self._thread.start()
+      print("Self driving thread started")
+  
+  def stop(self):
+    self._running = False
+    if self._thread:
+      self._thread.join(timeout=2)
+      print("Self driving thread stopped")
+      self._thread = None
+  
+  def set_mode(self, mode):
+    print(f"Switching mode to {mode}")
+    self.mode = mode
+  
+  def _run(self):
+    print("Self driving run loop running")
+    while self._running:
+      if services.motors is None:
+        print("Self driving can't find motors")
+        sleep(.1)
+        continue
+
+      if self.mode == SelfDrivingManager.MODE_WAYPOINT:
+        self._waypoint_navigation()
+      else:
+        services.motors.set_motor(MotorCommand(left=0, right=0))
       sleep(.05)
+    print("Exiting self-driving loop")
+  
+  def _waypoint_navigation(self):
+    for waypoint in states.locations:
+      bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
+      
 
-def waypoint_navigation():
-  while self_driving_mode == 1:
-    # will calc what heading and how to direct motors
+  def _calc_bearing_to_waypoint(self, current: GPSResponse, waypoint: Location):
+    x_diff = waypoint.latLng[0] - current.lat
+    y_diff = waypoint.latLng[1] - current.lon
 
-    sleep(.05)
+    bearing = math.degrees(math.atan2(y_diff, x_diff))
+
+    if bearing < 0:
+      bearing = 360+bearing
+    
+    return bearing

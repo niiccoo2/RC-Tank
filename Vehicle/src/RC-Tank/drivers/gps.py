@@ -2,11 +2,9 @@ import serial # type: ignore
 import time
 from pydantic import BaseModel
 import pynmea2
-
-class GPSResponse(BaseModel):
-    lat: float
-    lon: float
-    alt: float
+from time import sleep
+from core.types import GPSResponse
+from core import states
 
 class GPS:
     def __init__(self):
@@ -57,6 +55,12 @@ class GPS:
         return GPSResponse(
             lat=0, lon=0, alt=0
         )
+    
+    def update_gps_thread(self):
+        while True:
+            states.gps_location = self.read_data()
+            
+            sleep(1) # this is just a random number, might want to change if I hit issues
 
     def close(self):
         if self.port:

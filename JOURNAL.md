@@ -1011,7 +1011,7 @@ Took a while, but I finally got WebRTC video connecting over websockets. Now am 
 
 Did some stuff. I got a TURN server working and I think I know what I need to do to get the TURN server working on my own hardware. Going to try and get telemetry working tomorrow.
 
-### Sunday, April 26th | x hours
+### Sunday, April 26th | 3.5 hours
 
 ### 12:00 | 1.5 hours
 
@@ -1021,6 +1021,16 @@ Going to start working on getting telemetry working now. I think all we need to 
 
 Got telemetry sending from the tank, now just need to read it on the website.
 
-### 14:30 | x hours
+### 14:30 | 2 hours
 
-Going to start by getting telemetry decoding on the website working.
+Going to start by getting telemetry decoding on the website working. Got telemetry reading working on the website. Working on getting self driving working right now. One issue I hit is not multiple things are trying to read GPS, so I am going to make a thread that just always reads it and updates to states.
+
+### Monday, April 27th | x hours
+
+#### 08:30 | x hours
+
+Going to start by finishing the basic waypoint code, hopefully we can do some field testing in an hour or two.
+
+Almost done with basic waypoint code, just need to figure out some things with the compass...
+
+Compass code seems to not be working again... Going to try and see if this is because of bad wiring or something else.
