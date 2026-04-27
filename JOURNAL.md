@@ -1041,6 +1041,8 @@ Compass wasn't working because ground was not connected. Just spent a bit figuri
 
 Did some math for the basic self driving code, now just need to do a bit more and then make the website half.
 
-#### 12:00 | x hours
+#### 12:00 | 1 hour
 
 Finished the math that calculates how much to turn for each waypoint, I'm sure I will have to change some constants but it should be good enough. Also added self driving as a service, so now all I need to do is create a page on the website to start and stop it. Might add some of the telemetry there as well if I feel like it.
+
+Added the self driving screen to the website. Right now it is just a copy of the normal driving page with the video removed and motor speeds replaced with a start and stop button.
