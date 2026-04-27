@@ -40,7 +40,8 @@ class SelfDrivingManager:
       if self.mode == 1:
         self._waypoint_navigation()
       else:
-        services.motors.set_motor(MotorCommand(left=0, right=0))
+        #services.motors.set_motor(MotorCommand(left=0, right=0))
+        pass
       sleep(.05)
     print("Exiting self-driving loop")
   
