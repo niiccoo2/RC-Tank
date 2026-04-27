@@ -46,9 +46,10 @@ class SelfDrivingManager:
     print("Exiting self-driving loop")
   
   def _waypoint_navigation(self, max_speed = 400):
-    for waypoint in states.locations:
-      while True: # will need to change this to be while not within x meters from waypoint
-        bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
+    # for waypoint in states.locations:
+      #while True: # will need to change this to be while not within x meters from waypoint
+        print(f"Going to waypoint {states.locations[0]}")
+        bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, states.locations[0])
         heading = states.heading
 
         difference = bearing_to_waypoint - heading
