@@ -61,8 +61,12 @@ class SelfDrivingManager:
 
         normalized_difference = difference/360
 
+        print(f"Difference: {normalized_difference}")
+
         left_speed = max_speed-(max_speed*(-normalized_difference))
         right_speed = max_speed-(max_speed*(normalized_difference))
+
+        print(f"Self driving speeds: {left_speed}, {right_speed}")
 
         if services.motors:
           services.motors.set_motor(MotorCommand(left=left_speed, right=right_speed))
@@ -83,6 +87,7 @@ class SelfDrivingManager:
       bearing -= 360
     
     return bearing
+  
   def get_latLng(self, waypoint):
     if isinstance(waypoint, dict):
         return waypoint['latLng']
