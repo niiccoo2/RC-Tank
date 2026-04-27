@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import { ip, status, gpsData } from '$lib/stores';
+	import { ip, status, gpsData, ping } from '$lib/stores';
 
 	const MULTIPLIER: number = 1000;
 
@@ -11,7 +11,6 @@
 	export let stopWebRTC: () => void;
 
 	let animationFrame: number;
-	let ping: string = 'N/A';
 	let videoEl: HTMLVideoElement | null = null;
 	let lastSendTime: number = 0;
 	let videoSetting = true;
@@ -78,10 +77,10 @@
 				return;
 			}
 
-			ping = `${Math.round(performance.now() - timeSent)}ms`;
+			ping.set(`${Math.round(performance.now() - timeSent)}ms`);
 		} catch (e) {
 			console.error('Ping failed', e);
-			ping = 'N/A';
+			ping.set('N/A');
 		}
 	}
 
@@ -263,7 +262,7 @@
 	<div class="side right">
 		<div class="space-y-2">
 			<div>
-				<p class="info_card px-4 py-2">Ping: {ping}</p>
+				<p class="info_card px-4 py-2">Ping: {$ping}</p>
 			</div>
 
 			<div>

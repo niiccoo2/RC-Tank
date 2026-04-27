@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DrivingScreen from '$lib/components/DrivingScreen.svelte';
 	import RoutePlanner from '$lib/components/RoutePlanner.svelte';
-	// import SelfDriving from '$lib/components/SelfDriving.svelte';
+	import SelfDriving from '$lib/components/SelfDriving.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
@@ -15,8 +15,8 @@
 	type NavItem = { name: string; component: any };
 	let headerItems: NavItem[] = [
 		{ name: 'Human Driving', component: DrivingScreen },
-		{ name: 'Route Planner', component: RoutePlanner }
-		// { name: 'Self Driving', component: SelfDriving },
+		{ name: 'Route Planner', component: RoutePlanner },
+		{ name: 'Self Driving', component: SelfDriving }
 	];
 
 	async function confirmIp() {
@@ -60,7 +60,7 @@
 				{:else if item.component === RoutePlanner}
 					<RoutePlanner bind:this={routePlanner} />
 				{:else}
-					<svelte:component this={item.component} {ip} />
+					<svelte:component this={item.component} />
 				{/if}
 			</div>
 		{/each}

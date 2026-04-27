@@ -6,11 +6,10 @@
 	import Popup from './Popup.svelte';
 	import Polyline from './Polyline.svelte';
 	import MapToolbar from './MapToolbar.svelte';
+	import { ws } from './WebSocketHandler.svelte';
 	let map: L.Map;
 
-	export let ip: string = '';
-
-	let markerLocations: { ID: number, latLng: [number, number] }[] = [];
+	let markerLocations: { ID: number; latLng: [number, number] }[] = [];
 	let markerIdCount: number = 0;
 	let initialView: [number, number] = [0, 0];
 
@@ -18,7 +17,7 @@
 		let prev = markerLocations[i];
 		return {
 			latLngs: [prev.latLng, latLng.latLng],
-			color: "red"
+			color: 'red'
 		};
 	});
 
@@ -46,7 +45,7 @@
 		console.log(`Map clicked at ${lat}, ${lng}. ID: ${markerIdCount}`);
 		markerLocations = [...markerLocations, { ID: markerIdCount, latLng: [lat, lng] }];
 		markerIdCount++;
-	} 
+	}
 
 	function clearMarkers() {
 		markerLocations = [];
@@ -59,16 +58,18 @@
 
 	async function sendWaypointsToTank() {
 		console.log('Sending locations:', markerLocations);
-		
-		try {
-				const response = await fetch(`https://${ip}:5000/start_self_driving`, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(markerLocations)
-				});
-			} catch (e) {
-				console.error(e);
-			}
+
+		// try {
+		// 	const response = await fetch(`https://${ip}:5000/start_self_driving`, {
+		// 		method: 'POST',
+		// 		headers: { 'Content-Type': 'application/json' },
+		// 		body: JSON.stringify(markerLocations)
+		// 	});
+		// } catch (e) {
+		// 	console.error(e);
+		// }
+
+		ws.send('waypoint_data', markerLocations);
 	}
 </script>
 
@@ -77,7 +78,11 @@
 <div style="height: 94vh; width: 100%;">
 	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={15}>
 		<Control position="topright">
-			<MapToolbar bind:eye bind:lines={showLines} on:click-reset={resetMapView} on:click-send={sendWaypointsToTank} />
+			<MapToolbar
+				bind:eye
+				bind:lines={showLines}
+				on:click-reset={resetMapView}
+				on:click-send={sendWaypointsToTank} />
 		</Control>
 
 		{#if eye}
@@ -90,11 +95,14 @@
 						stroke-linejoin="round"
 						stroke-width="0"
 						viewBox="0 0 24 24"
-						stroke="currentColor"
-						><circle r="2" cx="12" cy="12" fill="red" /></svg>
+						stroke="currentColor"><circle r="2" cx="12" cy="12" fill="red" /></svg>
 
 					<Popup>
-						<button on:click|stopPropagation={() => {removeLocationFromArray(location.ID)}} class="remove_waypoint_button">Remove</button>
+						<button
+							on:click|stopPropagation={() => {
+								removeLocationFromArray(location.ID);
+							}}
+							class="remove_waypoint_button">Remove</button>
 					</Popup>
 				</Marker>
 			{/each}

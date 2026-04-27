@@ -1,5 +1,18 @@
-<script lang='ts'>
-    
+<script lang="ts">
+	import { status, voltage, ping, gpsData } from '$lib/stores';
+	import { ws } from '$lib/components/WebSocketHandler.svelte';
+
+	function startSelfDriving() {
+		ws.send('self_driving_mode', 1);
+		status.set('Waypoint Mode');
+	}
+
+	function stopSelfDriving() {
+		ws.send('self_driving_mode', 0);
+		status.set('Connected');
+	}
+
+	let val: boolean = false;
 </script>
 
 <!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
@@ -7,69 +20,33 @@
 <div class="layout">
 	<div class="side left">
 		<div class="info_card px-4 py-2">
-			<p>Left Speed: {roundedLeftSpeed}</p>
-			<p>Right Speed: {roundedRightSpeed}</p>
+			<button on:click={startSelfDriving} class="cursor-pointer button px-2 py-1">Start</button>
+			<button on:click={stopSelfDriving} class="cursor-pointer button px-2 py-1">Stop</button>
 		</div>
 
 		<div class="info_card px-4 py-2">
-			<p>Lat: {gpsData.lat}</p>
-			<p>Lon: {gpsData.lon}</p>
-			<p>Alt: {gpsData.alt}</p>
+			<p>Lat: {$gpsData.lat}</p>
+			<p>Lon: {$gpsData.lon}</p>
+			<p>Alt: {$gpsData.alt}</p>
 		</div>
 	</div>
 
 	<div class="center">
-		{#if videoSetting}
-			{#if !stream}
-				<img
-					class="border black_background"
-					src={`${cam_off_icon}`}
-					width="640"
-					height="480"
-					alt="Test Cam Feed" />
-				<p style="color: #FF0000; font-weight: bold;">{status}</p>
-			{:else}
-				<!-- svelte-ignore a11y-media-has-caption -->
-				<video
-					bind:this={videoEl}
-					autoplay
-					playsinline
-					class="border black_background"
-					width="640"
-					height="480"></video>
-				<p style="color: #00FF00; font-weight: bold;">{status}</p>
-			{/if}
-		{:else}
-			<img
-				class="border black_background"
-				src={`${cam_off_icon}`}
-				width="640"
-				height="480"
-				alt="Test Cam Feed" />
-			{#if status === 'Connected'}
-				<p style="color: #00FF00; font-weight: bold;">
-					Camera Off | {status}
-				</p>
-			{:else if status === 'Error'}
-				<p style="color: #FF0000; font-weight: bold;">
-					Camera Off | {status}
-				</p>
-			{:else}
-				<p style="color: #FF0000; font-weight: bold;">
-					Camera Off | {status}
-				</p>
-			{/if}
-		{/if}
+		<img class="border black_background" src={``} width="640" height="480" alt="Test Cam Feed" />
+
+		<p style="color: #fcad03; font-weight: bold;">
+			{$status}
+		</p>
 	</div>
 
 	<div class="side right">
 		<div class="space-y-2">
 			<div>
-				<p class="info_card px-4 py-2">Ping: {ping}</p>
+				<p class="info_card px-4 py-2">Ping: {$ping}</p>
 			</div>
 
 			<div>
-				<p class="info_card px-4 py-2">Battery Voltage: {voltage}v</p>
+				<p class="info_card px-4 py-2">Battery Voltage: {$voltage}v</p>
 			</div>
 		</div>
 
@@ -77,7 +54,7 @@
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Headlight:</span>
 				<label class="switch m-0 ml-auto">
-					<input type="checkbox" bind:checked={lights} on:change={() => handeLightSwitch(lights)} />
+					<input type="checkbox" bind:checked={val} on:change={() => {}} />
 					<span class="slider round"></span>
 				</label>
 			</div>
@@ -85,34 +62,32 @@
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">FrSky mode:</span>
 				<label class="switch m-0 ml-auto">
-					<input type="checkbox" bind:checked={FrSkyMode} />
+					<input type="checkbox" bind:checked={val} />
 					<span class="slider round"></span>
 				</label>
 			</div>
 
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-					<span class="py-1">Show Video:</span>
-					<label class="switch m-0 ml-auto">
-						<input type="checkbox" bind:checked={videoSetting} on:change={toggleVideo} />
-						<span class="slider round"></span>
-					</label>
+				<span class="py-1">Show Video:</span>
+				<label class="switch m-0 ml-auto">
+					<input type="checkbox" bind:checked={val} on:change={() => {}} />
+					<span class="slider round"></span>
+				</label>
 			</div>
 
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Refresh:</span>
 				<div class="inline-flex items-center gap-2 ml-auto">
-					<button on:click={() => changeRefresh(-10)} class="cursor-pointer button px-2 py-1"
-						>-</button>
-					<p class="m-0">{refreshTimeMs}ms</p>
-					<button on:click={() => changeRefresh(10)} class="cursor-pointer button px-2 py-1"
-						>+</button>
+					<button on:click={() => {}} class="cursor-pointer button px-2 py-1">-</button>
+					<p class="m-0">0ms</p>
+					<button on:click={() => {}} class="cursor-pointer button px-2 py-1">+</button>
 				</div>
 			</div>
 
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Car mode:</span>
 				<label class="switch m-0 ml-auto">
-					<input type="checkbox" bind:checked={carMode} />
+					<input type="checkbox" bind:checked={val} />
 					<span class="slider round"></span>
 				</label>
 			</div>
