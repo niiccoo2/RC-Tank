@@ -47,7 +47,7 @@ class SelfDrivingManager:
       sleep(.05)
     print("Exiting self-driving loop")
   
-  def _waypoint_navigation(self, max_speed = 400):
+  def _waypoint_navigation(self, max_speed = 500):
     # for waypoint in states.locations:
       #while True: # will need to change this to be while not within x meters from waypoint
         print(f"Going to waypoint {states.locations[0]}")
@@ -65,7 +65,7 @@ class SelfDrivingManager:
 
         print(f"Difference: {normalized_difference}")
 
-        TURNING_CONSTANT = 800
+        TURNING_CONSTANT = 1500
 
         left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
         right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
