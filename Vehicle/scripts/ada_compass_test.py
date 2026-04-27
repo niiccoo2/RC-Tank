@@ -13,6 +13,8 @@ while True:
     print(f"X:{mag_x:2.3f}, Y:{mag_y:2.3f}, Z:{mag_z:2.3f} G")
 
     heading = math.atan2(mag_y, mag_x)*(180/math.pi)
+    if heading < 0:
+        heading = heading+360
     print(heading)
 
     print("")
