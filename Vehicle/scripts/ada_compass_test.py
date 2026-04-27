@@ -22,38 +22,43 @@ sensor = adafruit_qmc5883p.QMC5883P(i2c)
 #     time.sleep(1)
 
 
-mag_x, mag_y, mag_z = [], [], []
+# mag_x, mag_y, mag_z = [], [], []
 
-print("Rotate the sensor in all directions for 30 seconds...")
-start_time = time.time()
-while time.time() - start_time < 30:
-    x, y, z = sensor.magnetic
-    mag_x.append(x)
-    mag_y.append(y)
-    mag_z.append(z)
-    time.sleep(0.1)
+# print("Rotate the sensor in all directions for 30 seconds...")
+# start_time = time.time()
+# while time.time() - start_time < 30:
+#     x, y, z = sensor.magnetic
+#     mag_x.append(x)
+#     mag_y.append(y)
+#     mag_z.append(z)
+#     time.sleep(0.1)
 
-offset_x = (max(mag_x) + min(mag_x)) / 2
-offset_y = (max(mag_y) + min(mag_y)) / 2
-offset_z = (max(mag_z) + min(mag_z)) / 2
+# offset_x = (max(mag_x) + min(mag_x)) / 2
+# offset_y = (max(mag_y) + min(mag_y)) / 2
+# offset_z = (max(mag_z) + min(mag_z)) / 2
 
-avg_delta_x = (max(mag_x) - min(mag_x)) / 2
-avg_delta_y = (max(mag_y) - min(mag_y)) / 2
-avg_delta_z = (max(mag_z) - min(mag_z)) / 2
+# avg_delta_x = (max(mag_x) - min(mag_x)) / 2
+# avg_delta_y = (max(mag_y) - min(mag_y)) / 2
+# avg_delta_z = (max(mag_z) - min(mag_z)) / 2
 
-avg_delta = (avg_delta_x + avg_delta_y + avg_delta_z) / 3
+# avg_delta = (avg_delta_x + avg_delta_y + avg_delta_z) / 3
 
-scale_x = avg_delta / avg_delta_x
-scale_y = avg_delta / avg_delta_y
+# scale_x = avg_delta / avg_delta_x
+# scale_y = avg_delta / avg_delta_y
 
-print(f"offset_x: {offset_x}, offset_y: {offset_y}, scale_x: {scale_x}, scale_y: {scale_y}")
+# print(f"offset_x: {offset_x}, offset_y: {offset_y}, scale_x: {scale_x}, scale_y: {scale_y}")
+
+OFFSET_X = -0.198
+OFFSET_Y = 0.013
+SCALE_X = 0.84  # Average of two runs
+SCALE_Y = 0.73  # Average of two runs
 
 def get_heading():
     raw_x, raw_y, raw_z = sensor.magnetic
     
     # Apply calibration
-    cal_x = (raw_x - offset_x) * scale_x
-    cal_y = (raw_y - offset_y) * scale_y
+    cal_x = (raw_x - OFFSET_X) * SCALE_X
+    cal_y = (raw_y - OFFSET_Y) * SCALE_Y
     
     # Calculate angle in radians, then convert to degrees
     heading = math.atan2(cal_y, cal_x) * (180 / math.pi)
@@ -66,8 +71,8 @@ def get_heading():
 
     return heading # that is the magnetic difference for boston and offset of how the compass is placed
 
-user = input("Read heading? (Y/n): ").lower()
+# user = input("Read heading? (Y/n): ").lower()
 
-if user == 'y' or user == '':
-    while True:
-        print(get_heading())
+# if user == 'y' or user == '':
+while True:
+    print(get_heading())
