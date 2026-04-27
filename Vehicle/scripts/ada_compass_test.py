@@ -68,6 +68,8 @@ def get_heading():
     # Ensure heading is 0-360
     if heading < 0:
         heading += 360
+    elif heading > 360:
+        heading -= 360
 
     return heading
 
