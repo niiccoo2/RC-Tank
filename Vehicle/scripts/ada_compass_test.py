@@ -37,7 +37,6 @@ offset_x = (max(mag_x) + min(mag_x)) / 2
 offset_y = (max(mag_y) + min(mag_y)) / 2
 offset_z = (max(mag_z) + min(mag_z)) / 2
 
-# Soft Iron Scaling (Optional but recommended for better accuracy)
 avg_delta_x = (max(mag_x) - min(mag_x)) / 2
 avg_delta_y = (max(mag_y) - min(mag_y)) / 2
 avg_delta_z = (max(mag_z) - min(mag_z)) / 2
@@ -46,7 +45,8 @@ avg_delta = (avg_delta_x + avg_delta_y + avg_delta_z) / 3
 
 scale_x = avg_delta / avg_delta_x
 scale_y = avg_delta / avg_delta_y
-scale_z = avg_delta / avg_delta_z
+
+print(f"offset_x: {offset_x}, offset_y: {offset_y}, scale_x: {scale_x}, scale_y: {scale_y}")
 
 def get_heading():
     raw_x, raw_y, raw_z = sensor.magnetic
@@ -61,7 +61,7 @@ def get_heading():
     # Ensure heading is 0-360
     if heading < 0:
         heading += 360
-    return heading
+    return heading-13.75 # that is the magnetic difference for boston
 
 while True:
     print(get_heading())
