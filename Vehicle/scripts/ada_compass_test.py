@@ -61,7 +61,7 @@ def get_heading():
     cal_y = (raw_y - OFFSET_Y) * SCALE_Y
     
     # Calculate angle in radians, then convert to degrees
-    heading = math.atan2(cal_y, cal_x) * (180 / math.pi)
+    heading = math.atan2(cal_x, cal_y) * (180 / math.pi)
     
     heading = heading-13.75
 
