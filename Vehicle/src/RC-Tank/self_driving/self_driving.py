@@ -27,7 +27,7 @@ class SelfDrivingManager:
       print("Self driving thread stopped")
       self._thread = None
   
-  def set_mode(self, mode):
+  def set_mode(self, mode: int):
     print(f"Switching mode to {mode}")
     self.mode = mode
   

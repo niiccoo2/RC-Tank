@@ -8,6 +8,7 @@ from drivers.lights import Lights
 from drivers.gps import GPS
 from drivers.webrtc import WebRTCManager
 from drivers.compass import Compass
+from self_driving.self_driving import SelfDrivingManager
 
 def initialize_components():
     global motors, webrtc, lights, gps
@@ -56,6 +57,15 @@ def initialize_components():
         services.compass = None
         print(f"Compass init failed: {e}")
         traceback.print_exc()
+    
+    print("Initializing SelfDrivingManager...")
+    try:
+        services.self_driving_manager = SelfDrivingManager()
+        print("SelfDrivingManager initialized")
+    except Exception as e:
+        services.self_driving_manager = None
+        print(f"SelfDrivingManager init failed: {e}")
+        traceback.print_exc()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -67,7 +77,9 @@ async def lifespan(app: FastAPI):
         threading.Thread(target=services.gps.update_gps_thread, daemon=True).start()
     if services.compass:
         threading.Thread(target=services.compass.update_compass_thread, daemon=True).start()
-    yield
+    if services.self_driving_manager: services.self_driving_manager.start()
+    yield # shutdown
+    if services.self_driving_manager: services.self_driving_manager.stop()
     if services.webrtc: await services.webrtc.cleanup()
     if services.motors: services.motors.cleanup()
     if services.lights: services.lights.off()

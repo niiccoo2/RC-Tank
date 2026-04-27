@@ -48,7 +48,7 @@ async def ws(ws: WebSocket):
                 elif msg_type == "waypoint_data":
                     states.locations = msg["data"]
                 elif msg_type == "self_driving_mode":
-                    states.self_driving_mode = msg["data"]
+                    if services.self_driving_manager: services.self_driving_manager.set_mode(msg["data"])
     finally:
         if telemetry_sender: 
             telemetry_sender.cancel()
