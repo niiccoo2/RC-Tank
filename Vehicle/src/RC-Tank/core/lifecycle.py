@@ -65,6 +65,8 @@ async def lifespan(app: FastAPI):
         threading.Thread(target=services.motors.timeout_check, daemon=True).start()
     if services.gps:
         threading.Thread(target=services.gps.update_gps_thread, daemon=True).start()
+    if services.compass:
+        threading.Thread(target=services.compass.update_compass_thread, daemon=True).start()
     yield
     if services.webrtc: await services.webrtc.cleanup()
     if services.motors: services.motors.cleanup()

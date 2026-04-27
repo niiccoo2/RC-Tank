@@ -1027,10 +1027,16 @@ Going to start by getting telemetry decoding on the website working. Got telemet
 
 ### Monday, April 27th | x hours
 
-#### 08:30 | x hours
+#### 08:30 | 1.5 hours
 
 Going to start by finishing the basic waypoint code, hopefully we can do some field testing in an hour or two.
 
 Almost done with basic waypoint code, just need to figure out some things with the compass...
 
 Compass code seems to not be working again... Going to try and see if this is because of bad wiring or something else.
+
+Compass wasn't working because ground was not connected. Just spent a bit figuring out how to calibrate the compass and doing that. Then added it to the main compass driver.
+
+#### 11:00 | .5 hours
+
+Did some math for the basic self driving code, now just need to do a bit more and then make the website half.

@@ -46,10 +46,28 @@ class SelfDrivingManager:
       sleep(.05)
     print("Exiting self-driving loop")
   
-  def _waypoint_navigation(self):
+  def _waypoint_navigation(self, max_speed = 400):
     for waypoint in states.locations:
       bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
-      
+      heading = states.heading
+
+      difference = bearing_to_waypoint - heading
+
+      if difference > 180: # make sure we are using the shortest path
+        difference -= 360
+      elif difference < -180:
+        difference += 360
+
+      normalized_difference = difference/360
+
+      left_speed = max_speed-(max_speed*(-normalized_difference))
+      right_speed = max_speed-(max_speed*(normalized_difference))
+
+      if services.motors:
+        services.motors.set_motor(MotorCommand(left=left_speed, right=right_speed))
+      else:
+        print("Was unable to set motor speed")
+
 
   def _calc_bearing_to_waypoint(self, current: GPSResponse, waypoint: Location):
     x_diff = waypoint.latLng[0] - current.lat
@@ -58,6 +76,8 @@ class SelfDrivingManager:
     bearing = math.degrees(math.atan2(y_diff, x_diff))
 
     if bearing < 0:
-      bearing = 360+bearing
+      bearing += 360
+    elif bearing > 360:
+      bearing -= 360
     
     return bearing
