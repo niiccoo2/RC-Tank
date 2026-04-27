@@ -5,11 +5,8 @@ import threading
 import math
 
 class SelfDrivingManager:
-  MODE_OFF = 0
-  MODE_WAYPOINT = 1
-
   def __init__(self):
-    self.mode = SelfDrivingManager.MODE_OFF
+    self.mode = 0
     self._thread = None
     self._running = False
   
@@ -38,8 +35,9 @@ class SelfDrivingManager:
         print("Self driving can't find motors")
         sleep(.1)
         continue
-
-      if self.mode == SelfDrivingManager.MODE_WAYPOINT:
+      
+      print(f"Self driving mode: {self.mode}")
+      if self.mode == 1:
         self._waypoint_navigation()
       else:
         services.motors.set_motor(MotorCommand(left=0, right=0))
