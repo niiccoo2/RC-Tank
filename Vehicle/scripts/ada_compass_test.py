@@ -7,6 +7,10 @@ i2c = board.I2C()
 
 sensor = adafruit_qmc5883p.QMC5883P(i2c)
 
+sensor.mode = adafruit_qmc5883p.Mode.CONTINUOUS
+sensor.range = adafruit_qmc5883p.Range.RANGE_2G # Natural Earth field is ~0.5G
+sensor.rate = adafruit_qmc5883p.Rate.RATE_100HZ 
+
 # while True:
 #     mag_x, mag_y, mag_z = sensor.magnetic
 
@@ -58,10 +62,13 @@ def get_heading():
     # Calculate angle in radians, then convert to degrees
     heading = math.atan2(cal_y, cal_x) * (180 / math.pi)
     
+    heading = heading-13.75-80
+
     # Ensure heading is 0-360
     if heading < 0:
         heading += 360
-    return heading-13.75-80 # that is the magnetic difference for boston and offset of how the compass is placed
+
+    return heading # that is the magnetic difference for boston and offset of how the compass is placed
 
 while True:
     print(get_heading())
