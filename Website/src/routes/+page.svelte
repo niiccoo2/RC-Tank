@@ -5,7 +5,7 @@
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import { ip, status } from '$lib/stores';
+	import { ip, STOP_SPEED } from '$lib/stores';
 
 	let ip_textbox: string = localStorage.getItem('ip') ?? ''; // ?? means if null
 	let activeIndex: number = 0;
@@ -38,7 +38,7 @@
 	}
 
 	function stopMotors() {
-    ws.send('motor', { left: 0, right: 0 });
+    ws.send('motor', { left: STOP_SPEED, right: STOP_SPEED });
 	}
 
 	onDestroy(() => {

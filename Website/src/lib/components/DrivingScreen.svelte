@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import { ip, status, gpsData, ping, voltage } from '$lib/stores';
+	import { ip, status, gpsData, ping, voltage, STOP_SPEED } from '$lib/stores';
 
 	const MULTIPLIER: number = 1000;
 
@@ -158,7 +158,7 @@
 
 	onMount(() => {
 		pollGamepad();
-		sendCommand(0, 0); // Ensure motors are stopped on load and check connection
+		sendCommand(STOP_SPEED, STOP_SPEED); // Ensure motors are stopped on load and check connection
 
 		updatePing();
 
@@ -166,7 +166,7 @@
 			updatePing();
 
 			if ($status === 'Disconnected') {
-				sendCommand(0, 0);
+				sendCommand(STOP_SPEED, STOP_SPEED);
 			}
 		}, 1000);
 	});

@@ -1085,7 +1085,7 @@ Working on debugging the motors not stopping and found another issue. It is of t
 | ---------------------- | ------------------------------------------------------------------- | ----- |
 | Go to different tab    | Looks like the website is still periodically sending motor commands | [x]   |
 | Go to differnt section | Looks like motors so the slow spin thing                            | [x]   |
-| Stop self driving      | Motors do a weird fast version of slow spin                         | [ ]   |
+| Stop self driving      | Motors do a weird fast version of slow spin                         | [x]   |
 | Failsafe               | Seemed like it should have caught the past issues                   | [ ]   |
 
 Going to start by fixing the different section thing. Now that I think about it, when you go to a new section, it stops sending motor commands, but never says zero. But then the failsafe should be starting anyways.
@@ -1103,3 +1103,5 @@ I'm really slow, first, I wasn't on the local version of the site, and second, t
 Seems like the ESC's sometimes need more than one instruction to get an idea of what to do. This doesn't really matter if it misses something when driving, but when you send it one command to stop, then it is an issue. Also would be nice if we could get their baudrate turned up so that we can do more messages.
 
 Omg, different section seems to be broken again. Also it really should be failsafing a lot of these times. Weird, after a reboot (for other reasons) the section switching seems to work again... Not sure why so I'm sure it will come up again. Also, the failsafe only seems to be happening when you send a single instance of a 0 and the ESC's don't listen... Then ofc the failsafe works... Now it is time to work on fixing the weird slowing down when it only sees one instance.
+
+The fix for the motors not always stopping when they only get one command isn't a really good fix, but should be good enough. I just changed it to send a special command for stop and if it gets it it sends stop, waits, and sends it again. I think the core issue is more something in the ESC, which I should mess with later this week once I have all my stuff I need because I now have a few things I need to fix on those ESC's.

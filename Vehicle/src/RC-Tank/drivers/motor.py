@@ -145,12 +145,13 @@ class Motor:
 
     def timeout_check(self):
         while not self._stop_event.is_set():
-        # x 1000 to make it millis
+            # x 1000 to make it millis
             # print("Checking time")
             time_since_last_update = (time.time() - self.last_update_time)*1000
             # print(f"Time since last update: {time_since_last_update}")
-            if time_since_last_update > 2000 and not self.stopped: # if over 2 sec
-                print(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
+            if time_since_last_update > 2000: # if over 2 sec
+                if not self.stopped:
+                    print(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
                 self.set_esc(0, 0) # Stop both motors
                 self.set_esc(1, 0)
                 time.sleep(.1)
