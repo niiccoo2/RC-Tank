@@ -1107,3 +1107,5 @@ Omg, different section seems to be broken again. Also it really should be failsa
 The fix for the motors not always stopping when they only get one command isn't a really good fix, but should be good enough. I just changed it to send a special command for stop and if it gets it it sends stop, waits, and sends it again. I think the core issue is more something in the ESC, which I should mess with later this week once I have all my stuff I need because I now have a few things I need to fix on those ESC's.
 
 Fixing the timeout was super easy, and now that I think about it, it also should be a janky fix to the ESC's turning off. I just removed the thing that makes sure it isn't already stopped. I don't even know why I had that, because it doesn't really do anything with how the program is set up right now.
+
+Found a few issues that I caused. I was using a different number than what I thought I set the stop code to. I got self driving stopping before the timeout hit, so I am going to call that good enough for now. Might work on this a bit more later today, but now sure.

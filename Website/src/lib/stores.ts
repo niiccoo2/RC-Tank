@@ -11,4 +11,4 @@ export const ip = writable('');
 export const gpsData: Writable<GPSResponse> = writable({ lat: 0, lon: 0, alt: 0 });
 export const voltage = writable(0);
 export const ping = writable('N/A');
-export const STOP_SPEED: number = 1234000;
+export const STOP_SPEED: number = 12340000;
