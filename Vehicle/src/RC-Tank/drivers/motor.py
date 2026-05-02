@@ -162,7 +162,10 @@ class Motor:
             
             self.read_feedback()
 
-            self._stop_event.wait(0.1)
+            if self.stopped:
+                self._stop_event.wait(1)
+            else:
+                self._stop_event.wait(0.1)
             # Need this to be responsive, but also not hog resources
 
     def clamp(self, x, lo, hi):
