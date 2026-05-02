@@ -23,7 +23,7 @@
 	let trottle: number = 0;
 	let stick: number = 0;
 	let carMode: boolean = true;
-	let FrSkyMode = true;
+	let FrSkyMode = false;
 	let lights: boolean = false;
 
 	async function toggleVideo() {
@@ -148,34 +148,12 @@
 		left = left * MULTIPLIER;
 		right = right * MULTIPLIER;
 
-		// left = applyExpo(left);
-		// right = applyExpo(right);
-
-		// if (!ip) {
-		// 	console.log('IP is not set. sendCommand returning.');
-		// 	return;
-		// } else {
-		// 	// console.log(`Sending command to ${ip} - Left: ${left}, Right: ${right}`);
-		// 	try {
-		// 		const response = await fetch(`https://${ip}:5000/motor`, {
-		// 			method: 'POST',
-		// 			headers: { 'Content-Type': 'application/json' },
-		// 			body: JSON.stringify({ left, right })
-		// 		});
-		// 		const data = await response.json();
-		// 		voltage = data.voltage;
-		// 		status = 'Connected';
-		// 		return data;
-		// 	} catch (e) {
-		// 		status = 'Error';
-		// 		console.error(e);
-		// 	}
-		// }
-
-		if (ws.send('motor', { left, right }) == false) {
-			console.log('WS Send error');
-			status.set('Error');
-		} else status.set('Connected');
+		if (!document.hidden) {
+			if (ws.send('motor', { left, right }) == false) {
+				console.log('WS Send error');
+				status.set('Error');
+			} else status.set('Connected');
+		}
 	}
 
 	onMount(() => {

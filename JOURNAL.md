@@ -1077,14 +1077,27 @@ Changed the `states.waypoint_locations` (waypoint list) to use the normal `Locat
 
 Should be done with the logic that lets it switch to a new waypoint. Although I'm sure there will be issues when I test it.
 
-#### 12:00 | x hours
+#### 12:00 | .75 hours
 
 Working on debugging the motors not stopping and found another issue. It is of the same nature but not sure if this will fix the same fix as self driving. If you are driving and then switch tabs it doesn't stop, this could be because of the website still sending pings or the timeout isn't working. But now that I say this, I don't think I wrote it to stop here... So it's an issue but I'm not sure if I ever did anything about it. Does a similar but different thing when going to another page on the site. So I think we have 3 issues that seem the same but are for 3 different reasons.
 
-| Steps to cause         | Notes                                                               |
-| ---------------------- | ------------------------------------------------------------------- |
-| Go to different tab    | Looks like the website is still periodically sending motor commands |
-| Go to differnt section | Looks like motors so the slow spin thing                            |
-| Stop self driving      | Motors do a weird fast version of slow spin                         |
+| Steps to cause         | Notes                                                               | Done? |
+| ---------------------- | ------------------------------------------------------------------- | ----- |
+| Go to different tab    | Looks like the website is still periodically sending motor commands | [x]   |
+| Go to differnt section | Looks like motors so the slow spin thing                            | [x]   |
+| Stop self driving      | Motors do a weird fast version of slow spin                         | [ ]   |
+| Failsafe               | Seemed like it should have caught the past issues                   | [ ]   |
 
 Going to start by fixing the different section thing. Now that I think about it, when you go to a new section, it stops sending motor commands, but never says zero. But then the failsafe should be starting anyways.
+
+Think I figured out how to stop the motors when switching tabs, but I still want to do some testing on the failsafe to make sure it is working... So adding that to the list.
+
+Fix did not work... But timeout is working now?? Idk, I don't like how weird all this is.
+
+#### 16:00 | x hours
+
+Just tested and was able to reproduce the failsafe not working.
+
+I'm really slow, first, I wasn't on the local version of the site, and second, there is literaly a function that runs when switching tabs. Now it does the same weird thing that happens when you stop self driving, so I am going to assume the rest is the same issue.
+
+Seems like the ESC's sometimes need more than one instruction to get an idea of what to do. This doesn't really matter if it misses something when driving, but when you send it one command to stop, then it is an issue. Also would be nice if we could get their baudrate turned up so that we can do more messages.
