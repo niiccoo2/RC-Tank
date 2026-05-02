@@ -18,6 +18,7 @@ class SelfDrivingManager:
       print("Self driving thread started")
   
   def stop(self):
+    self.mode = 0 # normal driving mode
     self._running = False
     if self._thread:
       self._thread.join(timeout=2)
@@ -40,14 +41,15 @@ class SelfDrivingManager:
       # print(f"Self driving mode: {self.mode}")
       if self.mode == 1:
         self._waypoint_navigation()
-      elif last_mode != 0:
+      elif self.mode == 0 and last_mode != 0:
+        print("Mode got changed to 0. Stopping.")
         services.motors.set_motor(MotorCommand(left=12340000, right=12340000))
 
       last_mode = self.mode
       sleep(.1) # .5 seems to be too fast for the ESC's
     print("Exiting self-driving loop")
   
-  def _waypoint_navigation(self, max_speed: int = 500, success_distance: float = 1):
+  def _waypoint_navigation(self, max_speed: int = 500, success_distance: float = 2):
     """
     Navigate through a list of waypoints.
     
@@ -59,7 +61,7 @@ class SelfDrivingManager:
       self.mode = 0
     for waypoint in states.waypoint_locations:
       # when more than 2 meters away form waypoint, keep trying to drive to it
-      while self._calc_distance(waypoint, states.gps_location) > 2:
+      while self._calc_distance(waypoint, states.gps_location) > success_distance:
         if self.mode != 1:
           print("Shouldn't be in self driving mode! Stopping.")
           return
