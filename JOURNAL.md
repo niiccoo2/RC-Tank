@@ -1078,3 +1078,13 @@ Changed the `states.waypoint_locations` (waypoint list) to use the normal `Locat
 Should be done with the logic that lets it switch to a new waypoint. Although I'm sure there will be issues when I test it.
 
 #### 12:00 | x hours
+
+Working on debugging the motors not stopping and found another issue. It is of the same nature but not sure if this will fix the same fix as self driving. If you are driving and then switch tabs it doesn't stop, this could be because of the website still sending pings or the timeout isn't working. But now that I say this, I don't think I wrote it to stop here... So it's an issue but I'm not sure if I ever did anything about it. Does a similar but different thing when going to another page on the site. So I think we have 3 issues that seem the same but are for 3 different reasons.
+
+| Steps to cause         | Notes                                                               |
+| ---------------------- | ------------------------------------------------------------------- |
+| Go to different tab    | Looks like the website is still periodically sending motor commands |
+| Go to differnt section | Looks like motors so the slow spin thing                            |
+| Stop self driving      | Motors do a weird fast version of slow spin                         |
+
+Going to start by fixing the different section thing. Now that I think about it, when you go to a new section, it stops sending motor commands, but never says zero. But then the failsafe should be starting anyways.

@@ -35,6 +35,16 @@
 		}
 	}
 
+	function stopMotors() {
+    ws.send('motor', { left: 0, right: 0 });
+	}
+
+	let prevActiveIndex = activeIndex;
+	$: if (prevActiveIndex === 0 && activeIndex !== 0) {
+			stopMotors();
+	}
+	$: prevActiveIndex = activeIndex;
+
 	onDestroy(() => {
 		stopWebRTC();
 	});
