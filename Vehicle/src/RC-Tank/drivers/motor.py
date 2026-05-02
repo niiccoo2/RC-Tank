@@ -197,7 +197,7 @@ class Motor:
         }
         """
 
-        if command.left == 1234000 or command.right == 1234000:
+        if command.left == 1234_0000 or command.right == 1234_0000:
             self.set_esc(0, 0) # Stop both motors
             self.set_esc(1, 0)
             time.sleep(0.1)
