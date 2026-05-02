@@ -37,7 +37,7 @@ class SelfDrivingManager:
         sleep(.1)
         continue
       
-      print(f"Self driving mode: {self.mode}")
+      # print(f"Self driving mode: {self.mode}")
       if self.mode == 1:
         self._waypoint_navigation()
       elif last_mode != 0:
