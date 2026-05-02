@@ -1059,18 +1059,22 @@ Did a bunch of field testing today and here are the main issues:
 
 ### Saturday, May 2nd
 
-#### 09:30 | x hours
+#### 09:30 | 2 hours
 
 Not sure exactly what I am going to work on right now... Going to start by adding logic that tells the self driving when to start going to the next waypoint. I guess I am just going to try and make the waypoint logic better in general... Is raining right now, so I can't test too much, but other things I might do today are: add more stats to self driving screen, figure out why motors don't stop all the way when self driving is stopped, add rtk. The only thing I am worried about with adding RTK GPS is that I don't want an over reliance on it... Although once I have more than just GPS for navigation it won't be such an issue.
 
 Things to do:
 
-- [ ] Next waypoint logic
-- [ ] More self driving screen stats
+- [x] Next waypoint logic
 - [ ] Stop motors after self driving ends
-- [ ] RTK GPS
 - [ ] Better debug system
+- [ ] RTK GPS
+- [ ] More self driving screen stats
 
 Going to start by writing a functoin to calculate distance between two sets of coords. Then will say something like if within x distance, go to next waypoint.
 
-Changed the `states.waypoint_locations` (waypoint list) to use the normal `Location` type (formerly `GPSLocation`) instead of the now not used `WaypointLocation` type (formerly `Location`). To do this, the locations are converted from `WaypointLocation` to `Location` when they are received in the websocket handler, before they are added to the `states.waypoint_locations` list.
+Changed the `states.waypoint_locations` (waypoint list) to use the normal `Location` type (formerly `GPSLocation`) instead of the now not used `WaypointLocation` type (formerly `Location`). To do this, the locations are converted from `WaypointLocation` to `Location` when they are received in the websocket handler, before they are added to the `states.waypoint_locations` list. Now that locations are all one type, it will be a lot easier to write the distance calulation function. Going to start with a simple function that finds distance, but the issue is that it will be in whatever unit the coords go in as, so we will need to convert that to meters after, and make sure to define this in the doc string.
+
+Should be done with the logic that lets it switch to a new waypoint. Although I'm sure there will be issues when I test it.
+
+#### 12:00 | x hours

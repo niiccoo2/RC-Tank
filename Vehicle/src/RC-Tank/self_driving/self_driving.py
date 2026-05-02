@@ -58,7 +58,8 @@ class SelfDrivingManager:
     if len(states.waypoint_locations) == 0: # if no waypoints, stop code
       self.mode = 0
     for waypoint in states.waypoint_locations:
-      while True: # will need to change this to be while not within x meters from waypoint
+      # when more than 2 meters away form waypoint, keep trying to drive to it
+      while self._calc_distance(waypoint, states.gps_location) > 2:
         if self.mode != 1:
           print("Shouldn't be in self driving mode! Stopping.")
           return
@@ -95,6 +96,8 @@ class SelfDrivingManager:
     """
     Calculate bearing from one position to another.
     """
+    # might want to change this to use the correct math, but I don't really understand how the correct math works...
+
     x_diff = waypoint.lat - current.lat
     y_diff = waypoint.lon - current.lon
 
@@ -108,4 +111,17 @@ class SelfDrivingManager:
     return bearing
   
   def _calc_distance(self, location_1: Location, location_2: Location):
-    pass
+    """
+    Calculate distance from two locations in meters.
+    """
+    # convert decimal degrees to radians
+    lon1, lat1, lon2, lat2 = map(math.radians, [location_1.lon, location_1.lat, location_2.lon, location_2.lat])
+
+    difference_lon = lon2 - lon1
+    difference_lat = lat2 - lat1
+    a = math.sin(difference_lat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(difference_lon/2)**2
+    c = 2 * math.asin(math.sqrt(a))
+    r = 6_378_137 # radius of earth in m
+
+    distance = c * r
+    return distance
