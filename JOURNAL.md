@@ -1094,10 +1094,12 @@ Think I figured out how to stop the motors when switching tabs, but I still want
 
 Fix did not work... But timeout is working now?? Idk, I don't like how weird all this is.
 
-#### 16:00 | x hours
+#### 16:00 | x hours 40mins
 
 Just tested and was able to reproduce the failsafe not working.
 
 I'm really slow, first, I wasn't on the local version of the site, and second, there is literaly a function that runs when switching tabs. Now it does the same weird thing that happens when you stop self driving, so I am going to assume the rest is the same issue.
 
 Seems like the ESC's sometimes need more than one instruction to get an idea of what to do. This doesn't really matter if it misses something when driving, but when you send it one command to stop, then it is an issue. Also would be nice if we could get their baudrate turned up so that we can do more messages.
+
+Omg, different section seems to be broken again. Also it really should be failsafing a lot of these times. Weird, after a reboot (for other reasons) the section switching seems to work again... Not sure why so I'm sure it will come up again. Also, the failsafe only seems to be happening when you send a single instance of a 0 and the ESC's don't listen... Then ofc the failsafe works... Now it is time to work on fixing the weird slowing down when it only sees one instance.

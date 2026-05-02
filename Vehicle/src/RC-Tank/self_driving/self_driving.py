@@ -41,7 +41,7 @@ class SelfDrivingManager:
       if self.mode == 1:
         self._waypoint_navigation()
       elif last_mode != 0:
-        services.motors.set_motor(MotorCommand(left=0, right=0))
+        services.motors.set_motor(MotorCommand(left=12340000, right=12340000))
 
       last_mode = self.mode
       sleep(.1) # .5 seems to be too fast for the ESC's

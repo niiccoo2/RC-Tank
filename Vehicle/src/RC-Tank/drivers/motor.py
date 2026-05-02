@@ -153,6 +153,10 @@ class Motor:
                 print(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
                 self.set_esc(0, 0) # Stop both motors
                 self.set_esc(1, 0)
+                time.sleep(.1)
+                self.set_esc(0, 0) # Stop both motors
+                self.set_esc(1, 0)
+                # Do this twice becuase of a weird bug with ESC
                 self.stopped = True
             
             self.read_feedback()
@@ -188,6 +192,17 @@ class Motor:
             "right": -500
         }
         """
+
+        if command.left == 1234000 or command.right == 1234000:
+            self.set_esc(0, 0) # Stop both motors
+            self.set_esc(1, 0)
+            time.sleep(0.1)
+            self.set_esc(0, 0) # Stop both motors
+            self.set_esc(1, 0)
+            return {"status": "ok", "left": 0, "right": 0, 'voltage': self.voltage}
+
+        command.left = self.clamp(command.left, -1000, 1000)
+        command.right = self.clamp(command.right, -1000, 1000)
 
         self.last_update_time = time.time()
 
