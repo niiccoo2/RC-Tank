@@ -3,7 +3,7 @@ import time
 from pydantic import BaseModel
 import pynmea2
 from time import sleep
-from core.types import GPSResponse
+from core.types import Location
 from core import states
 
 class GPS:
@@ -15,7 +15,7 @@ class GPS:
     
     def read_data(self, max_wait_seconds: float = 0.8):
         if not self.port:
-            return GPSResponse(
+            return Location(
                 lat=0, lon=0, alt=0
             )
         
@@ -34,7 +34,7 @@ class GPS:
                             #print(f"Lat: {msg.latitude}, Lon: {msg.longitude}, Fix: {fix_label}")
 
 
-                            return GPSResponse(
+                            return Location(
                                 lat=msg.latitude,
                                 lon=msg.longitude,
                                 alt=float(msg.altitude or 0.0)
@@ -52,7 +52,7 @@ class GPS:
             print("Stopping...")
 
         # No valid GPS data found
-        return GPSResponse(
+        return Location(
             lat=0, lon=0, alt=0
         )
     

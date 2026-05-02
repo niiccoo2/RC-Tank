@@ -1025,7 +1025,7 @@ Got telemetry sending from the tank, now just need to read it on the website.
 
 Going to start by getting telemetry decoding on the website working. Got telemetry reading working on the website. Working on getting self driving working right now. One issue I hit is not multiple things are trying to read GPS, so I am going to make a thread that just always reads it and updates to states.
 
-### Monday, April 27th | x hours
+### Monday, April 27th | 4 hours
 
 #### 08:30 | 1.5 hours
 
@@ -1047,14 +1047,30 @@ Finished the math that calculates how much to turn for each waypoint, I'm sure I
 
 Added the self driving screen to the website. Right now it is just a copy of the normal driving page with the video removed and motor speeds replaced with a start and stop button.
 
-#### 15:00 | x hours
+#### 15:00 | 1 hour
 
 There seem to be a few issues regarding who can control the motor. Sometimes it seems like the self driving thread crashes because it tries to control the motors at the same time as a human driving...
-
-### 17:00 | x hours
 
 Did a bunch of field testing today and here are the main issues:
 
 - Compass still has a lot of issues
 - Waypoint following seems to be pretty good, but still need to add the logic to decide when to go to the next waypoint in the list.
 - Now that I think about it, the apparent compass issues could also be from the GPS not being accurate
+
+### Saturday, May 2nd
+
+#### 09:30 | x hours
+
+Not sure exactly what I am going to work on right now... Going to start by adding logic that tells the self driving when to start going to the next waypoint. I guess I am just going to try and make the waypoint logic better in general... Is raining right now, so I can't test too much, but other things I might do today are: add more stats to self driving screen, figure out why motors don't stop all the way when self driving is stopped, add rtk. The only thing I am worried about with adding RTK GPS is that I don't want an over reliance on it... Although once I have more than just GPS for navigation it won't be such an issue.
+
+Things to do:
+
+- [ ] Next waypoint logic
+- [ ] More self driving screen stats
+- [ ] Stop motors after self driving ends
+- [ ] RTK GPS
+- [ ] Better debug system
+
+Going to start by writing a functoin to calculate distance between two sets of coords. Then will say something like if within x distance, go to next waypoint.
+
+Changed the `states.waypoint_locations` (waypoint list) to use the normal `Location` type (formerly `GPSLocation`) instead of the now not used `WaypointLocation` type (formerly `Location`). To do this, the locations are converted from `WaypointLocation` to `Location` when they are received in the websocket handler, before they are added to the `states.waypoint_locations` list.

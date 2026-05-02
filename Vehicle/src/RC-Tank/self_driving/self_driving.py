@@ -1,5 +1,5 @@
 from core import services, states
-from core.types import MotorCommand, Location, GPSResponse
+from core.types import MotorCommand, WaypointLocation, Location
 from time import sleep
 import threading
 import math
@@ -47,11 +47,24 @@ class SelfDrivingManager:
       sleep(.05)
     print("Exiting self-driving loop")
   
-  def _waypoint_navigation(self, max_speed = 500):
-    # for waypoint in states.locations:
-      #while True: # will need to change this to be while not within x meters from waypoint
-        print(f"Going to waypoint {states.locations[0]}")
-        bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, states.locations[0])
+  def _waypoint_navigation(self, max_speed: int = 500, success_distance: float = 1):
+    """
+    Navigate through a list of waypoints.
+    
+    Args:
+    max_speed: int that defines speed to be changed to turn
+    success_distance: float that defines how close you need to be to a waypoint to switch to next one
+    """
+    if len(states.waypoint_locations) == 0: # if no waypoints, stop code
+      self.mode = 0
+    for waypoint in states.waypoint_locations:
+      while True: # will need to change this to be while not within x meters from waypoint
+        if self.mode != 1:
+          print("Shouldn't be in self driving mode! Stopping.")
+          return
+
+        print(f"Going to waypoint {waypoint}")
+        bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
         heading = states.heading
 
         difference = bearing_to_waypoint - heading
@@ -78,10 +91,12 @@ class SelfDrivingManager:
           print("Was unable to set motor speed")
 
 
-  def _calc_bearing_to_waypoint(self, current: GPSResponse, waypoint: Location):
-    latLng = self.get_latLng(waypoint)
-    x_diff = latLng[0] - current.lat
-    y_diff = latLng[1] - current.lon
+  def _calc_bearing_to_waypoint(self, current: Location, waypoint: Location):
+    """
+    Calculate bearing from one position to another.
+    """
+    x_diff = waypoint.lat - current.lat
+    y_diff = waypoint.lon - current.lon
 
     bearing = math.degrees(math.atan2(y_diff, x_diff))
 
@@ -92,8 +107,5 @@ class SelfDrivingManager:
     
     return bearing
   
-  def get_latLng(self, waypoint):
-    if isinstance(waypoint, dict):
-        return waypoint['latLng']
-    else:
-        return waypoint.latLng
+  def _calc_distance(self, location_1: Location, location_2: Location):
+    pass

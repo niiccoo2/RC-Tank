@@ -1,5 +1,5 @@
-from core.types import Location, GPSResponse
+from core.types import WaypointLocation, Location
 
-locations: list[Location] = []
-gps_location: GPSResponse = GPSResponse(lat=0, lon=0, alt=0)
+waypoint_locations: list[Location] = []
+gps_location: Location = Location(lat=0, lon=0, alt=0)
 heading: float = 0

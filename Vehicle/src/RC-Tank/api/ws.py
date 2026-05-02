@@ -1,6 +1,6 @@
 import asyncio
 from fastapi import APIRouter, WebSocket
-from core.types import MotorCommand, RTCOffer
+from core.types import MotorCommand, RTCOffer, Location
 from core import services, states
 from api.telemetry import send_telemetry
 
@@ -37,7 +37,7 @@ async def ws(ws: WebSocket):
                     cmd = MotorCommand(**msg["data"]) # ** makes it unpack a dict into a typed object
 
                     if services.motors:
-                        services.motors.set_motor(cmd) # this returns data such as voltage that we need to somehow send to client
+                        services.motors.set_motor(cmd)
                     else:
                         pass # need to raise an error here
                 elif msg_type == "lights":
@@ -46,8 +46,11 @@ async def ws(ws: WebSocket):
                     else:
                         pass # need to raise an error here
                 elif msg_type == "waypoint_data":
-                    states.locations = msg["data"]
-                    print(f"Recevied waypoint data: {msg['data']}")
+                    locations_new_type: list[Location] = []
+                    for item in msg["data"]:
+                        locations_new_type.append(Location.from_waypoint(item))
+                    states.waypoint_locations = locations_new_type
+                    print(f"Recevied waypoint data: {locations_new_type}")
                 elif msg_type == "self_driving_mode":
                     if services.self_driving_manager: services.self_driving_manager.set_mode(msg["data"])
                     print(f"Set self driving mode to: {msg['data']}")
