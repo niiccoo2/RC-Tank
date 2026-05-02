@@ -44,7 +44,7 @@ class SelfDrivingManager:
         services.motors.set_motor(MotorCommand(left=0, right=0))
 
       last_mode = self.mode
-      sleep(.05)
+      sleep(.1) # .5 seems to be too fast for the ESC's
     print("Exiting self-driving loop")
   
   def _waypoint_navigation(self, max_speed: int = 500, success_distance: float = 1):
