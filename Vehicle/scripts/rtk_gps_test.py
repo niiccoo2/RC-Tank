@@ -15,14 +15,24 @@ print(f"Password length: {len(os.getenv('NTRIP_PWD') or '')} characters")
 
 NTRIP_USER = os.getenv("NTRIP_USER")
 NTRIP_PWD = os.getenv("NTRIP_PWD")
-# NTRIP_SERVER = "macorsrtk.massdot.state.ma.us" 
 NTRIP_SERVER = "rtk2go.com"
-# NTRIP_PORT = 10000
 NTRIP_PORT = 2101
-# MOUNTPOINT = "RTCM3MSM_IMAX"
 MOUNTPOINT = "Lowell_MA"
-# MOUNTPOINT = "RTCM3_NEAR"
 GGA_INTERVAL_S = 2
+
+
+class LockedSerial:
+    def __init__(self, port, lock):
+        self.port = port
+        self.lock = lock
+
+    def write(self, data):
+        with self.lock:
+            return self.port.write(data)
+
+    def flush(self):
+        with self.lock:
+            return self.port.flush()
 
 
 def preflight_ntrip_mountpoint():
@@ -44,7 +54,7 @@ def preflight_ntrip_mountpoint():
             raw = sock.recv(1024)
             text = raw.decode(errors="replace")
             header, _, body = text.partition("\r\n\r\n")
-            first_line = header.splitlines()[0] if header else "<no response>" # type: ignore
+            first_line = header.splitlines()[0] if header else "<no response>"  # type: ignore
             print(f"NTRIP preflight: {first_line}")
             if header:
                 print("NTRIP headers:")
@@ -70,18 +80,21 @@ def preflight_ntrip_mountpoint():
             "first_line": str(err),
         }
 
-def feed_rtcm(port, stop_event, ref_lat, ref_lon):
+
+def feed_rtcm(port, stop_event, ref_lat, ref_lon, serial_lock):
     """Background task to feed RTCM corrections into the GPS serial port"""
     retry_delay_s = 15
     retries = 0
     max_retries = 6
+
+    locked_output = LockedSerial(port, serial_lock)
+
     while not stop_event.is_set():
         if retries >= max_retries:
             print("NTRIP stopped after max retries to avoid caster spam.")
             break
         try:
             with GNSSNTRIPClient() as gnc:
-                # Start NTRIP client and keep it alive until stop/reconnect.
                 run_args = {
                     "server": NTRIP_SERVER,
                     "port": NTRIP_PORT,
@@ -96,7 +109,7 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
                     "reflon": ref_lon,
                     "refalt": 0.0,
                     "refsep": 0.0,
-                    "output": port,
+                    "output": locked_output,
                     "stopevent": stop_event,
                 }
 
@@ -109,8 +122,6 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
             if stop_event.is_set():
                 break
 
-            # pygnssutils may raise KeyError('code') if the caster reply is not
-            # the expected NTRIP response shape.
             if str(err).strip("'\"") == "code":
                 print(
                     "NTRIP response missing 'code'. Check mountpoint/user/password "
@@ -130,19 +141,22 @@ def feed_rtcm(port, stop_event, ref_lat, ref_lon):
             retry_delay_s = min(retry_delay_s * 2, 120)
             retries += 1
 
+
 def run():
     gps_port = "/dev/ttyACM0"
     print(f"Using GPS port: {gps_port}")
     port = serial.Serial(gps_port, baudrate=38400, timeout=1)
     gps = UbloxGps(port)
     stop_event = threading.Event()
+    serial_lock = threading.Lock()
 
     # Grab one valid position to seed fixed-reference GGA for NTRIP caster.
     ref_lat = None
     ref_lon = None
     for _ in range(150):
         try:
-            seed = gps.geo_coords()
+            with serial_lock:
+                seed = gps.geo_coords()
             if seed:
                 ref_lat = seed.lat
                 ref_lon = seed.lon
@@ -169,37 +183,33 @@ def run():
         port.close()
         return
 
-    # Start the NTRIP client in a separate thread
     ntrip_thread = threading.Thread(
         target=feed_rtcm,
-        args=(port, stop_event, ref_lat, ref_lon),
+        args=(port, stop_event, ref_lat, ref_lon, serial_lock),
         daemon=True,
     )
     ntrip_thread.start()
 
     print("Waiting for RTK Fix... (Ensure antenna is outside)")
-    
-    try: 
+
+    try:
         while True:
-            try: 
-                coords = gps.geo_coords()
-                # NAV-PVT message tells us the 'fix' type:
-                # 3 = 3D Fix, 4 = RTK Fixed (1cm), 5 = RTK Float (decimeters)
+            try:
+                with serial_lock:
+                    coords = gps.geo_coords()
                 if coords:
                     print(f"Lat: {coords.lat}, Lon: {coords.lon}, FixType: {coords.fixType}")
-                
                     if coords.fixType == 4:
                         print("--- RTK FIXED (Centimeter Accuracy!) ---")
-                
             except (ValueError, IOError):
-                pass # Ignore occasional dropped packets
-                
+                pass
     except KeyboardInterrupt:
         print("Stopping...")
     finally:
         stop_event.set()
         ntrip_thread.join(timeout=2)
         port.close()
+
 
 if __name__ == '__main__':
     run()

@@ -1127,3 +1127,7 @@ Think I got the better debugging working! Going to test on the tank now. Just ha
 Found this website for RTK: `https://macors.massdot.state.ma.us/`. Seems like it will work pretty good in Massachusetts, but will need to find a new one when not in state.
 
 Made some really good progress on getting RTK GPS working. There is a 40% chance that the only thing I need to do to get it working now it to bring it outside so that it can get a level 4 fix.
+
+#### 19:00 | x hours
+
+Have been having some fun time with RTK. Ended up getting something working with `rtk2go.com` but have still not gotten an RTK lock...
