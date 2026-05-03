@@ -15,7 +15,7 @@ print(f"Read username: {os.getenv('NTRIP_USER')}")
 NTRIP_USER = os.getenv("NTRIP_USER")
 NTRIP_PWD = os.getenv("NTRIP_PWD")
 NTRIP_SERVER = "macorsrtk.massdot.state.ma.us" 
-NTRIP_PORT = 443
+NTRIP_PORT = 2101
 # MOUNTPOINT = "Lowell_MA"
 MOUNTPOINT = "RTCM3_NEAR"
 GGA_INTERVAL_S = 2
