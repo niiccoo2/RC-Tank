@@ -1122,6 +1122,8 @@ Going to start by making a better debugging system so that it isn't spamming thi
 
 Think I got the better debugging working! Going to test on the tank now. Just had to add it to the websockets but now it seems like the new debugging seems to be working.
 
-#### 09:30 | x hours
+#### 09:30 | 1.5 hours
 
 Found this website for RTK: `https://macors.massdot.state.ma.us/`. Seems like it will work pretty good in Massachusetts, but will need to find a new one when not in state.
+
+Made some really good progress on getting RTK GPS working. There is a 40% chance that the only thing I need to do to get it working now it to bring it outside so that it can get a level 4 fix.
