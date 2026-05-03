@@ -5,13 +5,19 @@ from ublox_gps import UbloxGps
 from pygnssutils import GNSSNTRIPClient
 import threading
 import time
+import os
+from dotenv import load_dotenv
 
-NTRIP_USER = "rtk@a.nicosmith.net"
-NTRIP_PWD = "none"
-NTRIP_SERVER = "rtk2go.com" 
-NTRIP_PORT = 2101
+load_dotenv()
+
+print(f"Read username: {os.getenv("NTRIP_USER")}")
+
+NTRIP_USER = os.getenv("NTRIP_USER")
+NTRIP_PWD = os.getenv("NTRIP_PWD")
+NTRIP_SERVER = "macorsrtk.massdot.state.ma.us" 
+NTRIP_PORT = 443
 # MOUNTPOINT = "Lowell_MA"
-MOUNTPOINT = "Ellsworth202Grant"
+MOUNTPOINT = "RTCM3_NEAR"
 GGA_INTERVAL_S = 2
 
 
