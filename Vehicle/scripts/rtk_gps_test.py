@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-print(f"Read username: {os.getenv("NTRIP_USER")}")
+print(f"Read username: {os.getenv('NTRIP_USER')}")
 
 NTRIP_USER = os.getenv("NTRIP_USER")
 NTRIP_PWD = os.getenv("NTRIP_PWD")
