@@ -3,6 +3,9 @@ import adafruit_qmc5883p #type:ignore
 import math
 from core import states
 from time import sleep
+from core.config import get_logger
+
+compass = get_logger("compass")
 
 class Compass:
     def __init__(self):
@@ -12,6 +15,7 @@ class Compass:
         self.OFFSET_Y = 0.013
         self.SCALE_X = 0.84
         self.SCALE_Y = 0.73
+        compass.debug("Compass initialized")
     
     def read_compass(self):
         raw_x, raw_y, raw_z = self.sensor.magnetic
@@ -30,6 +34,8 @@ class Compass:
             heading += 360
         elif heading > 360:
             heading -= 360
+
+        compass.debug(f"Read compass: {heading}°")
 
         return heading
 

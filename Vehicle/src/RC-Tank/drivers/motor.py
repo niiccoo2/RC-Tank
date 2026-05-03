@@ -4,6 +4,9 @@ import serial  # type: ignore
 import time
 import threading
 from core.types import MotorCommand
+from core.config import get_logger
+
+motor = get_logger("motor")
 
 BLACK = "\033[0;30m"
 RED = "\033[0;31m"
@@ -61,7 +64,7 @@ class Motor:
             # Read all available bytes
             data = self.ser.read(self.ser.in_waiting)
             # Process 'data' here (it will be bytes)
-            print(f"Received: {data.hex()}")
+            motor.debug(f"Received: {data.hex()}")
             return data.hex()
         return
 
@@ -141,7 +144,7 @@ class Motor:
             # self.ser.flush() # Blocking, causes latency
 
         # Debugging: Show the sent packet
-        # print(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
+        # motor.debug(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
 
     def timeout_check(self):
         while not self._stop_event.is_set():
@@ -151,7 +154,7 @@ class Motor:
             # print(f"Time since last update: {time_since_last_update}")
             if time_since_last_update > 2000: # if over 2 sec
                 if not self.stopped:
-                    print(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
+                    motor.error(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
                 self.set_esc(0, 0) # Stop both motors
                 self.set_esc(1, 0)
                 time.sleep(.1)
@@ -182,9 +185,9 @@ class Motor:
             if voltage is not None:
                 self.voltage = voltage
             else:
-                print('Warning: Could not prase voltage from feedback')
+                motor.debug('Warning: Could not prase voltage from feedback')
         else:
-            print('Warning: No feedback data received')
+            motor.debug('Warning: No feedback data received')
     
     def set_motor(self, command: MotorCommand):
         """
@@ -216,7 +219,7 @@ class Motor:
         self.set_esc(0, left_speed) # slave 0 is left
         self.set_esc(1, right_speed) # slave 1 is right
 
-        print(f'/motor ran, left: {left_speed}, right: {right_speed}')
+        motor.debug(f'motor ran, left: {left_speed}, right: {right_speed}')
 
         return {"status": "ok", "left": left_speed, "right": right_speed, 'voltage': self.voltage}
 

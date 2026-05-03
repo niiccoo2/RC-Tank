@@ -5,13 +5,19 @@ import pynmea2
 from time import sleep
 from core.types import Location
 from core import states
+from core.config import get_logger
+
+gps = get_logger("gps")
 
 class GPS:
     def __init__(self):
-        # print('Initializing GPS')
-        self.port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=1)
-        time.sleep(.5)
-        # print('GPS Intitalized')
+        gps.debug("Initializing GPS")
+        try:
+            self.port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=1)
+            time.sleep(.5)
+            gps.debug("GPS Intitalized")
+        except Exception as e:
+            gps.debug(f"Error initializing GPS: {e}")
     
     def read_data(self, max_wait_seconds: float = 0.8):
         if not self.port:
@@ -46,7 +52,7 @@ class GPS:
                 except pynmea2.ParseError:
                     pass
                 except (ValueError, IOError) as e:
-                    print(f"Dropped packet: {e}")
+                    gps.error(f"Dropped packet: {e}")
 
         except KeyboardInterrupt:
             print("Stopping...")

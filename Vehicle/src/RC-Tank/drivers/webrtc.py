@@ -4,6 +4,9 @@ import logging
 import platform
 from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer # type: ignore
 from aiortc.contrib.media import MediaPlayer, MediaRelay # type: ignore
+from core.config import get_logger
+
+webrtc = get_logger("webrtc")
 
 class WebRTCManager:
     def __init__(self, cam_src="/dev/video0"):
@@ -35,7 +38,7 @@ class WebRTCManager:
 
     def get_webcam(self):
         if self.webcam is None:
-            print(f"Opening WebRTC camera: {self.cam_file} [{self.cam_format}]")
+            webrtc.debug(f"Opening WebRTC camera: {self.cam_file} [{self.cam_format}]")
             try:
                 self.webcam = MediaPlayer(
                     self.cam_file, 
@@ -43,12 +46,12 @@ class WebRTCManager:
                     options=self.cam_options
                 )
             except Exception as e:
-                print(f"Error opening camera: {e}")
+                webrtc.error(f"Error opening camera: {e}")
                 return None
         if self.webcam.video is not None:
             return self.relay.subscribe(self.webcam.video)
         else:
-            print("No video track found in webcam.")
+            webrtc.error("No video track found in webcam.")
             return None
 
     async def offer(self, params):
@@ -77,7 +80,7 @@ class WebRTCManager:
 
         @pc.on("connectionstatechange")
         async def on_connectionstatechange():
-            print(f"Connection state is {pc.connectionState}")
+            webrtc.debug(f"Connection state is {pc.connectionState}")
             if pc.connectionState == "failed":
                 await pc.close()
                 self.pcs.discard(pc)
@@ -98,7 +101,7 @@ class WebRTCManager:
         try:
             await asyncio.wait_for(self._wait_for_ice_gathering(pc), timeout=2.0)
         except asyncio.TimeoutError:
-            print("ICE gathering timed out, sending partial answer")
+            webrtc.warning("ICE gathering timed out, sending partial answer")
 
         return {
             "sdp": pc.localDescription.sdp,
@@ -110,7 +113,7 @@ class WebRTCManager:
             await asyncio.sleep(0.05)
 
     async def cleanup(self):
-        print("Cleaning up WebRTC connections...")
+        webrtc.debug("Cleaning up WebRTC connections...")
         coros = [pc.close() for pc in self.pcs]
         await asyncio.gather(*coros)
         self.pcs.clear()

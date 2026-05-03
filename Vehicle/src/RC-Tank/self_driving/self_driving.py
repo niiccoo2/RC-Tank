@@ -3,6 +3,9 @@ from core.types import MotorCommand, WaypointLocation, Location
 from time import sleep
 import threading
 import math
+from core.config import get_logger
+
+self_driving = get_logger("self_driving")
 
 class SelfDrivingManager:
   def __init__(self):
@@ -15,35 +18,35 @@ class SelfDrivingManager:
       self._running = True
       self._thread = threading.Thread(target=self._run, daemon=True)
       self._thread.start()
-      print("Self driving thread started")
+      self_driving.debug("Self driving thread started")
   
   def stop(self):
     self.mode = 0 # normal driving mode
     self._running = False
     if self._thread:
       self._thread.join(timeout=2)
-      print("Self driving thread stopped")
+      self_driving.debug("Self driving thread stopped")
       self._thread = None
   
   def set_mode(self, mode: int):
-    print(f"Switching mode to {mode}")
+    self_driving.debug(f"Switching mode to {mode}")
     self.mode = mode
   
   def _run(self):
-    print("Self driving run loop running")
+    self_driving.debug("Self driving run loop running")
     while self._running:
       if services.motors is None:
-        print("Self driving can't find motors")
+        self_driving.warning("Self driving can't find motors")
         sleep(.1)
         continue
       
-      # print(f"Self driving mode: {self.mode}")
+      # self_driving.debug(f"Self driving mode: {self.mode}")
       if self.mode == 1:
         self._waypoint_navigation()
       
 
       sleep(.1) # .5 seems to be too fast for the ESC's
-    print("Exiting self-driving loop")
+    self_driving.debug("Exiting self-driving loop")
   
   def _waypoint_navigation(self, max_speed: int = 500, success_distance: float = 2):
     """
@@ -59,12 +62,12 @@ class SelfDrivingManager:
       # when more than 2 meters away form waypoint, keep trying to drive to it
       while self._calc_distance(waypoint, states.gps_location) > success_distance:
         if self.mode != 1:
-          print("Shouldn't be in self driving mode! Stopping.")
+          self_driving.debug("Shouldn't be in self driving mode! Stopping.")
           if services.motors:
             services.motors.set_motor(MotorCommand(left=12340000, right=12340000))
           return
 
-        print(f"Going to waypoint {waypoint}")
+        self_driving.debug(f"Going to waypoint {waypoint}")
         bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
         heading = states.heading
 
@@ -77,19 +80,19 @@ class SelfDrivingManager:
 
         normalized_difference = difference/360
 
-        print(f"Difference: {normalized_difference}")
+        self_driving.debug(f"Difference: {normalized_difference}")
 
         TURNING_CONSTANT = 1500
 
         left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
         right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
 
-        print(f"Self driving speeds: {left_speed}, {right_speed}")
+        self_driving.debug(f"Self driving speeds: {left_speed}, {right_speed}")
 
         if services.motors:
           services.motors.set_motor(MotorCommand(left=left_speed, right=right_speed))
         else:
-          print("Was unable to set motor speed")
+          self_driving.debug("Was unable to set motor speed")
 
 
   def _calc_bearing_to_waypoint(self, current: Location, waypoint: Location):
