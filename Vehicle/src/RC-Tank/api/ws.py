@@ -3,19 +3,22 @@ from fastapi import APIRouter, WebSocket
 from core.types import MotorCommand, RTCOffer, Location
 from core import services, states
 from api.telemetry import send_telemetry
+from core.config import get_logger
 
 router = APIRouter()
+
+websocket_logger = get_logger("websocket")
 
 @router.websocket("/ws")
 async def ws(ws: WebSocket):
     await ws.accept()
-    telemetry_sender = asyncio.create_task(send_telemetry(ws))
+    telemetry_sender = asyncio.create_task(send_telemetry(ws, websocket_logger))
     try:
         while True:
             msg = await ws.receive_json()
             msg_type = msg.get("type")
 
-            print(f"{msg_type.upper()}: {msg['data']}")
+            websocket_logger.debug(f"{msg_type.upper()}: {msg['data']}")
 
             if len(msg_type.split(":")) > 1: # if has a prefix, in this case can only be two way
                 msg_type = msg_type.split(":")[1] # now set type to the minor type. we can now treat all these messages as two way
@@ -50,10 +53,10 @@ async def ws(ws: WebSocket):
                     for item in msg["data"]:
                         locations_new_type.append(Location.from_waypoint(item))
                     states.waypoint_locations = locations_new_type
-                    print(f"Recevied waypoint data: {locations_new_type}")
+                    websocket_logger.debug(f"Recevied waypoint data: {locations_new_type}")
                 elif msg_type == "self_driving_mode":
                     if services.self_driving_manager: services.self_driving_manager.set_mode(msg["data"])
-                    print(f"Set self driving mode to: {msg['data']}")
+                    websocket_logger.debug(f"Set self driving mode to: {msg['data']}")
 
     finally:
         if telemetry_sender: 

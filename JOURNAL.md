@@ -1119,3 +1119,5 @@ Found a few issues that I caused. I was using a different number than what I tho
 #### 07:45 | x hours
 
 Going to start by making a better debugging system so that it isn't spamming things that I don't want. I want to make it so if I run it with a flag like -motors-debug, then it will do motor stuff, but nothing else.
+
+Think I got the better debugging working! Going to test on the tank now.

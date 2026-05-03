@@ -11,6 +11,7 @@ def _parse_flags():
     parser.add_argument('--gps-debug', action='store_true', help='Show gps debug logs')
     parser.add_argument('--webrtc-debug', action='store_true', help='Show webrtc debug logs')
     parser.add_argument('--self_driving-debug', action='store_true', help='Show self_driving debug logs')
+    parser.add_argument('--websocket-debug', action='store_true', help='Show websocket debug logs')
     
     return parser.parse_args()
 
@@ -24,13 +25,15 @@ def get_logger(name):
     # Logic to enable specific debuggers
     if name == 'motor' and args.motor_debug:
         logger.setLevel(logging.DEBUG)
-    elif name == 'compass' and args.compass_debug:
+    if name == 'compass' and args.compass_debug:
         logger.setLevel(logging.DEBUG)
-    elif name == 'gps' and args.gps_debug:
+    if name == 'gps' and args.gps_debug:
         logger.setLevel(logging.DEBUG)
-    elif name == 'webrtc' and args.webrtc_debug:
+    if name == 'webrtc' and args.webrtc_debug:
         logger.setLevel(logging.DEBUG)
-    elif name == 'self_driving' and args.self_driving_debug:
+    if name == 'self_driving' and args.self_driving_debug:
+        logger.setLevel(logging.DEBUG)
+    if name == 'websocket' and args.websocket_debug:
         logger.setLevel(logging.DEBUG)
         
     return logger
