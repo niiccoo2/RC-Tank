@@ -1110,7 +1110,7 @@ Fixing the timeout was super easy, and now that I think about it, it also should
 
 Found a few issues that I caused. I was using a different number than what I thought I set the stop code to. I got self driving stopping before the timeout hit, so I am going to call that good enough for now. Might work on this a bit more later today, but now sure.
 
-### Sunday, May 3rd | x hours
+### Sunday, May 3rd | 3 hours
 
 - [x] Better debug system
 - [ ] RTK GPS
@@ -1128,6 +1128,6 @@ Found this website for RTK: `https://macors.massdot.state.ma.us/`. Seems like it
 
 Made some really good progress on getting RTK GPS working. There is a 40% chance that the only thing I need to do to get it working now it to bring it outside so that it can get a level 4 fix.
 
-#### 19:00 | x hours
+#### 19:00 | 1 hour
 
 Have been having some fun time with RTK. Ended up getting something working with `rtk2go.com` but have still not gotten an RTK lock...
