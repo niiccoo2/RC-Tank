@@ -1,34 +1,32 @@
-import serial
-import pynmea2 # type:ignore
-import time
+from serial import Serial
+from pygnssutils import GNSSNTRIPClient, GNSSReader
+from queue import Queue
+import os
+from dotenv import load_dotenv
 
-def run():
-    port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=1)
+load_dotenv()
 
-    print("Waiting for fix...")
-    try:
-        while True:
-            try:
-                line = port.readline().decode('ascii', errors='replace').strip()
-                if line.startswith('$GNGGA') or line.startswith('$GNRMC'):
-                    msg = pynmea2.parse(line)
+# 1. Connect to your GPS hardware
+stream = Serial('/dev/ttyACM0', 38400, timeout=3)
+out_queue = Queue()
 
-                    if isinstance(msg, pynmea2.GGA):
-                        fix_quality = int(msg.gps_qual) if msg.gps_qual else 0
-                        fix_label = {0: "No Fix", 1: "GPS", 4: "RTK Fixed", 5: "RTK Float"}.get(fix_quality, str(fix_quality))
-                        print(f"Lat: {msg.latitude}, Lon: {msg.longitude}, Fix: {fix_label}")
-                        if fix_quality == 4:
-                            print("--- RTK FIXED (Centimeter Accuracy!) ---")
+# 2. Start the NTRIP Client (Caster Info)
+with GNSSNTRIPClient(None) as gnc:
+    gnc.run(
+        server="macorsrtk.massdot.state.ma.us", 
+        port=10000, 
+        mountpoint="RTCM3MSM_IMAX", 
+        output=out_queue,  # Corrections go into this queue
+        ntripuser=os.getenv("NTRIP_USER"),
+        ntrippass=os.getenv("NTRIP_PWD")
+    )
 
-            except pynmea2.ParseError:
-                pass
-            except (ValueError, IOError) as e:
-                print(f"Dropped packet: {e}")
+    # 3. Simple Loop: Send corrections to GPS & Read "Good" result
+    while True:
+        if not out_queue.empty():
+            stream.write(out_queue.get()) # Inject RTCM into GPS
 
-    except KeyboardInterrupt:
-        print("Stopping...")
-    finally:
-        port.close()
-
-if __name__ == '__main__':
-    run()
+        gnr = GNSSReader(stream)
+        (raw, parsed) = gnr.read()
+        if parsed:
+            print(f"Precise Position: {parsed.lat}, {parsed.lon}")
