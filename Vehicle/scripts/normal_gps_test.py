@@ -16,12 +16,12 @@ out_queue = Queue()
 # 2. Start the NTRIP Client (Caster Info)
 with GNSSNTRIPClient(None) as gnc:
     gnc.run(
-        server="macorsrtk.massdot.state.ma.us", 
+        server="https://macorsrtk.massdot.state.ma.us/", 
         port=10000, 
-        mountpoint="RTCM3MSM_IMAX", 
-        output=out_queue,  # Corrections go into this queue
         ntripuser=os.getenv("NTRIP_USER"),
-        ntrippass=os.getenv("NTRIP_PWD")
+        ntrippass=os.getenv("NTRIP_PWD"),
+        mountpoint="RTCM3MSM_IMAX", 
+        output=out_queue  # Corrections go into this queue
     )
 
     # 3. Simple Loop: Send corrections to GPS & Read "Good" result
