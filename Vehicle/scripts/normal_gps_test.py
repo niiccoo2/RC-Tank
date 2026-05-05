@@ -16,7 +16,7 @@ out_queue = Queue()
 # 2. Start the NTRIP Client (Caster Info)
 with GNSSNTRIPClient(None) as gnc:
     gnc.run(
-        server="https://macorsrtk.massdot.state.ma.us/", 
+        server="macorsrtk.massdot.state.ma.us", 
         port=10000, 
         ntripuser=os.getenv("NTRIP_USER"),
         ntrippass=os.getenv("NTRIP_PWD"),
