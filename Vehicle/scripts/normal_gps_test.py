@@ -25,9 +25,15 @@ with GNSSNTRIPClient(None) as gnc:
     # 3. Simple Loop: Send corrections to GPS & Read "Good" result
     while True:
         if not out_queue.empty():
-            rtcm = out_queue.get()
-            # print(type(rtcm), (type(rtcm[0]) if isinstance(rtcm, (list, tuple)) and rtcm else None))
-            stream.write(b"".join(rtcm))
+            rtcm = out_queue.get()  # tuple
+
+            payload = b"".join(
+                part for part in rtcm
+                if isinstance(part, (bytes, bytearray, memoryview))
+            )
+
+            if payload:
+                stream.write(payload)
 
         gnr = GNSSReader(stream)
         (raw, parsed) = gnr.read()
