@@ -17,7 +17,8 @@ with GNSSNTRIPClient(None) as gnc:
         port=10000, 
         ntripuser=os.getenv("NTRIP_USER"),
         ntrippassword=os.getenv("NTRIP_PWD"),
-        mountpoint="RTCM3MSM_IMAX", 
+        mountpoint="RTCM3MSM_IMAX",
+        ggainterval=2,
         output=out_queue  # Corrections go into this queue
     )
 
