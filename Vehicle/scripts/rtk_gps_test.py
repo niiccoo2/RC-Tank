@@ -15,9 +15,9 @@ print(f"Password length: {len(os.getenv('NTRIP_PWD') or '')} characters")
 
 NTRIP_USER = os.getenv("NTRIP_USER")
 NTRIP_PWD = os.getenv("NTRIP_PWD")
-NTRIP_SERVER = "rtk2go.com"
-NTRIP_PORT = 2101
-MOUNTPOINT = "Lowell_MA"
+NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
+NTRIP_PORT = 10000
+MOUNTPOINT = "RTCM3MSM_IMAX"
 GGA_INTERVAL_S = 2
 
 

@@ -59,12 +59,12 @@ class SelfDrivingManager:
     if len(states.waypoint_locations) == 0: # if no waypoints, stop code
       self.mode = 0
     for waypoint in states.waypoint_locations:
-      # when more than 2 meters away form waypoint, keep trying to drive to it
+      # when more than x meters away form waypoint, keep trying to drive to it
       while self._calc_distance(waypoint, states.gps_location) > success_distance:
         if self.mode != 1:
           self_driving.debug("Shouldn't be in self driving mode! Stopping.")
           if services.motors:
-            services.motors.set_motor(MotorCommand(left=12340000, right=12340000))
+            services.motors.set_motor(MotorCommand(left=1234_0000, right=1234_0000)) #1234_0000 = stop and make sure it is stopped
           return
 
         self_driving.debug(f"Going to waypoint {waypoint}")
