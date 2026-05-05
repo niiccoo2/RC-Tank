@@ -30,4 +30,9 @@ with GNSSNTRIPClient(None) as gnc:
         (raw, parsed) = gnr.read()
         if parsed is not None:
             if parsed.identity == "NAV-PVT":
-                print(f"Fix type {parsed.carrSoln}: {parsed.lat}, {parsed.lon}")
+                rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed.carrSoln, "Unknown")
+        
+                print(f"Fix: {parsed.fixType}D | RTK: {rtk_status} | "
+                    f"NTRIP Age: {parsed.lastCorrectionAge}s | "
+                    f"Sats: {parsed.numSV} | "
+                    f"Lat: {parsed.lat*1e-7}, Lon: {parsed.lon*1e-7}")
