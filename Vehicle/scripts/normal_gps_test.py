@@ -29,4 +29,5 @@ with GNSSNTRIPClient(None) as gnc:
         gnr = GNSSReader(stream)
         (raw, parsed) = gnr.read()
         if parsed is not None:
-            print(f"Fix type {parsed.fixType}: {parsed.lat}, {parsed.lon}")
+            if parsed.identity == "NAV-PVT":
+                print(f"Fix type {parsed.fixType}: {parsed.lat}, {parsed.lon}")
