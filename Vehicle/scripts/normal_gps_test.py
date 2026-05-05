@@ -35,4 +35,4 @@ with GNSSNTRIPClient(None) as gnc:
                 print(f"Fix: {parsed.fixType}D | RTK: {rtk_status} | "
                     f"NTRIP Age: {parsed.lastCorrectionAge}s | "
                     f"Sats: {parsed.numSV} | "
-                    f"Lat: {parsed.lat*1e-7}, Lon: {parsed.lon*1e-7}")
+                    f"Lat: {parsed.lat}, Lon: {parsed.lon}")
