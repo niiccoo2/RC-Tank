@@ -19,7 +19,7 @@ with GNSSNTRIPClient(None) as gnc:
         server="macorsrtk.massdot.state.ma.us", 
         port=10000, 
         ntripuser=os.getenv("NTRIP_USER"),
-        ntrippass=os.getenv("NTRIP_PWD"),
+        ntrippassword=os.getenv("NTRIP_PWD"),
         mountpoint="RTCM3MSM_IMAX", 
         output=out_queue  # Corrections go into this queue
     )
