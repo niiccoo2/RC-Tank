@@ -30,4 +30,4 @@ with GNSSNTRIPClient(None) as gnc:
         (raw, parsed) = gnr.read()
         if parsed is not None:
             if parsed.identity == "NAV-PVT":
-                print(f"Fix type {parsed.fixType}: {parsed.lat}, {parsed.lon}")
+                print(f"Fix type {parsed.carrSoln}: {parsed.lat}, {parsed.lon}")
