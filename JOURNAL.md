@@ -1131,3 +1131,13 @@ Made some really good progress on getting RTK GPS working. There is a 40% chance
 #### 19:00 | 1 hour
 
 Have been having some fun time with RTK. Ended up getting something working with `rtk2go.com` but have still not gotten an RTK lock...
+
+### Tuesday, May 5th | x hours
+
+#### 18:30 | x hours
+
+Here is some data that I got from the GPS. It is a `UBXMessage`: `<NMEA(GLGSV, numMsg=3, msgNum=1, numSV=9, svid_01=68, elv_01=26, az_01=46, cno_01=, svid_02=69, elv_02=66, az_02=352, cno_02=, svid_03=70, elv_03=39, az_03=262, cno_03=, svid_04=77, elv_04=4, az_04=11, cno_04=, signalID=)>`
+
+Another type: `<UBX(NAV-PVT, iTOW=22:42:33, year=2026, month=5, day=5, hour=22, min=42, second=33, validDate=1, validTime=1, fullyResolved=1, validMag=0, tAcc=3, nano=-76042, fixType=3, gnssFixOk=1, diffSoln=0, psmState=0, headVehValid=0, carrSoln=0, confirmedAvai=1, confirmedDate=1, confirmedTime=1, numSV=22, lon=-71.1720552, lat=42.370101, height=8567, hMSL=41733, hAcc=750, vAcc=970, velN=-6, velE=39, velD=9, gSpeed=40, headMot=207.72908, sAcc=131, headAcc=52.49496, pDOP=1.23, invalidLlh=0, lastCorrectionAge=0, authTime=0, nmaFixStatus=0, reserved0=843696860, headVeh=0.0, magDec=0.0, magAcc=0.0)>`
+
+I am pretty sure we want fix type 4 because that is RTK.

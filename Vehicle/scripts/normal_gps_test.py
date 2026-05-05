@@ -29,5 +29,4 @@ with GNSSNTRIPClient(None) as gnc:
         gnr = GNSSReader(stream)
         (raw, parsed) = gnr.read()
         if parsed is not None:
-            # print(f"Precise Position: {parsed.lat}, {parsed.lon}")
-            print(parsed)
+            print(f"Fix type {parsed.fixType}: {parsed.lat}, {parsed.lon}")
