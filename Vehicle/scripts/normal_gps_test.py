@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+print(f"Read username: {os.getenv('NTRIP_USER')}")
+print(f"Read password: {os.getenv('NTRIP_PWD')}")
+
 # 1. Connect to your GPS hardware
 stream = Serial('/dev/ttyACM0', 38400, timeout=3)
 out_queue = Queue()
