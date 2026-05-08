@@ -6,56 +6,73 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-stream = Serial('/dev/ttyACM0', 38400, timeout=1)
-out_queue = Queue()
+SER_PORT = "/dev/ttyACM0"
+SER_BAUD = 38400
+
+NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
+NTRIP_PORT = 10000
+NTRIP_MOUNT = "RTCM3MSM_IMAX"
+
+# Use fixed reference coords (good for testing caster disconnects).
+# Replace with your actual approximate location if you want.
+REFLAT = 42.370152
+REFLON = -71.172057
+REFALT = 0.0
+REFSEP = 0.0
+
+stream = Serial(SER_PORT, SER_BAUD, timeout=1)
 gnr = GNSSReader(stream)
+out_queue = Queue()
+
+def describe_ntrip_item(raw, parsed) -> str:
+    """
+    Create a readable one-line description of whatever came from the NTRIP client.
+    """
+    ident = getattr(parsed, "identity", type(parsed).__name__)
+    raw_len = len(raw) if isinstance(raw, (bytes, bytearray, memoryview)) else -1
+    return f"NTRIP: {ident} ({raw_len} bytes)"
 
 with GNSSNTRIPClient(None) as gnc:
-    # start NTRIP client (it should push corrections into out_queue)
     gnc.run(
-        server="macorsrtk.massdot.state.ma.us",
-        port=10000,
+        server=NTRIP_SERVER,
+        port=NTRIP_PORT,
+        mountpoint=NTRIP_MOUNT,
+        datatype="RTCM",
         ntripuser=os.getenv("NTRIP_USER"),
         ntrippassword=os.getenv("NTRIP_PWD"),
-        mountpoint="RTCM3MSM_IMAX",
-        ggamode=1,          # fixed reference coordinates
-        reflat=42.370152,
-        reflon=-71.172057,
-        refalt=0.0,
-        refsep=0.0,
-        ggainterval=2,
+        ggainterval=10,   # 10s is typical; 2s can annoy some casters
+        ggamode=1,        # fixed reference coords (prevents many caster disconnects)
+        reflat=REFLAT,
+        reflon=REFLON,
+        refalt=REFALT,
+        refsep=REFSEP,
         output=out_queue,
     )
 
     while True:
-        # 1) write all available RTCM without blocking
+        # 1) Drain NTRIP queue quickly; print what arrives; inject RTCM raw bytes into receiver
         try:
             while True:
-                item = out_queue.get_nowait()
+                raw, parsed = out_queue.get_nowait()
 
-                # item might be bytes, or tuple of mixed stuff
-                if isinstance(item, (bytes, bytearray, memoryview)):
-                    payload = bytes(item)
-                elif isinstance(item, tuple):
-                    payload = b"".join(
-                        p for p in item if isinstance(p, (bytes, bytearray, memoryview))
-                    )
-                else:
-                    payload = b""
+                # Print what we got from caster
+                print(describe_ntrip_item(raw, parsed))
 
-                if payload:
-                    stream.write(payload)
+                # Inject only the raw bytes into the GNSS receiver
+                if isinstance(raw, (bytes, bytearray, memoryview)) and raw:
+                    stream.write(bytes(raw))
 
+                out_queue.task_done()
         except Empty:
             pass
 
-        # 2) read GNSS output
-        raw, parsed = gnr.read()
-        if parsed is not None and getattr(parsed, "identity", None) == "NAV-PVT":
-            rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed.carrSoln, "Unknown")
+        # 2) Read GNSS receiver output and show NAV-PVT RTK status
+        raw_gnss, parsed_gnss = gnr.read()
+        if parsed_gnss is not None and getattr(parsed_gnss, "identity", None) == "NAV-PVT":
+            rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
             print(
-                f"Fix: {parsed.fixType}D | RTK: {rtk_status} | "
-                f"NTRIP Age: {parsed.lastCorrectionAge}s | "
-                f"Sats: {parsed.numSV} | "
-                f"Lat: {parsed.lat}, Lon: {parsed.lon}"
+                f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
+                f"NTRIP Age: {parsed_gnss.lastCorrectionAge}s | "
+                f"Sats: {parsed_gnss.numSV} | "
+                f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
             )
