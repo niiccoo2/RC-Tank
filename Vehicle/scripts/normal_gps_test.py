@@ -1,16 +1,16 @@
 from serial import Serial
 from queue import Queue, Empty
 import os
-import time
 from dotenv import load_dotenv
 
 from pygnssutils import GNSSNTRIPClient, GNSSReader
-from pyubx2 import UBXMessage, SET
+
+from pyubx2 import UBXConfig
 
 load_dotenv()
 
 PORT = "/dev/ttyACM0"
-BAUD = 38400  # ignored by USB-CDC on many devices, but harmless
+BAUD = 38400
 
 NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
 NTRIP_PORT = 10000
@@ -22,57 +22,39 @@ REFALT = 0.0
 REFSEP = 0.0
 
 
-def send_valset(stream: Serial, pairs, layers=1):
+def configure_f9p_usb(stream: Serial):
     """
-    Send UBX-CFG-VALSET.
-    layers: 1=RAM, 2=BBR, 4=Flash. Use RAM for safe testing.
+    Configure ZED-F9P over USB to accept RTCM3 and output UBX NAV-PVT.
+    RAM-only by default (won't persist after power cycle).
     """
-    msg = UBXMessage(
-        "CFG",
-        "CFG-VALSET",
-        SET,
-        version=0,
-        layers=layers,
+    cfg = UBXConfig(stream)
+
+    # These are u-blox configuration database keys.
+    # UBXConfig will wrap them into CFG-VALSET correctly for your pyubx2 version.
+    cfg.set(
+        layers="RAM",
         transaction=0,
-        keys=pairs,
+        cfgdict={
+            "CFG_USBINPROT_UBX": 1,
+            "CFG_USBINPROT_NMEA": 1,
+            "CFG_USBINPROT_RTCM3X": 1,
+
+            "CFG_USBOUTPROT_UBX": 1,
+            "CFG_USBOUTPROT_NMEA": 0,
+            "CFG_USBOUTPROT_RTCM3X": 0,
+
+            "CFG_MSGOUT_UBX_NAV_PVT_USB": 1,
+        },
     )
-    stream.write(msg.serialize())
-    stream.flush()
-    time.sleep(0.2)
-
-
-def configure_ublox_usb_for_rtk(stream: Serial):
-    """
-    Configure u-blox receiver over USB:
-    - allow RTCM3 input on USB
-    - output UBX on USB
-    - enable NAV-PVT on USB
-    RAM-only (won't persist after power cycle).
-    """
-    pairs = [
-        # Accept RTCM3 on USB input
-        ("CFG_USBINPROT_UBX", 1),
-        ("CFG_USBINPROT_NMEA", 1),
-        ("CFG_USBINPROT_RTCM3X", 1),
-
-        # Output UBX on USB (reduce NMEA chatter to keep parsing clean)
-        ("CFG_USBOUTPROT_UBX", 1),
-        ("CFG_USBOUTPROT_NMEA", 0),
-        ("CFG_USBOUTPROT_RTCM3X", 0),
-
-        # Ensure NAV-PVT is emitted on USB so we can watch RTK state
-        ("CFG_MSGOUT_UBX_NAV_PVT_USB", 1),
-    ]
-    send_valset(stream, pairs, layers=1)
 
 
 def main():
     stream = Serial(PORT, BAUD, timeout=1)
 
-    # 1) Configure receiver so it will actually accept RTCM on USB
-    configure_ublox_usb_for_rtk(stream)
+    # 1) Configure receiver
+    configure_f9p_usb(stream)
 
-    # 2) Start NTRIP client -> queue, and inject RTCM raw bytes into receiver
+    # 2) Start NTRIP + inject RTCM
     out_queue = Queue()
     gnr = GNSSReader(stream)
 
@@ -94,7 +76,6 @@ def main():
         )
 
         while True:
-            # Drain NTRIP output and inject corrections
             try:
                 while True:
                     raw, parsed = out_queue.get_nowait()
@@ -106,7 +87,6 @@ def main():
             except Empty:
                 pass
 
-            # Read GNSS output and show RTK indicators
             raw_gnss, parsed_gnss = gnr.read()
             if parsed_gnss is not None and getattr(parsed_gnss, "identity", None) == "NAV-PVT":
                 rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
