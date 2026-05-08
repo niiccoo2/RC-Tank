@@ -82,7 +82,7 @@ class SelfDrivingManager:
 
         self_driving.debug(f"Difference: {normalized_difference}")
 
-        TURNING_CONSTANT = 1500
+        TURNING_CONSTANT = 800
 
         left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
         right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
