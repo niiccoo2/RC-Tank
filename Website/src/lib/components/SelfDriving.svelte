@@ -1,6 +1,14 @@
 <script lang="ts">
-	import { status, voltage, ping, gpsData } from '$lib/stores';
+	import { status, voltage, ping, gpsData, ip } from '$lib/stores';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
+	import cam_off_icon from '$lib/assets/cam_off.svg';
+	export let stream: MediaStream | null = null;
+
+	let videoEl: HTMLVideoElement | null = null;
+	let videoSetting = true;
+
+	export let startWebRTC: (ip: string) => Promise<MediaStream | null>;
+	export let stopWebRTC: () => void;
 
 	function startSelfDriving() {
 		ws.send('self_driving_mode', 1);
@@ -10,6 +18,18 @@
 	function stopSelfDriving() {
 		ws.send('self_driving_mode', 0);
 		status.set('Connected');
+	}
+
+	async function toggleVideo() {
+		if (videoSetting == true) {
+			stream = await startWebRTC($ip);
+		} else {
+			stopWebRTC();
+		}
+	}
+
+	$: if (videoEl) {
+		videoEl.srcObject = stream;
 	}
 
 	let val: boolean = false;
@@ -32,11 +52,47 @@
 	</div>
 
 	<div class="center">
-		<img class="border black_background" src={``} width="640" height="480" alt="Test Cam Feed" />
-
-		<p style="color: #fcad03; font-weight: bold;">
-			{$status}
-		</p>
+		{#if videoSetting}
+			{#if !stream}
+				<img
+					class="border black_background"
+					src={`${cam_off_icon}`}
+					width="640"
+					height="480"
+					alt="Test Cam Feed" />
+				<p style="color: #FF0000; font-weight: bold;">{$status}</p>
+			{:else}
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<video
+					bind:this={videoEl}
+					autoplay
+					playsinline
+					class="border black_background"
+					width="640"
+					height="480"></video>
+				<p style="color: #00FF00; font-weight: bold;">{$status}</p>
+			{/if}
+		{:else}
+			<img
+				class="border black_background"
+				src={`${cam_off_icon}`}
+				width="640"
+				height="480"
+				alt="Test Cam Feed" />
+			{#if $status === 'Connected'}
+				<p style="color: #00FF00; font-weight: bold;">
+					Camera Off | {$status}
+				</p>
+			{:else if $status === 'Error'}
+				<p style="color: #FF0000; font-weight: bold;">
+					Camera Off | {$status}
+				</p>
+			{:else}
+				<p style="color: #FF0000; font-weight: bold;">
+					Camera Off | {$status}
+				</p>
+			{/if}
+		{/if}
 	</div>
 
 	<div class="side right">
@@ -70,7 +126,7 @@
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Show Video:</span>
 				<label class="switch m-0 ml-auto">
-					<input type="checkbox" bind:checked={val} on:change={() => {}} />
+					<input type="checkbox" bind:checked={videoSetting} on:change={toggleVideo} />
 					<span class="slider round"></span>
 				</label>
 			</div>

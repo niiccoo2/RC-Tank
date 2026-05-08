@@ -1156,3 +1156,9 @@ Going to start by getting the cell modem all set up, then doing some RTK testing
 Added the modem. Now going to see if it worked. Used this command to add it: `sudo nmcli connection add type ethernet ifname usb0` also make sure to give it a lower route than wifi: `sudo nmcli connection modify usb0 ipv4.route-metric 50`, and check everything with these commands: `nmcli device` and `ip route`
 
 Now that the modem is working, I am going to see if I can get RTK GPS working now that we have better networking!
+
+FIELD NOTES:
+
+- Still uses WIFI for stuff when in field
+- Controller keybinds
+- Add video to self driving

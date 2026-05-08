@@ -63,7 +63,7 @@ def get_heading():
     # Calculate angle in radians, then convert to degrees
     heading = math.atan2(cal_x, cal_y) * (180 / math.pi)
     
-    heading = heading-13.75-93  # that is the magnetic difference for boston and offset of how the compass is placed
+    heading = heading-26.75-93  # that is the magnetic difference for boston and offset of how the compass is placed
 
     # Ensure heading is 0-360
     if heading < 0:

@@ -77,6 +77,10 @@
 						active={activeIndex === 0} />
 				{:else if item.component === RoutePlanner}
 					<RoutePlanner bind:this={routePlanner} />
+				{:else if item.component === SelfDriving}
+					<SelfDriving bind:stream={videoStream} 
+					{startWebRTC}
+						{stopWebRTC} />
 				{:else}
 					<svelte:component this={item.component} />
 				{/if}
