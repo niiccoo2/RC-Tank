@@ -1132,9 +1132,9 @@ Made some really good progress on getting RTK GPS working. There is a 40% chance
 
 Have been having some fun time with RTK. Ended up getting something working with `rtk2go.com` but have still not gotten an RTK lock...
 
-### Tuesday, May 5th | x hours
+### Tuesday, May 5th | 1 hour
 
-#### 18:30 | x hours
+#### 18:30 | 1 hour
 
 Here is some data that I got from the GPS. It is a `UBXMessage`: `<NMEA(GLGSV, numMsg=3, msgNum=1, numSV=9, svid_01=68, elv_01=26, az_01=46, cno_01=, svid_02=69, elv_02=66, az_02=352, cno_02=, svid_03=70, elv_03=39, az_03=262, cno_03=, svid_04=77, elv_04=4, az_04=11, cno_04=, signalID=)>`
 
@@ -1146,3 +1146,13 @@ Done for now. It isn't working, I think we are making progress though. Not sure 
 
 - Try to print data we are getting from caster
 - Somehow ensure they are being sent to the GPS and read by the GPS
+
+### Friday, May 8th | x hours
+
+#### 16:20 | x hours
+
+Going to start by getting the cell modem all set up, then doing some RTK testing, then going to do more field testing!!
+
+Added the modem. Now going to see if it worked. Used this command to add it: `sudo nmcli connection add type ethernet ifname usb0` also make sure to give it a lower route than wifi: `sudo nmcli connection modify usb0 ipv4.route-metric 50`, and check everything with these commands: `nmcli device` and `ip route`
+
+Now that the modem is working, I am going to see if I can get RTK GPS working now that we have better networking!

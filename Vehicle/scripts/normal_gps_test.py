@@ -18,7 +18,11 @@ with GNSSNTRIPClient(None) as gnc:
         ntripuser=os.getenv("NTRIP_USER"),
         ntrippassword=os.getenv("NTRIP_PWD"),
         mountpoint="RTCM3MSM_IMAX",
-        ggamode=0,
+        ggamode=1,          # fixed reference coordinates
+        reflat=42.370152,
+        reflon=-71.172057,
+        refalt=0.0,
+        refsep=0.0,
         ggainterval=2,
         output=out_queue,
     )
