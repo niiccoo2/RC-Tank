@@ -82,8 +82,8 @@ def main():
             port=NTRIP_PORT,
             mountpoint=NTRIP_MOUNT,
             datatype="RTCM",
-            ntripuser=os.getenv("NTRIP_USER"),
-            ntrippassword=os.getenv("NTRIP_PWD"),
+            ntripuser=os.getenv("NTRIP_USER", "anon"),
+            ntrippassword=os.getenv("NTRIP_PWD", "password"),
             ggainterval=10,
             ggamode=0, # use live location from gps
             output=out_queue,
