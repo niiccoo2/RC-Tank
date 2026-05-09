@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from serial import Serial
 
 from pygnssutils import GNSSNTRIPClient, GNSSReader
+from pyubx2 import UBXMessage
 
 load_dotenv()
 
@@ -21,76 +22,38 @@ REFALT = 0.0
 REFSEP = 0.0
 
 
-def ubx_checksum(payload: bytes) -> bytes:
-    ck_a = 0
-    ck_b = 0
-    for b in payload:
-        ck_a = (ck_a + b) & 0xFF
-        ck_b = (ck_b + ck_a) & 0xFF
-    return bytes([ck_a, ck_b])
-
-
-def ubx_frame(msg_class: int, msg_id: int, payload: bytes) -> bytes:
-    length = len(payload).to_bytes(2, "little")
-    body = bytes([msg_class, msg_id]) + length + payload
-    return b"\xB5\x62" + body + ubx_checksum(body)
-
-
-def send_cfg_prt_usb(stream: Serial, in_mask: int, out_mask: int):
-    """
-    Send UBX-CFG-PRT for USB port (portID=3).
-
-    in_mask/out_mask bits (u-blox):
-      bit0 UBX, bit1 NMEA, bit2 RTCM2, bit3 RTCM3, bit4 SPARTN (newer), bit5 UBX+ (etc)
-    We care about UBX/NMEA/RTCM3 => bits 0,1,3.
-    """
-
-    portID = 3  # USB
-    reserved0 = 0
-
-    # For USB, most of these fields are ignored but must be present.
-    txReady = 0
-    mode = 0
-    baudRate = 0
-    inProtoMask = in_mask
-    outProtoMask = out_mask
-    flags = 0
-    reserved5 = 0
-
-    payload = (
-        bytes([portID, reserved0])
-        + txReady.to_bytes(2, "little")
-        + mode.to_bytes(4, "little")
-        + baudRate.to_bytes(4, "little")
-        + inProtoMask.to_bytes(2, "little")
-        + outProtoMask.to_bytes(2, "little")
-        + flags.to_bytes(2, "little")
-        + reserved5.to_bytes(2, "little")
-    )
-
-    msg = ubx_frame(0x06, 0x00, payload)  # CFG-PRT
-    stream.write(msg)
-    stream.flush()
-    time.sleep(0.2)
-
-
 def configure_zedf9p_usb(stream: Serial):
-    # input: UBX + NMEA + RTCM3
-    IN_UBX = 1 << 0
-    IN_NMEA = 1 << 1
-    IN_RTCM3 = 1 << 3
+    """
+    Configure ZED-F9P via UBX-CFG-VALSET (Generation 9 compatible)
+    Ensures RTCM3 is accepted on USB, and NMEA/UBX are output on USB.
+    """
+    layers = 1  # 1 = RAM
+    transaction = 0
+    
+    # Configure USB Port Protocol In/Out Masks
+    cfg_data = [
+        ("CFG_USBINPROT_UBX", 1),
+        ("CFG_USBINPROT_NMEA", 1),
+        ("CFG_USBINPROT_RTCM3X", 1),    # VERY IMPORTANT: Accept RTCM3 on USB
+        ("CFG_USBOUTPROT_UBX", 1),
+        ("CFG_USBOUTPROT_NMEA", 1),     # Enabled so NTRIP Client can fetch GGA if needed
+        ("CFG_USBOUTPROT_RTCM3X", 0),
+        
+        # Ensure standard messages are output over USB
+        ("CFG_MSGOUT_UBX_NAV_PVT_USB", 1),
+        ("CFG_MSGOUT_NMEA_ID_GGA_USB", 1),
+    ]
 
-    # output: UBX only (set NMEA too if you want, but UBX-only is cleaner for parsing)
-    OUT_UBX = 1 << 0
-    OUT_NMEA = 0
-
-    send_cfg_prt_usb(stream, in_mask=(IN_UBX | IN_NMEA | IN_RTCM3), out_mask=(OUT_UBX | OUT_NMEA))
+    msg = UBXMessage.config_set(layers, transaction, cfg_data)
+    stream.write(msg.serialize())
+    stream.flush()
+    time.sleep(0.5)
 
 
 def main():
     stream = Serial(PORT, BAUD, timeout=1)
 
-    # 1) Configure receiver to accept RTCM3 on USB and output UBX
+    # 1) Configure receiver to accept RTCM3 on USB and output UBX/NMEA
     configure_zedf9p_usb(stream)
 
     out_queue = Queue()
@@ -119,7 +82,7 @@ def main():
                 while True:
                     raw, parsed = out_queue.get_nowait()
                     ident = getattr(parsed, "identity", type(parsed).__name__)
-                    print(f"NTRIP: {ident} ({len(raw)} bytes)")
+                    # print(f"NTRIP: {ident} ({len(raw)} bytes)")
                     if raw:
                         stream.write(raw)
                     out_queue.task_done()
