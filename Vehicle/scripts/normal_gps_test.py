@@ -22,6 +22,19 @@ REFALT = 0.0
 REFSEP = 0.0
 
 
+class RoverContext:
+    def __init__(self):
+        # Default starting position (optional, prevents sending 0,0 initially)
+        self.lat = REFLAT
+        self.lon = REFLON
+        self.alt = REFALT
+        self.sep = REFSEP
+
+    def get_coordinates(self):
+        """GNSSNTRIPClient calls this method every `ggainterval` seconds."""
+        return (self.lat, self.lon, self.alt, self.sep)
+
+
 def configure_zedf9p_usb(stream: Serial):
     """
     Configure ZED-F9P via UBX-CFG-VALSET (Generation 9 compatible)
@@ -59,7 +72,11 @@ def main():
     out_queue = Queue()
     gnr = GNSSReader(stream)
 
-    with GNSSNTRIPClient(None) as gnc:
+    # 2) Instantiate the context to hold live coordinates
+    rover = RoverContext()
+
+    # 3) Pass the context to GNSSNTRIPClient instead of None
+    with GNSSNTRIPClient(rover) as gnc:
         gnc.run(
             server=NTRIP_SERVER,
             port=NTRIP_PORT,
@@ -68,7 +85,7 @@ def main():
             ntripuser=os.getenv("NTRIP_USER"),
             ntrippassword=os.getenv("NTRIP_PWD"),
             ggainterval=10,
-            ggamode=2, # use live location from gps
+            ggamode=0, # use live location from gps
             output=out_queue,
         )
 
@@ -88,6 +105,13 @@ def main():
             # show rover status
             raw_gnss, parsed_gnss = gnr.read()
             if parsed_gnss is not None and getattr(parsed_gnss, "identity", None) == "NAV-PVT":
+                
+                # 4) Update the live coordinates so the NTRIP client can use them!
+                rover.lat = parsed_gnss.lat
+                rover.lon = parsed_gnss.lon
+                # hMSL is in mm, convert to meters
+                rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
+                
                 rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
                 print(
                     f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
