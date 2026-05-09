@@ -44,8 +44,8 @@ def configure_zedf9p_usb(stream: Serial):
         ("CFG_MSGOUT_NMEA_ID_GGA_USB", 1),
     ]
 
-    msg = UBXMessage.config_set(layers, transaction, cfg_data)
-    stream.write(msg.serialize())
+    msg = UBXMessage.config_set(layers, transaction, cfg_data) # type: ignore
+    stream.write(msg.serialize()) # type: ignore
     stream.flush()
     time.sleep(0.5)
 
@@ -68,11 +68,7 @@ def main():
             ntripuser=os.getenv("NTRIP_USER"),
             ntrippassword=os.getenv("NTRIP_PWD"),
             ggainterval=10,
-            ggamode=1,
-            reflat=REFLAT,
-            reflon=REFLON,
-            refalt=REFALT,
-            refsep=REFSEP,
+            ggamode=0, # use live location from gps
             output=out_queue,
         )
 
