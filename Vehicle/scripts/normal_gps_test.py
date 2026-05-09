@@ -29,10 +29,19 @@ class RoverContext:
         self.lon = REFLON
         self.alt = REFALT
         self.sep = REFSEP
+        self.sats = 15
 
     def get_coordinates(self):
         """GNSSNTRIPClient calls this method every `ggainterval` seconds."""
-        return (self.lat, self.lon, self.alt, self.sep)
+        # pygnssutils expects a dict for PyGPSClient >= 1.4.20 compatibility
+        return {
+            "lat": self.lat,
+            "lon": self.lon,
+            "alt": self.alt,
+            "sep": self.sep,
+            "sip": self.sats,
+            "fix": "3D"
+        }
 
 
 def configure_zedf9p_usb(stream: Serial):
@@ -109,6 +118,7 @@ def main():
                 # 4) Update the live coordinates so the NTRIP client can use them!
                 rover.lat = parsed_gnss.lat
                 rover.lon = parsed_gnss.lon
+                rover.sats = parsed_gnss.numSV
                 # hMSL is in mm, convert to meters
                 rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
                 
