@@ -1147,9 +1147,9 @@ Done for now. It isn't working, I think we are making progress though. Not sure 
 - Try to print data we are getting from caster
 - Somehow ensure they are being sent to the GPS and read by the GPS
 
-### Friday, May 8th | x hours
+### Friday, May 8th | 1.7 hours
 
-#### 16:20 | x hours
+#### 16:20 | 1.7 hours
 
 Going to start by getting the cell modem all set up, then doing some RTK testing, then going to do more field testing!!
 
@@ -1162,3 +1162,14 @@ FIELD NOTES:
 - Still uses WIFI for stuff when in field
 - Controller keybinds
 - Add video to self driving
+- Boomerang at waypoint
+  - Use PD or PID?
+- Show map of where tank is and where waypoints are and what one it is going to
+
+### Saturday, May 9th | x hours
+
+#### 13:00 | x hours
+
+Started by adding everything from my field test notes into my task list and ordering it. Going to start today by trying to get RTK GPS working. As much as I want to get this working, irdk if it is worth all the time... Because I want it to work even if RTK isn't an option or there isn't any internet... I don't know, I think if I can't make any more progress today, I should stop working on that part...
+
+GOT RTK GPS WORKING!!! It is only in float mode right now, but I think that is fine because it can only see around half the sky right now. Am going to now take the working code and rewrite the GPS library.
