@@ -68,7 +68,7 @@ def main():
             ntripuser=os.getenv("NTRIP_USER"),
             ntrippassword=os.getenv("NTRIP_PWD"),
             ggainterval=10,
-            ggamode=0, # use live location from gps
+            ggamode=2, # use live location from gps
             output=out_queue,
         )
 
