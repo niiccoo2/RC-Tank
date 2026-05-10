@@ -1,215 +1,135 @@
-import serial
-import base64
-import socket
-from ublox_gps import UbloxGps
-from pygnssutils import GNSSNTRIPClient
-import threading
-import time
 import os
+import time
+from queue import Queue, Empty
 from dotenv import load_dotenv
+from serial import Serial
+
+from pygnssutils import GNSSNTRIPClient, GNSSReader
+from pyubx2 import UBXMessage
 
 load_dotenv()
 
-print(f"Read username: {os.getenv('NTRIP_USER')}")
-print(f"Password length: {len(os.getenv('NTRIP_PWD') or '')} characters")
+PORT = "/dev/ttyACM0"
+BAUD = 38400
 
-NTRIP_USER = os.getenv("NTRIP_USER")
-NTRIP_PWD = os.getenv("NTRIP_PWD")
 NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
 NTRIP_PORT = 10000
-MOUNTPOINT = "RTCM3MSM_IMAX"
-GGA_INTERVAL_S = 2
+NTRIP_MOUNT = "RTCM3MSM_IMAX"
+
+REFLAT = 42.361145
+REFLON = -71.057083
+REFALT = 0.0
+REFSEP = 0.0
 
 
-class LockedSerial:
-    def __init__(self, port, lock):
-        self.port = port
-        self.lock = lock
+class RoverContext:
+    def __init__(self):
+        # Default starting position (optional, prevents sending 0,0 initially)
+        self.lat = REFLAT
+        self.lon = REFLON
+        self.alt = REFALT
+        self.sep = REFSEP
+        self.sats = 15
 
-    def write(self, data):
-        with self.lock:
-            return self.port.write(data)
-
-    def flush(self):
-        with self.lock:
-            return self.port.flush()
-
-
-def preflight_ntrip_mountpoint():
-    """Quick raw NTRIP request to show caster status and header details."""
-    try:
-        auth = base64.b64encode(f"{NTRIP_USER}:{NTRIP_PWD}".encode()).decode()
-        request = (
-            f"GET /{MOUNTPOINT} HTTP/1.0\r\n"
-            f"Host: {NTRIP_SERVER}:{NTRIP_PORT}\r\n"
-            "User-Agent: NTRIP RC-Tank/1.0\r\n"
-            f"Authorization: Basic {auth}\r\n"
-            "Connection: close\r\n"
-            "\r\n"
-        )
-
-        with socket.create_connection((NTRIP_SERVER, NTRIP_PORT), timeout=8) as sock:
-            sock.settimeout(8)
-            sock.sendall(request.encode())
-            raw = sock.recv(1024)
-            text = raw.decode(errors="replace")
-            header, _, body = text.partition("\r\n\r\n")
-            first_line = header.splitlines()[0] if header else "<no response>"  # type: ignore
-            print(f"NTRIP preflight: {first_line}")
-            if header:
-                print("NTRIP headers:")
-                for line in header.splitlines()[1:8]:
-                    print(f"  {line}")
-            if body:
-                preview = body[:80].replace("\r", " ").replace("\n", " ")
-                print(f"NTRIP body preview: {preview}")
-
-            lower_blob = (header + "\n" + body).lower()
-            banned = "banned your ip" in lower_blob or "forbidden" in lower_blob
-            ok = "200" in first_line or "icy" in first_line.lower()
-            return {
-                "ok": ok,
-                "banned": banned,
-                "first_line": first_line,
-            }
-    except Exception as err:
-        print(f"NTRIP preflight failed: {err}")
+    def get_coordinates(self):
+        """GNSSNTRIPClient calls this method every `ggainterval` seconds."""
+        # pygnssutils expects a dict for PyGPSClient >= 1.4.20 compatibility
         return {
-            "ok": False,
-            "banned": False,
-            "first_line": str(err),
+            "lat": self.lat,
+            "lon": self.lon,
+            "alt": self.alt,
+            "sep": self.sep,
+            "sip": self.sats,
+            "fix": "3D"
         }
 
 
-def feed_rtcm(port, stop_event, ref_lat, ref_lon, serial_lock):
-    """Background task to feed RTCM corrections into the GPS serial port"""
-    retry_delay_s = 15
-    retries = 0
-    max_retries = 6
+def configure_zedf9p_usb(stream: Serial):
+    """
+    Configure ZED-F9P via UBX-CFG-VALSET (Generation 9 compatible)
+    Ensures RTCM3 is accepted on USB, and NMEA/UBX are output on USB.
+    """
+    layers = 1  # 1 = RAM
+    transaction = 0
+    
+    # Configure USB Port Protocol In/Out Masks
+    cfg_data = [
+        ("CFG_USBINPROT_UBX", 1),
+        ("CFG_USBINPROT_NMEA", 1),
+        ("CFG_USBINPROT_RTCM3X", 1),    # VERY IMPORTANT: Accept RTCM3 on USB
+        ("CFG_USBOUTPROT_UBX", 1),
+        ("CFG_USBOUTPROT_NMEA", 1),     # Enabled so NTRIP Client can fetch GGA if needed
+        ("CFG_USBOUTPROT_RTCM3X", 0),
+        
+        # Ensure standard messages are output over USB
+        ("CFG_MSGOUT_UBX_NAV_PVT_USB", 1),
+        ("CFG_MSGOUT_NMEA_ID_GGA_USB", 1),
+    ]
 
-    locked_output = LockedSerial(port, serial_lock)
-
-    while not stop_event.is_set():
-        if retries >= max_retries:
-            print("NTRIP stopped after max retries to avoid caster spam.")
-            break
-        try:
-            with GNSSNTRIPClient() as gnc:
-                run_args = {
-                    "server": NTRIP_SERVER,
-                    "port": NTRIP_PORT,
-                    "mountpoint": MOUNTPOINT,
-                    "ntripuser": NTRIP_USER,
-                    "ntrippassword": NTRIP_PWD,
-                    "datatype": "RTCM",
-                    "version": "1.0",
-                    "ggamode": 1,
-                    "ggainterval": GGA_INTERVAL_S,
-                    "reflat": ref_lat,
-                    "reflon": ref_lon,
-                    "refalt": 0.0,
-                    "refsep": 0.0,
-                    "output": locked_output,
-                    "stopevent": stop_event,
-                }
-
-                gnc.run(**run_args)
-                while gnc.connected and not stop_event.is_set():
-                    time.sleep(0.5)
-            retry_delay_s = 15
-            retries = 0
-        except KeyError as err:
-            if stop_event.is_set():
-                break
-
-            if str(err).strip("'\"") == "code":
-                print(
-                    "NTRIP response missing 'code'. Check mountpoint/user/password "
-                    "or verify caster is returning a valid NTRIP stream."
-                )
-            else:
-                print(f"NTRIP key error, reconnecting: {err}")
-
-            time.sleep(retry_delay_s)
-            retry_delay_s = min(retry_delay_s * 2, 120)
-            retries += 1
-        except Exception as err:
-            if stop_event.is_set():
-                break
-            print(f"NTRIP error, reconnecting: {err}")
-            time.sleep(retry_delay_s)
-            retry_delay_s = min(retry_delay_s * 2, 120)
-            retries += 1
+    msg = UBXMessage.config_set(layers, transaction, cfg_data) # type: ignore
+    stream.write(msg.serialize()) # type: ignore
+    stream.flush()
+    time.sleep(0.5)
 
 
-def run():
-    gps_port = "/dev/ttyACM0"
-    print(f"Using GPS port: {gps_port}")
-    port = serial.Serial(gps_port, baudrate=38400, timeout=1)
-    gps = UbloxGps(port)
-    stop_event = threading.Event()
-    serial_lock = threading.Lock()
+def main():
+    stream = Serial(PORT, BAUD, timeout=1)
 
-    # Grab one valid position to seed fixed-reference GGA for NTRIP caster.
-    ref_lat = None
-    ref_lon = None
-    for _ in range(150):
-        try:
-            with serial_lock:
-                seed = gps.geo_coords()
-            if seed:
-                ref_lat = seed.lat
-                ref_lon = seed.lon
-                break
-        except (ValueError, IOError):
-            pass
-        time.sleep(0.2)
+    # 1) Configure receiver to accept RTCM3 on USB and output UBX/NMEA
+    configure_zedf9p_usb(stream)
 
-    if ref_lat is None or ref_lon is None:
-        print("No valid GNSS fix yet, cannot start NTRIP with GGA enabled.")
-        print("Move antenna to open sky and restart.")
-        port.close()
-        return
+    out_queue = Queue()
+    gnr = GNSSReader(stream)
 
-    print(f"NTRIP GGA enabled: interval={GGA_INTERVAL_S}s, ref=({ref_lat}, {ref_lon})")
-    preflight = preflight_ntrip_mountpoint()
-    if preflight.get("banned"):
-        print("Caster reported IP ban. Not starting NTRIP stream to avoid extending ban.")
-        print("Wait for ban timeout or use a different network IP/mountpoint.")
-        port.close()
-        return
-    if not preflight.get("ok"):
-        print("NTRIP preflight did not return a stream-OK status. Not starting stream.")
-        port.close()
-        return
+    # 2) Instantiate the context to hold live coordinates
+    rover = RoverContext()
 
-    ntrip_thread = threading.Thread(
-        target=feed_rtcm,
-        args=(port, stop_event, ref_lat, ref_lon, serial_lock),
-        daemon=True,
-    )
-    ntrip_thread.start()
+    # 3) Pass the context to GNSSNTRIPClient instead of None
+    with GNSSNTRIPClient(rover) as gnc:
+        gnc.run(
+            server=NTRIP_SERVER,
+            port=NTRIP_PORT,
+            mountpoint=NTRIP_MOUNT,
+            datatype="RTCM",
+            ntripuser=os.getenv("NTRIP_USER", "anon"),
+            ntrippassword=os.getenv("NTRIP_PWD", "password"),
+            ggainterval=10,
+            ggamode=0, # use live location from gps
+            output=out_queue,
+        )
 
-    print("Waiting for RTK Fix... (Ensure antenna is outside)")
-
-    try:
         while True:
+            # inject corrections + print what arrives
             try:
-                with serial_lock:
-                    coords = gps.geo_coords()
-                if coords:
-                    print(f"Lat: {coords.lat}, Lon: {coords.lon}, FixType: {coords.fixType}")
-                    if coords.fixType == 4:
-                        print("--- RTK FIXED (Centimeter Accuracy!) ---")
-            except (ValueError, IOError):
+                while True:
+                    raw, parsed = out_queue.get_nowait()
+                    ident = getattr(parsed, "identity", type(parsed).__name__)
+                    # print(f"NTRIP: {ident} ({len(raw)} bytes)")
+                    if raw:
+                        stream.write(raw)
+                    out_queue.task_done()
+            except Empty:
                 pass
-    except KeyboardInterrupt:
-        print("Stopping...")
-    finally:
-        stop_event.set()
-        ntrip_thread.join(timeout=2)
-        port.close()
+
+            # show rover status
+            raw_gnss, parsed_gnss = gnr.read()
+            if parsed_gnss is not None and getattr(parsed_gnss, "identity", None) == "NAV-PVT":
+                
+                # 4) Update the live coordinates so the NTRIP client can use them!
+                rover.lat = parsed_gnss.lat
+                rover.lon = parsed_gnss.lon
+                rover.sats = parsed_gnss.numSV
+                # hMSL is in mm, convert to meters
+                rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
+                
+                rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
+                print(
+                    f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
+                    f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
+                    f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
+                    f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
+                )
 
 
-if __name__ == '__main__':
-    run()
+if __name__ == "__main__":
+    main()

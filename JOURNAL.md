@@ -1166,10 +1166,18 @@ FIELD NOTES:
   - Use PD or PID?
 - Show map of where tank is and where waypoints are and what one it is going to
 
-### Saturday, May 9th | x hours
+### Saturday, May 9th | 1 hour
 
-#### 13:00 | x hours
+#### 13:00 | 1 hour
 
 Started by adding everything from my field test notes into my task list and ordering it. Going to start today by trying to get RTK GPS working. As much as I want to get this working, irdk if it is worth all the time... Because I want it to work even if RTK isn't an option or there isn't any internet... I don't know, I think if I can't make any more progress today, I should stop working on that part...
 
 GOT RTK GPS WORKING!!! It is only in float mode right now, but I think that is fine because it can only see around half the sky right now. Am going to now take the working code and rewrite the GPS library.
+
+Ended up spending some more time getting the RTK GPS working with live location. So didn't rewrite the library, will do that next time.
+
+### Sunday, May 10th | x hours
+
+#### 16:30 | x hours
+
+Going to start by taking the working code for the existing RTK testing, and replacing the GPS library with that.
