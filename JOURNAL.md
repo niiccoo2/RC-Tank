@@ -1181,3 +1181,5 @@ Ended up spending some more time getting the RTK GPS working with live location.
 #### 16:30 | x hours
 
 Going to start by taking the working code for the existing RTK testing, and replacing the GPS library with that.
+
+Done rewriting library, going to test. Then going to start working on the website more, I think I might just keep the same theme for the self driving page, but make it so you can scroll to see all the info... Not sure though, I do like the idea of having all the data on one screen.

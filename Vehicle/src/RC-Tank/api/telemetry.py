@@ -24,6 +24,7 @@ async def send_telemetry(ws: WebSocket, websocket_logger):
       "type": "telemetry", 
       "data": {
         "gps": gps_value,
+        "ntrip_status": states.ntrip_status,
         "heading": states.heading,
         "voltage": services.motors.voltage
       }
