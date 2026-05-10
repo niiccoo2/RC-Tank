@@ -25,6 +25,7 @@
 	let carMode: boolean = true;
 	let FrSkyMode = false;
 	let lights: boolean = false;
+	let button_states: boolean[] = new Array(16).fill(false);
 
 	async function toggleVideo() {
 		if (videoSetting == true) {
@@ -106,7 +107,18 @@
 		const gamepad = gamepads[0];
 
 		if (gamepad) {
-			// console.log('Axes:', gamepad.axes);
+			// console.log(gamepad.buttons[1]);
+
+			if (gamepad.buttons[1].pressed && gamepad.buttons[1].pressed != button_states[1]) {
+				// if B is pressed
+				carMode = !carMode; // toggle car mode
+			}
+
+			if (gamepad.buttons[5].pressed && gamepad.buttons[5].pressed != button_states[5]) {
+				// if right bumper is pressed
+				lights = !lights; // toggle car mode
+				handeLightSwitch(lights);
+			}
 
 			if (carMode) {
 				if (FrSkyMode) {
@@ -139,6 +151,10 @@
 				sendCommand(leftSpeed, rightSpeed);
 				lastSendTime = now;
 			}
+
+			gamepad.buttons.forEach((item, index) => {
+				button_states[index] = item.pressed;
+			});
 		}
 
 		animationFrame = requestAnimationFrame(pollGamepad);
@@ -163,6 +179,7 @@
 		updatePing();
 
 		setInterval(() => {
+			// this runs every second
 			updatePing();
 
 			if ($status === 'Disconnected') {
