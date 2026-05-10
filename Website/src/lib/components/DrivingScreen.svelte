@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import cam_off_icon from '$lib/assets/cam_off.svg';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import { ip, status, gpsData, ping, voltage, STOP_SPEED } from '$lib/stores';
+	import { ip, status, gpsData, ping, voltage, antiDoxx, STOP_SPEED } from '$lib/stores';
 
 	const MULTIPLIER: number = 1000;
 
@@ -192,9 +192,15 @@
 		</div>
 
 		<div class="info_card px-4 py-2">
-			<p>Lat: {$gpsData.lat}</p>
-			<p>Lon: {$gpsData.lon}</p>
-			<p>Alt: {$gpsData.alt}</p>
+			{#if $antiDoxx}
+				<p>Lat: Sorry creeps</p>
+				<p>Lon: Anti Doxx ™</p>
+				<p>Alt: is enabled</p>
+			{:else}
+				<p>Lat: {$gpsData.lat}</p>
+				<p>Lon: {$gpsData.lon}</p>
+				<p>Alt: {$gpsData.alt}</p>
+			{/if}
 		</div>
 	</div>
 
@@ -254,6 +260,14 @@
 		</div>
 
 		<div class="mt-2 space-y-2">
+			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+				<span class="py-1">Anti doxx:</span>
+				<label class="switch m-0 ml-auto">
+					<input type="checkbox" bind:checked={$antiDoxx} />
+					<span class="slider round"></span>
+				</label>
+			</div>
+
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Headlight:</span>
 				<label class="switch m-0 ml-auto">
