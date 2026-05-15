@@ -1176,10 +1176,23 @@ GOT RTK GPS WORKING!!! It is only in float mode right now, but I think that is f
 
 Ended up spending some more time getting the RTK GPS working with live location. So didn't rewrite the library, will do that next time.
 
-### Sunday, May 10th | x hours
+### Sunday, May 10th | 1.5 hours
 
-#### 16:30 | x hours
+#### 16:30 | 1.5 hours
 
 Going to start by taking the working code for the existing RTK testing, and replacing the GPS library with that.
-
 Done rewriting library, going to test. Then going to start working on the website more, I think I might just keep the same theme for the self driving page, but make it so you can scroll to see all the info... Not sure though, I do like the idea of having all the data on one screen.
+
+Got controller bindings working so that some buttons flick switches. Took a while because I had to deal with debouncing (I think thats the right term). Going to start looking into how to get the map on the self driving screen. Just got a good idea, we should make the camera have an option to instead show the map there. Lowk I don't even know if we need the tabs at the top... Might make sense to put it all on one tab? I don't know though, maybe just combine self driving and route planner.
+
+Thinking about a new UI so that we don't need to split everything into tabs. But not sure how to fit everything into once screen. Might change anti doxx so that it is on by default but if you click on the GPS coords it turns off.
+
+![New UI outline](./Photos/new_ui.jpg)
+
+### Thursday, May 14th | .5 hours
+
+#### 17:50 | .5 hours
+
+Going to start by making a static version of the new UI that I want to make. Once I have the static version looking nice, then I will wire up all the different parts and deal with all the bugs.
+
+Started on the new page, have a decent idea of how I want it to look, now just need to add the map, design buttons, and design telemetry section.
