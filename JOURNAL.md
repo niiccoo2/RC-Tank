@@ -1196,3 +1196,13 @@ Thinking about a new UI so that we don't need to split everything into tabs. But
 Going to start by making a static version of the new UI that I want to make. Once I have the static version looking nice, then I will wire up all the different parts and deal with all the bugs.
 
 Started on the new page, have a decent idea of how I want it to look, now just need to add the map, design buttons, and design telemetry section.
+
+### Friday, May 15th | x hours
+
+#### 19:30 | x hours
+
+Going to continue workoing on the UI tonight. Hoping to finish the new UI tomorrow morning and get RTK working for NH so that we can do some testing.
+
+Have been thinking, and we should make sure that the main page doesn't have too much logic, it should just be calling a bunch of components. So once I get the map working, I am going to redo the camera.
+
+Got the map working! Now going to redo the camera and maybe redo the div layout because I kinda made it complicated...

@@ -59,23 +59,13 @@
 	async function sendWaypointsToTank() {
 		console.log('Sending locations:', markerLocations);
 
-		// try {
-		// 	const response = await fetch(`https://${ip}:5000/start_self_driving`, {
-		// 		method: 'POST',
-		// 		headers: { 'Content-Type': 'application/json' },
-		// 		body: JSON.stringify(markerLocations)
-		// 	});
-		// } catch (e) {
-		// 	console.error(e);
-		// }
-
 		ws.send('waypoint_data', markerLocations);
 	}
 </script>
 
 <svelte:window on:resize={resizeMap} />
 
-<div style="height: 94vh; width: 100%;">
+<div style="height: 100%; width: 100%;">
 	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={15}>
 		<Control position="topright">
 			<MapToolbar
