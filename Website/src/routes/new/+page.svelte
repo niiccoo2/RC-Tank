@@ -8,6 +8,7 @@
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
+	import Telemetry from '$lib/components/Telemetry.svelte';
 
 	let ip_textbox: string = localStorage.getItem('ip') ?? ''; // ?? means if null
 	let activeIndex: number = 0;
@@ -25,24 +26,21 @@
 
 {#if $ip}
 	<main>
-		<div class="half horizontal_half_container">
+		<div class="horizontal_half_container">
 			<div class="half">
 				<!-- <p>TOP LEFT</p> -->
-				<div style="height: 50vh; width: 50vw;">
-					<Video bind:stream={videoStream} {startWebRTC} {stopWebRTC}></Video>
-				</div>
+				<Video bind:stream={videoStream} {startWebRTC} {stopWebRTC}></Video>
 			</div>
 			<div class="half">
 				<!-- <p>TOP RIGHT</p> -->
-				<div class="border" style="width: 50vw; height: 50vh;">
-					<RoutePlanner></RoutePlanner>
-					<!-- Should add the border into the component -->
-				</div>
+				<RoutePlanner></RoutePlanner>
 			</div>
 		</div>
-		<div class="half horizontal_half_container">
+		<div class="horizontal_half_container">
 			<div class="half">
-				<p>BOTTOM LEFT</p>
+				<!-- <p>BOTTOM LEFT</p> -->
+
+				<Telemetry></Telemetry>
 			</div>
 			<div class="half">
 				<p>BOTTOM RIGHT</p>
@@ -50,7 +48,7 @@
 		</div>
 	</main>
 {:else}
-	<main style="min-height: 100vh;">
+	<main style="min-height: 100vh; justify-content: center; align-content: center;">
 		<div class="center">
 			<div class="border black_background ip_picker">
 				<input

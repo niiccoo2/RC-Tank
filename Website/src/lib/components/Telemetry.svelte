@@ -1,0 +1,31 @@
+<script lang="ts">
+	import { ip, status, gpsData, ping, voltage, antiDoxx, STOP_SPEED } from '$lib/stores';
+
+	let roundedLeftSpeed: number = 0;
+	let roundedRightSpeed: number = 0;
+</script>
+
+<div style="width: 48vw; height: 48vh; align-items: first; margin-top: 2vh;">
+	<div class="info_card px-4 py-2">
+		<div style="display: grid; grid-template-columns: 95px 1fr; text-align: left;">
+			<span>Left Speed:</span> <span>{roundedLeftSpeed}</span>
+			<span>Right Speed:</span> <span>{roundedRightSpeed}</span>
+		</div>
+	</div>
+
+	<div class="info_card px-4 py-2">
+		{#if $antiDoxx}
+			<div style="display: grid; grid-template-columns: 35px 1fr; text-align: left;">
+				<span>Lat:</span> <span>0</span>
+				<span>Lon:</span> <span>0</span>
+				<span>Alt:</span> <span>0m</span>
+			</div>
+		{:else}
+			<div style="display: grid; grid-template-columns: 35px 1fr; text-align: left;">
+				<span>Lat:</span> <span>{$gpsData.lat}</span>
+				<span>Lon:</span> <span>{$gpsData.lon}</span>
+				<span>Alt:</span> <span>{$gpsData.alt}m</span>
+			</div>
+		{/if}
+	</div>
+</div>

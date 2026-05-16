@@ -65,7 +65,7 @@
 
 <svelte:window on:resize={resizeMap} />
 
-<div style="height: 100%; width: 100%;">
+<div class="border" style="height: 48vh; width: 48vw;">
 	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={15}>
 		<Control position="topright">
 			<MapToolbar

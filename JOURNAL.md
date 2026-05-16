@@ -1197,12 +1197,20 @@ Going to start by making a static version of the new UI that I want to make. Onc
 
 Started on the new page, have a decent idea of how I want it to look, now just need to add the map, design buttons, and design telemetry section.
 
-### Friday, May 15th | x hours
+### Friday, May 15th | .66 hours
 
-#### 19:30 | x hours
+#### 19:30 | .66 hours
 
 Going to continue workoing on the UI tonight. Hoping to finish the new UI tomorrow morning and get RTK working for NH so that we can do some testing.
 
 Have been thinking, and we should make sure that the main page doesn't have too much logic, it should just be calling a bunch of components. So once I get the map working, I am going to redo the camera.
 
 Got the map working! Now going to redo the camera and maybe redo the div layout because I kinda made it complicated...
+
+### Saturday, May 16th | x hours
+
+#### 11:00 | x hours
+
+Going to start by finishing the new UI. Then making sure everything works, because I think it will need a few logic changes to make sure that everything is working.
+
+I really don't know how I feel about the anti doxx thing. Like I wish I could just show the coords, but I don't want to be doing that when at my house... Whatever...
