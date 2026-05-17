@@ -11,7 +11,7 @@
 	let videoEl: HTMLVideoElement | null = null;
 	let videoSetting = true;
 
-	async function toggleVideo() {
+	export async function toggleVideo() {
 		if (videoSetting == true) {
 			stream = await startWebRTC($ip);
 		} else {
