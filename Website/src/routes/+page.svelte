@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ip, ping } from '$lib/stores';
-	import RoutePlanner from './old/RoutePlanner.svelte';
+	import RoutePlanner from '../lib/components/RoutePlanner.svelte';
 	import Video from '$lib/components/Video.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';

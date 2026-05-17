@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DrivingScreen from './DrivingScreen.svelte';
-	import RoutePlanner from './RoutePlanner.svelte';
+	import RoutePlanner from '../../lib/components/RoutePlanner.svelte';
 	import SelfDriving from './SelfDriving.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
