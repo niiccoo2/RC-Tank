@@ -74,7 +74,7 @@
 		<button
 			onclick={() => refreshTimeMs.set($refreshTimeMs - 10)}
 			class="cursor-pointer button px-2 py-1">-</button>
-		<p class="m-0">{refreshTimeMs}ms</p>
+		<p class="m-0">{$refreshTimeMs}ms</p>
 		<button
 			onclick={() => refreshTimeMs.set($refreshTimeMs + 10)}
 			class="cursor-pointer button px-2 py-1">+</button>

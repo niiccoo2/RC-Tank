@@ -1207,10 +1207,20 @@ Have been thinking, and we should make sure that the main page doesn't have too 
 
 Got the map working! Now going to redo the camera and maybe redo the div layout because I kinda made it complicated...
 
-### Saturday, May 16th | x hours
+### Saturday, May 16th | 1 hour
 
-#### 11:00 | x hours
+#### 11:00 | 1 hour
 
 Going to start by finishing the new UI. Then making sure everything works, because I think it will need a few logic changes to make sure that everything is working.
 
 I really don't know how I feel about the anti doxx thing. Like I wish I could just show the coords, but I don't want to be doing that when at my house... Whatever...
+
+### Sunday, May 17th | x hours
+
+#### 13:00 | 1 hour
+
+Worked on getting all the settings working. I think I have them all up and running. Next I am going to make the new file that will handle all the controller logic. Once that is working, I _think_ the new UI will be all up and running. It won't have every metric yet but its enough for testing.
+
+#### 17:00 | x hours
+
+Going to start on the controller stuff for the new UI. The code itself isn't new, but just figuring out how to link it all is...

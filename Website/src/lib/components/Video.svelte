@@ -1,6 +1,6 @@
 <script lang="ts">
 	import cam_off_icon from '$lib/assets/cam_off.svg';
-	import { ip, status } from '$lib/stores';
+	import { ip, status, videoSetting } from '$lib/stores';
 
 	const MULTIPLIER: number = 1000;
 
@@ -9,10 +9,9 @@
 	export let stopWebRTC: () => void;
 
 	let videoEl: HTMLVideoElement | null = null;
-	let videoSetting = true;
 
 	export async function toggleVideo() {
-		if (videoSetting == true) {
+		if ($videoSetting == true) {
 			stream = await startWebRTC($ip);
 		} else {
 			stopWebRTC();

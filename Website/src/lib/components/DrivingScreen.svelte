@@ -85,7 +85,7 @@
 		}
 	}
 
-	async function handeLightSwitch(value: boolean) {
+	async function handleLightSwitch(value: boolean) {
 		if (!ip) return;
 
 		if (value) {
@@ -117,7 +117,7 @@
 			if (gamepad.buttons[5].pressed && gamepad.buttons[5].pressed != button_states[5]) {
 				// if right bumper is pressed
 				lights = !lights; // toggle car mode
-				handeLightSwitch(lights);
+				handleLightSwitch(lights);
 			}
 
 			if (carMode) {
@@ -288,7 +288,10 @@
 			<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 				<span class="py-1">Headlight:</span>
 				<label class="switch m-0 ml-auto">
-					<input type="checkbox" bind:checked={lights} on:change={() => handeLightSwitch(lights)} />
+					<input
+						type="checkbox"
+						bind:checked={lights}
+						on:change={() => handleLightSwitch(lights)} />
 					<span class="slider round"></span>
 				</label>
 			</div>

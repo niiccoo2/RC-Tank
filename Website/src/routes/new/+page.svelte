@@ -1,14 +1,13 @@
 <script lang="ts">
-	import cam_off_icon from '$lib/assets/cam_off.svg';
-	import { ip, status, gpsData, ping, voltage, antiDoxx, STOP_SPEED } from '$lib/stores';
+	import { ip } from '$lib/stores';
 	import RoutePlanner from '$lib/components/RoutePlanner.svelte';
 	import Video from '$lib/components/Video.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
-	import { onDestroy, tick } from 'svelte';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
 	import Telemetry from '$lib/components/Telemetry.svelte';
 	import Settings from '$lib/components/Settings.svelte';
-	import SelfDriving from '$lib/components/SelfDriving.svelte';
+	import { startPollingGamepad } from '$lib/drivingController.svelte';
+	import { onMount } from 'svelte';
 
 	let videoRef: any = null;
 	let routePlannerRef: any = null;
@@ -27,6 +26,10 @@
 		await ws.waitForOpen();
 		videoStream = await startWebRTC($ip);
 	}
+
+	onMount(() => {
+		startPollingGamepad();
+	});
 </script>
 
 {#if $ip}

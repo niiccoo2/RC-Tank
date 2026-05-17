@@ -18,5 +18,7 @@ export const videoSetting = writable(true);
 export const refreshTimeMs = writable(100);
 export const carMode = writable(true);
 export const lights = writable(false);
+export const roundedLeftSpeed = writable(0);
+export const roundedRightSpeed = writable(0);
 
 export const STOP_SPEED: number = 12340000;
