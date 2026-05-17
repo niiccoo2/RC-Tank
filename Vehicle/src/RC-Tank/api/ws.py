@@ -1,5 +1,6 @@
 import asyncio
 from fastapi import APIRouter, WebSocket
+from fastapi.responses import HTMLResponse
 from core.types import MotorCommand, RTCOffer, Location
 from core import services, states
 from api.telemetry import send_telemetry
@@ -8,6 +9,34 @@ from core.config import get_logger
 router = APIRouter()
 
 websocket_logger = get_logger("websocket")
+
+@router.get("/")
+async def allow_insecure_page():
+    return HTMLResponse(
+        """
+        <!doctype html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>RC Tank</title>
+            <style>
+              body { font-family: Arial, sans-serif; background: #000; color: #fff; margin: 0; padding: 2rem; }
+              .card { max-width: 560px; margin: 0 auto; border: 1px solid #fff; padding: 1.5rem; }
+              h1 { margin-top: 0; }
+              a { color: #fff; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>RC Tank</h1>
+              <p>This page is served over HTTP to allow the browser to accept the connection before WebSocket/WebRTC usage.</p>
+              <p>You can now return to the controller UI.</p>
+            </div>
+          </body>
+        </html>
+        """
+    )
 
 @router.websocket("/ws")
 async def ws(ws: WebSocket):
