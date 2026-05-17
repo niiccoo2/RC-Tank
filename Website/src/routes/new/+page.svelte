@@ -3,12 +3,17 @@
 	import { ip, status, gpsData, ping, voltage, antiDoxx, STOP_SPEED } from '$lib/stores';
 	import RoutePlanner from '$lib/components/RoutePlanner.svelte';
 	import Video from '$lib/components/Video.svelte';
-	import DrivingScreen from '$lib/components/DrivingScreen.svelte';
-	import SelfDriving from '$lib/components/SelfDriving.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
 	import { onDestroy, tick } from 'svelte';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
 	import Telemetry from '$lib/components/Telemetry.svelte';
+	import Settings from '$lib/components/Settings.svelte';
+	import SelfDriving from '$lib/components/SelfDriving.svelte';
+
+	let videoRef: any = null;
+	let routePlannerRef: any = null;
+	let telemetryRef: any = null;
+	let settingsRef: any = null;
 
 	let ip_textbox: string = localStorage.getItem('ip') ?? ''; // ?? means if null
 	let activeIndex: number = 0;
@@ -29,21 +34,26 @@
 		<div class="horizontal_half_container">
 			<div class="half">
 				<!-- <p>TOP LEFT</p> -->
-				<Video bind:stream={videoStream} {startWebRTC} {stopWebRTC}></Video>
+				<Video bind:this={videoRef} bind:stream={videoStream} {startWebRTC} {stopWebRTC}></Video>
 			</div>
 			<div class="half">
 				<!-- <p>TOP RIGHT</p> -->
-				<RoutePlanner></RoutePlanner>
+				<RoutePlanner bind:this={routePlannerRef}></RoutePlanner>
 			</div>
 		</div>
 		<div class="horizontal_half_container">
 			<div class="half">
 				<!-- <p>BOTTOM LEFT</p> -->
 
-				<Telemetry></Telemetry>
+				<Telemetry bind:this={telemetryRef}></Telemetry>
 			</div>
 			<div class="half">
-				<p>BOTTOM RIGHT</p>
+				<!-- <p>BOTTOM RIGHT</p> -->
+				<Settings
+					bind:this={settingsRef}
+					videoToggle={() => {
+						videoRef?.toggleVideo();
+					}}></Settings>
 			</div>
 		</div>
 	</main>

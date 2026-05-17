@@ -1,20 +1,24 @@
 <script lang="ts">
-	import { ip, status, gpsData, ping, voltage, antiDoxx, STOP_SPEED } from '$lib/stores';
+	import {
+		ip,
+		refreshTimeMs,
+		antiDoxx,
+		videoSetting,
+		FrSkyMode,
+		carMode,
+		lights
+	} from '$lib/stores';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
-	import Video from '$lib/components/Video.svelte';
+	// import { $state } from 'svelte';
 
-	let videoRef: any = null;
+	let { videoToggle } = $props();
 
-	let videoSetting = true;
-	let refreshTimeMs: number = 100;
-	let carMode: boolean = true;
-	let FrSkyMode = false;
-	let lights: boolean = false;
+	async function handeLightSwitch(e: Event) {
+		lights.set((e.target as HTMLInputElement).checked);
 
-	async function handeLightSwitch(value: boolean) {
-		if (!ip) return;
+		if (!$ip) return;
 
-		if (value) {
+		if ($lights) {
 			// if on
 			ws.send('lights', 100);
 		} else {
@@ -23,12 +27,9 @@
 		}
 	}
 
-	function handleVideoToggle() {
-		videoRef.toggleVideo();
-	}
-
-	function changeRefresh(amount: number) {
-		refreshTimeMs = refreshTimeMs + amount;
+	function handleVideoToggle(e: Event) {
+		videoSetting.set((e.target as HTMLInputElement).checked);
+		videoToggle();
 	}
 </script>
 
@@ -43,7 +44,7 @@
 <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 	<span class="py-1">Headlight:</span>
 	<label class="switch m-0 ml-auto">
-		<input type="checkbox" bind:checked={lights} on:change={() => handeLightSwitch(lights)} />
+		<input type="checkbox" checked={$lights} onchange={(e) => handeLightSwitch(e)} />
 		<span class="slider round"></span>
 	</label>
 </div>
@@ -51,7 +52,10 @@
 <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 	<span class="py-1">FrSky mode:</span>
 	<label class="switch m-0 ml-auto">
-		<input type="checkbox" bind:checked={FrSkyMode} />
+		<input
+			type="checkbox"
+			checked={$FrSkyMode}
+			onchange={(e) => FrSkyMode.set((e.target as HTMLInputElement).checked)} />
 		<span class="slider round"></span>
 	</label>
 </div>
@@ -59,7 +63,7 @@
 <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 	<span class="py-1">Show Video:</span>
 	<label class="switch m-0 ml-auto">
-		<input type="checkbox" bind:checked={videoSetting} on:change={handleVideoToggle} />
+		<input type="checkbox" checked={$FrSkyMode} onchange={(e) => handleVideoToggle(e)} />
 		<span class="slider round"></span>
 	</label>
 </div>
@@ -67,16 +71,25 @@
 <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 	<span class="py-1">Refresh:</span>
 	<div class="inline-flex items-center gap-2 ml-auto">
-		<button on:click={() => changeRefresh(-10)} class="cursor-pointer button px-2 py-1">-</button>
+		<button
+			onclick={() => refreshTimeMs.set($refreshTimeMs - 10)}
+			class="cursor-pointer button px-2 py-1">-</button>
 		<p class="m-0">{refreshTimeMs}ms</p>
-		<button on:click={() => changeRefresh(10)} class="cursor-pointer button px-2 py-1">+</button>
+		<button
+			onclick={() => refreshTimeMs.set($refreshTimeMs + 10)}
+			class="cursor-pointer button px-2 py-1">+</button>
 	</div>
 </div>
 
 <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 	<span class="py-1">Car mode:</span>
 	<label class="switch m-0 ml-auto">
-		<input type="checkbox" bind:checked={carMode} />
+		<input
+			type="checkbox"
+			checked={$carMode}
+			onchange={(e) => {
+				carMode.set((e.target as HTMLInputElement).checked);
+			}} />
 		<span class="slider round"></span>
 	</label>
 </div>
