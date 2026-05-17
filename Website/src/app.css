@@ -7,6 +7,13 @@
 	font-weight: bold;
 }
 
+html,
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
 main {
 	display: flex;
 	flex-direction: column;
@@ -20,6 +27,31 @@ main {
 	background-repeat: repeat;
 	background-position: 0 0;
 	color: #fff;
+}
+
+.video-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	/* cap height to 48vh */
+	max-height: 48vh;
+	width: 100%;
+}
+
+.video-frame {
+	/* keep 4:3 and cap by height */
+	max-height: 48vh;
+	max-width: calc(48vh * 4 / 3); /* 640x480 ratio */
+	width: 100%;
+	height: auto;
+
+	aspect-ratio: 4 / 3;
+	object-fit: contain;
+	border: 1px solid #000;
+	background: #000;
+	display: block;
 }
 
 .half {

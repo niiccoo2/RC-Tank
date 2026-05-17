@@ -103,7 +103,7 @@ export function startPollingGamepad() {
 			}
 
 			if (carMode) {
-				if (FrSkyMode) {
+				if (get(FrSkyMode)) {
 					trottle = gamepad.axes[1]; // Left stick
 					stick = gamepad.axes[3]; // Right stick
 
@@ -111,11 +111,13 @@ export function startPollingGamepad() {
 				} else {
 					trottle = -gamepad.axes[3]; // Right stick
 					stick = gamepad.axes[0]; // Left stick
+
+					// console.log('Throttle: ', -gamepad.axes[3]);
 				}
 
 				[leftSpeed, rightSpeed] = carToTracks(trottle, stick);
 			} else {
-				if (FrSkyMode) {
+				if (get(FrSkyMode)) {
 					leftSpeed = gamepad.axes[1]; // Left stick
 					rightSpeed = gamepad.axes[2]; // Right stick
 				} else {

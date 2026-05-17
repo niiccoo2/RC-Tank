@@ -1231,9 +1231,13 @@ Things to fix:
 
 - [x] Ping
 - [x] Headlights (Don't know what I did to fix this)
-- [ ] Not using correct controller bindings?
+- [x] Not using correct controller bindings?
 
 UI things to fix:
 
 - [ ] Make everything fit so that it doesn't scroll
 - [ ] Make video 480p again so no black bars
+- [ ] Add self driving button
+- [ ] Show tank position on map
+
+Think I got everything working. Going to reboot to make sure motors are working, then charge the battery while I do some small UI changes and add the self driving button.
