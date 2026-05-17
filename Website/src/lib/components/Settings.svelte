@@ -6,7 +6,8 @@
 		videoSetting,
 		FrSkyMode,
 		carMode,
-		lights
+		lights,
+		status
 	} from '$lib/stores';
 	import { ws } from '$lib/components/WebSocketHandler.svelte';
 	// import { $state } from 'svelte';
@@ -31,6 +32,16 @@
 	function handleVideoToggle(e: Event) {
 		videoSetting.set((e.target as HTMLInputElement).checked);
 		videoToggle();
+	}
+
+	function startSelfDriving() {
+		ws.send('self_driving_mode', 1);
+		status.set('Waypoint Mode');
+	}
+
+	function stopSelfDriving() {
+		ws.send('self_driving_mode', 0);
+		status.set('Connected');
 	}
 </script>
 
@@ -96,6 +107,11 @@
 					}} />
 				<span class="slider round"></span>
 			</label>
+		</div>
+
+		<div class="info_card px-4 py-2">
+			<button onclick={startSelfDriving} class="cursor-pointer button px-2 py-1">Start</button>
+			<button onclick={stopSelfDriving} class="cursor-pointer button px-2 py-1">Stop</button>
 		</div>
 	</div>
 </div>
