@@ -1229,5 +1229,11 @@ The new site is connecting!! Going to fix all the bugs, then once it seems to be
 
 Things to fix:
 
-- [ ] Ping
+- [x] Ping
+- [x] Headlights (Don't know what I did to fix this)
 - [ ] Not using correct controller bindings?
+
+UI things to fix:
+
+- [ ] Make everything fit so that it doesn't scroll
+- [ ] Make video 480p again so no black bars

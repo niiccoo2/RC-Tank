@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ip } from '$lib/stores';
+	import { ip, ping } from '$lib/stores';
 	import RoutePlanner from './old/RoutePlanner.svelte';
 	import Video from '$lib/components/Video.svelte';
 	import { startWebRTC, stopWebRTC } from '$lib/components/WebRTC';
@@ -27,8 +27,35 @@
 		videoStream = await startWebRTC($ip);
 	}
 
+	async function updatePing() {
+		try {
+			let timeSent = await ws.twoWayMessage('ping', performance.now());
+
+			if (typeof timeSent !== 'number') {
+				console.error('ping did not return a number');
+				return;
+			}
+
+			ping.set(`${Math.round(performance.now() - timeSent)}ms`);
+		} catch (e) {
+			console.error('Ping failed', e);
+			ping.set('N/A');
+		}
+	}
+
 	onMount(() => {
 		startPollingGamepad();
+
+		updatePing();
+
+		setInterval(() => {
+			// this runs every second
+			updatePing();
+
+			// if ($status === 'Disconnected') { Don't know if we really need this... Is a pain to get working in the current config
+			// 	sendCommand(STOP_SPEED, STOP_SPEED);
+			// }
+		}, 1000);
 	});
 </script>
 

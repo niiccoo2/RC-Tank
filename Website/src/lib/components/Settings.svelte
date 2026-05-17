@@ -15,6 +15,7 @@
 
 	async function handeLightSwitch(e: Event) {
 		lights.set((e.target as HTMLInputElement).checked);
+		console.log('Got lights command', $lights);
 
 		if (!$ip) return;
 
@@ -63,7 +64,7 @@
 <div class="info_card inline-flex items-center gap-3 px-3 py-2">
 	<span class="py-1">Show Video:</span>
 	<label class="switch m-0 ml-auto">
-		<input type="checkbox" checked={$FrSkyMode} onchange={(e) => handleVideoToggle(e)} />
+		<input type="checkbox" checked={$videoSetting} onchange={(e) => handleVideoToggle(e)} />
 		<span class="slider round"></span>
 	</label>
 </div>
