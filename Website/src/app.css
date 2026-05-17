@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-body {
+:global(body) {
 	margin: 0;
 	padding: 0;
 	font-family: 'Arial Black', sans-serif;
@@ -11,16 +11,14 @@ html,
 body {
 	margin: 0;
 	padding: 0;
-	height: 100%;
 	overflow: hidden;
 }
 
 main {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
-	width: 100%;
-	min-height: 0;
+	min-height: 100vh;
+	width: 100vw;
 	background-color: #000000;
 	background-image:
 		linear-gradient(#3c3c3c 1px, transparent 1px),
@@ -29,7 +27,6 @@ main {
 	background-repeat: repeat;
 	background-position: 0 0;
 	color: #fff;
-	overflow: hidden;
 }
 
 .video-box {
@@ -37,17 +34,19 @@ main {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: fit-content;
-	max-width: 100%;
+
+	/* cap height to 48vh */
 	max-height: 48vh;
-	min-width: 0;
+	width: 100%;
 }
 
 .video-frame {
-	width: auto;
-	height: auto;
+	/* keep 4:3 and cap by height */
 	max-height: 48vh;
-	max-width: min(100%, calc(48vh * 4 / 3));
+	max-width: calc(48vh * 4 / 3); /* 640x480 ratio */
+	width: 100%;
+	height: auto;
+
 	aspect-ratio: 4 / 3;
 	object-fit: contain;
 	border: 1px solid #000;
@@ -55,45 +54,19 @@ main {
 	display: block;
 }
 
-.video-status {
-	margin: 0.25rem 0 0;
-}
-
 .half {
-	flex: 1 1 0;
+	flex: 1;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
-	padding: 0.5vh;
-	box-sizing: border-box;
-	min-width: 0;
-	min-height: 0;
+	padding: 1vh;
 }
 
 .horizontal_half_container {
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
-	flex: 1 1 0;
-	min-height: 0;
-	min-width: 0;
-	gap: 0.5vh;
-}
-
-.top_row .video_half {
-	flex: 0 1 auto;
-}
-
-.top_row .map_half {
-	flex: 1 1 0;
-}
-
-.map_panel {
-	height: 48vh;
-	width: 100%;
-	max-width: 100%;
-	min-width: 0;
 }
 
 .layout {

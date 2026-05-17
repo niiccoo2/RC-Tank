@@ -9,7 +9,7 @@
 	} from '$lib/stores';
 </script>
 
-<div style="width: 100%; max-width: 48vw; height: 48vh; align-items: first;">
+<div style="width: 48vw; height: 48vh; align-items: first; margin-top: 2vh;">
 	<div class="info_card px-4 py-2">
 		<div style="display: grid; grid-template-columns: 95px 1fr; text-align: left;">
 			<span>Left Speed:</span> <span>{$roundedLeftSpeed}</span>
