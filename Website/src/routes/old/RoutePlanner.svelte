@@ -1,12 +1,12 @@
 <script lang="ts">
 	import L, { latLng } from 'leaflet';
-	import Leaflet from './Leaflet.svelte';
-	import Control from './Control.svelte';
-	import Marker from './Marker.svelte';
-	import Popup from './Popup.svelte';
-	import Polyline from './Polyline.svelte';
-	import MapToolbar from './MapToolbar.svelte';
-	import { ws } from './WebSocketHandler.svelte';
+	import Leaflet from '../../lib/components/Leaflet.svelte';
+	import Control from '../../lib/components/Control.svelte';
+	import Marker from '../../lib/components/Marker.svelte';
+	import Popup from '../../lib/components/Popup.svelte';
+	import Polyline from '../../lib/components/Polyline.svelte';
+	import MapToolbar from '../../lib/components/MapToolbar.svelte';
+	import { ws } from '../../lib/components/WebSocketHandler.svelte';
 	let map: L.Map;
 
 	let markerLocations: { ID: number; latLng: [number, number] }[] = [];

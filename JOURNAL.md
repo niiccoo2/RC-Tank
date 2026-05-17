@@ -1224,3 +1224,10 @@ Worked on getting all the settings working. I think I have them all up and runni
 #### 17:00 | x hours
 
 Going to start on the controller stuff for the new UI. The code itself isn't new, but just figuring out how to link it all is...
+
+The new site is connecting!! Going to fix all the bugs, then once it seems to be working as it was last week, I am going to bring it in the charge, and while it's doing that, I am going to make a few UI changes.
+
+Things to fix:
+
+- [ ] Ping
+- [ ] Not using correct controller bindings?
