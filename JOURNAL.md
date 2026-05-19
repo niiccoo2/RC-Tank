@@ -1256,7 +1256,7 @@ The site wasn't working on the ally because I needed to accept the bad website. 
 #### 08:30 | x hours
 
 - [ ] Fix UI on site
-  - [ ] Add correct border and spacing to video
+  - [x] Add correct border and spacing to video
   - [ ] Create new button UI
   - [ ] Add more stats
     - [ ] GPS Telemetry
@@ -1267,3 +1267,9 @@ The site wasn't working on the ally because I needed to accept the bad website. 
   - [ ] Add a lock to motor driver
 
 Going to start by working on getting the video CSS working on the site.
+
+Fixed the video UI. Now going to figure out if I want to make a smaller button UI, and if I do, then how I will make it look. Decided to just keep the current style and just change how the icons look, because CSS is giving me a headache.
+
+Made a new UI for the buttons, so now they are square to match the rest of the theme and change color when they are toggled. Going to change how they are aligned, then start reworking the telemetry section.
+
+Done realigning the settings section. Now going to redo the telemetry section. I think I am going to make a section that has all the GPS info, and everything else can stay as is.

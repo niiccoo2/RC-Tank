@@ -154,32 +154,20 @@ main {
 	width: 26px;
 	left: 4px;
 	bottom: 4px;
-	background-color: white;
+	background-color: transparent;
+	border: 1px solid #fff;
 	-webkit-transition: 0.4s;
 	transition: 0.4s;
 }
 
-/* input:checked + .slider {
-  background-color: #2196F3;
+input:checked + .slider:before {
+	background-color: white;
 }
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-} */
 
 input:checked + .slider:before {
 	-webkit-transform: translateX(26px);
 	-ms-transform: translateX(26px);
 	transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-	border-radius: 34px;
-}
-
-.slider.round:before {
-	border-radius: 50%;
 }
 
 .info_card {
@@ -209,6 +197,7 @@ input:checked + .slider:before {
 .button {
 	background-color: #fff;
 	color: #000000;
+	height: 34px;
 	/* font-weight: 700; */
 }
 
