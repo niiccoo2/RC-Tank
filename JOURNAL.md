@@ -1257,7 +1257,7 @@ The site wasn't working on the ally because I needed to accept the bad website. 
 
 - [ ] Fix UI on site
   - [x] Add correct border and spacing to video
-  - [ ] Create new button UI
+  - [x] Create new button UI
   - [ ] Add more stats
     - [ ] GPS Telemetry
     - [ ] Heading
@@ -1273,3 +1273,12 @@ Fixed the video UI. Now going to figure out if I want to make a smaller button U
 Made a new UI for the buttons, so now they are square to match the rest of the theme and change color when they are toggled. Going to change how they are aligned, then start reworking the telemetry section.
 
 Done realigning the settings section. Now going to redo the telemetry section. I think I am going to make a section that has all the GPS info, and everything else can stay as is.
+
+Started on the new GPS telemetry section. Also need to find a spot to store the compass data that we are getting... But before I can even do that I need to add something that reads this from the websockets and adds it to stores.
+
+Next steps:
+
+- Read new telemetry from WS
+  - GPS
+  - Compass
+- Design UI for new telemetry
