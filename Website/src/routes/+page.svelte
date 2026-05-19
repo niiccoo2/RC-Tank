@@ -62,11 +62,11 @@
 {#if $ip}
 	<main>
 		<div class="horizontal_half_container">
-			<div class="half">
+			<div class="half video">
 				<!-- <p>TOP LEFT</p> -->
 				<Video bind:this={videoRef} bind:stream={videoStream} {startWebRTC} {stopWebRTC}></Video>
 			</div>
-			<div class="half">
+			<div class="half map">
 				<!-- <p>TOP RIGHT</p> -->
 				<RoutePlanner bind:this={routePlannerRef}></RoutePlanner>
 			</div>

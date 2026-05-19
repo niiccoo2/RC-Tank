@@ -33,11 +33,11 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	/* justify-content: center; breaks everything*/
 
 	/* cap height to 48vh */
 	max-height: 48vh;
-	width: 100%;
+	/* width: 100%; */
 }
 
 .video-frame {
@@ -49,18 +49,25 @@ main {
 
 	aspect-ratio: 4 / 3;
 	object-fit: contain;
-	border: 1px solid #000;
 	background: #000;
 	display: block;
 }
 
 .half {
-	flex: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
 	padding: 1vh;
+	min-width: 0; /* important for flex overflow */
+}
+
+.half.video {
+	flex: 0 0 auto; /* take only needed space */
+}
+
+.half.map {
+	flex: 1 1 auto; /* take remaining space */
 }
 
 .horizontal_half_container {

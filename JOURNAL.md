@@ -1215,13 +1215,13 @@ Going to start by finishing the new UI. Then making sure everything works, becau
 
 I really don't know how I feel about the anti doxx thing. Like I wish I could just show the coords, but I don't want to be doing that when at my house... Whatever...
 
-### Sunday, May 17th | x hours
+### Sunday, May 17th | 3 hours
 
 #### 13:00 | 1 hour
 
 Worked on getting all the settings working. I think I have them all up and running. Next I am going to make the new file that will handle all the controller logic. Once that is working, I _think_ the new UI will be all up and running. It won't have every metric yet but its enough for testing.
 
-#### 17:00 | x hours
+#### 17:00 | 2 hours
 
 Going to start on the controller stuff for the new UI. The code itself isn't new, but just figuring out how to link it all is...
 
@@ -1235,9 +1235,35 @@ Things to fix:
 
 UI things to fix:
 
-- [ ] Make everything fit so that it doesn't scroll
-- [ ] Make video 480p again so no black bars
-- [ ] Add self driving button
-- [ ] Show tank position on map
+- [x] Make everything fit so that it doesn't scroll
+- [x] Make video 480p again so no black bars
+- [x] Add self driving button
+- [x] Show tank position on map
 
 Think I got everything working. Going to reboot to make sure motors are working, then charge the battery while I do some small UI changes and add the self driving button.
+
+FIELD TEST NOTES:
+
+- Site doesn't work on ally
+- Still have wifi issue...
+- Don't see tank on map
+- Motor dual command issues
+
+The site wasn't working on the ally because I needed to accept the bad website. It wasn't loading becuase it was trying to go to http by default when the correct prefix is https. Now that I think about it, I don't think the WiFi was the issue, I think it was the motor issue that just happened when I was far away. Next issue is that the tank dot doesn't show on the map. Not sure why but I assume it has something to do with not being a reactive element. Last issue is that the motors were crashing again. I think the issue is that two things are trying to command them causing the serial port to crap out. The true solution is to add a lock so that only one command can be set at a time, but I think the main thing causing this to happen more often is because I haven't updated any of the code for the new UI. This means that it was sending commands from the joysticks even though it was also trying to self drive at the same time.
+
+### Tuesday, May 19th | x hours
+
+#### 08:30 | x hours
+
+- [ ] Fix UI on site
+  - [ ] Add correct border and spacing to video
+  - [ ] Create new button UI
+  - [ ] Add more stats
+    - [ ] GPS Telemetry
+    - [ ] Heading
+- [ ] Fix tank location on map
+- [ ] Motor issues
+  - [ ] Make sure website isn't sending commands while self driving
+  - [ ] Add a lock to motor driver
+
+Going to start by working on getting the video CSS working on the site.
