@@ -16,14 +16,13 @@ PORT = "/dev/ttyACM0"
 BAUD = 38400
 
 # MaCORS
-# NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
-# NTRIP_PORT = 10000
+NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
+NTRIP_PORT = 10000
+NTRIP_MOUNT = "RTCM3MSM_IMAX"
 
 # Free trial
-NTRIP_SERVER = "rtk.rtkdata.com"
-NTRIP_PORT = 2101
-
-NTRIP_MOUNT = "RTCM3MSM_IMAX"
+# NTRIP_SERVER = "rtk.rtkdata.com"
+# NTRIP_PORT = 2101
 
 # generic coords for boston
 REFLAT = 42.361145
@@ -143,8 +142,8 @@ class GPS:
 
                     states.gps_location = Location(lat = self.rover.lat, lon = self.rover.lon, alt = self.rover.alt)
                     states.ntrip_status = { 
-                        "fix_type": parsed_gnss.fixType,
-                        "rtk": rtk_status,
+                        "fix_type": parsed_gnss.fixType, # int
+                        "rtk": rtk_status, # string
                         "diff_soln": parsed_gnss.diffSoln,
                         "corr_age": parsed_gnss.lastCorrectionAge,
                         "h_acc": parsed_gnss.hAcc,

@@ -1251,9 +1251,9 @@ FIELD TEST NOTES:
 
 The site wasn't working on the ally because I needed to accept the bad website. It wasn't loading becuase it was trying to go to http by default when the correct prefix is https. Now that I think about it, I don't think the WiFi was the issue, I think it was the motor issue that just happened when I was far away. Next issue is that the tank dot doesn't show on the map. Not sure why but I assume it has something to do with not being a reactive element. Last issue is that the motors were crashing again. I think the issue is that two things are trying to command them causing the serial port to crap out. The true solution is to add a lock so that only one command can be set at a time, but I think the main thing causing this to happen more often is because I haven't updated any of the code for the new UI. This means that it was sending commands from the joysticks even though it was also trying to self drive at the same time.
 
-### Tuesday, May 19th | x hours
+### Tuesday, May 19th | 1.5 hours
 
-#### 08:30 | x hours
+#### 08:30 | 1.5 hours
 
 - [ ] Fix UI on site
   - [x] Add correct border and spacing to video
@@ -1282,3 +1282,20 @@ Next steps:
   - GPS
   - Compass
 - Design UI for new telemetry
+
+### Wednesday, May 20th | x hours
+
+#### 09:30 | x hours
+
+- [ ] Fix UI on site
+  - [x] Add correct border and spacing to video
+  - [x] Create new button UI
+  - [ ] Add more stats
+    - [ ] GPS Telemetry
+    - [ ] Heading
+- [ ] Fix tank location on map
+- [ ] Motor issues
+  - [ ] Make sure website isn't sending commands while self driving
+  - [ ] Add a lock to motor driver
+
+Going to start today by adding the logic that will take the new telemetry and save it to stores. Then will make the new UI to display it!
