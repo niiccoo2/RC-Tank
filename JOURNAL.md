@@ -1283,9 +1283,9 @@ Next steps:
   - Compass
 - Design UI for new telemetry
 
-### Wednesday, May 20th | x hours
+### Wednesday, May 20th | 1.5 hours
 
-#### 09:30 | x hours
+#### 09:30 | 1.5 hours
 
 - [ ] Fix UI on site
   - [x] Add correct border and spacing to video
@@ -1297,7 +1297,7 @@ Next steps:
   - [x] Fix button offset on IP screen
   - [x] New anti doxx
     - [x] Make it so you just need to click on it to show
-- [ ] Fix tank location on map
+- [x] Fix tank location on map
 - [ ] Motor issues
   - [ ] Make sure website isn't sending commands while self driving
   - [ ] Add a lock to motor driver
@@ -1307,3 +1307,5 @@ Going to start today by adding the logic that will take the new telemetry and sa
 Added all the new telemetry and also fixed the issue with video CSS that happens when you actually connect the video. Now going to fix a small visual bug on the IP picking screen and then make the new anti doxx version.
 
 Done with the new anti doxx! I like it a lot more and now it doesn't take up an entire switch. This means we are done with all the UI changes I wanted to make! Now going to figure out why the tank location isn't updating.
+
+Done making the tank location show on the map! Just had to make some things reactive! Done for now! Next time I want a fun project for the website I should make it show what waypoint it is going to. Not going to do that right now though... Next thing I need to do before we are ready for a field test is to fix the motors and it should be ready for the waypoint only ship on Saturday!

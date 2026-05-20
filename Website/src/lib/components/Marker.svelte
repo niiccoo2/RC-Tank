@@ -6,7 +6,6 @@
 	export { classNames as class };
 
 	export let marker: L.Marker<any> | undefined = undefined;
-
 	export let width = 30;
 	export let height = 30;
 	export let latLng: L.LatLngExpression;
@@ -18,8 +17,8 @@
 		let icon = L.divIcon({
 			html: markerElement,
 			className: 'map-marker',
-			iconSize: L.point(width/2, height/2),
-			iconAnchor: L.point(width/2, height/2)
+			iconSize: L.point(width / 2, height / 2),
+			iconAnchor: L.point(width / 2, height / 2)
 		});
 		marker = L.marker(latLng, { icon }).addTo(layerGroup);
 
@@ -31,6 +30,10 @@
 				}
 			}
 		};
+	}
+
+	$: if (marker && latLng) {
+		marker.setLatLng(latLng);
 	}
 </script>
 

@@ -108,10 +108,13 @@
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				stroke-width="0"
-				viewBox="0 0 24 24"
+				viewBox="0 0 12 12"
 				stroke="currentColor">
-				<circle r="2" cx="12" cy="12" fill="blue" />
+				<circle r="2" cx="6" cy="6" fill="blue" fill-opacity="1" />
 			</svg>
+			<Popup>
+				<p>Tank</p>
+			</Popup>
 		</Marker>
 
 		{#if showLines}
