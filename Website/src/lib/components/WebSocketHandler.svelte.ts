@@ -1,4 +1,4 @@
-import { gpsData, voltage } from '$lib/stores';
+import { gpsData, heading, ntripStatus, voltage } from '$lib/stores';
 
 class WebSocketHandler {
 	ws: WebSocket | null = null;
@@ -43,6 +43,17 @@ class WebSocketHandler {
 					lon: message.data.gps.lon,
 					alt: message.data.gps.alt
 				});
+
+				ntripStatus.set({
+					fixType: message.data.ntrip_status.fix_type,
+					rtk: message.data.ntrip_status.rtk,
+					diffSoln: message.data.ntrip_status.diff_soln,
+					corrAge: message.data.ntrip_status.corr_age,
+					hAcc: message.data.ntrip_status.h_acc,
+					sats: message.data.ntrip_status.sats
+				});
+
+				heading.set(message.data.heading);
 			}
 		}
 	}

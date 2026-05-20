@@ -12,6 +12,15 @@ export const gpsData: Writable<GPSResponse> = writable({ lat: 0, lon: 0, alt: 0 
 export const voltage = writable(0);
 export const ping = writable('N/A');
 export const antiDoxx = writable(true);
+export const ntripStatus = writable({
+	fixType: 0,
+	rtk: '',
+	diffSoln: 0,
+	corrAge: 0,
+	hAcc: 0,
+	sats: 0
+});
+export const heading = writable(0);
 
 export const FrSkyMode = writable(false);
 export const videoSetting = writable(true);

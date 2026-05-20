@@ -1291,8 +1291,12 @@ Next steps:
   - [x] Add correct border and spacing to video
   - [x] Create new button UI
   - [ ] Add more stats
-    - [ ] GPS Telemetry
-    - [ ] Heading
+    - [x] GPS Telemetry
+    - [x] Heading
+  - [ ] Fix video CSS when connected
+  - [ ] Fix offset button on IP screen
+  - [ ] New anti doxx
+    - [ ] Make it so you just need to click on it to show
 - [ ] Fix tank location on map
 - [ ] Motor issues
   - [ ] Make sure website isn't sending commands while self driving

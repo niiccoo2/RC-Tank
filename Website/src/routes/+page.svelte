@@ -8,6 +8,7 @@
 	import Settings from '$lib/components/Settings.svelte';
 	import { startPollingGamepad } from '$lib/drivingController.svelte';
 	import { onMount } from 'svelte';
+	import { ntripStatus } from '$lib/stores';
 
 	let videoRef: any = null;
 	let routePlannerRef: any = null;
@@ -51,6 +52,8 @@
 		setInterval(() => {
 			// this runs every second
 			updatePing();
+
+			console.log($ntripStatus);
 
 			// if ($status === 'Disconnected') { Don't know if we really need this... Is a pain to get working in the current config
 			// 	sendCommand(STOP_SPEED, STOP_SPEED);

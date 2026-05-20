@@ -144,10 +144,10 @@ class GPS:
                     states.ntrip_status = { 
                         "fix_type": parsed_gnss.fixType, # int
                         "rtk": rtk_status, # string
-                        "diff_soln": parsed_gnss.diffSoln,
-                        "corr_age": parsed_gnss.lastCorrectionAge,
-                        "h_acc": parsed_gnss.hAcc,
-                        "sats": parsed_gnss.numSV
+                        "diff_soln": parsed_gnss.diffSoln, # int, if it is solving
+                        "corr_age": parsed_gnss.lastCorrectionAge, # int
+                        "h_acc": parsed_gnss.hAcc, # int
+                        "sats": parsed_gnss.numSV # int, number sats
                         }
 
                 sleep(.1) # random number, just don't want to be hogging resources
