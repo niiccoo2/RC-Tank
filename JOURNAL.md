@@ -1309,3 +1309,7 @@ Added all the new telemetry and also fixed the issue with video CSS that happens
 Done with the new anti doxx! I like it a lot more and now it doesn't take up an entire switch. This means we are done with all the UI changes I wanted to make! Now going to figure out why the tank location isn't updating.
 
 Done making the tank location show on the map! Just had to make some things reactive! Done for now! Next time I want a fun project for the website I should make it show what waypoint it is going to. Not going to do that right now though... Next thing I need to do before we are ready for a field test is to fix the motors and it should be ready for the waypoint only ship on Saturday!
+
+#### 18:30 | .33 hours
+
+Changed the map to use the location it gets from the tank instead of the users location. Is much faster and would be useful if you are controlling the tank from far away. There is probably a way to make the browser location faster, but this is better anyways.

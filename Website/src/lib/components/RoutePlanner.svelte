@@ -8,6 +8,7 @@
 	import MapToolbar from './MapToolbar.svelte';
 	import { ws } from './WebSocketHandler.svelte';
 	import { gpsData } from '$lib/stores';
+	import { onMount } from 'svelte';
 	let map: L.Map;
 
 	let markerLocations: { ID: number; latLng: [number, number] }[] = [];
@@ -22,8 +23,6 @@
 		};
 	});
 
-	navigator.geolocation.getCurrentPosition(setInitialView);
-
 	let eye = true;
 	let showLines = true;
 
@@ -33,10 +32,6 @@
 		if (map) {
 			map.invalidateSize();
 		}
-	}
-
-	function setInitialView(geolocationPosition: GeolocationPosition) {
-		initialView = [geolocationPosition.coords.latitude, geolocationPosition.coords.longitude];
 	}
 
 	function resetMapView() {
@@ -64,12 +59,22 @@
 
 		ws.send('waypoint_data', markerLocations);
 	}
+
+	onMount(() => {
+		const unsubscribe = gpsData.subscribe((data) => {
+			if (data.lat !== 0 && data.lon !== 0) {
+				initialView = [data.lat, data.lon];
+				unsubscribe(); // Unsubscribe immediately
+			}
+		});
+		return unsubscribe;
+	});
 </script>
 
 <svelte:window on:resize={resizeMap} />
 
 <div class="border" style="height: 48vh; width: 100%;">
-	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={15}>
+	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={18}>
 		<Control position="topright">
 			<MapToolbar
 				bind:eye
