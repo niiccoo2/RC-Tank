@@ -27,6 +27,8 @@
 	let eye = true;
 	let showLines = true;
 
+	$: liveLocation = { lat: $gpsData.lat, lng: $gpsData.lon };
+
 	export function resizeMap() {
 		if (map) {
 			map.invalidateSize();
@@ -99,7 +101,7 @@
 			{/each}
 		{/if}
 
-		<Marker latLng={{ lat: $gpsData.lat, lng: $gpsData.lon }} width={30} height={30}>
+		<Marker latLng={liveLocation} width={30} height={30}>
 			<svg
 				style="width:30px;height:30px"
 				fill="none"
