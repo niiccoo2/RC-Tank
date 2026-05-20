@@ -45,7 +45,7 @@
 	}
 </script>
 
-<div style="display: flex; align-items: flex-start; width: 48vw; margin-top: 2vh;">
+<div style="display: flex; align-items: flex-start; width: 48vw;">
 	<div style="display: flex; flex-direction: column;">
 		<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 			<span class="py-1">Anti doxx:</span>

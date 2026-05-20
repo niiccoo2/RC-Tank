@@ -29,26 +29,16 @@
 	{#if videoSetting}
 		{#if !stream}
 			<img class="video-frame border" src={`${cam_off_icon}`} alt="Test Cam Feed" />
-			<p style="color: #FF0000; font-weight: bold;">{$status}</p>
 		{:else}
 			<!-- svelte-ignore a11y-media-has-caption -->
-			<video bind:this={videoEl} autoplay playsinline class="video-frame"> </video>
-			<p style="color: #00FF00; font-weight: bold;">{$status}</p>
+			<video bind:this={videoEl} autoplay playsinline class="video-frame border"> </video>
 		{/if}
 	{:else}
 		<img class="video-frame border" src={`${cam_off_icon}`} alt="Test Cam Feed" />
-		{#if $status === 'Connected'}
-			<p style="color: #00FF00; font-weight: bold;">
-				Camera Off | {$status}
-			</p>
-		{:else if $status === 'Error'}
-			<p style="color: #FF0000; font-weight: bold;">
-				Camera Off | {$status}
-			</p>
-		{:else}
-			<p style="color: #FF0000; font-weight: bold;">
-				Camera Off | {$status}
-			</p>
-		{/if}
 	{/if}
 </div>
+
+<p style="color: {$status === 'Connected' ? '#00FF00' : '#FF0000'}; font-weight: bold;">
+	{#if !videoSetting}Camera Off |
+	{/if}{$status}
+</p>

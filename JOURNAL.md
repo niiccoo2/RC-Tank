@@ -1293,7 +1293,7 @@ Next steps:
   - [ ] Add more stats
     - [x] GPS Telemetry
     - [x] Heading
-  - [ ] Fix video CSS when connected
+  - [x] Fix video CSS when connected
   - [ ] Fix offset button on IP screen
   - [ ] New anti doxx
     - [ ] Make it so you just need to click on it to show

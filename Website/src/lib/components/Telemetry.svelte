@@ -11,7 +11,7 @@
 	} from '$lib/stores';
 </script>
 
-<div style="width: 48vw; height: 48vh; display: flex; align-items: flex-start; margin-top: 2vh;">
+<div style="width: 48vw; height: 48vh; display: flex; align-items: flex-start;">
 	<div style="display: flex; flex-direction: column;">
 		<div class="info_card px-4 py-2">
 			<strong>GPS Telemetry:</strong>

@@ -33,21 +33,22 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* justify-content: center; breaks everything*/
 
-	/* cap height to 48vh */
+	/* cap height */
+	height: 48vh;
 	max-height: 48vh;
-	/* width: 100%; */
+
+	/* keep 4:3 */
+	aspect-ratio: 4 / 3;
+
+	/* allow shrink on small screens */
+	max-width: 100%;
 }
 
 .video-frame {
-	/* keep 4:3 and cap by height */
-	max-height: 48vh;
-	max-width: calc(48vh * 4 / 3); /* 640x480 ratio */
 	width: 100%;
-	height: auto;
+	height: 100%;
 
-	aspect-ratio: 4 / 3;
 	object-fit: contain;
 	background: #000;
 	display: block;
