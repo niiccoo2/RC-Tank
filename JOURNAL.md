@@ -1294,9 +1294,9 @@ Next steps:
     - [x] GPS Telemetry
     - [x] Heading
   - [x] Fix video CSS when connected
-  - [x] Fix offset button on IP screen
-  - [ ] New anti doxx
-    - [ ] Make it so you just need to click on it to show
+  - [x] Fix button offset on IP screen
+  - [x] New anti doxx
+    - [x] Make it so you just need to click on it to show
 - [ ] Fix tank location on map
 - [ ] Motor issues
   - [ ] Make sure website isn't sending commands while self driving
@@ -1305,3 +1305,5 @@ Next steps:
 Going to start today by adding the logic that will take the new telemetry and save it to stores. Then will make the new UI to display it!
 
 Added all the new telemetry and also fixed the issue with video CSS that happens when you actually connect the video. Now going to fix a small visual bug on the IP picking screen and then make the new anti doxx version.
+
+Done with the new anti doxx! I like it a lot more and now it doesn't take up an entire switch. This means we are done with all the UI changes I wanted to make! Now going to figure out why the tank location isn't updating.

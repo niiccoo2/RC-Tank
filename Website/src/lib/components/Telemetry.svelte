@@ -9,6 +9,10 @@
 		ntripStatus,
 		heading
 	} from '$lib/stores';
+
+	function antiDoxxClick() {
+		antiDoxx.set(!$antiDoxx);
+	}
 </script>
 
 <div style="width: 48vw; height: 48vh; display: flex; align-items: flex-start;">
@@ -18,15 +22,29 @@
 			<br />
 
 			<div style="display: grid; grid-template-columns: 75px 1fr">
-				{#if $antiDoxx}
-					<span>Lat:</span> <span style="text-align: right;">0</span>
-					<span>Lon:</span> <span style="text-align: right;">0</span>
-					<span>Alt:</span> <span style="text-align: right;">0m</span>
-				{:else}
-					<span>Lat:</span> <span style="text-align: right;">{$gpsData.lat}</span>
-					<span>Lon:</span> <span style="text-align: right;">{$gpsData.lon}</span>
-					<span>Alt:</span> <span style="text-align: right;">{$gpsData.alt}m</span>
-				{/if}
+				<span>Lat:</span>
+				<button
+					class="invisible-button"
+					onclick={antiDoxxClick}
+					style="display: flex; justify-content: flex-end; width: 100%;">
+					{#if $antiDoxx}
+						████████
+					{:else}
+						{$gpsData.lat}
+					{/if}
+				</button>
+				<span>Lon:</span>
+				<button
+					class="invisible-button"
+					onclick={antiDoxxClick}
+					style="display: flex; justify-content: flex-end; width: 100%;">
+					{#if $antiDoxx}
+						████████
+					{:else}
+						{$gpsData.lon}
+					{/if}
+				</button>
+				<span>Alt:</span> <span style="text-align: right;">{$gpsData.alt}m</span>
 				<span>Fix Type:</span> <span style="text-align: right;">{$ntripStatus.fixType}D</span>
 				<span>RTK:</span> <span style="text-align: right;">{$ntripStatus.rtk}</span>
 				<span>Solving:</span> <span style="text-align: right;">{$ntripStatus.diffSoln}</span>

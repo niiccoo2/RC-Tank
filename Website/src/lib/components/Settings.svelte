@@ -48,14 +48,6 @@
 <div style="display: flex; align-items: flex-start; width: 48vw;">
 	<div style="display: flex; flex-direction: column;">
 		<div class="info_card inline-flex items-center gap-3 px-3 py-2">
-			<span class="py-1">Anti doxx:</span>
-			<label class="switch m-0 ml-auto">
-				<input type="checkbox" bind:checked={$antiDoxx} />
-				<span class="slider"></span>
-			</label>
-		</div>
-
-		<div class="info_card inline-flex items-center gap-3 px-3 py-2">
 			<span class="py-1">Headlight:</span>
 			<label class="switch m-0 ml-auto">
 				<input type="checkbox" checked={$lights} onchange={(e) => handeLightSwitch(e)} />

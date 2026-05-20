@@ -54,6 +54,17 @@ main {
 	display: block;
 }
 
+.invisible-button {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	font: inherit;
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 0.5rem;
+}
+
 .half {
 	display: flex;
 	flex-direction: column;
