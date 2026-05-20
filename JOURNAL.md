@@ -1294,7 +1294,7 @@ Next steps:
     - [x] GPS Telemetry
     - [x] Heading
   - [x] Fix video CSS when connected
-  - [ ] Fix offset button on IP screen
+  - [x] Fix offset button on IP screen
   - [ ] New anti doxx
     - [ ] Make it so you just need to click on it to show
 - [ ] Fix tank location on map
@@ -1303,3 +1303,5 @@ Next steps:
   - [ ] Add a lock to motor driver
 
 Going to start today by adding the logic that will take the new telemetry and save it to stores. Then will make the new UI to display it!
+
+Added all the new telemetry and also fixed the issue with video CSS that happens when you actually connect the video. Now going to fix a small visual bug on the IP picking screen and then make the new anti doxx version.

@@ -99,7 +99,7 @@
 					bind:value={ip_textbox}
 					placeholder="Tank IP"
 					class="border focus:outline-none px-2 py-1 mt-4" />
-				<button on:click={() => confirmIp()} class="px-4 py-2 cursor-pointer button px-2 py-1 mt-4">
+				<button on:click={() => confirmIp()} class="cursor-pointer button px-2 py-1 mt-4">
 					Confirm
 				</button>
 			</div>
