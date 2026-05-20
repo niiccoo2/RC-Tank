@@ -35,7 +35,7 @@
 	}
 
 	function resetMapView() {
-		map.setView(initialView, 15);
+		map.setView(initialView, 18);
 	}
 
 	function handleMapClick(event: CustomEvent<L.LeafletMouseEvent>) {
