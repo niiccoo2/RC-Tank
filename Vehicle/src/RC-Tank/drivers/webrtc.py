@@ -5,6 +5,7 @@ import platform
 from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer # type: ignore
 from aiortc.contrib.media import MediaPlayer, MediaRelay # type: ignore
 from core.config import get_logger
+import re
 
 webrtc = get_logger("webrtc")
 
@@ -35,6 +36,23 @@ class WebRTCManager:
                 self.cam_file = src_str
 
         self.webcam = None
+
+    def filter_candidates(self, sdp: str, allow_ip_prefix: str) -> str:
+        # Only preserve candidates where the IP starts with allow_ip_prefix (e.g., "192.168.225")
+        filtered_lines = []
+        for line in sdp.splitlines():
+            if line.startswith("a=candidate:"):
+                # Parse candidate IP (5th field in spec)
+                fields = line.split()
+                if len(fields) >= 5:
+                    candidate_ip = fields[4]
+                    if candidate_ip.startswith(allow_ip_prefix):
+                        filtered_lines.append(line)
+                    # else: filtered out (e.g., "192.168.1.") for wifi
+                # else: malformed, drop
+            else:
+                filtered_lines.append(line)
+        return "\r\n".join(filtered_lines) + "\r\n"
 
     def get_webcam(self):
         if self.webcam is None:
@@ -94,17 +112,20 @@ class WebRTCManager:
 
         await pc.setRemoteDescription(offer)
         answer = await pc.createAnswer()
-        await pc.setLocalDescription(answer)
+        await pc.setLocalDescription(answer)  # ICE gathering state gets set here
 
-        # Wait for ICE gathering to complete or timeout after 2 seconds
-        # This ensures we get STUN/Tailscale candidates without hanging forever
+        # Wait for ICE gathering...
         try:
             await asyncio.wait_for(self._wait_for_ice_gathering(pc), timeout=2.0)
         except asyncio.TimeoutError:
             webrtc.warning("ICE gathering timed out, sending partial answer")
 
+        # FILTER candidates here
+        allow_prefix = "192.168.225."  # for usb0, change as needed
+        filtered_sdp = self.filter_candidates(pc.localDescription.sdp, allow_prefix)
+
         return {
-            "sdp": pc.localDescription.sdp,
+            "sdp": filtered_sdp,
             "type": pc.localDescription.type
         }
 

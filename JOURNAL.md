@@ -1313,3 +1313,24 @@ Done making the tank location show on the map! Just had to make some things reac
 #### 18:30 | .33 hours
 
 Changed the map to use the location it gets from the tank instead of the users location. Is much faster and would be useful if you are controlling the tank from far away. There is probably a way to make the browser location faster, but this is better anyways.
+
+### Sunday, May 24th | x hours
+
+#### 19:00 | x hours
+
+- [ ] Motor issues
+  - [ ] Make sure website isn't sending commands while self driving
+  - [ ] Add a lock to motor driver
+- [ ] Export / import waypoints
+- [ ] Fix ESC issues
+  - [ ] Turn off timeout
+  - [ ] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
+  - [ ] Higher Buadrate? (Again, if this breaks things, turn it off)
+- [ ] Tighten screws on bottom
+- [ ] Find better way to mount everything inside
+- [ ] Fix waypoint turning code
+  - [ ] Make it PD or PID
+
+Tonight I am going to finish up the waypoint version. That means adding all the final touches so I can ship waypoints. We are not stopping though. Now that waypoints are working, we are at the point where we can start adding more advanced AI / ML. Not sure if any of the ESC things will get fixed... Depends on if I remember how to program them.
+
+Vibe coded some code that should make it so that when WebRTC finds a link it doesn't use wifi. Hopefully it works.
