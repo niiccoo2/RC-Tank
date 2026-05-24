@@ -37,19 +37,24 @@ class WebRTCManager:
 
         self.webcam = None
 
-    def filter_candidates(self, sdp: str, allow_ip_prefix: str) -> str:
-        # Only preserve candidates where the IP starts with allow_ip_prefix (e.g., "192.168.225")
+    def filter_candidates(self, sdp: str, allow_ip_prefixes: list) -> str:
         filtered_lines = []
         for line in sdp.splitlines():
             if line.startswith("a=candidate:"):
-                # Parse candidate IP (5th field in spec)
                 fields = line.split()
-                if len(fields) >= 5:
+                if len(fields) >= 8:
                     candidate_ip = fields[4]
-                    if candidate_ip.startswith(allow_ip_prefix):
+                    cand_type = None
+                    for idx, token in enumerate(fields):
+                        if token == "typ" and (idx + 1 < len(fields)):
+                            cand_type = fields[idx + 1]
+                    # Allow relay (TURN) candidates ALWAYS
+                    if cand_type == "relay":
                         filtered_lines.append(line)
-                    # else: filtered out (e.g., "192.168.1.") for wifi
-                # else: malformed, drop
+                    # Allow host/srflx (direct) but ONLY if in your allowed modem subnet
+                    elif cand_type in ("host", "srflx") and any(candidate_ip.startswith(prefix) for prefix in allow_ip_prefixes):
+                        filtered_lines.append(line)
+                # else: malformed candidate, skip
             else:
                 filtered_lines.append(line)
         return "\r\n".join(filtered_lines) + "\r\n"
@@ -121,8 +126,8 @@ class WebRTCManager:
             webrtc.warning("ICE gathering timed out, sending partial answer")
 
         # FILTER candidates here
-        allow_prefix = "192.168.225."  # for usb0, change as needed
-        filtered_sdp = self.filter_candidates(pc.localDescription.sdp, allow_prefix)
+        allow_ip_prefixes = ["192.168.225."]  # for usb0
+        filtered_sdp = self.filter_candidates(pc.localDescription.sdp, allow_ip_prefixes)
 
         return {
             "sdp": filtered_sdp,
