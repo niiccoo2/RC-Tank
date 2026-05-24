@@ -71,8 +71,6 @@ def initialize_components():
 async def lifespan(app: FastAPI):
     initialize_components()
     if services.lights: services.lights.side_on()
-    if services.motors:
-        threading.Thread(target=services.motors.timeout_check, daemon=True).start()
     if services.gps:
         threading.Thread(target=services.gps.update_gps_thread, daemon=True).start()
     if services.compass:
