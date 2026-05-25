@@ -60,6 +60,61 @@
 		ws.send('waypoint_data', markerLocations);
 	}
 
+	function downloadRoute() {
+		const date = new Date();
+
+		const month: string = ((date.getMonth()+1).toString().length < 2) ? `0${date.getMonth()+1}` : `${date.getMonth()+1}`
+		const day: string = (date.getDate().toString().length < 2) ? `0${date.getDate()}` : `${date.getDate()}`
+		const hour: string = (date.getHours().toString().length < 2) ? `0${date.getHours()}` : `${date.getHours()}`
+		const minute: string = (date.getMinutes().toString().length < 2) ? `0${date.getMinutes()}` : `${date.getMinutes()}`
+		
+    const fileContent = `${JSON.stringify(markerLocations)}`;
+    const fileName = `route_${date.getFullYear()}-${month}-${day}_${hour}${minute}.json`;
+
+    // Create a Blob object with the file content
+    const blob = new Blob([fileContent], { type: 'text/plain' });
+
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+
+    // Programmatically click the link to trigger the download
+    link.click();
+
+    // Clean up the URL object
+    URL.revokeObjectURL(link.href);
+	}
+
+	function uploadRoute() {
+		const upload = document.getElementById("file_input") as HTMLInputElement | null;
+		if (upload == null) return
+
+		upload.value = "";
+		upload.click();
+	}
+
+	function handleFiles(e: Event) {
+		const input = e.currentTarget as HTMLInputElement;
+		const reader = new FileReader();
+		if (!input.files) return;
+		const file = input.files[0];
+
+		reader.addEventListener("load", () => {
+			const text = String(reader.result ?? "");
+			const parsed = JSON.parse(text);
+
+			if (!Array.isArray(parsed)) throw new Error("Route file must be an array");
+
+			markerLocations = parsed;
+			markerIdCount = markerLocations.length
+				? Math.max(...markerLocations.map(m => m.ID)) + 1
+				: 0;
+		});
+
+		if (file) reader.readAsText(file);
+	}
+
 	onMount(() => {
 		const unsubscribe = gpsData.subscribe((data) => {
 			if (data.lat !== 0 && data.lon !== 0) {
@@ -73,6 +128,8 @@
 
 <svelte:window on:resize={resizeMap} />
 
+<input type="file" id="file_input" accept=".json" on:change={handleFiles}/>
+
 <div class="border" style="height: 48vh; width: 100%;">
 	<Leaflet bind:map on:click={handleMapClick} view={initialView} zoom={18}>
 		<Control position="topright">
@@ -80,7 +137,9 @@
 				bind:eye
 				bind:lines={showLines}
 				on:click-reset={resetMapView}
-				on:click-send={sendWaypointsToTank} />
+				on:click-send={sendWaypointsToTank}
+				on:click-download={downloadRoute}
+				on:click-upload={uploadRoute} />
 		</Control>
 
 		{#if eye}

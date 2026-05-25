@@ -65,6 +65,10 @@ main {
 	gap: 0.5rem;
 }
 
+#file_input {
+	display: none;
+}
+
 .half {
 	display: flex;
 	flex-direction: column;

@@ -1314,9 +1314,9 @@ Done making the tank location show on the map! Just had to make some things reac
 
 Changed the map to use the location it gets from the tank instead of the users location. Is much faster and would be useful if you are controlling the tank from far away. There is probably a way to make the browser location faster, but this is better anyways.
 
-### Sunday, May 24th | x hours
+### Sunday, May 24th | 2 hours
 
-#### 19:00 | x hours
+#### 19:00 | 2 hours
 
 - [x] Fix WebRTC using WiFi instead of modem
 - [x] Add camera mount
@@ -1325,15 +1325,6 @@ Changed the map to use the location it gets from the tank instead of the users l
   - [x] Add a lock to motor driver
 - [x] Figure out why tank mode isn't working
 - [x] Change self driving buttons to a switch
-- [ ] Export / import waypoints
-- [ ] Fix ESC issues
-  - [ ] Turn off timeout
-  - [ ] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
-  - [ ] Higher Buadrate? (Again, if this breaks things, turn it off)
-- [ ] Tighten screws on bottom
-- [ ] Find better way to mount everything inside
-- [ ] Fix waypoint turning code
-  - [ ] Make it PD or PID
 
 Tonight I am going to finish up the waypoint version. That means adding all the final touches so I can ship waypoints. We are not stopping though. Now that waypoints are working, we are at the point where we can start adding more advanced AI / ML. Not sure if any of the ESC things will get fixed... Depends on if I remember how to program them.
 
@@ -1345,4 +1336,22 @@ New motor fix seems to be working. Now there is only one thread that is controll
 
 Got all the motor issues fixed. Just spent 30 minutes figuring out why it wasn't working, but I was checking if the status was `Self Driving`, when I meant to check if it was `Waypoint Mode`. `Self Driving` isn't a mode... Now I need to figure out why it is stuck in car mode.
 
-Fixed tank mode, also turned self driving mode into a switch and added a button on the controller for it.
+Fixed tank mode, also turned self driving mode into a switch and added a button on the controller for it. Going to call it a night for now. Hopfully I can finish the other features in the morning, and ship the waypoint version. Also hope to start doing ML tmr!!
+
+### Monday, May 25th | x hours
+
+- [ ] Export / import waypoints
+- [ ] Fix ESC issues
+  - [ ] Turn off timeout
+  - [ ] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
+  - [ ] Higher Buadrate? (Again, if this breaks things, turn it off)
+- [ ] Tighten screws on bottom
+- [ ] Find better way to mount everything inside
+- [ ] Fix waypoint turning code
+  - [ ] Make it PD or PID
+
+#### 16:00 | 1.33 hours
+
+Going to start by making it so that you can import and export waypoints. Just going to export them as a CSV file. Got downloading working. Now going to get uploading working!
+
+Got uploading routes working!!! Was a bit hard but now it works!! Now going to look in the code for the hoverboard and see if I can even find the code that I need to change to do what I want. If I can't find it now, then I'm just going to skip it.
