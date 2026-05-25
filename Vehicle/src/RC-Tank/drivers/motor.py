@@ -1,7 +1,6 @@
 import time
 import struct
 import serial  # type: ignore
-import time
 import threading
 from core.types import MotorCommand
 from core.config import get_logger
@@ -32,20 +31,26 @@ class Motor:
         self.ser.reset_input_buffer()
         self.ser.reset_output_buffer()
 
+        self._state_lock = threading.Lock()
         self.last_update_time = time.time()
-        self._lock = threading.Lock()
+        self.desired_left = 0
+        self.desired_right = 0
+        self.applied_left = 0
+        self.applied_right = 0
 
         self.voltage: float = 0.0
 
-        self.set_esc(0, 0) # Stop both motors
-        self.set_esc(1, 0)
         self.stopped = True
 
         self._stop_event = threading.Event()
+        self._io_thread = threading.Thread(target=self._io_worker, daemon=True)
+        self._io_thread.start()
     
     def stop(self):
-        """Request the timeout_check loop to exit."""
+        """Request the I/O loop to exit and wait for shutdown."""
         self._stop_event.set()
+        if self._io_thread.is_alive():
+            self._io_thread.join(timeout=2)
     
     def calc_crc(self, data: bytes) -> int:
         crc = 0
@@ -59,14 +64,17 @@ class Motor:
         return crc & 0xFFFF  # Ensure a 16-bit CRC
 
     def read_feedback(self):
-        # Check if there is data in the buffer
-        if self.ser.in_waiting > 0:
-            # Read all available bytes
-            data = self.ser.read(self.ser.in_waiting)
-            # Process 'data' here (it will be bytes)
-            motor.debug(f"Received: {data.hex()}")
-            return data.hex()
-        return
+        try:
+            waiting = self.ser.in_waiting
+            if waiting > 0:
+                data = self.ser.read(waiting)
+                if data:
+                    motor.debug(f"Received: {data.hex()}")
+                    return data
+        except serial.SerialException as exc:
+            motor.error(f"{RED}Serial read failed: {exc}{RESET}")
+            raise
+        return None
 
     def read_voltage_from_uart(self, data):
         """
@@ -138,56 +146,85 @@ class Motor:
             raise RuntimeError("Serial port is not opened. Initialize it before sending packets.")
 
         packet = self.build_packet(iSlave, iSpeed, wState)
-        
-        with self._lock:
-            self.ser.write(packet)
-            # self.ser.flush() # Blocking, causes latency
+        self.ser.write(packet)
+        # self.ser.flush() # Blocking, causes latency
 
         # Debugging: Show the sent packet
         # motor.debug(f"Sent packet | Slave: {iSlave} | Speed: {iSpeed} | State: {wState} | Packet: {packet.hex()}")
 
-    def timeout_check(self):
+    def _send_pair(self, left_speed: int, right_speed: int) -> bool:
+        try:
+            self.set_esc(0, left_speed)  # slave 0 is left
+            self.set_esc(1, right_speed)  # slave 1 is right
+            return True
+        except serial.SerialException as exc:
+            motor.error(f"{RED}Serial write failed: {exc}{RESET}")
+            return False
+
+    def _set_safe_stopped_state(self):
+        with self._state_lock:
+            self.desired_left = 0
+            self.desired_right = 0
+            self.applied_left = 0
+            self.applied_right = 0
+            self.stopped = True
+
+    def _io_worker(self):
         while not self._stop_event.is_set():
-            # x 1000 to make it millis
-            # print("Checking time")
-            time_since_last_update = (time.time() - self.last_update_time)*1000
-            # print(f"Time since last update: {time_since_last_update}")
-            if time_since_last_update > 2000: # if over 2 sec
+            now = time.time()
+            with self._state_lock:
+                desired_left = self.desired_left
+                desired_right = self.desired_right
+                time_since_last_update = (now - self.last_update_time) * 1000
+
+            timeout_hit = time_since_last_update > 2000
+            if timeout_hit:
                 if not self.stopped:
                     motor.error(f"{RED}TIMEOUT HIT ({time_since_last_update:.0f}ms), STOPPING{RESET}")
-                self.set_esc(0, 0) # Stop both motors
-                self.set_esc(1, 0)
-                time.sleep(.1)
-                self.set_esc(0, 0) # Stop both motors
-                self.set_esc(1, 0)
-                # Do this twice becuase of a weird bug with ESC
-                self.stopped = True
-            
-            self.read_feedback()
-
-            if self.stopped:
-                self._stop_event.wait(1)
+                sent = self._send_pair(0, 0)
+                if sent:
+                    self._send_pair(0, 0)  # Do this twice because of a weird bug with ESC
+                    with self._state_lock:
+                        self.applied_left = 0
+                        self.applied_right = 0
+                        self.stopped = True
+                else:
+                    self._set_safe_stopped_state()
             else:
-                self._stop_event.wait(0.1)
-            # Need this to be responsive, but also not hog resources
+                sent = self._send_pair(desired_left, desired_right)
+                if sent:
+                    with self._state_lock:
+                        self.applied_left = desired_left
+                        self.applied_right = desired_right
+                        self.stopped = (desired_left == 0 and desired_right == 0)
+                else:
+                    self._set_safe_stopped_state()
+
+            try:
+                feedback = self.read_feedback()
+                if feedback:
+                    voltage = self.read_voltage_from_uart(feedback)
+                    if voltage is not None:
+                        self.voltage = voltage
+                    else:
+                        motor.debug("Warning: Could not parse voltage from feedback")
+            except serial.SerialException:
+                self._set_safe_stopped_state()
+                self._stop_event.wait(self.SEND_INTERVAL)
+
+            self._stop_event.wait(self.SEND_INTERVAL)
+
+        self._send_pair(0, 0)
+        self._send_pair(0, 0)
+        self._set_safe_stopped_state()
 
     def clamp(self, x, lo, hi):
         return max(lo, min(hi, x))
 
     def set_esc(self, slave_id: int, throttle: int):
         self.send_packet(slave_id, throttle, 32)
-        if throttle != 0.0:
+        if throttle != 0:
             self.stopped = False
-        
-        feedback = self.read_feedback()
-        if feedback is not None:
-            voltage = self.read_voltage_from_uart(feedback)
-            if voltage is not None:
-                self.voltage = voltage
-            else:
-                motor.debug('Warning: Could not prase voltage from feedback')
-        else:
-            motor.debug('Warning: No feedback data received')
     
     def set_motor(self, command: MotorCommand):
         """
@@ -201,30 +238,28 @@ class Motor:
         """
 
         if command.left == 1234_0000 or command.right == 1234_0000:
-            self.set_esc(0, 0) # Stop both motors
-            self.set_esc(1, 0)
-            time.sleep(0.1)
-            self.set_esc(0, 0) # Stop both motors
-            self.set_esc(1, 0)
-            return {"status": "ok", "left": 0, "right": 0, 'voltage': self.voltage}
+            command.left = 0
+            command.right = 0
 
         command.left = self.clamp(command.left, -1000, 1000)
         command.right = self.clamp(command.right, -1000, 1000)
 
-        self.last_update_time = time.time()
-
         left_speed = int(-command.left)
         right_speed = int(command.right)
 
-        self.set_esc(0, left_speed) # slave 0 is left
-        self.set_esc(1, right_speed) # slave 1 is right
+        with self._state_lock:
+            self.last_update_time = time.time()
+            self.desired_left = left_speed
+            self.desired_right = right_speed
+            applied_left = self.applied_left
+            applied_right = self.applied_right
+            voltage = self.voltage
 
         motor.debug(f'motor ran, left: {left_speed}, right: {right_speed}')
 
-        return {"status": "ok", "left": left_speed, "right": right_speed, 'voltage': self.voltage}
+        return {"status": "ok", "left": applied_left, "right": applied_right, 'voltage': voltage}
 
     def cleanup(self):
-        self.set_esc(0, 0)
-        self.set_esc(1, 0)
-        time.sleep(0.3)
-        self.ser.close()
+        self.stop()
+        if self.ser and self.ser.is_open:
+            self.ser.close()
