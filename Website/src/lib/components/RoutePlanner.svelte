@@ -139,7 +139,8 @@
 				on:click-reset={resetMapView}
 				on:click-send={sendWaypointsToTank}
 				on:click-download={downloadRoute}
-				on:click-upload={uploadRoute} />
+				on:click-upload={uploadRoute}
+				on:click-delete={clearMarkers} />
 		</Control>
 
 		{#if eye}
