@@ -1370,3 +1370,5 @@ Changed `#define REMOTE_BAUD 4800` to 19200.
 Now going to see if I can figure out how to program this john.
 
 Done reprograming the ESC's. Now going to see what I broke. First need to change the baud rate in the python code.
+
+I fear the higher baudrate broke some stuff. I don't even remember why I had it on my list of things to change. I think I thought it was causing the issues that were from reading the serial without a lock... Going to try 9600 but if I see anything weird I am going back to 4800. Also need to test the slow down speed, just going to unplug the cable to test that.

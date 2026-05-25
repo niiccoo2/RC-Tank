@@ -18,7 +18,7 @@ RESET = "\033[0m"
 class Motor:
     def __init__(self,
                  port: str = "/dev/ttyTHS1",
-                 baudrate: int = 19200,
+                 baudrate: int = 9600,
                  send_interval: float = 0.1,
                  max_speed: int = 1000):
        
