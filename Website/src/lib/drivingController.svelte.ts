@@ -6,7 +6,8 @@ import {
 	FrSkyMode,
 	carMode,
 	lights,
-	status
+	status,
+	selfDriving
 } from '$lib/stores';
 import { ws } from '$lib/components/WebSocketHandler.svelte';
 import { get } from 'svelte/store';
@@ -30,6 +31,18 @@ async function handleLightSwitch(value: boolean) {
 	} else {
 		// if off
 		ws.send('lights', 0);
+	}
+}
+
+function handleAutoPilotToggle() {
+	if (get(selfDriving)) {
+		selfDriving.set(false);
+		ws.send('self_driving_mode', 0);
+		status.set('Connected');
+	} else {
+		selfDriving.set(true);
+		ws.send('self_driving_mode', 1);
+		status.set('Waypoint Mode');
 	}
 }
 
@@ -95,6 +108,11 @@ export function startPollingGamepad() {
 				// if right bumper is pressed
 				lights.set(!get(lights)); // toggle lights
 				handleLightSwitch(get(lights));
+			}
+
+			if (gamepad.buttons[2].pressed && gamepad.buttons[2].pressed != button_states[2]) {
+				// if x is pressed
+				handleAutoPilotToggle();
 			}
 
 			if (get(carMode)) {

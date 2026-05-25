@@ -1323,8 +1323,8 @@ Changed the map to use the location it gets from the tank instead of the users l
 - [x] Motor issues
   - [x] Make sure website isn't sending commands while self driving
   - [x] Add a lock to motor driver
-- [ ] Figure out why tank mode isn't working
-- [ ] Change self driving buttons to a switch
+- [x] Figure out why tank mode isn't working
+- [x] Change self driving buttons to a switch
 - [ ] Export / import waypoints
 - [ ] Fix ESC issues
   - [ ] Turn off timeout
@@ -1344,3 +1344,5 @@ Now that I am reading the code, _I think_ that I commented out all the stuff tha
 New motor fix seems to be working. Now there is only one thread that is controlling it and everything goes through it. Now going to add some code on the website so that it won't send gamepad commands when in self driving mode. Thought I fixed it, but now it is only saying waypoint mode for a second before going back to normal...
 
 Got all the motor issues fixed. Just spent 30 minutes figuring out why it wasn't working, but I was checking if the status was `Self Driving`, when I meant to check if it was `Waypoint Mode`. `Self Driving` isn't a mode... Now I need to figure out why it is stuck in car mode.
+
+Fixed tank mode, also turned self driving mode into a switch and added a button on the controller for it.

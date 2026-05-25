@@ -21,6 +21,7 @@ export const ntripStatus = writable({
 	sats: 0
 });
 export const heading = writable(0);
+export const selfDriving = writable(false);
 
 export const FrSkyMode = writable(false);
 export const videoSetting = writable(true);
