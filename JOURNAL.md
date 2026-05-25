@@ -1372,3 +1372,5 @@ Now going to see if I can figure out how to program this john.
 Done reprograming the ESC's. Now going to see what I broke. First need to change the baud rate in the python code.
 
 I fear the higher baudrate broke some stuff. I don't even remember why I had it on my list of things to change. I think I thought it was causing the issues that were from reading the serial without a lock... Going to try 9600 but if I see anything weird I am going back to 4800. Also need to test the slow down speed, just going to unplug the cable to test that.
+
+9600 is a lot better, but once I test the other stuff, I am going to test a 4800 and see if it looks better, becuase I think there might have been a reason for using that. Seems like I fixed the slow down issue!! Now just going to test 4800 and I think I am done!
