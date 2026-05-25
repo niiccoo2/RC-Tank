@@ -1340,7 +1340,7 @@ Fixed tank mode, also turned self driving mode into a switch and added a button 
 
 ### Monday, May 25th | x hours
 
-- [ ] Export / import waypoints
+- [x] Export / import waypoints
 - [ ] Fix ESC issues
   - [ ] Turn off timeout
   - [ ] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
@@ -1349,9 +1349,24 @@ Fixed tank mode, also turned self driving mode into a switch and added a button 
 - [ ] Find better way to mount everything inside
 - [ ] Fix waypoint turning code
   - [ ] Make it PD or PID
+- [ ] Add a bunch of pictures to this journal (its been a bit bland)
 
 #### 16:00 | 1.33 hours
 
 Going to start by making it so that you can import and export waypoints. Just going to export them as a CSV file. Got downloading working. Now going to get uploading working!
 
 Got uploading routes working!!! Was a bit hard but now it works!! Now going to look in the code for the hoverboard and see if I can even find the code that I need to change to do what I want. If I can't find it now, then I'm just going to skip it.
+
+#### 18:00 | x hours
+
+Looking at the ESC code to see if I can find the options I need. If I end up fixing all the issues, getting BLDC_SIDE working would be nice. Also using revs/s\*1024 might be useful. Not sure really... The current speeds are fine and everything should be reactive anyways. I really don't want to open this can of worms, so I might just quit trying to ever fix these ESC issues. They aren't super bad anyways.
+
+Found all the settings, now that I think about this, it is going to be a pain to test the changes because it _should_ not happen via the default software.
+
+Changed `SetFilter(14);` to 10, we will see if that makes a difference.
+Changed `#define INACTIVITY_TIMEOUT 8` to 300, so that should be fixed.
+Changed `#define REMOTE_BAUD 4800` to 19200.
+
+Now going to see if I can figure out how to program this john.
+
+Done reprograming the ESC's. Now going to see what I broke. First need to change the baud rate in the python code.

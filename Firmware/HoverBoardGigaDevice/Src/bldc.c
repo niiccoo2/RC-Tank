@@ -214,7 +214,7 @@ void CalculateBLDC(void)
 	if (currentDC > DC_CUR_LIMIT  || bldc_enable == RESET  || timedOut == SET)	//		
 	{
 		iDrivingModeOverride = bldc_inputFilterPwm = iBldcInput = 0;
-		SetFilter(14);	// soft brake	old: FILTER_SHIFT + 2
+		SetFilter(10);	// soft brake	old: FILTER_SHIFT + 2
 		if (ABS(bldc_outputFilterPwm)<100)
 		{
 			timer_automatic_output_disable(TIMER_BLDC);		

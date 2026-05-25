@@ -1341,28 +1341,28 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      2994          4          8         20         92       3950   bldc.o
-       194          6          0          0          0        838   bldcbc.o
-       210          0          0          0          0       1821   comms.o
-      1158          4          0         86        100       3108   driver.o
-      2674          4          0          0          0       6586   gd32f1x0_adc.o
-      1796          8          0          0          0       5040   gd32f1x0_dma.o
-      2428          0          0          0          0       5612   gd32f1x0_fmc.o
-       490          0          0          0          0       1787   gd32f1x0_fwdgt.o
-       962          0          0          0          0       3871   gd32f1x0_gpio.o
-       492          0          0          0          0       2970   gd32f1x0_misc.o
-      3204         18          0          0          0      10583   gd32f1x0_rcu.o
-      5764         52          0          0          0      15065   gd32f1x0_timer.o
-      2618          8          0          0          0      11210   gd32f1x0_usart.o
-       578          0          0          0         42       2882   it.o
-      3010          0        724          4         34       6010   main.o
-       822          0          0          0        267       2439   remoteuartbus.o
-      2480          0          0          0        177       8484   setup.o
+      2994          4          8         20         92       3942   bldc.o
+       194          6          0          0          0        830   bldcbc.o
+       210          0          0          0          0       1813   comms.o
+      1158          4          0         86        100       3100   driver.o
+      2674          4          0          0          0       6578   gd32f1x0_adc.o
+      1796          8          0          0          0       5032   gd32f1x0_dma.o
+      2428          0          0          0          0       5604   gd32f1x0_fmc.o
+       490          0          0          0          0       1779   gd32f1x0_fwdgt.o
+       962          0          0          0          0       3863   gd32f1x0_gpio.o
+       492          0          0          0          0       2962   gd32f1x0_misc.o
+      3204         18          0          0          0      10575   gd32f1x0_rcu.o
+      5764         52          0          0          0      15057   gd32f1x0_timer.o
+      2618          8          0          0          0      11202   gd32f1x0_usart.o
+       578          0          0          0         42       2874   it.o
+      3010          0        724          4         34       6002   main.o
+       822          0          0          0        267       2431   remoteuartbus.o
+      2480          0          0          0        177       8476   setup.o
         36          8        360          0       1024        864   startup_gd32f1x0.o
-       650          0          0          4          0       1540   system_gd32f1x0.o
+       650          0          0          4          0       1532   system_gd32f1x0.o
 
     ----------------------------------------------------------------------
-     32582        112       1126        116       1764      94660   Object Totals
+     32582        112       1126        116       1764      94516   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         22          0          2          2         28          0   (incl. Padding)
 
@@ -1428,8 +1428,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     34814        130       1126        116       1764      95564   Grand Totals
-     34814        130       1126        116       1764      95564   ELF Image Totals
+     34814        130       1126        116       1764      95420   Grand Totals
+     34814        130       1126        116       1764      95420   ELF Image Totals
      34814        130       1126        116          0          0   ROM Totals
 
 ==============================================================================

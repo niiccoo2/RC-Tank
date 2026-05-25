@@ -72,7 +72,7 @@
 		#define REMOTE_UARTBUS	// ESP32 as master and multiple boards as multiple slaves ESP.tx-Hovers.rx and ESP.rx-Hovers.tx
 				#ifdef REMOTE_UARTBUS
 					//#define TEST_HALL2LED
-					#define SLAVE_ID	0		// must be unique for all hoverboards connected to the bus
+					#define SLAVE_ID	1		// must be unique for all hoverboards connected to the bus
 				#endif
 		//#define REMOTE_CRSF		// https://github.com/RoboDurden/Hoverboard-Firmware-Hack-Gen2.x/issues/26
 		//#define REMOTE_ROS2		// https://github.com/RoboDurden/Hoverboard-Firmware-Hack-Gen2.x/issues/122
@@ -128,7 +128,7 @@
 
 
 #ifdef MASTER_OR_SINGLE
-	#define INACTIVITY_TIMEOUT 	8        	// Minutes of not driving until poweroff (not very precise)
+	#define INACTIVITY_TIMEOUT 300        	// Minutes of not driving until poweroff (not very precise)
 
 	#define CELL_LOW_LVL1     3.5       // Gently beeps, show green battery symbol above this Level.
 	#define CELL_LOW_LVL2     3.3       // Battery almost empty, show orange battery symbol above this Level. Charge now! 
