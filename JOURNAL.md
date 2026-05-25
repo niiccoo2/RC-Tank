@@ -1318,6 +1318,8 @@ Changed the map to use the location it gets from the tank instead of the users l
 
 #### 19:00 | x hours
 
+- [x] Fix WebRTC using WiFi instead of modem
+- [x] Add camera mount
 - [ ] Motor issues
   - [ ] Make sure website isn't sending commands while self driving
   - [ ] Add a lock to motor driver
@@ -1333,4 +1335,6 @@ Changed the map to use the location it gets from the tank instead of the users l
 
 Tonight I am going to finish up the waypoint version. That means adding all the final touches so I can ship waypoints. We are not stopping though. Now that waypoints are working, we are at the point where we can start adding more advanced AI / ML. Not sure if any of the ESC things will get fixed... Depends on if I remember how to program them.
 
-Vibe coded some code that should make it so that when WebRTC finds a link it doesn't use wifi. Hopefully it works.
+Vibe coded some code that should make it so that when WebRTC finds a link it doesn't use wifi. Hopefully it works. Also just added some camera mounts to the frame. One in front and one in back. Hopfully I can get some cool videos with it tonight. Now going to start debugging the website.
+
+Now that I am reading the code, _I think_ that I commented out all the stuff that actually does stuff, but there are a few other vars I need to get rid of. Then it should just be, if self driving, don't send gamepad inputs.
