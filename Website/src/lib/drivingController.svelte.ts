@@ -97,7 +97,7 @@ export function startPollingGamepad() {
 				handleLightSwitch(get(lights));
 			}
 
-			if (carMode) {
+			if (get(carMode)) {
 				if (get(FrSkyMode)) {
 					trottle = gamepad.axes[1]; // Left stick
 					stick = gamepad.axes[3]; // Right stick
