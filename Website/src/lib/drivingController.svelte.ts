@@ -71,20 +71,15 @@ async function sendCommand(left: number, right: number) {
 		if (ws.send('motor', { left, right }) == false) {
 			console.log('WS Send error');
 			status.set('Error');
-		} else status.set('Connected');
+		} else if (get(status) !== 'Waypoint Mode') {
+			// console.log('Setting status');
+			status.set('Connected');
+		}
 	}
 }
 
 export function startPollingGamepad() {
 	function pollGamepad() {
-		// Think this code is for not sending commands when on different pages,
-		// left over from when we had tabs... Not sure if needed anymore
-		//
-		// if (!active) {
-		// 	animationFrame = requestAnimationFrame(pollGamepad);
-		// 	return;
-		// }
-
 		const gamepads = navigator.getGamepads();
 		const gamepad = gamepads[0];
 
@@ -131,7 +126,7 @@ export function startPollingGamepad() {
 
 			// Only send if x ms has passed
 			const now = Date.now();
-			if (now - lastSendTime > get(refreshTimeMs)) {
+			if (now - lastSendTime > get(refreshTimeMs) && get(status) !== 'Waypoint Mode') {
 				sendCommand(leftSpeed, rightSpeed);
 				lastSendTime = now;
 			}

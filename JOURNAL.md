@@ -1320,9 +1320,11 @@ Changed the map to use the location it gets from the tank instead of the users l
 
 - [x] Fix WebRTC using WiFi instead of modem
 - [x] Add camera mount
-- [ ] Motor issues
-  - [ ] Make sure website isn't sending commands while self driving
-  - [ ] Add a lock to motor driver
+- [x] Motor issues
+  - [x] Make sure website isn't sending commands while self driving
+  - [x] Add a lock to motor driver
+- [ ] Figure out why tank mode isn't working
+- [ ] Change self driving buttons to a switch
 - [ ] Export / import waypoints
 - [ ] Fix ESC issues
   - [ ] Turn off timeout
@@ -1338,3 +1340,7 @@ Tonight I am going to finish up the waypoint version. That means adding all the 
 Vibe coded some code that should make it so that when WebRTC finds a link it doesn't use wifi. Hopefully it works. Also just added some camera mounts to the frame. One in front and one in back. Hopfully I can get some cool videos with it tonight. Now going to start debugging the website.
 
 Now that I am reading the code, _I think_ that I commented out all the stuff that actually does stuff, but there are a few other vars I need to get rid of. Then it should just be, if self driving, don't send gamepad inputs.
+
+New motor fix seems to be working. Now there is only one thread that is controlling it and everything goes through it. Now going to add some code on the website so that it won't send gamepad commands when in self driving mode. Thought I fixed it, but now it is only saying waypoint mode for a second before going back to normal...
+
+Got all the motor issues fixed. Just spent 30 minutes figuring out why it wasn't working, but I was checking if the status was `Self Driving`, when I meant to check if it was `Waypoint Mode`. `Self Driving` isn't a mode... Now I need to figure out why it is stuck in car mode.
