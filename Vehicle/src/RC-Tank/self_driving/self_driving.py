@@ -4,6 +4,7 @@ from time import sleep
 import threading
 import math
 from core.config import get_logger
+import time
 
 self_driving = get_logger("self_driving")
 
@@ -58,6 +59,9 @@ class SelfDrivingManager:
     """
     if len(states.waypoint_locations) == 0: # if no waypoints, stop code
       self.mode = 0
+    
+    LOG_EVERY = 0.05  # seconds
+    last_log_t = 0.0
     for waypoint in states.waypoint_locations:
       # when more than x meters away form waypoint, keep trying to drive to it
       while self._calc_distance(waypoint, states.gps_location) > success_distance:
@@ -81,7 +85,11 @@ class SelfDrivingManager:
         normalized_difference = difference/360
 
         # self_driving.debug(f"Difference: {normalized_difference}")
-        self_driving.debug(f"{bearing_to_waypoint}, {heading}, {normalized_difference}")
+       
+        now = time.monotonic()
+        if now - last_log_t >= LOG_EVERY:
+            self_driving.debug(f"{bearing_to_waypoint}, {heading}, {normalized_difference}")
+            last_log_t = now
 
         # PID STUFF
 
@@ -103,7 +111,7 @@ class SelfDrivingManager:
         left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
         right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
 
-        self_driving.debug(f"Self driving speeds: {left_speed}, {right_speed}")
+        # self_driving.debug(f"Self driving speeds: {left_speed}, {right_speed}")
 
         if services.motors:
           services.motors.set_motor(MotorCommand(left=left_speed, right=right_speed))
