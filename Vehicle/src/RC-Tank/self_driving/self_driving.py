@@ -67,7 +67,7 @@ class SelfDrivingManager:
             services.motors.set_motor(MotorCommand(left=1234_0000, right=1234_0000)) #1234_0000 = stop and make sure it is stopped
           return
 
-        self_driving.debug(f"Going to waypoint {waypoint}")
+        # self_driving.debug(f"Going to waypoint {waypoint}")
         bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
         heading = states.heading
 
@@ -80,7 +80,23 @@ class SelfDrivingManager:
 
         normalized_difference = difference/360
 
-        self_driving.debug(f"Difference: {normalized_difference}")
+        # self_driving.debug(f"Difference: {normalized_difference}")
+        self_driving.debug(f"{bearing_to_waypoint}, {heading}, {normalized_difference}")
+
+        # PID STUFF
+
+        # error = bearing_to_waypoint - heading
+
+        # if difference > 180: # make sure we are using the shortest path
+        #   difference -= 360
+        # elif difference < -180:
+        #   difference += 360
+
+        # integral += error * dt
+        # derivative = (error - previous_error) / dt
+        # control = kp * error + ki * integral + kd * derivative
+
+        ###########
 
         TURNING_CONSTANT = 800
 

@@ -1338,13 +1338,13 @@ Got all the motor issues fixed. Just spent 30 minutes figuring out why it wasn't
 
 Fixed tank mode, also turned self driving mode into a switch and added a button on the controller for it. Going to call it a night for now. Hopfully I can finish the other features in the morning, and ship the waypoint version. Also hope to start doing ML tmr!!
 
-### Monday, May 25th | x hours
+### Monday, May 25th | 2.75 hours
 
 - [x] Export / import waypoints
-- [ ] Fix ESC issues
-  - [ ] Turn off timeout
-  - [ ] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
-  - [ ] Higher Buadrate? (Again, if this breaks things, turn it off)
+- [x] Fix ESC issues
+  - [x] Turn off timeout
+  - [x] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
+  - [x] Higher Buadrate? (Again, if this breaks things, turn it off)
 - [ ] Tighten screws on bottom
 - [ ] Find better way to mount everything inside
 - [ ] Fix waypoint turning code
@@ -1357,7 +1357,7 @@ Going to start by making it so that you can import and export waypoints. Just go
 
 Got uploading routes working!!! Was a bit hard but now it works!! Now going to look in the code for the hoverboard and see if I can even find the code that I need to change to do what I want. If I can't find it now, then I'm just going to skip it.
 
-#### 18:00 | x hours
+#### 18:00 | 1.33 hours
 
 Looking at the ESC code to see if I can find the options I need. If I end up fixing all the issues, getting BLDC_SIDE working would be nice. Also using revs/s\*1024 might be useful. Not sure really... The current speeds are fine and everything should be reactive anyways. I really don't want to open this can of worms, so I might just quit trying to ever fix these ESC issues. They aren't super bad anyways.
 
@@ -1374,3 +1374,5 @@ Done reprograming the ESC's. Now going to see what I broke. First need to change
 I fear the higher baudrate broke some stuff. I don't even remember why I had it on my list of things to change. I think I thought it was causing the issues that were from reading the serial without a lock... Going to try 9600 but if I see anything weird I am going back to 4800. Also need to test the slow down speed, just going to unplug the cable to test that.
 
 9600 is a lot better, but once I test the other stuff, I am going to test a 4800 and see if it looks better, becuase I think there might have been a reason for using that. Seems like I fixed the slow down issue!! Now just going to test 4800 and I think I am done!
+
+Yep, 4800 baud is much better. But good that I found where everything is! Now going to go fix some physical things, then do the test drive, tune the P or make it PID, and get the video for shipping!!
