@@ -87,10 +87,18 @@ class SelfDrivingManager:
 
         # self_driving.debug(f"Difference: {normalized_difference}")
        
-        now = time.monotonic()
-        if now - last_log_t >= LOG_EVERY:
-            self_driving.debug(f"{debug_i}, {bearing_to_waypoint}, {heading}, {normalized_difference}")
-            last_log_t = now
+        # now = time.monotonic()
+        # if now - last_log_t >= LOG_EVERY:
+        #     self_driving.debug(f"{debug_i}, {bearing_to_waypoint}, {heading}, {normalized_difference}")
+        #     last_log_t = now
+
+        cur = states.gps_location
+        dist = self._calc_distance(waypoint, cur)
+        self_driving.debug(
+          f"{debug_i}, dist={dist:.2f}m, "
+          f"gps=({cur.lat:.7f},{cur.lon:.7f}), "
+          f"bearing={bearing_to_waypoint:.2f}, heading={heading:.2f}"
+        )
 
         # PID STUFF
 
@@ -123,21 +131,16 @@ class SelfDrivingManager:
 
 
   def _calc_bearing_to_waypoint(self, current: Location, waypoint: Location):
-    """
-    Calculate bearing from one position to another.
-    """
-    # might want to change this to use the correct math, but I don't really understand how the correct math works...
+    lat1 = math.radians(current.lat)
+    lat2 = math.radians(waypoint.lat)
+    dlon = math.radians(waypoint.lon - current.lon)
+    dlat = math.radians(waypoint.lat - current.lat)
 
-    x_diff = waypoint.lat - current.lat
-    y_diff = waypoint.lon - current.lon
+    # scale lon by cos(mean_lat) to make a local tangent-plane
+    x = dlon * math.cos((lat1 + lat2) / 2.0)
+    y = dlat
 
-    bearing = math.degrees(math.atan2(y_diff, x_diff))
-
-    if bearing < 0:
-      bearing += 360
-    elif bearing > 360:
-      bearing -= 360
-    
+    bearing = (math.degrees(math.atan2(x, y)) + 360) % 360
     return bearing
   
   def _calc_distance(self, location_1: Location, location_2: Location):
