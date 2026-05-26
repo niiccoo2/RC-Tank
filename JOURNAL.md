@@ -1376,3 +1376,7 @@ I fear the higher baudrate broke some stuff. I don't even remember why I had it 
 9600 is a lot better, but once I test the other stuff, I am going to test a 4800 and see if it looks better, becuase I think there might have been a reason for using that. Seems like I fixed the slow down issue!! Now just going to test 4800 and I think I am done!
 
 Yep, 4800 baud is much better. But good that I found where everything is! Now going to go fix some physical things, then do the test drive, tune the P or make it PID, and get the video for shipping!!
+
+#### 20:00 | x hours
+
+Have been messing with PID, I made a graph of what it is doing, and it doesn't look like it will need PID, I just need to figure out why the data isn't updating...

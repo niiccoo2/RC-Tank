@@ -62,6 +62,7 @@ class SelfDrivingManager:
     
     LOG_EVERY = 0.05  # seconds
     last_log_t = 0.0
+    debug_i = 0
     for waypoint in states.waypoint_locations:
       # when more than x meters away form waypoint, keep trying to drive to it
       while self._calc_distance(waypoint, states.gps_location) > success_distance:
@@ -88,7 +89,7 @@ class SelfDrivingManager:
        
         now = time.monotonic()
         if now - last_log_t >= LOG_EVERY:
-            self_driving.debug(f"{bearing_to_waypoint}, {heading}, {normalized_difference}")
+            self_driving.debug(f"{debug_i}, {bearing_to_waypoint}, {heading}, {normalized_difference}")
             last_log_t = now
 
         # PID STUFF
@@ -117,6 +118,8 @@ class SelfDrivingManager:
           services.motors.set_motor(MotorCommand(left=left_speed, right=right_speed))
         else:
           self_driving.debug("Was unable to set motor speed")
+        debug_i += 1
+        sleep(.01)
 
 
   def _calc_bearing_to_waypoint(self, current: Location, waypoint: Location):
