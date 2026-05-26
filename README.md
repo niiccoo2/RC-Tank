@@ -1,6 +1,65 @@
-# Info
+# Ships
 
-This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions for Hack Club [Moonshot](https://moonshot.hackclub.com).
+_Wondering what a ship is? Watch [this](https://vimeo.com/1111478391) video! Basically, a ship is when you make your project experiancable by others. In this case, that is writing a README about the project and adding some videos so people can see what it is!_
+
+## Version 3
+
+Features:
+
+- Overall:
+  - Low latency human driving using cellular
+  - Waypoint driving using RTK GPS (under 30mm accuracy)
+- Vehicle:
+  - Hoverboard motors (very high tourque)
+  - Neopixels for headlights and direction lights (red and green)
+  - Camera for driving
+  - GoPro monuts for videos (not needed to drive, only for extra video)
+  - Handles because it weighs 35lbs (around 15kg)
+  - Tech specs:
+    - Nvidia Jetson Orin Nano
+    - SIM7600 cell modem
+    - SparkFun GPS-RTK2 Board
+    - Hoverboard ECS's
+    - 16Ah 4S LiPo battery
+- Website:
+  - Live video from tank (under 100ms control loop)
+  - Live telemetry from tank:
+    - Location
+    - RTK GPS status
+    - Battery voltage
+    - Ping
+    - Heading
+  - Map:
+    - View live location of tank
+    - Create waypoint routes
+    - Send routes to tank
+    - Download and upload routes as JSON files
+  - Tank settings:
+    - Car mode (off lets you control each wheel by itself)
+    - Lights
+    - FrSky mode (for nicer controlers)
+    - Self driving toggle
+    - Video toggle
+    - Refresh rate setting
+  - Go check out the website at [rc.nicosmith.net](https://rc.nicosmith.net)! (Enter anything into text box and click connect)
+
+Version 3 of this project has been based around adding waypoint following capabilities to the tank. There should also be version 3.5 coming out soon which will add ML features, such as staying on sidewalk and avoiding humans. This version has taken a while, but it is well worth it. The project as a whole has taken over 110 hours over 112 days (see, it really is a little bit every day). I redid the entire website UI, redid entire tank-side python software, and added waypoint following code. I have learned a lot about everything, from how much of a pain CSS can be, to how WebRTC doesn't follow system routing priorities, to how people are jerks and will steal stuff. Here are some awesome pictures and videos!
+
+[Videos!](https://drive.proton.me/urls/YN5Q618FJM#a7Ycw6LDcv0I)
+
+<img src="./Photos/tank_in_field.jpg" width="680" height="512" alt="Tank in field">
+
+<img src="./Photos/tank_on_bench.jpg" width="680" height="512" alt="Tank on workbench">
+
+<img src="./Photos/tank_on_road.jpeg" width="512" height="680" alt="Tank on road">
+
+<img src="./Photos/tank_with_camera.jpg" width="512" height="680" alt="Tank with camera mounts">
+
+<img src="./Photos/early_new_site_on_ally.jpg" width="512" height="680" alt="Early version of new site on ally">
+
+## Versions 1 & 2
+
+This is version 2 of my RC-Tank. It is no longer a tank but whatever. I created both versions 1 and 2 for Hack Club [Moonshot](https://moonshot.hackclub.com).
 
 The idea of this project was simple, I had a normal rc car with camera, but it coulden't even go around the block, so I wanted something that would have much better range. Thats where using a cell modem comes in. The main (and big) disadvantage with this is latency, you need < 1.5s or else it becomes very hard to drive. I learned a lot doing this project (not done though!), I spent a lot of time learning about motor contollers and reverse engineering some hoverboard ECS's so I could use the motors I had. The main thing I want to keep working on, is the latency over cell, hopefully I can get webRTC working also. After I have a working human controled rover, then I will use it as the testbed for many more projects such as AI vision control, and GPS waypoints.
 

@@ -755,7 +755,7 @@ Finally have time to work on the tank!! Going to start by regluing things to the
 
 Wired in the Jetson and new RTK GPS module. Also remounted a bunch of other things. Going to get all the basic functions working again now.
 
-# 16:30 | 1.33 hours
+#### 16:30 | 1.33 hours
 
 Found how to switch power modes:
 
@@ -1338,15 +1338,14 @@ Got all the motor issues fixed. Just spent 30 minutes figuring out why it wasn't
 
 Fixed tank mode, also turned self driving mode into a switch and added a button on the controller for it. Going to call it a night for now. Hopfully I can finish the other features in the morning, and ship the waypoint version. Also hope to start doing ML tmr!!
 
-### Monday, May 25th | 2.75 hours
+### Monday, May 25th | 4.39 hours
 
 - [x] Export / import waypoints
 - [x] Fix ESC issues
   - [x] Turn off timeout
   - [x] Slow down faster on timeout (depends on how the code handles it... if this would make it go slower when sending normal cmds don't change it)
   - [x] Higher Buadrate? (Again, if this breaks things, turn it off)
-- [ ] Tighten screws on bottom
-- [ ] Find better way to mount everything inside
+- [x] Tighten screws on bottom
 - [ ] Fix waypoint turning code
   - [ ] Make it PD or PID
 - [ ] Add a bunch of pictures to this journal (its been a bit bland)
@@ -1377,6 +1376,34 @@ I fear the higher baudrate broke some stuff. I don't even remember why I had it 
 
 Yep, 4800 baud is much better. But good that I found where everything is! Now going to go fix some physical things, then do the test drive, tune the P or make it PID, and get the video for shipping!!
 
-#### 20:00 | x hours
+#### 20:00 | 1.73 hours
 
 Have been messing with PID, I made a graph of what it is doing, and it doesn't look like it will need PID, I just need to figure out why the data isn't updating...
+
+Wasn't able to fix the GPS issue. That is the last thing I am going to work on before starting AI.
+
+Here is a chart of the goal heading (blue, calculated using current position and goal position), and current heading (red). This explained a lot of the issues I was seeing in waypoint mode (or my data taking method is broken), as you can see, once it is told what heading to go to, it does it decently, sure it could be better, but it isn't the main issue. The main issue is that the goal heading isn't updating much at all (it should be updating more than once a second, this data is from around 20s). It seems like this issue is steming from the GPS driver. So the next step is going to be use the test script and see if that one is actually updating the data at the right rate, then once that is, then figure out why the driver is not.
+
+![Initial P tune](./Photos/Initial_P_chart.jpg)
+
+PHOTO DUMP!!
+
+<img src="./Photos/tank_in_field.jpg" width="680" height="512" alt="Tank in field">
+
+<img src="./Photos/tank_on_bench.jpg" width="680" height="512" alt="Tank on workbench">
+
+<img src="./Photos/tank_on_road.jpeg" width="512" height="680" alt="Tank on road">
+
+<img src="./Photos/tank_with_camera.jpg" width="512" height="680" alt="Tank with camera mounts">
+
+<img src="./Photos/early_new_site_on_ally.jpg" width="512" height="680" alt="Early version of new site on ally">
+
+### Tuesday, May 26th | x hours
+
+#### 17:30 | x hours
+
+Going to spend this time writing the ship for version 3 (waypoints). Even though I am shipping it now, I am going to work on one more big waypoint bug after this, then start on version 3.5 (ML self driving). That version will add the cool stuff like staying on sidewalk, although not sure how much of that is going to get done, and or if I am going to keep working on this project throughout the summer. Don't get me wrong, I _love_ this project, but sometimes a change is good. Or a project is just done for now. I can always come back to it later!
+
+# VERSION 3.5
+
+This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
