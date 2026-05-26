@@ -45,6 +45,8 @@ Features:
 
 Version 3 of this project has been based around adding waypoint following capabilities to the tank. There should also be version 3.5 coming out soon which will add ML features, such as staying on sidewalk and avoiding humans. This version has taken a while, but it is well worth it. The project as a whole has taken over 110 hours over 112 days (see, it really is a little bit every day). I redid the entire website UI, redid entire tank-side python software, and added waypoint following code. I have learned a lot about everything, from how much of a pain CSS can be, to how WebRTC doesn't follow system routing priorities, to how people are jerks and will steal stuff. Here are some awesome pictures and videos!
 
+Go look at the build journal (its pretty long): [here!](./JOURNAL.md)
+
 [Videos!](https://drive.proton.me/urls/YN5Q618FJM#a7Ycw6LDcv0I)
 
 <img src="./Photos/tank_in_field.jpg" width="680" height="512" alt="Tank in field">
