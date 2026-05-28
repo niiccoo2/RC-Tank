@@ -1388,19 +1388,11 @@ Here is a chart of the goal heading (blue, calculated using current position and
 
 PHOTO DUMP!!
 
-<img src="./Photos/tank_in_field.jpg" width="680" height="512" alt="Tank in field">
+![Tank in field](./Photos/tank_in_field.jpg) ![Tank on workbench](./Photos/tank_on_bench.jpg) ![Tank on road](./Photos/tank_on_road.jpeg) ![Tank with camera mounts](./Photos/tank_with_camera.jpg) ![Early version of new site on ally](./Photos/early_new_site_on_ally.jpg)
 
-<img src="./Photos/tank_on_bench.jpg" width="680" height="512" alt="Tank on workbench">
+### Tuesday, May 26th | .66 hours
 
-<img src="./Photos/tank_on_road.jpeg" width="512" height="680" alt="Tank on road">
-
-<img src="./Photos/tank_with_camera.jpg" width="512" height="680" alt="Tank with camera mounts">
-
-<img src="./Photos/early_new_site_on_ally.jpg" width="512" height="680" alt="Early version of new site on ally">
-
-### Tuesday, May 26th | x hours
-
-#### 17:30 | x hours
+#### 17:30 | .66 hours
 
 Going to spend this time writing the ship for version 3 (waypoints). Even though I am shipping it now, I am going to work on one more big waypoint bug after this, then start on version 3.5 (ML self driving). That version will add the cool stuff like staying on sidewalk, although not sure how much of that is going to get done, and or if I am going to keep working on this project throughout the summer. Don't get me wrong, I _love_ this project, but sometimes a change is good. Or a project is just done for now. I can always come back to it later!
 
