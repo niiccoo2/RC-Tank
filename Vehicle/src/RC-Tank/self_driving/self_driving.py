@@ -6,6 +6,12 @@ import math
 from core.config import get_logger
 import time
 
+import os
+from queue import Queue, Empty
+from dotenv import load_dotenv
+
+load_dotenv()
+
 self_driving = get_logger("self_driving")
 
 class SelfDrivingManager:
@@ -67,9 +73,9 @@ class SelfDrivingManager:
     control = 0
     previous_error = 0
 
-    KP = 2
-    KI = 0
-    KD = 0
+    # KP = 2
+    # KI = 0
+    # KD = 0
     TURNING_CONSTANT = 8
 
     for waypoint in states.waypoint_locations:
@@ -82,6 +88,10 @@ class SelfDrivingManager:
           if services.motors:
             services.motors.set_motor(MotorCommand(left=1234_0000, right=1234_0000)) #1234_0000 = stop and make sure it is stopped
           return
+        
+        KP = float(os.getenv("KP", "0"))
+        KI = float(os.getenv("KI", "0"))
+        KD = float(os.getenv("KD", "0"))
 
         # self_driving.debug(f"Going to waypoint {waypoint}")
         bearing_to_waypoint = self._calc_bearing_to_waypoint(states.gps_location, waypoint)
