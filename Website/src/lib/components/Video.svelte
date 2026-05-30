@@ -26,7 +26,7 @@
 <!-- <img src={`https://${ip}:5000/camera`} width="640" height="480" alt="RC Tank Camera Feed"> -->
 <!-- Test Image -->
 <div class="video-box">
-	{#if videoSetting}
+	{#if $videoSetting}
 		{#if !stream}
 			<img class="video-frame border" src={`${cam_off_icon}`} alt="Test Cam Feed" />
 		{:else}
@@ -39,6 +39,6 @@
 </div>
 
 <p style="color: {$status === 'Connected' ? '#00FF00' : '#FF0000'}; font-weight: bold;">
-	{#if !videoSetting}Camera Off |
+	{#if !$videoSetting}Camera Off |
 	{/if}{$status}
 </p>
