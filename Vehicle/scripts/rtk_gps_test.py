@@ -13,13 +13,14 @@ PORT = "/dev/ttyACM0"
 BAUD = 38400
 
 # MaCORS
-NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
-NTRIP_PORT = 10000
-NTRIP_MOUNT = "RTCM3MSM_IMAX"
+# NTRIP_SERVER = "macorsrtk.massdot.state.ma.us"
+# NTRIP_PORT = 10000
+# NTRIP_MOUNT = "RTCM3MSM_IMAX"
 
 # Free trial
-# NTRIP_SERVER = "rtk.rtkdata.com"
-# NTRIP_PORT = 2101
+NTRIP_SERVER = "rtk.rtkdata.com"
+NTRIP_PORT = 2101
+NTRIP_MOUNT = "AUTO"
 
 REFLAT = 42.361145
 REFLON = -71.057083

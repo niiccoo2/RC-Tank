@@ -1396,6 +1396,14 @@ PHOTO DUMP!!
 
 Going to spend this time writing the ship for version 3 (waypoints). Even though I am shipping it now, I am going to work on one more big waypoint bug after this, then start on version 3.5 (ML self driving). That version will add the cool stuff like staying on sidewalk, although not sure how much of that is going to get done, and or if I am going to keep working on this project throughout the summer. Don't get me wrong, I _love_ this project, but sometimes a change is good. Or a project is just done for now. I can always come back to it later!
 
+### Saturday, May 30th | x hours
+
+#### 14:15 | x hours
+
+Going to start today by figuring out the issue with the desired heading not updating enough. Assuming it is because the GPS is not updating enough. Once we have this fixed, hoping to start working on getting some ML working. I really have no idea how ML is going to work, all I knew was that waypoints had to go first, so I am hoping it can just fit in, but idkkkk.
+
+Having issues with the tank getting cell service :sk:. Trying to see what I can do to get it on cell... It would work on WiFi but then it is going to be a pain to test the waypoints. Going to see if I can find a better antenna to use... Ended up just bringing it inside and using WiFi, but this is going to be an issue once I am ready to test waypoints. First going to get RTK working using that same trial I used last time, I think it should be fine.
+
 # VERSION 3.5
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
