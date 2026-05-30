@@ -126,7 +126,9 @@ class WebRTCManager:
             webrtc.warning("ICE gathering timed out, sending partial answer")
 
         # FILTER candidates here
-        allow_ip_prefixes = ["192.168.225."]  # for usb0
+        # allow_ip_prefixes = ["192.168.225."]  # only allow USB0
+        allow_ip_prefixes = [""] # allow all IP's for video
+        
         filtered_sdp = self.filter_candidates(pc.localDescription.sdp, allow_ip_prefixes)
 
         return {

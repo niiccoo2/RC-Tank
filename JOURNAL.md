@@ -1412,6 +1412,8 @@ The GPS in the real program is def updating a lot less than the script. Now goin
 
 Note for future self: Remember that you made it so that video does not work over Wifi, if you want it to work when testing inside you need to turn that off. Haven't testing the self driving yet, but heading def changes a bit when the wheels are spinning... Not sure if it is enough to cause an issue though... Should also add an offline mode, although I don't know how much work that is going to take.
 
+I think I that fixed the issue? Going to see if I can get cell working bc I really don't wanna stand outside to test this rn. Think I'm just gonna put my phone in the tank and it will use phones network.
+
 # VERSION 3.5
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
