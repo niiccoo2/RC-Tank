@@ -94,11 +94,12 @@ class SelfDrivingManager:
 
         cur = states.gps_location
         dist = self._calc_distance(waypoint, cur)
-        self_driving.debug(
-          f"{debug_i}, dist={dist:.2f}m, "
-          f"gps=({cur.lat:.7f},{cur.lon:.7f}), "
-          f"bearing={bearing_to_waypoint:.2f}, heading={heading:.2f}"
-        )
+        # self_driving.debug(
+        #   f"{debug_i}, dist={dist:.2f}m, "
+        #   f"gps=({cur.lat:.7f},{cur.lon:.7f}), "
+        #   f"bearing={bearing_to_waypoint:.2f}, heading={heading:.2f}"
+        # )
+        self_driving.debug(f"{bearing_to_waypoint}, {heading}")
 
         # PID STUFF
 

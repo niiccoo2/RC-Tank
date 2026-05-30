@@ -1408,7 +1408,9 @@ Going to start debugging this by ploting the data that is coming out of the test
 
 On `rtk_gps_test.py` it _seems_ to be updating with each print statement... There is a small chance that it is just moving a small number and won't reflect big changes, but I think it is good. Going to add the same debug to the real program and see if there is a difference.
 
-The GPS in the real program is def updating a lot less than the script. Now going to see if I can find a difference. The only difference I see is `sleep(.1)`, which sure, adds time, but not a second of time... Anyways, going to test without it now.
+The GPS in the real program is def updating a lot less than the script. Now going to see if I can find a difference. The only difference I see is `sleep(.1)`, which sure, adds time, but not a second of time... Anyways, going to test without it now. Weird, removing that seemed to fix it... Not sure why though because it changed it from being like over a second between updates, to many times per second. Now going to see if I can figure out this cell service so that I can test this. Actually, should be able to test just holding the tank. Going to do that first. Really not sure why it doesn't have cell though, it is only 1 bar here, but that should be enough to at least connect to. Might see if I can debug that next, although I am not sure I am going to learn anything new. I think it will just say that it isn't finding a tower.
+
+Note for future self: Remember that you made it so that video does not work over Wifi, if you want it to work when testing inside you need to turn that off. Haven't testing the self driving yet, but heading def changes a bit when the wheels are spinning... Not sure if it is enough to cause an issue though... Should also add an offline mode, although I don't know how much work that is going to take.
 
 # VERSION 3.5
 
