@@ -60,10 +60,20 @@ class SelfDrivingManager:
     if len(states.waypoint_locations) == 0: # if no waypoints, stop code
       self.mode = 0
     
-    LOG_EVERY = 0.05  # seconds
-    last_log_t = 0.0
-    debug_i = 0
+    last_time = time.time()
+    error = 0
+    integral = 0
+    derivative = 0
+    control = 0
+    previous_error = 0
+
+    KP = 1
+    KI = 0
+    KD = 0
+
     for waypoint in states.waypoint_locations:
+      last_time = time.time()
+
       # when more than x meters away form waypoint, keep trying to drive to it
       while self._calc_distance(waypoint, states.gps_location) > success_distance:
         if self.mode != 1:
@@ -86,40 +96,42 @@ class SelfDrivingManager:
         normalized_difference = difference/360
 
         # self_driving.debug(f"Difference: {normalized_difference}")
-       
-        # now = time.monotonic()
-        # if now - last_log_t >= LOG_EVERY:
-        #     self_driving.debug(f"{debug_i}, {bearing_to_waypoint}, {heading}, {normalized_difference}")
-        #     last_log_t = now
-
-        cur = states.gps_location
-        dist = self._calc_distance(waypoint, cur)
-        # self_driving.debug(
-        #   f"{debug_i}, dist={dist:.2f}m, "
-        #   f"gps=({cur.lat:.7f},{cur.lon:.7f}), "
-        #   f"bearing={bearing_to_waypoint:.2f}, heading={heading:.2f}"
-        # )
-        self_driving.debug(f"{bearing_to_waypoint}, {heading}")
 
         # PID STUFF
 
-        # error = bearing_to_waypoint - heading
-
-        # if difference > 180: # make sure we are using the shortest path
-        #   difference -= 360
-        # elif difference < -180:
-        #   difference += 360
-
+        # error = setpoint - pv
         # integral += error * dt
         # derivative = (error - previous_error) / dt
         # control = kp * error + ki * integral + kd * derivative
 
-        ###########
+        current_time = time.time()
+        dt = current_time - last_time
 
+        if dt <= 0:
+            dt = 0.001
+
+        error = difference
+        integral += error * dt
+        integral = max(min(integral, 100), -100) # clamp
+        derivative = (error - previous_error) / dt
+        control = KP * error + KI * integral + KD * derivative
+
+        last_time = current_time
+        previous_error = error
+        
         TURNING_CONSTANT = 800
 
-        left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
-        right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
+        left_speed = max_speed-(TURNING_CONSTANT*(-control))
+        right_speed = max_speed-(TURNING_CONSTANT*(control))
+
+        ###########
+
+        self_driving.debug(f"{bearing_to_waypoint}, {heading}, {error}, {integral}, {derivative}")
+
+        # TURNING_CONSTANT = 800
+
+        # left_speed = max_speed-(TURNING_CONSTANT*(-normalized_difference))
+        # right_speed = max_speed-(TURNING_CONSTANT*(normalized_difference))
 
         # self_driving.debug(f"Self driving speeds: {left_speed}, {right_speed}")
 
@@ -127,7 +139,6 @@ class SelfDrivingManager:
           services.motors.set_motor(MotorCommand(left=left_speed, right=right_speed))
         else:
           self_driving.debug("Was unable to set motor speed")
-        debug_i += 1
         sleep(.01)
 
 
