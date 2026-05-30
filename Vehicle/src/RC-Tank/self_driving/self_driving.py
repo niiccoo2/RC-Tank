@@ -70,6 +70,7 @@ class SelfDrivingManager:
     KP = 1
     KI = 0
     KD = 0
+    TURNING_CONSTANT = 8
 
     for waypoint in states.waypoint_locations:
       last_time = time.time()
@@ -118,8 +119,6 @@ class SelfDrivingManager:
 
         last_time = current_time
         previous_error = error
-        
-        TURNING_CONSTANT = 800
 
         left_speed = max_speed-(TURNING_CONSTANT*(-control))
         right_speed = max_speed-(TURNING_CONSTANT*(control))
