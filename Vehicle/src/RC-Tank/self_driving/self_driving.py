@@ -67,7 +67,7 @@ class SelfDrivingManager:
     control = 0
     previous_error = 0
 
-    KP = 1
+    KP = 2
     KI = 0
     KD = 0
     TURNING_CONSTANT = 8
