@@ -129,12 +129,15 @@ def main():
                 rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
                 
                 rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
-                print(
-                    f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
-                    f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
-                    f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
-                    f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
-                )
+                # print( # print statement with lots of detail
+                #     f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
+                #     f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
+                #     f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
+                #     f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
+                # )
+                
+                # print statement to debug heading not updating
+                print(f"{parsed_gnss.lat}, {parsed_gnss.lon}, {time.time()}")
 
 
 if __name__ == "__main__":

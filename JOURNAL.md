@@ -1404,6 +1404,8 @@ Going to start today by figuring out the issue with the desired heading not upda
 
 Having issues with the tank getting cell service :sk:. Trying to see what I can do to get it on cell... It would work on WiFi but then it is going to be a pain to test the waypoints. Going to see if I can find a better antenna to use... Ended up just bringing it inside and using WiFi, but this is going to be an issue once I am ready to test waypoints. First going to get RTK working using that same trial I used last time, I think it should be fine.
 
+Going to start debugging this by ploting the data that is coming out of the testing script and see if it looks like it is updating enough. If it is, then will add same statement to real code and see what's happening.
+
 # VERSION 3.5
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
