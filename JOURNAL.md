@@ -1408,6 +1408,8 @@ Going to start debugging this by ploting the data that is coming out of the test
 
 On `rtk_gps_test.py` it _seems_ to be updating with each print statement... There is a small chance that it is just moving a small number and won't reflect big changes, but I think it is good. Going to add the same debug to the real program and see if there is a difference.
 
+The GPS in the real program is def updating a lot less than the script. Now going to see if I can find a difference. The only difference I see is `sleep(.1)`, which sure, adds time, but not a second of time... Anyways, going to test without it now.
+
 # VERSION 3.5
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.

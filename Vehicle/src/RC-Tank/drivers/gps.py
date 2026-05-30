@@ -153,4 +153,4 @@ class GPS:
                         "sats": parsed_gnss.numSV # int, number sats
                         }
 
-                sleep(.1) # random number, just don't want to be hogging resources
+                # sleep(.1) # random number, just don't want to be hogging resources
