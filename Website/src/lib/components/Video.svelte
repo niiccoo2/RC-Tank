@@ -40,5 +40,5 @@
 
 <p style="color: {$status === 'Connected' ? '#00FF00' : '#FF0000'}; font-weight: bold;">
 	{#if !$videoSetting}Camera Off |
-	{/if}{$status}
+	{/if} {$status}
 </p>

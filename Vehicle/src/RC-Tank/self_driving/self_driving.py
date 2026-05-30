@@ -135,7 +135,7 @@ class SelfDrivingManager:
 
         ###########
 
-        self_driving.debug(f"{bearing_to_waypoint}, {heading}, {error}, {integral}, {derivative}")
+        self_driving.debug(f"{bearing_to_waypoint}, {heading}")
 
         # TURNING_CONSTANT = 800
 

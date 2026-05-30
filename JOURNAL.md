@@ -1398,7 +1398,7 @@ Going to spend this time writing the ship for version 3 (waypoints). Even though
 
 ### Saturday, May 30th | x hours
 
-#### 14:15 | x hours
+#### 14:15 | 2.33 hours
 
 Going to start today by figuring out the issue with the desired heading not updating enough. Assuming it is because the GPS is not updating enough. Once we have this fixed, hoping to start working on getting some ML working. I really have no idea how ML is going to work, all I knew was that waypoints had to go first, so I am hoping it can just fit in, but idkkkk.
 
@@ -1415,6 +1415,12 @@ Note for future self: Remember that you made it so that video does not work over
 I think I that fixed the issue? Going to see if I can get cell working bc I really don't wanna stand outside to test this rn. Think I'm just gonna put my phone in the tank and it will use phones network.
 
 Fixed the issue! Now going to add some PID and try to tune it a bit.
+
+#### 19:00 | x hours
+
+Starting to tune the PID loop. Should be done with this tonight, take a video for shipping it, and be ready to start on ML in the morning.
+
+Have just been working on tuning the PID look but the GPS seems to have shit itself. No idea why but it lock RTK lock and now has 800m accuracy... Need to fix this before I keep tuning it. Found the issue... Somehow the SMA connector for the GPS antenna came undone. Not really sure how that happens but ok I guess. Back to figuring out this PID.
 
 # VERSION 3.5
 
