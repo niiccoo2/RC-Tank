@@ -134,12 +134,14 @@ class GPS:
                     self.rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
                     
                     rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
-                    gps.debug(
-                        f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
-                        f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
-                        f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
-                        f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
-                    )
+                    # gps.debug(
+                    #     f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
+                    #     f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
+                    #     f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
+                    #     f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
+                    # )
+
+                    gps.debug(f"{self.rover.lon}, {self.rover.lat}, {time.time()}")
 
                     states.gps_location = Location(lat = self.rover.lat, lon = self.rover.lon, alt = self.rover.alt)
                     states.ntrip_status = { 
