@@ -9,6 +9,7 @@ from core.config import get_logger
 router = APIRouter()
 
 websocket_logger = get_logger("websocket")
+self_driving = get_logger("self_driving")
 
 @router.get("/")
 async def allow_insecure_page():
@@ -84,7 +85,9 @@ async def ws(ws: WebSocket):
                     states.waypoint_locations = locations_new_type
                     websocket_logger.debug(f"Recevied waypoint data: {locations_new_type}")
                 elif msg_type == "self_driving_mode":
-                    if services.self_driving_manager: services.self_driving_manager.set_mode(msg["data"])
+                    # if services.self_driving_manager: services.self_driving_manager.set_mode(msg["data"])
+                    states.self_driving_mode = msg["data"]
+                    self_driving.debug(f"Set self driving mode to: {msg['data']}")
                     websocket_logger.debug(f"Set self driving mode to: {msg['data']}")
 
     finally:
