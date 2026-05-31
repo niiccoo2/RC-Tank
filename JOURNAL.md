@@ -1432,10 +1432,12 @@ This version is around adding ML features to the waypoint mode, really turning i
 
 ### Sunday, May 31st | x hours
 
-#### 10:30 | x hours
+#### 10:30 | .5 hours
 
 Now that we have waypoints working, I'm kinda going to change directions and work on a solely ML mode that just follows a person. I want to learn the basics of ML on the Jetson before we add it into the existing waypoint mode.
 
 Going to start by adding a button for ML mode to the site (this will be temp while we are testing) then getting the code on the tank ready to handle two different self driving modes.
 
 Think I have a decent outline for ML mode in the website and tank code. Now waiting for everything to download...
+
+#### 18:00 | x hours
