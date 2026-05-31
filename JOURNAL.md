@@ -1396,7 +1396,7 @@ PHOTO DUMP!!
 
 Going to spend this time writing the ship for version 3 (waypoints). Even though I am shipping it now, I am going to work on one more big waypoint bug after this, then start on version 3.5 (ML self driving). That version will add the cool stuff like staying on sidewalk, although not sure how much of that is going to get done, and or if I am going to keep working on this project throughout the summer. Don't get me wrong, I _love_ this project, but sometimes a change is good. Or a project is just done for now. I can always come back to it later!
 
-### Saturday, May 30th | x hours
+### Saturday, May 30th | 4 hours
 
 #### 14:15 | 2.33 hours
 
@@ -1416,12 +1416,24 @@ I think I that fixed the issue? Going to see if I can get cell working bc I real
 
 Fixed the issue! Now going to add some PID and try to tune it a bit.
 
-#### 19:00 | x hours
+#### 19:00 | 1.66 hours
 
 Starting to tune the PID loop. Should be done with this tonight, take a video for shipping it, and be ready to start on ML in the morning.
 
 Have just been working on tuning the PID look but the GPS seems to have shit itself. No idea why but it lock RTK lock and now has 800m accuracy... Need to fix this before I keep tuning it. Found the issue... Somehow the SMA connector for the GPS antenna came undone. Not really sure how that happens but ok I guess. Back to figuring out this PID.
 
+I think I have a decent tune for the PID now? It is only KP, but there seem to be some other issues also... I'm just going to end today by recording a demo video. Then tmr am going to start figuring out how we are going to add ML. I will probably do some more waypoint tests once back in Boston because there are a lot of issues right now... Cell isn't working bc of location, uhh yea that is causing a lot of issues. Might also be something with the compass? Not really sure. Anyways, yeah, video today, start on ML tmr, go back and do some final PID tests once back in town.
+
+I am so stupid. When tuning the PID loop, I was reading the values from a .env file, but I forgot that I run `load_dotenv()` at the beginning of the file, so I never reloaded it. That meant that the values it was using only changed when I reloaded the entire program. Good news is that a tune of 1, 0, 0 seems good enough for now. Got the videos I need for shipping, so going to edit that then call it enough for today.
+
 # VERSION 3.5
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
+
+### Sunday, May 31st | x hours
+
+#### 10:30 | x hours
+
+Now that we have waypoints working, I'm kinda going to change directions and work on a solely ML mode that just follows a person. I want to learn the basics of ML on the Jetson before we add it into the existing waypoint mode.
+
+Going to start by adding a button for ML mode to the site (this will be temp while we are testing) then getting the code on the tank ready to handle two different self driving modes.

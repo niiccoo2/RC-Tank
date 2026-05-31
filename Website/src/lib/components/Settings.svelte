@@ -36,13 +36,25 @@
 
 	function handleAutoPilotToggle() {
 		if ($selfDriving) {
-			selfDriving.set(false);
+			selfDriving.set(0);
 			ws.send('self_driving_mode', 0);
 			status.set('Connected');
 		} else {
-			selfDriving.set(true);
+			selfDriving.set(1);
 			ws.send('self_driving_mode', 1);
 			status.set('Waypoint Mode');
+		}
+	}
+
+	function handleMLToggle() {
+		if ($selfDriving) {
+			selfDriving.set(0);
+			ws.send('self_driving_mode', 0);
+			status.set('Connected');
+		} else {
+			selfDriving.set(2);
+			ws.send('self_driving_mode', 2); // 2 for ML mode
+			status.set('ML Mode');
 		}
 	}
 </script>
@@ -73,8 +85,19 @@
 			<label class="switch m-0 ml-auto">
 				<input
 					type="checkbox"
-					checked={$selfDriving}
+					checked={$selfDriving === 1}
 					onchange={handleAutoPilotToggle} />
+				<span class="slider"></span>
+			</label>
+		</div>
+
+		<div class="info_card inline-flex items-center gap-3 px-3 py-2">
+			<span class="py-1">ML Mode:</span>
+			<label class="switch m-0 ml-auto">
+				<input
+					type="checkbox"
+					checked={$selfDriving === 2}
+					onchange={handleMLToggle} />
 				<span class="slider"></span>
 			</label>
 		</div>

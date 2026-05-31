@@ -38,7 +38,7 @@
 	{/if}
 </div>
 
-<p style="color: {$status === 'Connected' ? '#00FF00' : '#FF0000'}; font-weight: bold;">
+<p style="color: {$status === 'Connected' ? '#00FF00' : $status === 'Error' ? '#FF0000' : '#FFA500'}; font-weight: bold;">
 	{#if !$videoSetting}Camera Off |
 	{/if} {$status}
 </p>

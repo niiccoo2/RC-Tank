@@ -36,13 +36,25 @@ async function handleLightSwitch(value: boolean) {
 
 function handleAutoPilotToggle() {
 	if (get(selfDriving)) {
-		selfDriving.set(false);
+		selfDriving.set(0);
 		ws.send('self_driving_mode', 0);
 		status.set('Connected');
 	} else {
-		selfDriving.set(true);
+		selfDriving.set(1);
 		ws.send('self_driving_mode', 1);
 		status.set('Waypoint Mode');
+	}
+}
+
+function handleMLToggle() {
+	if (get(selfDriving)) {
+		selfDriving.set(0);
+		ws.send('self_driving_mode', 0);
+		status.set('Connected');
+	} else {
+		selfDriving.set(2);
+		ws.send('self_driving_mode', 2); // 2 for ML mode
+		status.set('ML Mode');
 	}
 }
 
@@ -84,11 +96,18 @@ async function sendCommand(left: number, right: number) {
 		if (ws.send('motor', { left, right }) == false) {
 			console.log('WS Send error');
 			status.set('Error');
-		} else if (get(status) !== 'Waypoint Mode') {
+		} else if (get(status) !== 'Waypoint Mode' || get(status) !== 'ML Mode') {
 			// console.log('Setting status');
 			status.set('Connected');
 		}
 	}
+}
+
+function isButtonPressed(gamepad: Gamepad | null, button: number) {
+	if (gamepad)
+		return (
+			gamepad.buttons[button].pressed && gamepad.buttons[button].pressed != button_states[button]
+		);
 }
 
 export function startPollingGamepad() {
@@ -99,20 +118,25 @@ export function startPollingGamepad() {
 		if (gamepad) {
 			// console.log(gamepad.buttons[1]);
 
-			if (gamepad.buttons[1].pressed && gamepad.buttons[1].pressed != button_states[1]) {
+			if (isButtonPressed(gamepad, 1)) {
 				// if B is pressed
 				carMode.set(!get(carMode)); // toggle car mode
 			}
 
-			if (gamepad.buttons[5].pressed && gamepad.buttons[5].pressed != button_states[5]) {
+			if (isButtonPressed(gamepad, 5)) {
 				// if right bumper is pressed
 				lights.set(!get(lights)); // toggle lights
 				handleLightSwitch(get(lights));
 			}
 
-			if (gamepad.buttons[2].pressed && gamepad.buttons[2].pressed != button_states[2]) {
+			if (isButtonPressed(gamepad, 2)) {
 				// if x is pressed
 				handleAutoPilotToggle();
+			}
+
+			if (isButtonPressed(gamepad, 3)) {
+				// if y is pressed
+				handleMLToggle();
 			}
 
 			if (get(carMode)) {
@@ -144,7 +168,11 @@ export function startPollingGamepad() {
 
 			// Only send if x ms has passed
 			const now = Date.now();
-			if (now - lastSendTime > get(refreshTimeMs) && get(status) !== 'Waypoint Mode') {
+			if (
+				now - lastSendTime > get(refreshTimeMs) &&
+				get(status) !== 'Waypoint Mode' &&
+				get(status) !== 'ML Mode'
+			) {
 				sendCommand(leftSpeed, rightSpeed);
 				lastSendTime = now;
 			}
