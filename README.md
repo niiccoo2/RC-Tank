@@ -1,6 +1,6 @@
 Supported by [RTKdata](https://rtkdata.com/)
 
-![RTKdata logo](./Photos/RTKData_logo.png)
+![RTKdata logo](./Photos/RTK_data_logo.jpg)
 
 ![Hackatime Stats](https://hackatime.hackclub.com/api/v1/badge/U090JSHV8QJ/niiccoo2/RC-Tank)
 
