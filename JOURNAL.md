@@ -1440,15 +1440,17 @@ Going to start by adding a button for ML mode to the site (this will be temp whi
 
 Think I have a decent outline for ML mode in the website and tank code. Now waiting for everything to download...
 
-### Monday, June 1st | x hours
+### Monday, June 1st | 1 hour
 
-#### 17:30 | x hours
+#### 17:30 | 1 hour
 
 Aiming for just 1 hour of some light work today. Going to start by getting coolify linked with GitHub so that the deployments are shown instead of the old vercel stuff. Then going to probably just try to figure out how this ML works. Again, the goal for now is to follow a person so that I can kinda just learn about ML, then we will later integrate more ML into the waypoint mode. Not sure what the first thing I'm going to add to waypoints, but this is kinda also figuring that out.
 
 ALSO, WE GOT SPONSORED BY RTKDATA! Not with any money yet, but they said they would be willing to give me a free RTK plan if I could take some data and they could add it to their website. So at some point soon I just should start logging all the gps data, just so that I have it. I will figure out the graphing and all that later, but I just need it logged. Ahhh coolify seems to have gone down, going to need to fix that. Hosted sites seem to be fine, so not the end of the world yet, but this needs to be fixed.
 
-Might have fixed coolify? Pushing to test.
+Might have fixed coolify? Pushing to test. It worked!! This took way too long, but at least it is done. It has been a small thing that has been bugging me for a while.
+
+Starting to figure out what code I need to be running. As you can see, I have no idea what I am doing with ML / AI.
 
 ## VERSION 4
 
