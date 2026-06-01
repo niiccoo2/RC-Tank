@@ -58,6 +58,8 @@
 	<title>RC Tank Controller</title>
 </svelte:head>
 
+Woah, a change!
+
 {#if $ip}
 	<header>
 		{#each headerItems as item, i}

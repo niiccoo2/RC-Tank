@@ -1430,7 +1430,7 @@ I am so stupid. When tuning the PID loop, I was reading the values from a .env f
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
 
-### Sunday, May 31st | x hours
+### Sunday, May 31st | .5 hours
 
 #### 10:30 | .5 hours
 
@@ -1440,7 +1440,15 @@ Going to start by adding a button for ML mode to the site (this will be temp whi
 
 Think I have a decent outline for ML mode in the website and tank code. Now waiting for everything to download...
 
-#### 18:00 | x hours
+### Monday, June 1st | x hours
+
+#### 17:30 | x hours
+
+Aiming for just 1 hour of some light work today. Going to start by getting coolify linked with GitHub so that the deployments are shown instead of the old vercel stuff. Then going to probably just try to figure out how this ML works. Again, the goal for now is to follow a person so that I can kinda just learn about ML, then we will later integrate more ML into the waypoint mode. Not sure what the first thing I'm going to add to waypoints, but this is kinda also figuring that out.
+
+ALSO, WE GOT SPONSORED BY RTKDATA! Not with any money yet, but they said they would be willing to give me a free RTK plan if I could take some data and they could add it to their website. So at some point soon I just should start logging all the gps data, just so that I have it. I will figure out the graphing and all that later, but I just need it logged. Ahhh coolify seems to have gone down, going to need to fix that. Hosted sites seem to be fine, so not the end of the world yet, but this needs to be fixed.
+
+Might have fixed coolify? Pushing to test.
 
 ## VERSION 4
 
