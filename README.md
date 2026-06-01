@@ -1,6 +1,10 @@
-# Ships
+Supported by [RTKdata](https://rtkdata.com/)
+
+![RTKdata logo](./Photos/RTKData_logo.png)
 
 ![Hackatime Stats](https://hackatime.hackclub.com/api/v1/badge/U090JSHV8QJ/niiccoo2/RC-Tank)
+
+# Ships
 
 _Wondering what a ship is? Watch [this](https://vimeo.com/1111478391) video! Basically, a ship is when you make your project experiancable by others. In this case, that is writing a README about the project and adding some videos so people can see what it is!_
 

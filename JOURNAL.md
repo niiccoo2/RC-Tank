@@ -1426,7 +1426,7 @@ I think I have a decent tune for the PID now? It is only KP, but there seem to b
 
 I am so stupid. When tuning the PID loop, I was reading the values from a .env file, but I forgot that I run `load_dotenv()` at the beginning of the file, so I never reloaded it. That meant that the values it was using only changed when I reloaded the entire program. Good news is that a tune of 1, 0, 0 seems good enough for now. Got the videos I need for shipping, so going to edit that then call it enough for today.
 
-# VERSION 3.5
+## VERSION 3.5
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
 
@@ -1441,3 +1441,17 @@ Going to start by adding a button for ML mode to the site (this will be temp whi
 Think I have a decent outline for ML mode in the website and tank code. Now waiting for everything to download...
 
 #### 18:00 | x hours
+
+## VERSION 4
+
+This is going to be making a new frame for the tank! Not sure if this is ever going to happen, but if it does, here is a list of things it should have / do:
+
+- Suspension
+- Be able to go offroad
+- Good turning radius
+  - Crab / front and back turning?
+- Waterproof (like a real car)
+- Be able to hold a person / payload
+  - Lock suspension
+  - Have a spot to sit that isn't crushing anything
+- Trailer hitch
