@@ -1452,6 +1452,14 @@ Might have fixed coolify? Pushing to test. It worked!! This took way too long, b
 
 Starting to figure out what code I need to be running. As you can see, I have no idea what I am doing with ML / AI.
 
+### Tuesday, June 2nd | x hours
+
+#### 11:00 | x hours
+
+Going to start working on adding some logging for the RTK data. Just done with MCAS so I'm only really going to have around 30 minutes to get it done now, but that _should_ be enough time.
+
+Think I have a basic logger working. Need to first check if it works, then make sure that it is logging all the data that I was told to log in the email.
+
 ## VERSION 4
 
 This is going to be making a new frame for the tank! Not sure if this is ever going to happen, but if it does, here is a list of things it should have / do:

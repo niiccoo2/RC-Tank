@@ -1,5 +1,4 @@
 import time
-from time import sleep
 from core.types import Location
 from core import states
 from core.config import get_logger
@@ -9,6 +8,7 @@ from dotenv import load_dotenv
 from serial import Serial
 from pygnssutils import GNSSNTRIPClient, GNSSReader
 from pyubx2 import UBXMessage
+import datetime
 
 load_dotenv()
 
@@ -20,7 +20,7 @@ BAUD = 38400
 # NTRIP_PORT = 10000
 # NTRIP_MOUNT = "RTCM3MSM_IMAX"
 
-# Free trial
+# RTK Data
 NTRIP_SERVER = "rtk.rtkdata.com"
 NTRIP_PORT = 2101
 NTRIP_MOUNT = "AUTO"
@@ -96,59 +96,71 @@ class GPS:
         time.sleep(0.5)
     
     def update_gps_thread(self):
-        with GNSSNTRIPClient(self.rover) as gnc:
-            gnc.run(
-                server=NTRIP_SERVER,
-                port=NTRIP_PORT,
-                mountpoint=NTRIP_MOUNT,
-                datatype="RTCM",
-                ntripuser=os.getenv("NTRIP_USER", "anon"),
-                ntrippassword=os.getenv("NTRIP_PWD", "password"),
-                ggainterval=10,
-                ggamode=0, # use live location from gps
-                output=self.out_queue,
-            )
+        with open("./RTK.log", "a") as f:
+            date = datetime.datetime.now()
 
-            while True:
-                # inject corrections + print what arrives
-                try:
-                    while True:
-                        raw, parsed = self.out_queue.get_nowait()
-                        ident = getattr(parsed, "identity", type(parsed).__name__)
-                        # print(f"NTRIP: {ident} ({len(raw)} bytes)")
-                        if raw:
-                            self.stream.write(raw)
-                        self.out_queue.task_done()
-                except Empty:
-                    pass
+            f.write(f"GPS thread started. {date.year}-{date.month:02d}-{date.day:02d}_{date.hour:02d}{date.minute:02d}\n")
 
-                # show rover status
-                raw_gnss, parsed_gnss = self.gnr.read()
-                if parsed_gnss is not None and getattr(parsed_gnss, "identity", None) == "NAV-PVT":
-                    
-                    # Update the live coordinates so the NTRIP client can use them!
-                    self.rover.lat = parsed_gnss.lat
-                    self.rover.lon = parsed_gnss.lon
-                    self.rover.sats = parsed_gnss.numSV
-                    # hMSL is in mm, convert to meters
-                    self.rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
-                    
-                    rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
-                    # gps.debug(
-                    #     f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
-                    #     f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
-                    #     f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
-                    #     f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
-                    # )
+            with GNSSNTRIPClient(self.rover) as gnc:
+                gnc.run(
+                    server=NTRIP_SERVER,
+                    port=NTRIP_PORT,
+                    mountpoint=NTRIP_MOUNT,
+                    datatype="RTCM",
+                    ntripuser=os.getenv("NTRIP_USER", "anon"),
+                    ntrippassword=os.getenv("NTRIP_PWD", "password"),
+                    ggainterval=10,
+                    ggamode=0, # use live location from gps
+                    output=self.out_queue,
+                )
 
-                    gps.debug(f"{self.rover.lon}, {self.rover.lat}, {time.time()}")
+                while True:
+                    # inject corrections + print what arrives
+                    try:
+                        while True:
+                            raw, parsed = self.out_queue.get_nowait()
+                            ident = getattr(parsed, "identity", type(parsed).__name__)
+                            # print(f"NTRIP: {ident} ({len(raw)} bytes)")
+                            if raw:
+                                self.stream.write(raw)
+                            self.out_queue.task_done()
+                    except Empty:
+                        pass
 
-                    states.gps_location = Location(lat = self.rover.lat, lon = self.rover.lon, alt = self.rover.alt)
-                    states.ntrip_status = { 
-                        "fix_type": parsed_gnss.fixType, # int
-                        "rtk": rtk_status, # string
-                        "diff_soln": parsed_gnss.diffSoln, # int, if it is solving
-                        "corr_age": parsed_gnss.lastCorrectionAge, # int
-                        "h_acc": parsed_gnss.hAcc, # int
-                        "sats": parsed_gnss.numSV # int, number sats
-                        }
+                    # show rover status
+                    raw_gnss, parsed_gnss = self.gnr.read()
+                    if parsed_gnss is not None and getattr(parsed_gnss, "identity", None) == "NAV-PVT":
+                        
+                        # Update the live coordinates so the NTRIP client can use them!
+                        self.rover.lat = parsed_gnss.lat
+                        self.rover.lon = parsed_gnss.lon
+                        self.rover.sats = parsed_gnss.numSV
+                        # hMSL is in mm, convert to meters
+                        self.rover.alt = getattr(parsed_gnss, "hMSL", 0.0) / 1000.0
+                        
+                        rtk_status = {0: "None", 1: "Float", 2: "Fixed"}.get(parsed_gnss.carrSoln, "Unknown")
+                        gps.debug(
+                            f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
+                            f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
+                            f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
+                            f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
+                        )
+
+                        f.write(
+                            f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
+                            f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
+                            f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
+                            f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}\n"
+                        )
+
+                        # gps.debug(f"{self.rover.lon}, {self.rover.lat}, {time.time()}")
+
+                        states.gps_location = Location(lat = self.rover.lat, lon = self.rover.lon, alt = self.rover.alt)
+                        states.ntrip_status = { 
+                            "fix_type": parsed_gnss.fixType, # int
+                            "rtk": rtk_status, # string
+                            "diff_soln": parsed_gnss.diffSoln, # int, if it is solving
+                            "corr_age": parsed_gnss.lastCorrectionAge, # int
+                            "h_acc": parsed_gnss.hAcc, # int
+                            "sats": parsed_gnss.numSV # int, number sats
+                            }
