@@ -2,7 +2,7 @@ from core import services
 from time import sleep
 import threading
 from core.config import get_logger
-from waypoint_navigation import WaypointNavigation
+from self_driving.waypoint_navigation import WaypointNavigation
 from core.states import self_driving_mode
 
 self_driving = get_logger("self_driving")
