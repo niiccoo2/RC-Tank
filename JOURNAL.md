@@ -1492,7 +1492,7 @@ Think I have a basic logger working. Need to first check if it works, then make 
 
 ### Tuesday, June 23th | x hours
 
-#### 08:30 | x hours
+#### 16:00 | 2 hours
 
 I think I have decided that I am going to keep working on this project throughout the summer. Not 100% sure, but pretty sure. If I do, going to start by finishing adding all the RTK logging and starting on using ML to help it drive. Then going to get started on working on the frame so that parts can arrive while I'm on vacation.
 
@@ -1512,3 +1512,7 @@ Have been drawing out a simple design, and I'm not really sure how to get the pr
 Apparently, they never gave me the free RTK connection, so I now have to go back to MACors for now and email them. I think I got all the logging done. Only issue is that the the saved log is kinda a mess, so I am going to write a quick script that will read the full log and just take the data that I want, in this case, the time to lock data. Then going to have it output it in a form that is easy to visualize. I think just a copy paste csv is a good idea.
 
 I was about to write some quick code so you can see the lock time code on the website, but now it is deciding to loose cell... I can't tell if it is loosing cell, if it is somehow on WiFi and loosing that, or if this is a power issue. For now I am just going to bring it inside, but once I bring it out to the field it would be a good time to test wtf is wrong. Lights seem to not be working... Going to debug that, then the power / internet issue. I have the bare minimum done for logging, so after today I am not going to work on it, but if I have time tonight, I might add a chart to the website (not likely). No idea why lights aren't working. I guess that is something to work on next time.
+
+### 19:40 | x hours
+
+Not really sure why the lights are not working, but not going to debug it now because I don't have the right tools. Going to work on finishing that logging tool I wanted to add to the website.
