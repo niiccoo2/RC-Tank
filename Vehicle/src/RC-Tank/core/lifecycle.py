@@ -17,7 +17,7 @@ lifecycle_logger = get_logger("lifecycle")
 def initialize_components():
     global motors, webrtc, lights, gps
 
-    lifecycle_logger.warning(f"Software started at {time()}")
+    lifecycle_logger.warning(f"\n\n\nSoftware started at {time()}")
 
     lifecycle_logger.warning("Initializing Motor...")
     try:
