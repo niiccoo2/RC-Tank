@@ -1513,6 +1513,8 @@ Apparently, they never gave me the free RTK connection, so I now have to go back
 
 I was about to write some quick code so you can see the lock time code on the website, but now it is deciding to loose cell... I can't tell if it is loosing cell, if it is somehow on WiFi and loosing that, or if this is a power issue. For now I am just going to bring it inside, but once I bring it out to the field it would be a good time to test wtf is wrong. Lights seem to not be working... Going to debug that, then the power / internet issue. I have the bare minimum done for logging, so after today I am not going to work on it, but if I have time tonight, I might add a chart to the website (not likely). No idea why lights aren't working. I guess that is something to work on next time.
 
-### 19:40 | x hours
+### 19:40 | .33 hours
 
 Not really sure why the lights are not working, but not going to debug it now because I don't have the right tools. Going to work on finishing that logging tool I wanted to add to the website.
+
+Just finished making a _really_ quick script that just reads through the log file and prints all time to fixes that the tank has had.
