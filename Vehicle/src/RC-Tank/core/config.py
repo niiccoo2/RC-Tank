@@ -9,6 +9,7 @@ def _parse_flags():
     parser.add_argument('--webrtc-debug', action='store_true', help='Show webrtc debug logs')
     parser.add_argument('--self_driving-debug', action='store_true', help='Show self_driving debug logs')
     parser.add_argument('--websocket-debug', action='store_true', help='Show websocket debug logs')
+    parser.add_argument('--lifecycle-debug', action='store_true', help='Show lifecycle debug logs')
     
     return parser.parse_args()
 
@@ -41,7 +42,8 @@ def get_logger(name):
         'gps': args.gps_debug,
         'webrtc': args.webrtc_debug,
         'self_driving': args.self_driving_debug,
-        'websocket': args.websocket_debug
+        'websocket': args.websocket_debug,
+        'lifecycle': args.lifecycle_debug
     }
     
     if name in debug_flags and debug_flags[name]:

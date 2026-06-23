@@ -9,62 +9,68 @@ from drivers.gps import GPS
 from drivers.webrtc import WebRTCManager
 from drivers.compass import Compass
 from self_driving.self_driving import SelfDrivingManager
+from core.config import get_logger
+from time import time
+
+lifecycle_logger = get_logger("lifecycle")
 
 def initialize_components():
     global motors, webrtc, lights, gps
 
-    print("Initializing Motor...")
+    lifecycle_logger.warning(f"Software started at {time()}")
+
+    lifecycle_logger.warning("Initializing Motor...")
     try:
         services.motors = Motor()
-        print("Motor initialized")
+        lifecycle_logger.warning("Motor initialized")
     except Exception as e:
         services.motors = None
-        print(f"Motor init failed: {e}")
+        lifecycle_logger.warning(f"Motor init failed: {e}")
         traceback.print_exc()
 
-    print("Initializing WebRTC...")
+    lifecycle_logger.warning("Initializing WebRTC...")
     try:
         services.webrtc = WebRTCManager()
-        print("WebRTC initialized")
+        lifecycle_logger.warning("WebRTC initialized")
     except Exception as e:
         services.webrtc = None
-        print(f"WebRTC init failed: {e}")
+        lifecycle_logger.warning(f"WebRTC init failed: {e}")
         traceback.print_exc()
 
-    print("Initializing Lights...")
+    lifecycle_logger.warning("Initializing Lights...")
     try:
         services.lights = Lights()
-        print("Lights initialized")
+        lifecycle_logger.warning("Lights initialized")
     except Exception as e:
         services.lights = None
-        print(f"Lights init failed: {e}")
+        lifecycle_logger.warning(f"Lights init failed: {e}")
         traceback.print_exc()
 
-    print("Initializing GPS...")
+    lifecycle_logger.warning("Initializing GPS...")
     try:
         services.gps = GPS()
-        print("GPS initialized")
+        lifecycle_logger.warning("GPS initialized")
     except Exception as e:
         services.gps = None
-        print(f"GPS init failed: {e}")
+        lifecycle_logger.warning(f"GPS init failed: {e}")
         traceback.print_exc()
     
-    print("Initializing Compass...")
+    lifecycle_logger.warning("Initializing Compass...")
     try:
         services.compass = Compass()
-        print("Compass initialized")
+        lifecycle_logger.warning("Compass initialized")
     except Exception as e:
         services.compass = None
-        print(f"Compass init failed: {e}")
+        lifecycle_logger.warning(f"Compass init failed: {e}")
         traceback.print_exc()
     
-    print("Initializing SelfDrivingManager...")
+    lifecycle_logger.warning("Initializing SelfDrivingManager...")
     try:
         services.self_driving_manager = SelfDrivingManager()
-        print("SelfDrivingManager initialized")
+        lifecycle_logger.warning("SelfDrivingManager initialized")
     except Exception as e:
         services.self_driving_manager = None
-        print(f"SelfDrivingManager init failed: {e}")
+        lifecycle_logger.warning(f"SelfDrivingManager init failed: {e}")
         traceback.print_exc()
 
 @asynccontextmanager
