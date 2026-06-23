@@ -1,9 +1,6 @@
 import argparse
 import logging
 
-# Set the base logging style for the whole project
-logging.basicConfig(level=logging.WARNING, format='[%(levelname)s] %(name)s: %(message)s')
-
 def _parse_flags():
     parser = argparse.ArgumentParser()
     parser.add_argument('--motor-debug', action='store_true', help='Show motor debug logs')
@@ -15,25 +12,41 @@ def _parse_flags():
     
     return parser.parse_args()
 
-# Run this once when config.py is imported
 args = _parse_flags()
+
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.DEBUG)
+
+log_format = logging.Formatter('[%(levelname)s] %(name)s: %(message)s')
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.WARNING)
+console_handler.setFormatter(log_format)
+root_logger.addHandler(console_handler)
+
+file_handler = logging.FileHandler('tank.log', mode='a') # 'w' overwrites each run; use 'a' to append
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(log_format)
+root_logger.addHandler(file_handler)
+
+# ------------------------------
 
 def get_logger(name):
     """Returns a logger and sets its level based on flags."""
     logger = logging.getLogger(name)
     
-    # Logic to enable specific debuggers
-    if name == 'motor' and args.motor_debug:
+    debug_flags = {
+        'motor': args.motor_debug,
+        'compass': args.compass_debug,
+        'gps': args.gps_debug,
+        'webrtc': args.webrtc_debug,
+        'self_driving': args.self_driving_debug,
+        'websocket': args.websocket_debug
+    }
+    
+    if name in debug_flags and debug_flags[name]:
         logger.setLevel(logging.DEBUG)
-    if name == 'compass' and args.compass_debug:
-        logger.setLevel(logging.DEBUG)
-    if name == 'gps' and args.gps_debug:
-        logger.setLevel(logging.DEBUG)
-    if name == 'webrtc' and args.webrtc_debug:
-        logger.setLevel(logging.DEBUG)
-    if name == 'self_driving' and args.self_driving_debug:
-        logger.setLevel(logging.DEBUG)
-    if name == 'websocket' and args.websocket_debug:
-        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.WARNING)
         
     return logger

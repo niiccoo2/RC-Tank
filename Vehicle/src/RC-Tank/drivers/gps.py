@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 from serial import Serial
 from pygnssutils import GNSSNTRIPClient, GNSSReader
 from pyubx2 import UBXMessage
-import datetime
 
 load_dotenv()
 
@@ -96,10 +95,10 @@ class GPS:
         time.sleep(0.5)
     
     def update_gps_thread(self):
-        with open("./RTK.log", "a") as f:
-            date = datetime.datetime.now()
+            start_time = time.time()
+            has_gotten_fix = False
 
-            f.write(f"GPS thread started. {date.year}-{date.month:02d}-{date.day:02d}_{date.hour:02d}{date.minute:02d}\n")
+            gps.debug(f"GPS thread started. UNIX TIME: {start_time}\n")
 
             with GNSSNTRIPClient(self.rover) as gnc:
                 gnc.run(
@@ -146,12 +145,13 @@ class GPS:
                             f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}"
                         )
 
-                        f.write(
-                            f"Fix: {parsed_gnss.fixType}D | RTK: {rtk_status} | "
-                            f"diffSoln: {parsed_gnss.diffSoln} | corrAge: {parsed_gnss.lastCorrectionAge}s | "
-                            f"hAcc: {parsed_gnss.hAcc}mm | Sats: {parsed_gnss.numSV} | "
-                            f"Lat: {parsed_gnss.lat}, Lon: {parsed_gnss.lon}\n"
-                        )
+                        if rtk_status == "Fixed" and has_gotten_fix == False:
+                            fix_time = time.time()
+
+                            gps.debug(f"Time to fix: {fix_time-start_time}")
+
+                            has_gotten_fix = True
+
 
                         # gps.debug(f"{self.rover.lon}, {self.rover.lat}, {time.time()}")
 

@@ -1426,9 +1426,39 @@ I think I have a decent tune for the PID now? It is only KP, but there seem to b
 
 I am so stupid. When tuning the PID loop, I was reading the values from a .env file, but I forgot that I run `load_dotenv()` at the beginning of the file, so I never reloaded it. That meant that the values it was using only changed when I reloaded the entire program. Good news is that a tune of 1, 0, 0 seems good enough for now. Got the videos I need for shipping, so going to edit that then call it enough for today.
 
-## VERSION 3.5
+Just shipped and got aproved for horizons. Right now it is at 108 hours on hackatime, and I shipped 74 hours. So everything on from hour 108 is new and can be used for a new program.
+
+## **VERSION 4**
 
 This version is around adding ML features to the waypoint mode, really turning it into a self driving car instead of a point following car. Not sure how much is going to get done (see above) but the idea right now is to have a setting that keeps it on sidewalks, while still following waypoints the best it can.
+
+It also includes a new frame! Here is a list of things the frame should have:
+
+- Suspension
+- Be able to go offroad
+- Good turning radius
+  - Crab / front and back turning?
+- Waterproof (like a real car)
+- Be able to hold a person / payload
+  - Lock suspension
+  - Have a spot to sit that isn't crushing anything
+- Trailer hitch
+- Spot for E-Stop
+- Laptop charger / USB PD out
+  - Maybe also do PD in for charging main pack
+- Attachment spot
+  - Laptop holder
+  - Include power and a data line
+- Lights:
+  - Good headlights
+  - Brake lights?
+  - Blinkers?
+  - Maybe just a lot of neo pixels for this...
+- Pack into suitcase?
+  - 62 linear inches is normal for checked luggage, so aim for that
+  - ^ is the total case, so figure out if it will be mailed itself, or in something
+  - maybe make it fit in this? https://www.pelican.com/us/en/product/cases/1615?sku=016150-0011-110
+  - Should make a fake frame out of wood to get idea of size I am working with
 
 ### Sunday, May 31st | .5 hours
 
@@ -1452,24 +1482,29 @@ Might have fixed coolify? Pushing to test. It worked!! This took way too long, b
 
 Starting to figure out what code I need to be running. As you can see, I have no idea what I am doing with ML / AI.
 
-### Tuesday, June 2nd | x hours
+### Tuesday, June 2nd | .4 hours
 
-#### 11:00 | x hours
+#### 11:00 | .4 hours
 
 Going to start working on adding some logging for the RTK data. Just done with MCAS so I'm only really going to have around 30 minutes to get it done now, but that _should_ be enough time.
 
 Think I have a basic logger working. Need to first check if it works, then make sure that it is logging all the data that I was told to log in the email.
 
-## VERSION 4
+### Tuesday, June 23th | x hours
 
-This is going to be making a new frame for the tank! Not sure if this is ever going to happen, but if it does, here is a list of things it should have / do:
+#### 08:30 | x hours
 
-- Suspension
-- Be able to go offroad
-- Good turning radius
-  - Crab / front and back turning?
-- Waterproof (like a real car)
-- Be able to hold a person / payload
-  - Lock suspension
-  - Have a spot to sit that isn't crushing anything
-- Trailer hitch
+I think I have decided that I am going to keep working on this project throughout the summer. Not 100% sure, but pretty sure. If I do, going to start by finishing adding all the RTK logging and starting on using ML to help it drive. Then going to get started on working on the frame so that parts can arrive while I'm on vacation.
+
+Going to try and finish up getting the RTK logging working. Going to start by making something that times how long it takes to get to fixed. Then need to make something that figures out distance from base station.
+
+Before I work on logging today, I am going to take some measurements of the current tank and do some recearch to figure out the size I want the new one to be.
+
+Current body size: 55 x 30 x 10 cm
+Current with wheels: 55 x 60 x 20 cm
+
+Max size in [1615 Air Case](https://www.pelican.com/us/en/product/cases/1615?sku=016150-0011-110#specs): 75.16 x 39.37 x 23.83 cm
+
+Idea for new body size: 70 x 30 x 15 cm. This is going to the be main part that has to go in the box. Everything else should come apart to lower the size. Hoping for the inside of the tank to have 10cm usable room. Now going to look up similar tihngs to find how I should make it.
+
+Have been drawing out a simple design, and I'm not really sure how to get the proportions I want while keeping it in a size that it able to be checked on an airplane. I think it should be portable, but still a respectable size. Now that I look at it more, the main body should fit fine, I just need to lower the wheels a bit to get the height that I want. I think it will really start to make more sense once I am designing it. Looked at calendar, and if I want to bring this to outpost (if I can go), then I really need to start on the new frame ASAP. Plan right now is to get logging done today, then tomorrow and Thursday get follow mode working. Once follow mode is done, I am ready to do the new frame.
