@@ -1,7 +1,7 @@
 start_time: float = 0
 end_time: float = 0
 
-with open("./../tank.log", "r") as f:
+with open("./tank.log", "r") as f:
   for line in f:
     if "Software started at" in line:
       split_line = line.split(" ")
