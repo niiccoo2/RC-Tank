@@ -1548,3 +1548,5 @@ Issues:
 - Make map follow robot
 
 Going to start by making the map follow the robot, but then after that, I am fully switching to the new frame. Like even if I will still have the self driving issue on the new frame, I would rather fix it on the final device...
+
+Kinda vibe coded a fix but it should be fine. Now going to start getting the basics set up in fusion. Like getting all the sizes I need.
