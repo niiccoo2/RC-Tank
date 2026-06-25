@@ -1538,3 +1538,13 @@ Need to stop now, but next thing to do today is to check if the GPS locking is g
 I think the issue that seems like network loss is that when it is on a really weak cell link, and then you start streaming video the link gets saturated and can't keep up. Going to try again but turning video off. For some reason it isn't getting a lock right now. Going to try switching to MaCORS and see if that is any better. Wait, it might get a lock just take a bit...
 
 Even in a really good spot I am only getting RTK float... Might try going back RTKdata to see if that is any better but idk why this is happening.
+
+UGHHH did a test run and like 20 things broke. I lowk don't know if I want to fix then before doing the new frame because half of the issues will be gone with the new frame anyways. So I think I might just call it quits on this frame for now. I did a good run, and I really don't feel like fixing issues on a frame that is about to be retired anyways... It had a really good run, but it's just time to replace it.
+
+Issues:
+
+- Won't drive to follow waypoints
+- Right wheel stops working
+- Make map follow robot
+
+Going to start by making the map follow the robot, but then after that, I am fully switching to the new frame. Like even if I will still have the self driving issue on the new frame, I would rather fix it on the final device...

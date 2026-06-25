@@ -28,6 +28,29 @@
 
 	$: liveLocation = { lat: $gpsData.lat, lng: $gpsData.lon };
 
+	// Threshold in meters. Adjust this based on how much your GPS drifts when still!
+  const MOVEMENT_THRESHOLD = 3; 
+  let lastPannedLocation: L.LatLng | null = null;
+
+  // Reactively watch for gpsData changes to auto-pan the map
+  $: if (map && $gpsData.lat !== 0 && $gpsData.lon !== 0) {
+    const currentPos = L.latLng($gpsData.lat, $gpsData.lon);
+
+    if (!lastPannedLocation) {
+      // First valid fix: set our baseline
+      lastPannedLocation = currentPos;
+    } else {
+      // Calculate distance from the last time we moved the map
+      const distance = lastPannedLocation.distanceTo(currentPos);
+
+      if (distance > MOVEMENT_THRESHOLD) {
+        // Robot actually moved! Pan the map and update our baseline
+        map.panTo(currentPos);
+        lastPannedLocation = currentPos;
+      }
+    }
+  }
+
 	export function resizeMap() {
 		if (map) {
 			map.invalidateSize();
