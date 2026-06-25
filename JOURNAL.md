@@ -1536,3 +1536,5 @@ Need to stop now, but next thing to do today is to check if the GPS locking is g
 #### 18:00 | x hours
 
 I think the issue that seems like network loss is that when it is on a really weak cell link, and then you start streaming video the link gets saturated and can't keep up. Going to try again but turning video off. For some reason it isn't getting a lock right now. Going to try switching to MaCORS and see if that is any better. Wait, it might get a lock just take a bit...
+
+Even in a really good spot I am only getting RTK float... Might try going back RTKdata to see if that is any better but idk why this is happening.
