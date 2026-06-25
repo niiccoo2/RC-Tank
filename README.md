@@ -115,7 +115,7 @@ sudo ip link set wlan0 up
 
 ### Configure GPIO for SPI
 
-To use SPI on the GPIO pins, you must first run the Jetson-IO python script and enable SPI.
+To use SPI on the GPIO pins, you must first run the Jetson-IO python script and enable SPI1 (no idea why you need SPI1 for SPI0).
 
 ```shell
 sudo /opt/nvidia/jetson-io/jetson-io.py

@@ -1490,7 +1490,7 @@ Going to start working on adding some logging for the RTK data. Just done with M
 
 Think I have a basic logger working. Need to first check if it works, then make sure that it is logging all the data that I was told to log in the email.
 
-### Tuesday, June 23th | x hours
+### Tuesday, June 23th | 2.33 hours
 
 #### 16:00 | 2 hours
 
@@ -1513,8 +1513,22 @@ Apparently, they never gave me the free RTK connection, so I now have to go back
 
 I was about to write some quick code so you can see the lock time code on the website, but now it is deciding to loose cell... I can't tell if it is loosing cell, if it is somehow on WiFi and loosing that, or if this is a power issue. For now I am just going to bring it inside, but once I bring it out to the field it would be a good time to test wtf is wrong. Lights seem to not be working... Going to debug that, then the power / internet issue. I have the bare minimum done for logging, so after today I am not going to work on it, but if I have time tonight, I might add a chart to the website (not likely). No idea why lights aren't working. I guess that is something to work on next time.
 
-### 19:40 | .33 hours
+#### 19:40 | .33 hours
 
 Not really sure why the lights are not working, but not going to debug it now because I don't have the right tools. Going to work on finishing that logging tool I wanted to add to the website.
 
 Just finished making a _really_ quick script that just reads through the log file and prints all time to fixes that the tank has had.
+
+### Thursday, June 25th | x hours
+
+#### 10:30 | .8 hours
+
+Going to start today by figuring out why the lights aren't working and why it seems to be loosing power or internet. First going to deal with lights.
+
+Seems like nothing is being sent out of the pin for the lights.
+
+For some reason SPI1 was turned off in jetson-io. I have no idea how it got turned off, as I haven't been messing with that stuff in ages, and I also have no idea why it is now called SPI1, but lights works now!
+
+Just turned off the WiFi chip entierly because it is being a pain.
+
+Need to stop now, but next thing to do today is to check if the GPS locking is getting logged correctly and then also have the log reader print the location where it locked at
