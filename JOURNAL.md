@@ -1532,3 +1532,7 @@ For some reason SPI1 was turned off in jetson-io. I have no idea how it got turn
 Just turned off the WiFi chip entierly because it is being a pain.
 
 Need to stop now, but next thing to do today is to check if the GPS locking is getting logged correctly and then also have the log reader print the location where it locked at
+
+#### 18:00 | x hours
+
+I think the issue that seems like network loss is that when it is on a really weak cell link, and then you start streaming video the link gets saturated and can't keep up. Going to try again but turning video off. For some reason it isn't getting a lock right now. Going to try switching to MaCORS and see if that is any better. Wait, it might get a lock just take a bit...
