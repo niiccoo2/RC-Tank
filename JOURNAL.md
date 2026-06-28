@@ -1551,7 +1551,7 @@ Going to start by making the map follow the robot, but then after that, I am ful
 
 Kinda vibe coded a fix but it should be fine. Now going to start getting the basics set up in fusion. Like getting all the sizes I need.
 
-### Saturday, June 27th | x hours
+### Saturday, June 27th | 1.33 hours
 
 #### 17:30 | 1.33 hours
 
@@ -1560,3 +1560,13 @@ Working on learning how to use extrusions in fusion. It is really confusing but 
 Got a nice simple rectangle working! Now need to start thinking about how I want this thing to look. I have a very rough outline, but other than that all I know is I want a nice metal frame lol.
 
 ![Rectangle Frame V4](./Photos/rect_frame_v4.jpg)
+
+### Sunday, June 28th | x hours
+
+#### 16:30 | 1 hour
+
+Not sure if I like how the hardware that holds the rectangle together is on the top. I might want the top flush so that it can have attachments or things that can take advantage of the full width. Going to start today by working on moving that hardware to sides and then finishing the outline of the rest of the core frame. Might also add the plastic that I want to use for this part... Lowk I think I might just use sheet metal for the walls as it doesn't look like it will cost much more and idt it will add much weight. Just so I don't forget, I am going to use [this](https://www.homedepot.com/p/Falken-Design-24-in-x-60-in-x-1-8-in-Thick-Aluminum-Composite-ACM-Black-Sheet-Falken-Design-ACM-BK-1-8-2460/308670306#see-more-details).
+
+Made some good progress. Ended up switching to internal joints and also did some drawing to figure out if the real version will look good. By real I mean the version that will work due to minimum sizes. Now going to start on the ends, which are going to be 10cm tall, then making the 45 degree angle peice until it is the full 20cm.
+
+![Chassis V4 with internal joints](./Photos/frame_v4_with_internal_joints.jpg)
