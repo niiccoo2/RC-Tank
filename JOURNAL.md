@@ -1570,3 +1570,9 @@ Not sure if I like how the hardware that holds the rectangle together is on the 
 Made some good progress. Ended up switching to internal joints and also did some drawing to figure out if the real version will look good. By real I mean the version that will work due to minimum sizes. Now going to start on the ends, which are going to be 10cm tall, then making the 45 degree angle peice until it is the full 20cm.
 
 ![Chassis V4 with internal joints](./Photos/frame_v4_with_internal_joints.jpg)
+
+#### 17:30 | .66 hours
+
+Started working on the shorter front. I haven't been doing any joints, but it shouldn't be too bad because it is all going to be joint in place. So I am just going to do all those either once I am done figuring out the overall geometry or once I remember again lol. Here is a nice picture.
+
+![Short front on frame V4](./Photos/short_front_frame_v4.jpg)
