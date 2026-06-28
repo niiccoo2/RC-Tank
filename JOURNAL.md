@@ -1519,7 +1519,7 @@ Not really sure why the lights are not working, but not going to debug it now be
 
 Just finished making a _really_ quick script that just reads through the log file and prints all time to fixes that the tank has had.
 
-### Thursday, June 25th | x hours
+### Thursday, June 25th | 2.8 hours
 
 #### 10:30 | .8 hours
 
@@ -1533,7 +1533,7 @@ Just turned off the WiFi chip entierly because it is being a pain.
 
 Need to stop now, but next thing to do today is to check if the GPS locking is getting logged correctly and then also have the log reader print the location where it locked at
 
-#### 18:00 | x hours
+#### 18:00 | 2 hours
 
 I think the issue that seems like network loss is that when it is on a really weak cell link, and then you start streaming video the link gets saturated and can't keep up. Going to try again but turning video off. For some reason it isn't getting a lock right now. Going to try switching to MaCORS and see if that is any better. Wait, it might get a lock just take a bit...
 
@@ -1550,3 +1550,13 @@ Issues:
 Going to start by making the map follow the robot, but then after that, I am fully switching to the new frame. Like even if I will still have the self driving issue on the new frame, I would rather fix it on the final device...
 
 Kinda vibe coded a fix but it should be fine. Now going to start getting the basics set up in fusion. Like getting all the sizes I need.
+
+### Saturday, June 27th | x hours
+
+#### 17:30 | 1.33 hours
+
+Working on learning how to use extrusions in fusion. It is really confusing but I hope once I figure it out I will know enough to design the frame...
+
+Got a nice simple rectangle working! Now need to start thinking about how I want this thing to look. I have a very rough outline, but other than that all I know is I want a nice metal frame lol.
+
+![Rectangle Frame V4](./Photos/rect_frame_v4.jpg)
