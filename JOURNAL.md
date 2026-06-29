@@ -1561,7 +1561,7 @@ Got a nice simple rectangle working! Now need to start thinking about how I want
 
 ![Rectangle Frame V4](./Photos/rect_frame_v4.jpg)
 
-### Sunday, June 28th | x hours
+### Sunday, June 28th | 1.66 hours
 
 #### 16:30 | 1 hour
 
@@ -1576,3 +1576,17 @@ Made some good progress. Ended up switching to internal joints and also did some
 Started working on the shorter front. I haven't been doing any joints, but it shouldn't be too bad because it is all going to be joint in place. So I am just going to do all those either once I am done figuring out the overall geometry or once I remember again lol. Here is a nice picture.
 
 ![Short front on frame V4](./Photos/short_front_frame_v4.jpg)
+
+### Monday, June 29th | .66 hours
+
+#### 09:00 | .33 hours
+
+Started today by making that custom mount / joint thing. Hopefully once I am done with the overall frame and adding the metal walls it doesn't get in the way. Like it will, but I hope it is easy to move it after the fact. Now going to add the screws and things and then do it for all sides.
+
+![Custom 100mm joint](./Photos/custom_100mm_joint_frame_v4.jpg)
+
+#### 10:00 | .33 hours
+
+Done for now. Added some screws, but having a lot of issues with this last screw...
+
+![Stupid screws](./Photos/custom_100mm_joint_with_screws_frame_v4.jpg)
