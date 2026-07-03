@@ -1590,3 +1590,18 @@ Started today by making that custom mount / joint thing. Hopefully once I am don
 Done for now. Added some screws, but having a lot of issues with this last screw...
 
 ![Stupid screws](./Photos/custom_100mm_joint_with_screws_frame_v4.jpg)
+
+### Friday, July 3rd | 1.5 hours
+
+#### 17:00 | 1.5 hours
+
+Today I am going to be working on getting the rest of the shape of the frame built out! I can not figure out why this frame wants to move out whenever I make a joint for the life of me...
+
+Needed to do a bunch of grounding to get it working. Now working on figuring out the geometry so that it looks good while being possable to build.
+
+Very rough area needed for outside metal: 3,280 cm^2
+Area in [this](https://www.homedepot.com/p/Falken-Design-24-in-x-60-in-x-1-8-in-Thick-Aluminum-Composite-ACM-Black-Sheet-Falken-Design-ACM-BK-1-8-2460/308670306#see-more-details) piece of metal: 9,120 cm^2
+
+Wow, actually using trig in real life now. Going to start on the 45 degree stuff tomorrow.
+
+![V4 frame with the short parts now on all sides](./Photos/v4_frame_with_all_short_things.jpg)
