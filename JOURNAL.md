@@ -1605,3 +1605,23 @@ Area in [this](https://www.homedepot.com/p/Falken-Design-24-in-x-60-in-x-1-8-in-
 Wow, actually using trig in real life now. Going to start on the 45 degree stuff tomorrow.
 
 ![V4 frame with the short parts now on all sides](./Photos/v4_frame_with_all_short_things.jpg)
+
+### Saturday, July 4th | 3.32 hours
+
+#### 11:30 | .6 hours
+
+My goal for today is to finish the core frame and then figure out how I want the shell to work. The two options are inside or outside. I think outside is easier, but then the question is how can I mount things on the outside. Although I don't think I will be needing to mount much on the outside other than the top. So the top is its own issue. Was talking about batteries and I might want a door on the bottom to switch the battery pack... Will start spacing that all out once the frame is done though (am making a 18650 pack from scratch). Might wanna figure out wheels first though...
+
+Ended up taking a bit of time to get my 3d printer working, then started on the 45 degree angle cuts.
+
+### 12:30 | 1 hour
+
+Am thinking about if I want the metal on the outside or inside, and the two main things are that I need an attachment point for things on top, and I might want a trailer hitch. And maybe more cameras. I guess what I'm saying is that I want to still be able to attach things to the outside even with the metal.
+
+Waitttt, I didn't know you could put metal or plastic in the middle using the groves. I might do that. It will make the top a bit more interesting, but it might be better. I am going to finish just getting the frame done though, and then I can kinda redo the whole top. It is annoying that I spent all this time on it, but it isn't too bad, I was learning.
+
+### 14:00 | 1.66 hours
+
+Got the 45 degree angle stuff sorted out, now going to work on the connectors and cross beams.
+
+Started on the cross beams, but ended up getting stuck on removing past parts. Really not able to think right now so I am going to try and figure this out tomorrow.
