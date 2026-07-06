@@ -1439,9 +1439,6 @@ It also includes a new frame! Here is a list of things the frame should have:
 - Good turning radius
   - Crab / front and back turning?
 - Waterproof (like a real car)
-- Be able to hold a person / payload
-  - Lock suspension
-  - Have a spot to sit that isn't crushing anything
 - Trailer hitch
 - Spot for E-Stop
 - Laptop charger / USB PD out
@@ -1614,14 +1611,38 @@ My goal for today is to finish the core frame and then figure out how I want the
 
 Ended up taking a bit of time to get my 3d printer working, then started on the 45 degree angle cuts.
 
-### 12:30 | 1 hour
+#### 12:30 | 1 hour
 
 Am thinking about if I want the metal on the outside or inside, and the two main things are that I need an attachment point for things on top, and I might want a trailer hitch. And maybe more cameras. I guess what I'm saying is that I want to still be able to attach things to the outside even with the metal.
 
 Waitttt, I didn't know you could put metal or plastic in the middle using the groves. I might do that. It will make the top a bit more interesting, but it might be better. I am going to finish just getting the frame done though, and then I can kinda redo the whole top. It is annoying that I spent all this time on it, but it isn't too bad, I was learning.
 
-### 14:00 | 1.66 hours
+#### 14:00 | 1.66 hours
 
 Got the 45 degree angle stuff sorted out, now going to work on the connectors and cross beams.
 
 Started on the cross beams, but ended up getting stuck on removing past parts. Really not able to think right now so I am going to try and figure this out tomorrow.
+
+### Sunday, July 5th | x hours
+
+#### 11:30 | 2 hours
+
+Going to start today by figuring out this error I made by removing past pieces. Then going to finish adding the crossbars and start adding the plating.
+
+FIXED IT IN 10 MINUTES. I SWEAR I JUST NEED TO TAKE MORE BREAKS. Now going to add crossbars, and then make these plates and see how much it is going to cost me.
+
+Just realized that if I use these internal joints, then I won't be able to add plating, so I think I am going to use external surface joints? Not sure yet, I am now trying to remember why I stopped using those for the side. I think it was just that there was a simpler way to do it. I don't think I am going to be mounting much on the bottom, and def not on the corner so I think it should be fine. Also should start thinking about if I want a door on the bottom to take out the battery... I think that might be too much work, like I think I will just try to design the top to make it easy to get to the bottom and battery, but the point is that it should be a big enough battery that it doesn't need to be changed constantly. For now I am just going to use external joints, and we will see if it becomes and issue.
+
+Made some good progress and am almost done making the first metal plate, just making sure that this AI is not making things up before I do it lol.
+
+#### 17:00 | 2.5 hours
+
+Going to try and work on this for 2 more hours today. First going to finish checking these measurements on the gasket that I am going to use, then make and price out all the plates for the tank. No offense to anyone Chinese, but trying to understand bad Chinese english is a skill of its own.
+
+Sendcutsend is looking a bit exspensive so I think once the design is done I am just going to give them the parts that are too complicated / I just don't want to cut myself, and everything else I will do myself. Going to try and finish the blank panels today, and then tomorrow I think I am going to start on the steering and wheels and suspention and all that. The final thing will be adding all the stuff to the inside / adding any holes I need to the plates.
+
+WHY WILL HOME DEPOT NOT SELL ME METAL COLORED METAL??? Anyways, did some simple maths and for a piece that is almost certintly going to be the same in the final design and is just a plain rectangle SCS wants $36 and if I buy from Home Depot and cut myself it will cost $5. I think I am going to use SCS for the side pieces and probably the bent ones unless something else gets super hard.
+
+Done with the bent panels. Not sure what I am going to do for the top yet, all I know is that I will need a opening to get inside, and probably spots for cables / SMA connectors to leave. Because now that the frame is metal, we can't have any antennas on the inside. I think I am going to leave that to the end though. Second big thing I need to do is to figure out the steering system.
+
+![The new frame with all the panels added](./Photos/v4_frame_with_panels.jpg)
