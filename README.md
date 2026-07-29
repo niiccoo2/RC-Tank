@@ -55,7 +55,11 @@ Go look at the build journal (its pretty long): [here!](./JOURNAL.md)
 
 [Videos!](https://drive.proton.me/urls/YN5Q618FJM#a7Ycw6LDcv0I)
 
-![Tank in field](./Photos/tank_in_field.jpg) ![Tank on workbench](./Photos/tank_on_bench.jpg) ![Tank on road](./Photos/tank_on_road.jpeg) ![Tank with camera mounts](./Photos/tank_with_camera.jpg) ![Early version of new site on ally](./Photos/early_new_site_on_ally.jpg)
+![Tank in field](./Photos/tank_in_field.jpg)
+![Tank on workbench](./Photos/tank_on_bench.jpg)
+![Tank on road](./Photos/tank_on_road.jpeg)
+![Tank with camera mounts](./Photos/tank_with_camera.jpg)
+![Early version of new site on ally](./Photos/early_new_site_on_ally.jpg)
 
 ## Versions 1 & 2
 

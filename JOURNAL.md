@@ -1435,7 +1435,7 @@ This version is around adding ML features to the waypoint mode, really turning i
 It also includes a new frame! Here is a list of things the frame should have:
 
 - Suspension
-- Be able to go offroad
+  - Be able to go offroad
 - Good turning radius
   - Crab / front and back turning?
 - Waterproof (like a real car)
@@ -1646,3 +1646,101 @@ WHY WILL HOME DEPOT NOT SELL ME METAL COLORED METAL??? Anyways, did some simple 
 Done with the bent panels. Not sure what I am going to do for the top yet, all I know is that I will need a opening to get inside, and probably spots for cables / SMA connectors to leave. Because now that the frame is metal, we can't have any antennas on the inside. I think I am going to leave that to the end though. Second big thing I need to do is to figure out the steering system.
 
 ![The new frame with all the panels added](./Photos/v4_frame_with_panels.jpg)
+
+### Monday, July 6th | 1 hour
+
+#### 18:00 | 1 hour
+
+Going to start today by figuring out how to do the wheels. I really have no idea where to start.
+
+These wheels are going to be a freaking pain in the rear to figure out. I'm having a hard time even finding MOA (motor on axle) axles in the first place. Not even checking if they are the right size yet... AHHHH.
+
+I think I am going to end up making my own thing from scratch for this. I hope it isn't too much work and that it doesn't cost too much.
+
+### Tuesday, July 7th | 2 hours
+
+#### 15:00 | 2 hours
+
+I think I am set on designing my own drivetrain, but I am first going to do a bit of research around suspension, because I think the way of doing steering that I am thinking about isn't the best for this type of suspension... Not sure though, I just wanna do a bit more research before I get started.
+
+I think I am going for a **beam axle** suspension system. This is why: "A beam axle is typically _simple in design_, rugged, and inexpensive to manufacture". Love hearing that it is simple lol. Sure, it might not be the best suspension in the world, but it seems simple, which is what I want for now. If I really hate it, then I can make a new design later, and the expensive stuff like motors and wheels are just fine.
+
+After a _lot_ of time and research I think I have decided on brushless motors and parts from Flipsky. I **_GREATLY_** underestimated the price of motors, and the motors alone are going to end up costing around $400, which is insane. But from what I have been seeing, that is a good price... Sent them and email so I really hope that I can get sponsored... Ok, going to start on the CAD for the motors in a little bit.
+
+### Thursday, July 9th | 1.66 hours
+
+#### 20:00 | 1.66 hours
+
+Finally about time to start the cad for this part. The new plan is to use a motor, connected via a belt to a diff, then conencted via u axles to the wheels. Going to start by designing the motor and finding a diff that will work with the right belt ratio.
+
+Seems like I am going to be doing a 10S - 12S build. Also just thought about this, but we need airflow to the inside of this john.
+
+Finally done with the battery rabbit hole, I think the best plan for now is to just use LiPo. Li-ion is fine if you are using a large enough pack, but a pack of that size is too much money, therefore we are going to combine 2 6S LiPo's to get 12S voltage.
+
+Now it is really time to start designing the drivetrain. Again, going to start with the motor and figuring how how to do this belt.
+
+### Friday, July 10th | 5.85 hours
+
+#### 08:00 | .33 hours
+
+Learned that not all gears are designed for belts. So I think I am going to have to find a way for this to work with only gears... Also not sure if this 1:10 scale diff is going to for for this car... Going to do one last look for a better 3d model / sepcs of a 1/5 scale...
+
+I think I am going to take a 3d printed design, and just scale it up and or find metal parts for it. Ok, I found [this](https://grabcad.com/library/differential-for-rc-quarterscale-cars), now lets see if I can find the parts I need for it, if so I think this is going to be it.
+
+#### 10:00 | 1.66 hours
+
+I GOT THE PRICE FOR 2 DIFFS UDNER $100!! It looked like it was going to be over, but that was just because the min amount of a lot of parts is like 100, so I don't actually need to buy more when I am building two of them. Now that I know that I can make this diff (everything else is going to be 3D printed), it is time to get it set up with the motor!
+
+Done figuring out everything for the diff. Well at least how to make it. Now going to have lunch, and then start connecting it to the motors and figuring out how to hold everything.
+
+#### 13:00 | 2.5 hours
+
+A few things with these belt models in cad are def going to be wrong, although I don't think it will have a big impact due to how it is fixed. Making sure to have everything correct in the BOM though so that I order the correct stuff.
+
+Got the belts added. Now going to work on getting the rest of the wheel drive train and steering figured out, then going to figure out how to mount everything and add suspension.
+
+#### 18:30 | 1.2 hours
+
+Oh shoot, before I move on I need to find the real parts to order.
+
+Done finding prices for the gears, now I should find the belts.
+
+Took a while to find blts because I needed to change the geometry to be a standard length. Now making a quick wheel design so I can start on steering.
+
+#### 21:00 | .16 hours
+
+Started making the wheel, going to try and finish everything tomorrow.
+
+### Saturday, July 11th | x hours
+
+#### 09:00 | .5 hours
+
+Going to start figuring out how to connect the wheels to the diff.
+
+I think I found some good U joints, now going to do the cad! Should also find the bearings I need...
+
+#### 09:30 | 1 hour
+
+I think I am going to do a 35 degrees steering angle.
+
+Still working on getting the wheel placed in the right spot, but lowk it might make more sense to have the motor above the diff. If the motor was above, then it wouldn't get in the way of the wheel as much. Only issue is that it might pose an issue to the suspension...
+
+Things to do:
+
+- [ ] Move motor above diff
+  - [ ] Make sure that doesn't ruin suspension
+- [ ] Figure out a way to go from 8mm rod to 12mm hex
+- [ ] Mount everything
+- [ ] Suspension
+
+Working on adding the rods that go from the diff, through the U joints, and into the wheels. Next going to add the bearings and start with thinking about how everything is going to be mounted.
+
+#### 11:00 | .33 hours
+
+For now, I'm just going to have a rod magically connect to the wheel, but once I get everything working I am going to need to design a real way for it to connect.
+
+Got the left wheel done, now having some small issues with the right wheel. I should make it attach closer to the diff because there is no motor in the way. Anyways, going to do this later today.
+
+#### 16:00 | x hours
+
+Got the right wheel up and running, now going to move the motor above the diff, I hope that doesn't mess with anything else. Notes: right now it uses a 174mm belt, stator to jack rod is 45.675mm.
