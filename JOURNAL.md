@@ -1187,7 +1187,7 @@ Got controller bindings working so that some buttons flick switches. Took a whil
 
 Thinking about a new UI so that we don't need to split everything into tabs. But not sure how to fit everything into once screen. Might change anti doxx so that it is on by default but if you click on the GPS coords it turns off.
 
-![New UI outline](./Photos/new_ui.jpg)
+![New UI outline](./photos/new_ui.jpg)
 
 ### Thursday, May 14th | .5 hours
 
@@ -1384,11 +1384,11 @@ Wasn't able to fix the GPS issue. That is the last thing I am going to work on b
 
 Here is a chart of the goal heading (blue, calculated using current position and goal position), and current heading (red). This explained a lot of the issues I was seeing in waypoint mode (or my data taking method is broken), as you can see, once it is told what heading to go to, it does it decently, sure it could be better, but it isn't the main issue. The main issue is that the goal heading isn't updating much at all (it should be updating more than once a second, this data is from around 20s). It seems like this issue is steming from the GPS driver. So the next step is going to be use the test script and see if that one is actually updating the data at the right rate, then once that is, then figure out why the driver is not.
 
-![Initial P tune](./Photos/Initial_P_chart.jpg)
+![Initial P tune](./photos/Initial_P_chart.jpg)
 
 PHOTO DUMP!!
 
-![Tank in field](./Photos/tank_in_field.jpg) ![Tank on workbench](./Photos/tank_on_bench.jpg) ![Tank on road](./Photos/tank_on_road.jpeg) ![Tank with camera mounts](./Photos/tank_with_camera.jpg) ![Early version of new site on ally](./Photos/early_new_site_on_ally.jpg)
+![Tank in field](./photos/tank_in_field.jpg) ![Tank on workbench](./photos/tank_on_bench.jpg) ![Tank on road](./photos/tank_on_road.jpeg) ![Tank with camera mounts](./photos/tank_with_camera.jpg) ![Early version of new site on ally](./photos/early_new_site_on_ally.jpg)
 
 ### Tuesday, May 26th | .66 hours
 
@@ -1556,7 +1556,7 @@ Working on learning how to use extrusions in fusion. It is really confusing but 
 
 Got a nice simple rectangle working! Now need to start thinking about how I want this thing to look. I have a very rough outline, but other than that all I know is I want a nice metal frame lol.
 
-![Rectangle Frame V4](./Photos/rect_frame_v4.jpg)
+![Rectangle Frame V4](./photos/rect_frame_v4.jpg)
 
 ### Sunday, June 28th | 1.66 hours
 
@@ -1566,13 +1566,13 @@ Not sure if I like how the hardware that holds the rectangle together is on the 
 
 Made some good progress. Ended up switching to internal joints and also did some drawing to figure out if the real version will look good. By real I mean the version that will work due to minimum sizes. Now going to start on the ends, which are going to be 10cm tall, then making the 45 degree angle peice until it is the full 20cm.
 
-![Chassis V4 with internal joints](./Photos/frame_v4_with_internal_joints.jpg)
+![Chassis V4 with internal joints](./photos/frame_v4_with_internal_joints.jpg)
 
 #### 17:30 | .66 hours
 
 Started working on the shorter front. I haven't been doing any joints, but it shouldn't be too bad because it is all going to be joint in place. So I am just going to do all those either once I am done figuring out the overall geometry or once I remember again lol. Here is a nice picture.
 
-![Short front on frame V4](./Photos/short_front_frame_v4.jpg)
+![Short front on frame V4](./photos/short_front_frame_v4.jpg)
 
 ### Monday, June 29th | .66 hours
 
@@ -1580,13 +1580,13 @@ Started working on the shorter front. I haven't been doing any joints, but it sh
 
 Started today by making that custom mount / joint thing. Hopefully once I am done with the overall frame and adding the metal walls it doesn't get in the way. Like it will, but I hope it is easy to move it after the fact. Now going to add the screws and things and then do it for all sides.
 
-![Custom 100mm joint](./Photos/custom_100mm_joint_frame_v4.jpg)
+![Custom 100mm joint](./photos/custom_100mm_joint_frame_v4.jpg)
 
 #### 10:00 | .33 hours
 
 Done for now. Added some screws, but having a lot of issues with this last screw...
 
-![Stupid screws](./Photos/custom_100mm_joint_with_screws_frame_v4.jpg)
+![Stupid screws](./photos/custom_100mm_joint_with_screws_frame_v4.jpg)
 
 ### Friday, July 3rd | 1.5 hours
 
@@ -1601,7 +1601,7 @@ Area in [this](https://www.homedepot.com/p/Falken-Design-24-in-x-60-in-x-1-8-in-
 
 Wow, actually using trig in real life now. Going to start on the 45 degree stuff tomorrow.
 
-![V4 frame with the short parts now on all sides](./Photos/v4_frame_with_all_short_things.jpg)
+![V4 frame with the short parts now on all sides](./photos/v4_frame_with_all_short_things.jpg)
 
 ### Saturday, July 4th | 3.32 hours
 
@@ -1645,7 +1645,7 @@ WHY WILL HOME DEPOT NOT SELL ME METAL COLORED METAL??? Anyways, did some simple 
 
 Done with the bent panels. Not sure what I am going to do for the top yet, all I know is that I will need a opening to get inside, and probably spots for cables / SMA connectors to leave. Because now that the frame is metal, we can't have any antennas on the inside. I think I am going to leave that to the end though. Second big thing I need to do is to figure out the steering system.
 
-![The new frame with all the panels added](./Photos/v4_frame_with_panels.jpg)
+![The new frame with all the panels added](./photos/v4_frame_with_panels.jpg)
 
 ### Monday, July 6th | 1 hour
 
