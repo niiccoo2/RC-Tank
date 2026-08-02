@@ -1711,7 +1711,7 @@ Took a while to find blts because I needed to change the geometry to be a standa
 
 Started making the wheel, going to try and finish everything tomorrow.
 
-### Saturday, July 11th | x hours
+### Saturday, July 11th | 1.83 hours
 
 #### 09:00 | .5 hours
 
@@ -1744,3 +1744,31 @@ Got the left wheel done, now having some small issues with the right wheel. I sh
 #### 16:00 | x hours
 
 Got the right wheel up and running, now going to move the motor above the diff, I hope that doesn't mess with anything else. Notes: right now it uses a 174mm belt, stator to jack rod is 45.675mm.
+
+### Sunday, August 2nd | x hours
+
+#### 09:00 | .75 hours
+
+Finally time to work on the tank again!! I was on vacation and getting a lot of work done, but now it is time to grind. I have around a week to work on it before I am going to be away again, but I am hoping in this time I can finish up the frame design and maybe even start working on printing parts of the differentials! Today I am going to start by moving the motor above the diff and just remembering where I left off.
+
+Done moving the motor and redoing the belt in Fusion. I think I kept the same length, but still should add some micro adjustments into the design. Now I have to figure out how tf to mount / hold everything, add steering, and add suspension.
+
+### 09:45 | .88 hours
+
+Going to start by starting a test print, and also diving in to the mounting problem. Probably going to draw some ideas... This is kidna getting off topic, but I am going to quickly set up an octoprint instance bc I'ma be doing a lot of printing.
+
+Getting octoprint working is taking a while. Not tracking it all though so its fine.
+
+I think I finally got it working! Now going to get back to figuring out how to mount ts.
+
+### 14:00 | 2.66 hours
+
+Now it is time to figure out how everything is going to be mounted. I really don't know how it is going to work, because no two things are on the same plane, but I guess I might just draw some ideas to start.
+
+I think I am going to realign the jack rod so that I can fit a flat piece of sheet metal between the motor and diff, then have a hole for the belt, and use bent metal and or 3dp to attach to the sheet metal. Need to find what thickness metal I used for everything else on this thing. **Using .125" metal, which is 3.2mm.**
+
+I just realized that right now nothing is holding up the wheels, like if you sit it down, they will just fold. I have some ideas for how to do that, but I think for now I am going to finish the mounting so that I have something to start with.
+
+Now having some trouble getting this gear to move independently from its parent, and no, it isn't grounded.
+
+In the middle of re adding the belts after moving the idler and now everything is lop sided. Going to try and fix later today or tomorrow.
