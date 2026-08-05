@@ -1745,7 +1745,7 @@ Got the left wheel done, now having some small issues with the right wheel. I sh
 
 Got the right wheel up and running, now going to move the motor above the diff, I hope that doesn't mess with anything else. Notes: right now it uses a 174mm belt, stator to jack rod is 45.675mm.
 
-### Sunday, August 2nd | x hours
+### Sunday, August 2nd | 4.3 hours
 
 #### 09:00 | .75 hours
 
@@ -1753,7 +1753,7 @@ Finally time to work on the tank again!! I was on vacation and getting a lot of 
 
 Done moving the motor and redoing the belt in Fusion. I think I kept the same length, but still should add some micro adjustments into the design. Now I have to figure out how tf to mount / hold everything, add steering, and add suspension.
 
-### 09:45 | .88 hours
+#### 09:45 | .88 hours
 
 Going to start by starting a test print, and also diving in to the mounting problem. Probably going to draw some ideas... This is kidna getting off topic, but I am going to quickly set up an octoprint instance bc I'ma be doing a lot of printing.
 
@@ -1761,7 +1761,7 @@ Getting octoprint working is taking a while. Not tracking it all though so its f
 
 I think I finally got it working! Now going to get back to figuring out how to mount ts.
 
-### 14:00 | 2.66 hours
+#### 14:00 | 2.66 hours
 
 Now it is time to figure out how everything is going to be mounted. I really don't know how it is going to work, because no two things are on the same plane, but I guess I might just draw some ideas to start.
 
@@ -1772,3 +1772,27 @@ I just realized that right now nothing is holding up the wheels, like if you sit
 Now having some trouble getting this gear to move independently from its parent, and no, it isn't grounded.
 
 In the middle of re adding the belts after moving the idler and now everything is lop sided. Going to try and fix later today or tomorrow.
+
+### Tuesday, August 4th | x hours
+
+#### 14:00 | 1 hour
+
+Goal for today is to finish getting everything mounted and maybe even start on steering. Let's hope that everything is working now.
+
+I first am going to start by adding the belt from idler to diff and hoping that it is a common length.
+
+This took ages, I forgot how I got it to work last time, but I just kinda janked it together. I need to remember to elongate the bolt holes so that it can be adjusted.
+
+#### 18:00 | 1.5 hours
+
+Making the 90 mounts now. It really isn't that hard. So I'm happy that this part is going well.
+
+Almost done adding the bolts for the first 90 degree mount, the others should be faster.
+
+#### 20:00 | x hours
+
+Now working on finishing the rest of the mounts. Then its done for today.
+
+Took forever to finish the motor mount. Most of the time was spent on screws, then I forgot to add washers, so that took a while. I think the rest should be faster now that I know how to do it.
+
+![Motor mount in question](./photos/motor_mount.jpg)
