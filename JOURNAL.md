@@ -1795,7 +1795,7 @@ Took forever to finish the motor mount. Most of the time was spent on screws, th
 
 ![Motor mount in question](./photos/motor_mount.jpg)
 
-### Wednesday, August 5th | x hours
+### Wednesday, August 5th | 3 hours
 
 #### 14:00 | 1 hour
 
@@ -1805,7 +1805,7 @@ Going to start today by finishing the rest of the mounts that I need to make. Ho
 
 Made some really good progress and almost finished the idler mount, but I found that I really don't have the room to make it how it should be, so I ended up having to expand the mounting plate, and now I have to go. Once I am back it _should_ be pretty quick because I know how I want it and should have room for it now.
 
-#### 20:45 | x hours
+#### 20:45 | 1 hour
 
 I am kinda restarting the bearing mount, but I'm hoping I can get it done tonight. That is my goal.
 
