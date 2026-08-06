@@ -1773,7 +1773,7 @@ Now having some trouble getting this gear to move independently from its parent,
 
 In the middle of re adding the belts after moving the idler and now everything is lop sided. Going to try and fix later today or tomorrow.
 
-### Tuesday, August 4th | x hours
+### Tuesday, August 4th | 3 hours
 
 #### 14:00 | 1 hour
 
@@ -1789,10 +1789,26 @@ Making the 90 mounts now. It really isn't that hard. So I'm happy that this part
 
 Almost done adding the bolts for the first 90 degree mount, the others should be faster.
 
-#### 20:00 | x hours
-
-Now working on finishing the rest of the mounts. Then its done for today.
+#### 20:00 | .5 hours
 
 Took forever to finish the motor mount. Most of the time was spent on screws, then I forgot to add washers, so that took a while. I think the rest should be faster now that I know how to do it.
 
 ![Motor mount in question](./photos/motor_mount.jpg)
+
+### Wednesday, August 5th | x hours
+
+#### 14:00 | 1 hour
+
+Going to start today by finishing the rest of the mounts that I need to make. Hoping to get that done before 16:00, then tonight I am going to start on steering. The goal was to have steering done by EOD today, but clearly that is not happening, sooo...
+
+#### 15:00 | 1 hour
+
+Made some really good progress and almost finished the idler mount, but I found that I really don't have the room to make it how it should be, so I ended up having to expand the mounting plate, and now I have to go. Once I am back it _should_ be pretty quick because I know how I want it and should have room for it now.
+
+#### 20:45 | x hours
+
+I am kinda restarting the bearing mount, but I'm hoping I can get it done tonight. That is my goal.
+
+Mostly got the new design done. One issue is that one of them hits the motor mount, but it is the bolt that isn't bearing much load, so I am just gonna kinda cut the end off in the morning. Also need to add the bolts but that should be fast.
+
+![The thing overlaping](./photos/overlaping_bearing_motor_mount.jpg)
