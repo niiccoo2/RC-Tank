@@ -8,6 +8,33 @@ Supported by [RTKdata](https://rtkdata.com/)
 
 _Wondering what a ship is? Watch [this](https://vimeo.com/1111478391) video! Basically, a ship is when you make your project experiancable by others. In this case, that is writing a README about the project and adding some videos so people can see what it is!_
 
+### Version 4 BETA
+
+This is a pretty small version, only 35 hours more than V3. This includes a bit of testing on the old frame, and then the start of designing the new frame. The new frame has been super fun to design but also super hard. Most of this is because all I knew was that I wanted a new frame, nothing else, but also because I didn't really know how to use Fusion. I will say that I learned a lot, and I am ready to finish up the frame. I'm hoping that this is over half of the new frame done, but it might end up taking a lot longer.
+
+Features of new frame worked on for this ship:
+
+- Main body
+  - Figuring out how to connect all the aluminum was hard
+- Start of the drivetrain
+
+That doesn't sound like a lot, but it really is, especially when you don't know CAD.
+
+CAD file for this ship can be found at `/CAD/V4/ships/V4b.3mf`.
+
+Go look at the build journal (its pretty long! Scroll until you find V4, this ship was on SEP 5): [here!](./JOURNAL.md)
+
+![Rectangle Frame V4](./photos/rect_frame_v4.jpg)
+![Chassis V4 with internal joints](./photos/frame_v4_with_internal_joints.jpg)
+![Short front on frame V4](./photos/short_front_frame_v4.jpg)
+![Custom 100mm joint](./photos/custom_100mm_joint_frame_v4.jpg)
+![Stupid screws](./photos/custom_100mm_joint_with_screws_frame_v4.jpg)
+![V4 frame with the short parts now on all sides](./photos/v4_frame_with_all_short_things.jpg)
+![The new frame with all the panels added](./photos/v4_frame_with_panels.jpg)
+![Motor mount in question](./photos/motor_mount.jpg)
+![The thing overlaping](./photos/overlaping_bearing_motor_mount.jpg)
+![Final V4b](./photos/V4b.jpg)
+
 ## Version 3
 
 Features:

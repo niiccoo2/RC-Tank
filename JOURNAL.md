@@ -1623,7 +1623,7 @@ Got the 45 degree angle stuff sorted out, now going to work on the connectors an
 
 Started on the cross beams, but ended up getting stuck on removing past parts. Really not able to think right now so I am going to try and figure this out tomorrow.
 
-### Sunday, July 5th | x hours
+### Sunday, July 5th | 4.5 hours
 
 #### 11:30 | 2 hours
 
@@ -1812,3 +1812,37 @@ I am kinda restarting the bearing mount, but I'm hoping I can get it done tonigh
 Mostly got the new design done. One issue is that one of them hits the motor mount, but it is the bolt that isn't bearing much load, so I am just gonna kinda cut the end off in the morning. Also need to add the bolts but that should be fast.
 
 ![The thing overlaping](./photos/overlaping_bearing_motor_mount.jpg)
+
+### Thursday, August 6th | 1 hour
+
+#### 13:00 | 1 hour
+
+Going to start today by fixing that overlap, then going to get the diff mounts done. I'm really hoping I can get this done before 14:00.
+
+I think I am just going to remove the bolt that is causing trouble, and add a 3dp thing that sticks out to prevent rotation. Not sure how it will print but worst case I just remove it.
+
+Uhh I forgot to pause the timelapse, so it is logged for 20 minutes extra. Don't really know what to do...
+
+Done fixing the overlap. Now going to add the mount for the diff. I AM HOPING THAT THIS IS EASIER!!
+
+#### 19:00 | 0 hours
+
+I edited a sketch and everything freaking broke. I am so annoyed. I should be able to fix it but I need to take a break for a bit.
+
+### Friday, August 7th | x hours
+
+#### 13:00 | x hours
+
+Going to start by ordering some parts for the diff, kinda broke now so I am just going to order the parts with longest shipping. Will order the rest once I get paid.
+
+Currently spending forever cleaning this build plate before I start the next print...
+
+I think I am going to stop printing parts for now because supports are not working with PETG at all. Sounds like an issue for future me to fix. Not sure if this will be in 2 weeks or before school starts... I should have enough to do in 2 weeks.
+
+### Saturday, September 5th | 0 hours
+
+#### 20:00 | 0 hours
+
+This is just a note for myself, because hours for this project are getting confusing. At this time, I shipped V4 beta to pay for my flights to SF. Hackatime is at 164 hours, and the journal is at 40 something hours since V4 started. That is weird because hackatime was at 108 hours when I started V4. Not really sure what happened. For now I'm going to use hackatime hours as the master.
+
+![Final V4b](./photos/V4b.jpg)
