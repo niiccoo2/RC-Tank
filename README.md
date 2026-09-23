@@ -20,7 +20,7 @@ Features of new frame worked on for this ship:
 
 That doesn't sound like a lot, but it really is, especially when you don't know CAD.
 
-CAD file for this ship can be found at `/CAD/V4/ships/V4b.3mf`.
+CAD file for this ship can be found at `/CAD/V4/ships/V4b/V4b.step`.
 
 Go look at the build journal (its pretty long! Scroll until you find V4, this ship was on SEP 5): [here!](./JOURNAL.md)
 
