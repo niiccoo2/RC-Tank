@@ -22,6 +22,10 @@ That doesn't sound like a lot, but it really is, especially when you don't know 
 
 CAD file for this ship can be found at `/CAD/V4/ships/V4b/V4b.step`.
 
+**[Bill of materials](./BOM.md)** and **[wiring diagram](./WIRING.md)** — every part needed to build
+V4 with quantities, prices and sources (~$2,613 total), and a diagram of how it all wires together.
+Frame and drivetrain quantities come straight out of the V4b CAD.
+
 Go look at the build journal (its pretty long! Scroll until you find V4, this ship was on SEP 5): [here!](./JOURNAL.md)
 
 ![Rectangle Frame V4](./photos/rect_frame_v4.jpg)
